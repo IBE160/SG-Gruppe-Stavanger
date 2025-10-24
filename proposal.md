@@ -84,7 +84,152 @@ model Notification {
 - A **User** has many **FoodItems**.  
 - A **Recipe** uses many **FoodItems**.  
 - A **User** can receive many **Notifications**.  
-- **User Preferences** influence recipe recommendations.  
+- **User Preferences** influence recipe recommendations.
+
+# User Flows – Smart Food & Recipe Platform
+
+## 1. User Comes Home from Grocery Shopping
+- Opens the website and lands on the **Landing Page**  
+  *(Unregistered users can see “Today’s Recipes”, “Daily Inspiration”, or try a “Creative Mode” without saving results.  
+  This improves engagement before login — an important UX element.)*
+- Logs in  
+- Selects **“My Pantry”**  
+- Enters the **My Pantry** page  
+- Clicks **“Add Food Item”** and fills in:
+  - Name  
+  - Quantity and unit  
+  - Category (e.g., fruit, dairy)  
+  - Expiration date  
+- Repeats until all items are added  
+- Logs out  
+
+---
+
+## 2. User Is Hungry and Wants to Know What to Cook for Dinner
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Selects **“What Can I Cook for Dinner”**  
+- Arrives at a page with recipes available based on the items in **“My Pantry”**  
+- Can search, filter, or categorize recipes  
+- Finds a recipe and clicks **“I’ll Make This One”**  
+- The ingredients used in the recipe are deducted from **My Pantry**  
+  - After selecting a recipe, show a confirmation message:  
+    “Do you want to use the ingredients from your pantry?”  
+    *(This avoids accidental deletion and could allow manual adjustments — e.g., “I didn’t use these ingredients…”)*  
+- Receives confirmation:  
+  “Recipe completed! Ingredients have been updated. Would you like to rate this recipe?”  
+- Logs out  
+
+---
+
+## 3. User Is at the Store and Wants to Check What They Need to Buy
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Selects **“See What’s in My Pantry”**  
+- Logs out  
+
+---
+
+## 4. User Is at the Store and Wants Dinner Inspiration
+- Opens the website and lands on the **Landing Page**  
+- Clicks **“Recipes & Inspiration”**  
+- Can filter by:
+  - Price  
+  - Cooking time  
+  - Type of meal (dinner, lunch, dessert)  
+
+---
+
+## 5. User Is at the Store and Logged In, Looking for Dinner Ideas
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Clicks **“Recipes & Inspiration”**  
+- Clicks on a recipe  
+- Receives message:  
+  “You only need 2 more ingredients for this dish.”  
+- Logs out  
+
+---
+
+## 6. User Wants to Create a Profile for Preferences and Tips
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Selects **“My Profile”**  
+- Enters preferences, goals, and needs (e.g., eat healthier, more protein, vegan, allergies, more indulgent foods, etc.)  
+- Clicks **“Update Profile”**  
+- Reads **tips and tricks** on the profile page based on their preferences  
+- Clicks on a direct link to recipes that match their chosen preferences  
+- Logs out  
+
+---
+
+## 7. User Wants to View “My Liked Recipes” in Profile
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Selects **“My Profile”**  
+- Scrolls to the section **“My Liked Recipes ❤️”**  
+- Sees a list/grid of previously liked recipes with thumbnails, titles, and quick links  
+- Can:
+  - Click a recipe to view full details  
+  - Filter by meal type (Breakfast, Lunch, Dinner, Dessert)  
+  - Remove recipes from the liked list  
+- The system uses this data to generate personalized suggestions in the “Tips & Recommendations” section  
+- Logs out  
+
+---
+
+## 8. User Wants to View and Use Soon-to-Expire Food Items
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Sees a **notification badge** (e.g., “3 items expiring soon”)  
+- Clicks **“Expiring Soon”** or navigates to **My Pantry → Expiring Items**  
+- Views a list of items nearing expiration (sorted by date)  
+- Selects an item → sees **recipe suggestions** that use it  
+- Clicks on a recipe → can view, cook, and confirm usage  
+- The ingredients used are automatically deducted from the pantry  
+- Receives confirmation:  
+  “Nice work! You just saved 2 items from going to waste.”  
+- Logs out  
+
+---
+
+## 9. User Wants to Report a Bug or Suggest an Improvement
+- Opens the website and lands on the **Landing Page**  
+- Clicks **“Report a Bug or Suggest Improvement”**  
+- A text box appears (limited to a set number of characters)  
+- User selects a category (e.g., **Bug** or **Improvement**)  
+- The message is sent to the **Smart Food support email**  
+- A contact email address is displayed for direct follow-up  
+
+---
+
+## 10. User Wants to Generate a Creative Recipe (AI Mode)
+- Opens the website and lands on the **Landing Page**  
+- Logs in  
+- Clicks **“Creative Mode”** (visible on landing page or recipe dashboard)  
+- Enters a short prompt, such as:  
+  - “Make something Italian with tomatoes and chicken”  
+  - “Create a vegan breakfast that uses oats”  
+- The app automatically includes **My Pantry items** to personalize the generation  
+- The **AI engine (e.g., GPT or embedding model)** generates:  
+  - Recipe title  
+  - Ingredient list (highlighting which ones the user already has)  
+  - Instructions  
+  - Optional nutrition info or tips  
+- The recipe appears in a “Creative Recipe Preview” view  
+- User can:  
+  - Save it to **My Recipes**  
+  - Like it ❤️  
+  - Mark ingredients as “used” (deduct from pantry)  
+- Confirmation message appears:  
+  “Your creative recipe has been saved! Ingredients updated in your pantry.”  
+- Logs out  
+ 
+---
+
+**Future expansion (Phase 2–3):**
+- **Smart substitution suggestions:** e.g., “You’re missing basil — try parsley instead.”  
+- **Regenerate with constraints:** e.g., “Make it cheaper / faster / healthier.”
 
 ## Technical Framework
 
