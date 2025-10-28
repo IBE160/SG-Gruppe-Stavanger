@@ -14,14 +14,16 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
 ## Core Functionality
 
 ### Must Have (MVP)
-- **User Authentication:** Secure registration and login using NextAuth.js (email/password).  
-- **Food Inventory Management:** Users manually add food items with quantities and expiration dates.  
-- **Inventory Overview:** Users can view, edit, and delete items from their pantry or fridge.  
-- **Recipe Database (Spoonacular API):** Browse, search, and view recipes from Spoonacular’s API.  
-- **Smart Recipe Suggestions:** Suggest recipes based on the user’s current inventory.  
-- **Automatic Inventory Update:** When a recipe is used, ingredients are automatically deducted.  
-- **Expiration Alerts:** In-app notifications for food nearing expiration (2–3 days before).  
-- **Recipe Recommendations for Expiring Items:** Suggest meals using ingredients close to expiration.  
+- **User Authentication:** Secure registration and login using NextAuth.js (email/password).
+- **Food Inventory Management:** Users add food items with quantities and expiration dates.
+  - **Barcode Scanning:** Use the device camera to scan barcodes and instantly add items, minimizing manual entry.
+- **Inventory Overview:** Users can view, edit, and delete items from their pantry or fridge.
+- **Smart Grocery List Generation:** Automatically creates a shopping list for a recipe or meal plan, excluding items already in the user's pantry.
+- **Recipe Database (Spoonacular API):** Browse, search, and view recipes from Spoonacular’s API.
+- **Flexible Recipe Matching:** Intelligently suggest recipes even if the user is missing 1-2 ingredients to prevent "no results" dead ends.
+- **Manual Inventory Update:** Require user confirmation before deducting ingredients from the pantry after a meal is cooked to ensure accuracy and build trust.
+- **Expiration Alerts:** In-app notifications for food nearing expiration (2–3 days before).
+- **Recipe Recommendations for Expiring Items:** Suggest meals using ingredients close to expiration.
 
 ### Nice to Have (Phase 2 and Beyond)
 - **User Preferences & Dietary Profiles:** Save dietary restrictions and preferred cuisines.  
@@ -265,16 +267,19 @@ AI is intentionally **not part of the MVP** to keep the core development focused
 - **Phase 2:** Add optional email alerts via Supabase functions or third-party API (Resend/SendGrid).  
 - **Phase 3 (Optional):** Push notifications through web browser API.
 
-## 6-Week Timeline
+## 9-Week Timeline
 
 | **Week** | **Focus** |
 |-----------|------------|
-| **Week 1** | Project setup, authentication (NextAuth.js), Supabase connection |
-| **Week 2** | Food inventory CRUD operations, Prisma schema integration |
-| **Week 3** | Recipe API integration (Spoonacular), recipe display & search |
-| **Week 4** | Smart recipe matching, expiration alerts, basic notifications |
-| **Week 5** | Recipe suggestions, inventory auto-update, UI polish |
-| **Week 6** | Testing, debugging, performance optimization, deployment |
+| **Week 1** | Project setup, authentication (NextAuth.js), Supabase connection, Prisma schema. |
+| **Week 2** | Foundational inventory CRUD operations (add, view, edit, delete). |
+| **Week 3** | **Barcode Scanning Integration:** Implement and test barcode scanner for adding food items. |
+| **Week 4** | Recipe API integration (Spoonacular), basic recipe display & search. |
+| **Week 5** | **Flexible Recipe Matching:** Develop and test the algorithm to suggest recipes when ingredients are missing. |
+| **Week 6** | **Smart Grocery List Generation:** Implement logic to create shopping lists based on recipes and pantry contents. |
+| **Week 7** | Expiration alerts and manual inventory update confirmation flow. |
+| **Week 8** | End-to-end feature testing, UI polish, and improving user flows. |
+| **Week 9** | Final testing, debugging, performance optimization, and deployment. |
 
 ## Success Criteria
 
@@ -317,11 +322,11 @@ AI is intentionally **not part of the MVP** to keep the core development focused
 - **Monitoring:** Supabase logs + Vercel analytics.
 
 ## Final Notes
-This updated proposal **addresses all teacher feedback** by:
-- Locking in a concrete backend stack and schema.  
-- Defining a clear **6-week roadmap**.  
-- Specifying a **recipe source (Spoonacular)**.  
-- Moving AI to **Phase 2** for feasibility.  
-- Adding detail to notifications, testing, and privacy.  
+This proposal has been updated based on a comprehensive market and technical research phase. The initial 6-week timeline and feature set have been revised to address critical findings and de-risk the project launch.
 
-This approach ensures a **focused MVP** that’s achievable within the 6-week window while laying a strong foundation for AI-powered extensions and personalization in later phases.
+The key changes are:
+- **Addition of Barcode Scanning:** Market research revealed this is a table-stakes feature for user convenience, and its absence was identified as a primary cause of user abandonment in competing apps.
+- **Focus on Flexible Matching:** The high growth rate of AI-driven planners confirms that an intelligent matching algorithm is key to competitiveness.
+- **Timeline Extension to 9 Weeks:** This data-driven decision was made to accommodate these critical features, ensuring the MVP is not only functional but also competitive and user-friendly at launch.
+
+This revised approach ensures a **focused, market-aware MVP** that’s achievable within the 9-week window while laying a strong foundation for AI-powered extensions and personalization in later phases.
