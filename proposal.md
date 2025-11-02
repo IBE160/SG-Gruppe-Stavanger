@@ -241,7 +241,8 @@ model Notification {
 ### Backend
 - **Architecture:** Next.js API Routes for server logic.  
 - **Database:** Supabase (PostgreSQL).  
-- **ORM:** Prisma for schema management and migrations.  
+- **ORM:** Prisma for schema management and migrations.
+- **AI:** Pydatic AI for talking to the LLM.  
 - **Authentication:** NextAuth.js (email/password).  
 - **Hosting:** Vercel (frontend + API), Supabase cloud (database).  
 
