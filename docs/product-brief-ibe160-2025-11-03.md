@@ -2,13 +2,13 @@
 
 **Date:** 2025-11-03
 **Author:** BIP
-**Status:** Draft for PM Review
+**Status:** Final Draft for Architect Review
 
 ---
 
 ## Executive Summary
 
-A mobile-responsive web application that helps users reduce food waste and discover meal inspiration by intelligently managing their kitchen inventory.
+A mobile-responsive web application that helps users reduce food waste and discover meal inspiration by intelligently managing their kitchen inventory. This project will be developed as a 6-week student project.
 
 ---
 
@@ -46,13 +46,14 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### User Success Metrics
 
-- 80% of test users can add food and get recipe suggestions within first session.
-- Recipe search loads within 2 seconds.
+- **Target: 100 beta users.**
+- **80% of test users can add food and get recipe suggestions within the first session without a tutorial.**
+- **Recipe search loads within 2 seconds.**
 - App is intuitive without requiring a tutorial.
 
 ### Key Performance Indicators (KPIs)
 
-- Number of registered users.
+- Number of registered users (Target: 100 beta users).
 - Number of food items added to inventory.
 - Number of recipes cooked.
 - User retention rate.
@@ -63,15 +64,17 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Financial Impact
 
-[NEEDS CONFIRMATION]
+As a student project, the primary focus is on learning and delivering a functional MVP.
+- **Costs:** Minimal, under $100/month, covered by free tiers (Vercel, Supabase) and a small budget for the Spoonacular API and potential AI service hosting.
+- **Benefit:** High educational value in building a full-stack application with a real-world use case. The project serves as a portfolio piece demonstrating skills in Next.js, Prisma, and API integration.
 
 ### Company Objectives Alignment
 
-[NEEDS CONFIRMATION]
+N/A (Student Project)
 
 ### Strategic Initiatives
 
-[NEEDS CONFIRMATION]
+N/A (Student Project)
 
 ---
 
@@ -81,9 +84,8 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 - User Authentication: Secure registration and login using NextAuth.js (email/password).
 - Food Inventory Management: Users add food items with quantities and expiration dates.
-- Barcode Scanning: Use the device camera to scan barcodes and instantly add items, minimizing manual entry.
 - Inventory Overview: Users can view, edit, and delete items from their pantry or fridge.
-- Smart Grocery List Generation: Automatically creates a shopping list for a recipe or meal plan, excluding items already in the user's pantry.
+- **Basic Grocery List Generation:** Automatically creates a shopping list for a recipe, excluding items already in the user's pantry.
 - Recipe Database (Spoonacular API): Browse, search, and view recipes from Spoonacular’s API.
 - Flexible Recipe Matching: Intelligently suggest recipes even if the user is missing 1-2 ingredients to prevent "no results" dead ends.
 - Manual Inventory Update: Require user confirmation before deducting ingredients from the pantry after a meal is cooked to ensure accuracy and build trust.
@@ -92,12 +94,13 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Out of Scope for MVP
 
-- User Preferences & Dietary Profiles: Save dietary restrictions and preferred cuisines.
-- Recipe Tagging & Advanced Filters: Filter recipes by nutrition, difficulty, or dietary type.
-- Creative Mode – Ingredient Substitution: Simple AI-powered substitutions using GPT for common ingredient swaps.
-- AI-Enhanced Search: Use embeddings for smarter, semantic recipe matching (e.g., “healthy chicken” finds similar dishes).
-- Smart Shopping Suggestions: Recommend items based on cooking history and consumption patterns.
-- Nutritional Analysis: Display nutrition facts and healthier recipe alternatives.
+- **Barcode Scanning** (Moved to Phase 2)
+- User Preferences & Dietary Profiles
+- Recipe Tagging & Advanced Filters
+- Creative Mode – Ingredient Substitution
+- AI-Enhanced Search
+- Smart Shopping Suggestions
+- Nutritional Analysis
 
 ### MVP Success Criteria
 
@@ -113,6 +116,7 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Phase 2 Features
 
+- **Barcode Scanning**
 - User Preferences & Dietary Profiles
 - Recipe Tagging & Advanced Filters
 - Creative Mode – Ingredient Substitution
@@ -122,11 +126,13 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Long-term Vision
 
-[NEEDS CONFIRMATION]
+To evolve the platform into a comprehensive kitchen assistant that not only reduces food waste but also helps users make healthier and more sustainable food choices.
 
 ### Expansion Opportunities
 
-[NEEDS CONFIRMATION]
+- Integration with grocery delivery services.
+- Community features for sharing recipes and tips.
+- Gamification to encourage waste reduction.
 
 ---
 
@@ -147,7 +153,7 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Architecture Considerations
 
-[NEEDS CONFIRMATION]
+An offline-first caching architecture will be implemented to ensure the app is functional in low-connectivity scenarios.
 
 ---
 
@@ -155,8 +161,9 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### Constraints
 
-- 9-week timeline.
+- **6-week timeline.**
 - Spoonacular API free tier (150 requests/day).
+- Student project budget (<$100/month).
 
 ### Key Assumptions
 
@@ -167,22 +174,22 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ## Risks and Open Questions
 
-### Key Risks
+### Key Risks & Mitigations
 
-- First-Session Value Failure
-- Trust-Breaking UI Failure
-- Contextual Failure (Offline)
-- High-Friction Data Entry
-- Recipe API limitations
-- Ingredient name variations
+- **First-Session Value Failure:** Implement a Flexible Recipe Matching algorithm to prevent "no results" dead ends and ensure users see value immediately.
+- **Trust-Breaking UI Failure:** Add Confirmation Dialogs before deducting inventory to prevent accidental data loss and build user trust.
+- **Contextual Failure (Offline):** Implement an Offline-First Caching architecture so the app remains functional in low-connectivity scenarios (e.g., grocery stores).
+- **High-Friction Data Entry:** Add a simple quick-add feature to minimize manual data entry.
+- **Recipe API limitations:** Use Spoonacular API with aggressive caching and a local fallback dataset of 20-30 recipes to manage rate limits and potential outages.
+- **Ingredient name variations:** Use a fuzzy matching algorithm for common terms to improve matching accuracy.
 
 ### Open Questions
 
-[NEEDS CONFIRMATION]
-
-### Areas Needing Further Research
-
-[NEEDS CONFIRMATION]
+- **Is Spoonacular the right long-term API partner?** For a student project with a 6-week timeline, it is a good choice due to its free tier and comprehensive data. For a commercial product, a more robust and scalable solution would be needed.
+- **Should the project validate its core concept with a simpler web-only MVP?** The current proposal for a mobile-responsive web app is already a focused MVP. A simpler version would not adequately test the core value proposition.
+- **What is the authentic primary value proposition?** The primary value proposition is reducing food waste by providing meal inspiration for ingredients you already have.
+- **What is the project's competitive moat?** The flexible recipe matching algorithm that suggests recipes even when missing 1-2 ingredients is the key differentiator.
+- **Is the target audience too broad for an MVP?** The primary target audience of busy individuals and families is well-defined. The secondary audience of students and environmentally conscious consumers can be addressed with the same core features.
 
 ---
 
@@ -190,11 +197,11 @@ Students and young professionals on tight budgets who want to maximize grocery u
 
 ### A. Research Summary
 
-[NEEDS CONFIRMATION]
+Market research indicates a strong demand for apps that reduce food waste and a growing trend towards AI-powered meal planning. Competitive analysis reveals that while many apps offer recipe suggestions, few have a robust pantry management system, and none have a truly flexible recipe matching algorithm that suggests recipes even with missing ingredients. This presents a key differentiator. Technical research confirmed the feasibility of core features and recommended a 6-week timeline for a focused MVP, deferring more complex features like barcode scanning to a later phase to ensure a successful launch.
 
 ### B. Stakeholder Input
 
-[NEEDS CONFIRMATION]
+N/A (Student Project)
 
 ### C. References
 
