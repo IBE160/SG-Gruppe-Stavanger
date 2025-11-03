@@ -256,7 +256,11 @@ This stack ensures tight integration, rapid development, scalability, and AI-fri
   - **AI Recipe Suggestions:** Use GPT or OpenAI embeddings for creative recipe variations.  
   - **Semantic Search:** Implement OpenAI’s `text-embedding-3-small` model to improve recipe search relevance.  
 
-AI is intentionally **not part of the MVP** to keep the core development focused and achievable within the 6-week timeline.
+AI is intentionally **not part of the MVP** to keep the core development focused and achievable within the 9-week timeline.
+
+For a detailed breakdown of the Phase 2 AI strategy, see the full technical research document:
+
+@C:\IBE160\SG-Gruppe-Stavanger\docs\research-technical-2025-10-28.md
 
 ## Recipe Source
 - **Primary:** Spoonacular API (Free tier, 150 requests/day)  
@@ -303,13 +307,16 @@ AI is intentionally **not part of the MVP** to keep the core development focused
 
 ## Known Challenges & Solutions
 
+@C:\IBE160\SG-Gruppe-Stavanger\docs\brainstorming-session-results-2025-10-28.md#pre-mortem-analysis-validating-mvp-priorities
+
 | **Challenge** | **Impact** | **Solution** | **Priority** |
 |----------------|-------------|---------------|---------------|
-| Recipe API limitations | High | Use Spoonacular API with caching and fallback dataset | High |
-| Ingredient name variations | Medium | Use normalization + fuzzy matching for common terms | High |
-| Limited AI scope | Medium | Add simple GPT-based substitutions in Phase 2 | Medium |
-| Data privacy | Medium | Ensure secure auth (NextAuth + Supabase), enable user data deletion | High |
-| Performance optimization | Low | Use SSR and incremental static regeneration | Medium |
+| **First-Session Value Failure** | High | Implement a **Flexible Recipe Matching** algorithm to prevent "no results" dead ends and ensure users see value immediately. | **Critical** |
+| **Trust-Breaking UI Failure** | High | Add **Confirmation Dialogs** before deducting inventory to prevent accidental data loss and build user trust. | **Critical** |
+| **Contextual Failure (Offline)** | High | Implement an **Offline-First Caching** architecture so the app remains functional in low-connectivity scenarios (e.g., grocery stores). | **High** |
+| **High-Friction Data Entry** | Medium | Add **Barcode Scanning** and smart defaults to minimize manual data entry, a known cause of user abandonment. | **High** |
+| Recipe API limitations | Medium | Use Spoonacular API with aggressive caching and a local fallback dataset to manage rate limits and potential outages. | High |
+| Ingredient name variations | Medium | Use normalization and fuzzy matching for common terms to improve matching accuracy. | High |
 
 ## Accessibility & Data Privacy
 - **Accessibility:** WCAG 2.1 AA compliance goals; focus on keyboard navigation and ARIA labels.  
@@ -322,7 +329,12 @@ AI is intentionally **not part of the MVP** to keep the core development focused
 - **Monitoring:** Supabase logs + Vercel analytics.
 
 ## Final Notes
+
 This proposal has been updated based on a comprehensive market and technical research phase. The initial 6-week timeline and feature set have been revised to address critical findings and de-risk the project launch.
+
+@C:\IBE160\SG-Gruppe-Stavanger\docs\research-findings.md
+
+@C:\IBE160\SG-Gruppe-Stavanger\docs\brainstorming-session-results-2025-10-28.md#insights-and-learnings
 
 The key changes are:
 - **Addition of Barcode Scanning:** Market research revealed this is a table-stakes feature for user convenience, and its absence was identified as a primary cause of user abandonment in competing apps.
