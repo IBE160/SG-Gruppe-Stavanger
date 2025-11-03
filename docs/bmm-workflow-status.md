@@ -12,8 +12,8 @@ WORKFLOW_PATH: greenfield-level-3.yaml
 ## Current State
 
 CURRENT_PHASE: 1
-CURRENT_WORKFLOW: brainstorm-project - Complete
-CURRENT_AGENT: analyst
+CURRENT_WORKFLOW: product-brief - Complete
+CURRENT_AGENT: architect
 PHASE_1_COMPLETE: false
 PHASE_2_COMPLETE: false
 PHASE_3_COMPLETE: false
@@ -21,9 +21,9 @@ PHASE_4_COMPLETE: false
 
 ## Next Action
 
-NEXT_ACTION: Guide me through Research
-NEXT_COMMAND: research
-NEXT_AGENT: analyst
+NEXT_ACTION: Generate comprehensive documentation of an existing Project
+NEXT_COMMAND: document-project
+NEXT_AGENT: architect
 
 ## Story Backlog
 
