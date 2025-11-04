@@ -148,7 +148,8 @@ model Notification {
 - Clicks **“Recipes & Inspiration”**  
 - Clicks on a recipe  
 - Receives message:  
-  “You only need 2 more ingredients for this dish.”  
+  “You only need 2 more ingredients for this dish.”
+- Adds the 2 ingredients to **My Shopping List**
 - Logs out  
 
 ---
@@ -230,7 +231,9 @@ model Notification {
 ---
 
 ## 11. User Wants to Delete Account and Data
-- Logs in and goes to **“Account Settings.”**  
+- Opens the website and lands on the **Landing Page** 
+- Logs in
+- clicks on **“Account Settings.”**  
 - Selects **“Delete My Account.”**  
 - A warning message explains data will be permanently deleted (pantry, recipes, preferences, and statistics).  
 - User confirms deletion with password re-entry.  
@@ -240,7 +243,9 @@ model Notification {
 ---
 
 ## 12. User Wants to View Monthly Dashboard Summary
-- Logs in and lands on the **Dashboard Page.**  
+- Opens the website and lands on the **Landing Page**  
+- Logs in
+- clicks on the **Dashboard Page.**  
 - Sees a **Monthly Overview Card** with:  
   - Total food items used.  
   - Estimated **money saved** (based on average item cost).  
@@ -253,6 +258,7 @@ model Notification {
 ---
 
 ## 13. Yearly Summary
+- Opens the website and lands on the **Landing Page**  
 - First time log in afte first of January in the current year
 - Gets a **Notification Display** saying **Your Yearly Summary is Ready** with:
   - Total food items used.  
@@ -262,6 +268,17 @@ model Notification {
   - **Top 3 most-used ingredients** and **Favorite Recipies** this year.
 - The user can **download** a PDF summary or **share highlights** on social media.
 - Logs out.
+
+---
+
+## 14. User wants to view shopping list
+- Opens the website and lands on the **Landing Page**  
+- Logs in
+- navigates to **My Pantry**
+- clicks on **My Shopping List**
+- Add items or delete items or delete My Shopping List
+- Logs out
+
 
 ---
 
