@@ -30,6 +30,8 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
 - **AI-Enhanced Search:** Use embeddings for smarter, semantic recipe matching (e.g., “healthy chicken” finds similar dishes).  
 - **Smart Shopping Suggestions:** Recommend items based on cooking history and consumption patterns.  
 - **Nutritional Analysis:** Display nutrition facts and healthier recipe alternatives.  
+- **Picture of receipt or Food Items:** Add food items to inventory by taking a picture of either the food itself or the receipt.
+
 
 ## Data Requirements
 
