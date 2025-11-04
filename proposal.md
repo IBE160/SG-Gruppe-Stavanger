@@ -227,6 +227,42 @@ model Notification {
  
 ---
 
+## 11. User Wants to Delete Account and Data
+- Logs in and goes to **“Account Settings.”**  
+- Selects **“Delete My Account.”**  
+- A warning message explains data will be permanently deleted (pantry, recipes, preferences, and statistics).  
+- User confirms deletion with password re-entry.  
+- App deletes all data via Supabase API and confirms: “Your account and data have been deleted.”  
+- User receives optional exit survey or feedback link.  
+
+---
+
+## 12. User Wants to View Monthly Dashboard Summary
+- Logs in and lands on the **Dashboard Page.**  
+- Sees a **Monthly Overview Card** with:  
+  - Total food items used.  
+  - Estimated **money saved** (based on average item cost).  
+  - **CO₂ saved** (using ingredient category multipliers).  
+  - **Meals cooked** this month.    
+- Can click “See Details” for insights by category (e.g., dairy, produce, meat).  
+- Can share achievements or download a summary (PDF).  
+- Logs out.
+
+---
+
+## 13. Yearly Summary
+- First time log in afte first of January in the current year
+- Gets a **Notification Display** saying **Your Yearly Summary is Ready** with:
+  - Total food items used.  
+  - Estimated **money saved** (based on average item cost).  
+  - **CO₂ saved** (using ingredient category multipliers).  
+  - **Meals cooked** this year month.
+  - **Top 3 most-used ingredients** and **Favorite Recipies** this year.
+- The user can **download** a PDF summary or **share highlights** on social media.
+- Logs out.
+
+---
+
 **Future expansion (Phase 2–3):**
 - **Smart substitution suggestions:** e.g., “You’re missing basil — try parsley instead.”  
 - **Regenerate with constraints:** e.g., “Make it cheaper / faster / healthier.”
@@ -242,7 +278,7 @@ model Notification {
 - **Architecture:** Next.js API Routes for server logic.  
 - **Database:** Supabase (PostgreSQL).  
 - **ORM:** Prisma for schema management and migrations.
-- **AI:** Pydatic AI for talking to the LLM.  
+- **AI Integration:** **Pydantic AI** (for structured LLM outputs) and GPT API for creative mode and substitution suggestions.   
 - **Authentication:** NextAuth.js (email/password).  
 - **Hosting:** Vercel (frontend + API), Supabase cloud (database).  
 
