@@ -21,8 +21,9 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
 - **Smart Recipe Suggestions:** Suggest recipes based on the user’s current inventory.  
 - **Automatic Inventory Update:** When a recipe is used, ingredients are automatically deducted.  
 - **Expiration Alerts:** In-app notifications for food nearing expiration (2–3 days before).  
-- **Recipe Recommendations for Expiring Items:** Suggest meals using ingredients close to expiration.  
-
+    - **Recipe Recommendations for Expiring Items:** Suggest meals using ingredients close to expiration.
+    - **Basic Creative Mode:** Users can manually enter 2-3 ingredients and get recipe suggestions from Spoonacular API based on those inputs (no AI).
+    - **Shopping List Management:** Users can add, view, and delete items from a shopping list. Items can be added manually or from missing recipe ingredients.
 ### Nice to Have (Phase 2 and Beyond)
 - **User Preferences & Dietary Profiles:** Save dietary restrictions and preferred cuisines.  
 - **Recipe Tagging & Advanced Filters:** Filter recipes by nutrition, difficulty, or dietary type.  
@@ -30,8 +31,8 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
 - **AI-Enhanced Search:** Use embeddings for smarter, semantic recipe matching (e.g., “healthy chicken” finds similar dishes).  
 - **Smart Shopping Suggestions:** Recommend items based on cooking history and consumption patterns.  
 - **Nutritional Analysis:** Display nutrition facts and healthier recipe alternatives.  
-- **Picture of receipt or Food Items:** Add food items to inventory by taking a picture of either the food itself or the receipt. se research report in @docs\reseach-missing-user-flows.md
-
+    - **Picture of receipt or Food Items:** Add food items to inventory by taking a picture of either the food itself or the receipt. se research report in @docs\reseach-missing-user-flows.md
+    - **Dashboard Summaries with Savings Metrics:** Monthly/Yearly overviews including estimated money saved (based on user-inputted prices for items used before expiration) and CO₂ saved (based on food category multipliers).
 
 ## Data Requirements
 
@@ -46,6 +47,7 @@ model User {
   createdAt     DateTime @default(now())
   foodItems     FoodItem[]
   preferences   UserPreference?
+  shoppingList  ShoppingList?
 }
 
 model FoodItem {
@@ -80,10 +82,31 @@ model Notification {
   createdAt       DateTime @default(now())
   foodItemId      String?
 }
+
+model ShoppingList {
+  id        String         @id @default(cuid())
+  userId    String         @unique
+  user      User           @relation(fields: [userId], references: [id])
+  items     ShoppingListItem[]
+  createdAt DateTime       @default(now())
+}
+
+model ShoppingListItem {
+  id            String     @id @default(cuid())
+  shoppingListId String
+  shoppingList  ShoppingList @relation(fields: [shoppingListId], references: [id])
+  name          String
+  quantity      Float?
+  unit          String?
+  isCompleted   Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+}
 \`\`\`
 
 ### Relationships
 - A **User** has many **FoodItems**.  
+- A **User** has one **ShoppingList**.
+- A **ShoppingList** has many **ShoppingListItems**.
 - A **Recipe** uses many **FoodItems**.  
 - A **User** can receive many **Notifications**.  
 - **User Preferences** influence recipe recommendations.
@@ -248,9 +271,8 @@ model Notification {
 - clicks on the **Dashboard Page.**  
 - Sees a **Monthly Overview Card** with:  
   - Total food items used.  
-  - Estimated **money saved** (based on average item cost).  
-  - **CO₂ saved** (using ingredient category multipliers).  
-  - **Meals cooked** this month.    
+  - Meals cooked this month.
+  *(Note: Estimated money saved and CO₂ saved metrics are planned for Phase 2, requiring additional data and methodology.)*
 - Can click “See Details” for insights by category (e.g., dairy, produce, meat).  
 - Can share achievements or download a summary (PDF).  
 - Logs out.
@@ -262,10 +284,9 @@ model Notification {
 - First time log in afte first of January in the current year
 - Gets a **Notification Display** saying **Your Yearly Summary is Ready** with:
   - Total food items used.  
-  - Estimated **money saved** (based on average item cost).  
-  - **CO₂ saved** (using ingredient category multipliers).  
-  - **Meals cooked** this year month.
+  - Meals cooked this year month.
   - **Top 3 most-used ingredients** and **Favorite Recipies** this year.
+  *(Note: Estimated money saved and CO₂ saved metrics are planned for Phase 2, requiring additional data and methodology.)*
 - The user can **download** a PDF summary or **share highlights** on social media.
 - Logs out.
 
