@@ -34,6 +34,9 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
     - **Picture of receipt or Food Items:** Add food items to inventory by taking a picture of either the food itself or the receipt. se research report in @docs\reseach-missing-user-flows.md
     - **Dashboard Summaries with Savings Metrics:** Monthly/Yearly overviews including estimated money saved (based on user-inputted prices for items used before expiration) and CO₂ saved (based on food category multipliers).
 
+    - **Eco-Facts & Food Stories:** A personalized content feed with educational, bite-sized information about the environmental impact of food waste.
+    - **Upcycle Your Scraps:** Provides creative and practical tips for what to do with food that is no longer edible or with food scraps (e.g., composting, growing new plants).
+
 ## Data Requirements
 
 ### Core Entities
@@ -300,6 +303,28 @@ model ShoppingListItem {
 - Add items or delete items or delete My Shopping List
 - Logs out
 
+---
+
+
+## 15. User Interacts with Eco-Facts & Food Stories
+- Opens the website and lands on the **Landing Page**
+- Scrolls to the **"Eco-Facts & Food Stories"** section
+- Sees a personalized card: "You've wasted bread twice this month. Did you know it takes 160 gallons of water to make a loaf of bread?"
+- Clicks on the card to learn more about the water footprint of different foods
+- Shares an interesting infographic to social media directly from the app
+- Logs out
+
+---
+
+## 16. User Upcycles a Wasted Food Item
+- Opens the app and navigates to **"My Pantry"**
+- Marks an overripe tomato as "wasted"
+- Instead of just confirming, the app shows a prompt: "Don't just toss it, upcycle it!"
+- Clicks the "Upcycle It!" button
+- A card appears with a tip: "Plant the seeds from your overripe tomato in a pot of soil and grow your own tomato plant. Here's how..."
+- The user also sees an option to learn more about composting
+- Feels empowered and educated, turning a negative moment into a positive one
+
 
 ---
 
@@ -330,6 +355,7 @@ This stack ensures tight integration, rapid development, scalability, and AI-fri
   - **Ingredient Substitution:** GPT-powered simple substitution recommendations (e.g., lime ↔ lemon).  
   - **AI Recipe Suggestions:** Use GPT or OpenAI embeddings for creative recipe variations.  
   - **Semantic Search:** Implement OpenAI’s `text-embedding-3-small` model to improve recipe search relevance.  
+  - **Personalized Educational Content:** Use basic data analysis or simple AI to personalize the "Eco-Facts & Food Stories" content based on user's waste habits.
 
 AI is intentionally **not part of the MVP** to keep the core development focused and achievable within the 6-week timeline.
 
@@ -366,6 +392,7 @@ AI is intentionally **not part of the MVP** to keep the core development focused
 - 80% of test users can add food and get recipe suggestions within first session.  
 - Recipe search loads within 2 seconds.  
 - App is intuitive without requiring a tutorial.
+- At least 25% of users engage with a Phase 2 feature (e.g., Upcycling) within the first month of its release.
 
 ### Technical
 - ≥99% uptime on Vercel + Supabase.  
