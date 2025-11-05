@@ -34,8 +34,8 @@ Develop a **mobile-responsive web application** that helps users **reduce food w
     - **Picture of receipt or Food Items:** Add food items to inventory by taking a picture of either the food itself or the receipt. se research report in @docs\reseach-missing-user-flows.md
     - **Dashboard Summaries with Savings Metrics:** Monthly/Yearly overviews including estimated money saved (based on user-inputted prices for items used before expiration) and CO₂ saved (based on food category multipliers).
 
-    - **Eco-Facts & Food Stories:** A personalized content feed with educational, bite-sized information about the environmental impact of food waste.
-    - **Upcycle Your Scraps:** Provides creative and practical tips for what to do with food that is no longer edible or with food scraps (e.g., composting, growing new plants).
+    - **Eco-Facts & Food Stories:** A personalized content feed with educational, bite-sized information about the environmental impact of food waste. See research @docs\research-environmental-focus-onsdag 5. november 2025.md
+    - **Upcycle Your Scraps:** Provides creative and practical tips for what to do with food that is no longer edible or with food scraps (e.g., composting, growing new plants). See research @docs\research-environmental-focus-onsdag 5. november 2025.md
 
 ## Data Requirements
 
