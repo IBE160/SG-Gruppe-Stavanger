@@ -33,7 +33,7 @@ workflow_status:
   document-project: required
 
   # Phase 1: Analysis
-  brainstorm-project: optional
+  brainstorm-project: docs/brainstorming-session-results-2025-11-06.md
   research: recommended
   product-brief: recommended
 
