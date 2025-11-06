@@ -38,7 +38,7 @@ workflow_status:
   product-brief: recommended
 
   # Phase 2: Planning
-  prd: required
+  prd: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
   validate-prd: optional
   create-design: conditional
 
