@@ -1,36 +1,292 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ibe160 - Smart Food & Recipe Platform
 
-## Getting Started
+A Next.js-based web application for tracking pantry inventory, managing food expiration dates, and discovering recipes to reduce food waste.
 
-First, run the development server:
+## 🎯 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ibe160 helps users:
+- **Track food inventory** with expiration dates
+- **Get expiration alerts** for items about to expire
+- **Discover recipes** based on available ingredients
+- **Reduce food waste** through smart planning
+
+## ✨ Features Implemented (MVP)
+
+### Epic 1: Project Foundation ✓
+- Next.js 16.0.1 with App Router
+- TypeScript configuration
+- Tailwind CSS 4 styling
+- Prisma ORM setup with PostgreSQL schema
+- Auth.js v5 configuration
+
+### Epic 2: User Authentication ✓
+- Email/password registration with validation
+- Secure login with Auth.js v5
+- User profile management
+- 30-day session duration
+- Protected routes with middleware
+
+### Epic 3: Food Inventory Management ✓
+- **View pantry items** with responsive grid layout
+- **Add items** with full validation (name, category, quantity, unit, expiration)
+- **Edit items** with pre-filled forms
+- **Delete items** with confirmation dialog
+- **Expiration indicators** - visual warnings for items expiring within 3 days
+- **Category emojis** (🥛 Dairy, 🥗 Produce, 🍗 Meat, 🌾 Grains, 📦 Other)
+- **Loading states** and error handling
+- **Toast notifications** for success/error feedback
+
+### Epic 9: Landing Page & Recipe Browser ✓
+- Professional landing page with hero section
+- Recipe browser with search and filtering
+- Sample recipes with categories and cooking times
+- Navigation between all pages
+
+## 🛠 Technology Stack
+
+### Frontend
+- **Framework:** Next.js 16.0.1 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **Forms:** React Hook Form + Zod validation
+- **State:** React hooks (useState, useEffect)
+
+### Backend
+- **API:** Next.js API Routes (RESTful)
+- **Authentication:** Auth.js v5 (NextAuth beta)
+- **Database:** Prisma 6.19.0 + PostgreSQL
+- **Validation:** Zod schemas
+
+### Development
+- **Build Tool:** Turbopack (Next.js 16)
+- **Package Manager:** npm
+- **Version Control:** Git
+
+## 📁 Project Structure
+
+```
+ibe160-app/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/           # Protected routes
+│   │   │   ├── pantry/       # Pantry management
+│   │   │   ├── profile/      # User profile
+│   │   │   └── recipes/      # Recipe browser
+│   │   ├── (unauth)/         # Public routes
+│   │   │   ├── login/        # Login page
+│   │   │   └── register/     # Registration page
+│   │   ├── api/
+│   │   │   ├── auth/         # Auth endpoints
+│   │   │   └── pantry/       # CRUD endpoints
+│   │   ├── globals.css       # Global styles + animations
+│   │   └── page.tsx          # Landing page
+│   ├── components/
+│   │   ├── PantryItemCard.tsx
+│   │   ├── AddItemDialog.tsx
+│   │   ├── EditItemDialog.tsx
+│   │   ├── ConfirmDialog.tsx
+│   │   └── Toast.tsx
+│   └── lib/
+│       ├── auth.ts           # Auth.js configuration
+│       └── validation/       # Zod schemas
+│           ├── auth.ts
+│           └── pantry.ts
+├── prisma/
+│   └── schema.prisma         # Database schema
+├── docs/                     # BMAD documentation
+│   ├── architecture.md       # Technical architecture
+│   ├── bmm-epics.md         # Epics and stories
+│   └── sprint-status.yaml   # Development tracking
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+ and npm
+- PostgreSQL database (Supabase recommended)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd ibe160-app
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Configure environment variables**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   Create `.env.local`:
+   ```env
+   # Database
+   DATABASE_URL="postgresql://user:password@host:5432/database"
+   DIRECT_URL="postgresql://user:password@host:5432/database"
 
-## Deploy on Vercel
+   # Auth.js
+   AUTH_SECRET="<generate-with-openssl-rand-base64-32>"
+   AUTH_URL="http://localhost:3000"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   # Future: Spoonacular API (for recipes)
+   SPOONACULAR_API_KEY="your_api_key"
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Setup database**
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+
+   # Run migrations
+   npx prisma migrate dev --name init
+
+   # (Optional) Seed database
+   npx prisma db seed
+   ```
+
+5. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📊 Database Schema
+
+```prisma
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  passwordHash  String
+  name          String?
+  foodItems     FoodItem[]
+  notifications Notification[]
+  preferences   UserPreference?
+}
+
+model FoodItem {
+  id              String   @id @default(cuid())
+  name            String
+  category        String   // dairy, produce, meat, grains, other
+  bestBeforeDate  DateTime
+  quantity        Float
+  unit            String   // g, kg, ml, L, pieces, oz, lbs
+  userId          String
+}
+
+model Recipe {
+  id             String   @id @default(cuid())
+  spoonacularId  Int?     @unique
+  title          String
+  ingredients    String   // JSON
+  instructions   String
+  cookingTime    Int
+  servings       Int
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test:watch
+
+# Coverage report
+npm run test:coverage
+```
+
+## 🏗️ Build & Deploy
+
+### Production Build
+```bash
+npm run build
+npm start
+```
+
+### Deploy to Vercel
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Production deployment
+vercel --prod
+```
+
+### Environment Variables (Production)
+Set these in Vercel dashboard:
+- `DATABASE_URL`
+- `DIRECT_URL`
+- `AUTH_SECRET`
+- `AUTH_URL` (your production URL)
+
+## 🔐 Security
+
+- **Password hashing** with bcrypt
+- **JWT sessions** with 30-day expiration
+- **Protected API routes** with session validation
+- **Input validation** with Zod schemas
+- **SQL injection prevention** via Prisma ORM
+- **XSS protection** via React's automatic escaping
+
+## 📝 Development Workflow
+
+This project follows the **BMAD Method** (Business-Mad Development):
+
+1. **Phase 1:** Requirements Analysis → `docs/PRD.md`
+2. **Phase 2:** Architecture Design → `docs/architecture.md`
+3. **Phase 3:** Epic Planning → `docs/bmm-epics.md`
+4. **Phase 4:** Implementation → Tracked in `docs/sprint-status.yaml`
+
+### Completed Epics
+- ✅ Epic 1: Project Initialization
+- ✅ Epic 2: User Authentication
+- ✅ Epic 3: Food Inventory Management
+- ✅ Epic 9: Landing Page & Recipe Browser
+
+### Upcoming Features
+- Epic 4: Offline-First Infrastructure (React Query)
+- Epic 5: Recipe Search (Spoonacular API)
+- Epic 6: Flexible Recipe Matching
+- Epic 7: Smart Grocery List
+- Epic 8: Expiration Alerts & Notifications
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Built following the BMAD Method
+- Inspired by the global food waste challenge (1 billion meals wasted daily)
+- Uses Spoonacular API for recipe data (production)
+
+## 📞 Support
+
+For issues and questions:
+- Create an issue in the repository
+- Check existing documentation in `/docs`
+- Review sprint status in `docs/sprint-status.yaml`
+
+---
+
+**Status:** MVP Complete ✓
+**Version:** 1.0.0
+**Last Updated:** November 2025

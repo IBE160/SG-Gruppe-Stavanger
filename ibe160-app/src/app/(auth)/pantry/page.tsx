@@ -9,6 +9,7 @@ import { PantryItemCard } from "@/components/PantryItemCard"
 import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { Toast } from "@/components/Toast"
 
 interface FoodItem {
   id: string
@@ -30,6 +31,7 @@ export default function PantryPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [deletingItem, setDeletingItem] = useState<FoodItem | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -67,6 +69,7 @@ export default function PantryPage() {
   const handleItemAdded = () => {
     // Refresh the list after adding an item
     handleRetry()
+    setToast({ message: "Item added successfully!", type: "success" })
   }
 
   const handleEditClick = (item: FoodItem) => {
@@ -77,6 +80,7 @@ export default function PantryPage() {
   const handleItemUpdated = () => {
     // Refresh the list after updating an item
     handleRetry()
+    setToast({ message: "Item updated successfully!", type: "success" })
   }
 
   const handleDeleteClick = (item: FoodItem) => {
@@ -102,9 +106,10 @@ export default function PantryPage() {
       setIsDeleteDialogOpen(false)
       setDeletingItem(null)
       handleRetry()
+      setToast({ message: "Item deleted successfully!", type: "success" })
     } catch (err) {
       console.error("Error deleting item:", err)
-      // Keep dialog open to show error
+      setToast({ message: "Failed to delete item. Please try again.", type: "error" })
     } finally {
       setIsDeleting(false)
     }
@@ -263,6 +268,16 @@ export default function PantryPage() {
           onCancel={handleDeleteCancel}
           isLoading={isDeleting}
         />
+
+        {/* Toast Notification */}
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            isVisible={!!toast}
+            onClose={() => setToast(null)}
+          />
+        )}
       </div>
     </div>
   )
