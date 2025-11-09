@@ -101,9 +101,9 @@ development_status:
   epic-8-retrospective: optional
 
   # Epic 9: Landing Page and Public Routes
-  epic-9: backlog
-  9-1-build-landing-page: backlog
-  9-2-build-public-recipe-browser: backlog
+  epic-9: done
+  9-1-build-landing-page: done  # Enhanced landing page with updated footer
+  9-2-build-public-recipe-browser: done  # Recipe browser with stub data and search/filter
   epic-9-retrospective: optional
 
   # Epic 10: Testing and Quality Assurance

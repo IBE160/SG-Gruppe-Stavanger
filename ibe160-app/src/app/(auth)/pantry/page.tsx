@@ -120,12 +120,20 @@ export default function PantryPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">My Pantry</h1>
-          <Link
-            href="/profile"
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-          >
-            Profile
-          </Link>
+          <div className="flex gap-4">
+            <Link
+              href="/recipes"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+            >
+              Recipes
+            </Link>
+            <Link
+              href="/profile"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+            >
+              Profile
+            </Link>
+          </div>
         </div>
 
         {/* Loading State */}

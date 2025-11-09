@@ -82,8 +82,8 @@ export default function Home() {
 
         {/* Footer */}
         <div className="text-center py-8 text-gray-600">
-          <p>🚧 Currently in development - Epic 2 (Authentication) Complete!</p>
-          <p className="text-sm mt-2">Next: Epic 3 - Food Inventory Management</p>
+          <p className="font-semibold text-green-600">✓ MVP Complete: Auth & Pantry Management Live!</p>
+          <p className="text-sm mt-2">Built with Next.js 16, TypeScript, Tailwind CSS & Prisma</p>
         </div>
       </div>
     </div>
