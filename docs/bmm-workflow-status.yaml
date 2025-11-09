@@ -43,11 +43,11 @@ workflow_status:
   create-design: conditional
 
   # Phase 3: Solutioning
-  architecture-review: required
-  integration-planning: required
-  create-architecture: required
-  validate-architecture: optional
-  solutioning-gate-check: required
+  architecture-review: skipped
+  integration-planning: skipped
+  create-architecture: /home/user/test/docs/architecture.md
+  validate-architecture: skipped
+  solutioning-gate-check: /home/user/test/docs/solutioning-gate-check-report.md
 
   # Phase 4: Implementation
-  sprint-planning: required
+  sprint-planning: /home/user/test/docs/sprint-status.yaml

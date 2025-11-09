@@ -1,0 +1,131 @@
+# Sprint Status - ibe160 Smart Food & Recipe Platform
+# This tracks progress through Phase 4 implementation
+# Generated from: docs/bmm-epics.md
+
+# generated: 2025-11-09
+# project: ibe160
+# project_key: ibe160-app
+# tracking_system: file-system
+# story_location: {project-root}/docs/stories
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then to 'done' after review passes
+
+generated: 2025-11-09
+project: ibe160
+project_key: ibe160-app
+tracking_system: file-system
+story_location: "{project-root}/docs/stories"
+
+development_status:
+  # Epic 1: Project Initialization and Foundation
+  epic-1: backlog
+  1-1-initialize-nextjs-project: backlog
+  1-2-install-core-dependencies: backlog
+  1-3-configure-database-and-prisma-schema: backlog
+  1-4-setup-authjs-v5-configuration: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: User Authentication and Profile
+  epic-2: backlog
+  2-1-build-registration-page: backlog
+  2-2-build-login-page: backlog
+  2-3-implement-user-profile-page: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Food Inventory Management
+  epic-3: backlog
+  3-1-build-pantry-list-view: backlog
+  3-2-implement-add-food-item-form: backlog
+  3-3-implement-edit-food-item: backlog
+  3-4-implement-delete-food-item: backlog
+  3-5-implement-pantry-filters-and-search: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Offline-First Infrastructure
+  epic-4: backlog
+  4-1-setup-react-query-offline-configuration: backlog
+  4-2-implement-offline-detection-and-ui-indicators: backlog
+  4-3-implement-offline-mutation-queue: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Recipe Search and Discovery
+  epic-5: backlog
+  5-1-setup-spoonacular-api-client: backlog
+  5-2-build-recipe-search-page: backlog
+  5-3-build-recipe-detail-page: backlog
+  5-4-implement-recipe-caching: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Flexible Recipe Matching
+  epic-6: backlog
+  6-1-implement-ingredient-normalization: backlog
+  6-2-build-recipe-matching-api-endpoint: backlog
+  6-3-build-what-can-i-cook-page: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Smart Grocery List Generation
+  epic-7: backlog
+  7-1-build-grocery-list-api-endpoint: backlog
+  7-2-build-grocery-list-ui-component: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Expiration Alerts and Notifications
+  epic-8: backlog
+  8-1-setup-vercel-cron-job-for-expiration-checking: backlog
+  8-2-implement-notification-data-model-and-api: backlog
+  8-3-build-notification-bell-ui-component: backlog
+  8-4-add-recipe-suggestions-for-expiring-items: backlog
+  epic-8-retrospective: optional
+
+  # Epic 9: Landing Page and Public Routes
+  epic-9: backlog
+  9-1-build-landing-page: backlog
+  9-2-build-public-recipe-browser: backlog
+  epic-9-retrospective: optional
+
+  # Epic 10: Testing and Quality Assurance
+  epic-10: backlog
+  10-1-setup-testing-infrastructure: backlog
+  10-2-write-unit-tests-for-critical-functions: backlog
+  10-3-write-integration-tests-for-api-routes: backlog
+  10-4-write-e2e-tests-for-critical-user-flows: backlog
+  epic-10-retrospective: optional
+
+  # Epic 11: Deployment and Monitoring
+  epic-11: backlog
+  11-1-deploy-to-vercel-production: backlog
+  11-2-configure-production-environment-variables: backlog
+  11-3-run-production-database-migrations: backlog
+  11-4-setup-vercel-analytics-and-monitoring: backlog
+  epic-11-retrospective: optional
+
+  # Epic 12: Polish and User Experience
+  epic-12: backlog
+  12-1-responsive-design-audit-and-fixes: backlog
+  12-2-accessibility-improvements: backlog
+  12-3-loading-states-and-animations: backlog
+  12-4-error-messages-and-empty-states: backlog
+  epic-12-retrospective: optional
