@@ -1,0 +1,90 @@
+// Prisma schema for ibe160 Smart Food & Recipe Platform
+// Based on architecture.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  passwordHash  String
+  name          String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  foodItems     FoodItem[]
+  notifications Notification[]
+  preferences   UserPreference?
+
+  @@map("users")
+}
+
+model FoodItem {
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  bestBeforeDate  DateTime
+  quantity        Float
+  unit            String
+  userId          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([bestBeforeDate])
+  @@map("food_items")
+}
+
+model Recipe {
+  id             String   @id @default(cuid())
+  spoonacularId  Int?     @unique
+  title          String
+  image          String?
+  ingredients    String   // JSON string
+  instructions   String
+  cookingTime    Int
+  servings       Int
+  tags           String?
+  sourceUrl      String?
+  createdAt      DateTime @default(now())
+
+  @@index([spoonacularId])
+  @@map("recipes")
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  message    String
+  type       String   // 'expiration', 'recipe_suggestion'
+  isRead     Boolean  @default(false)
+  foodItemId String?
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}
+
+model UserPreference {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  dietaryRestr String?  // JSON array
+  cuisines     String?  // JSON array
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
