@@ -56,12 +56,12 @@ development_status:
   epic-2-retrospective: optional
 
   # Epic 3: Food Inventory Management
-  epic-3: backlog
-  3-1-build-pantry-list-view: backlog
-  3-2-implement-add-food-item-form: backlog
-  3-3-implement-edit-food-item: backlog
-  3-4-implement-delete-food-item: backlog
-  3-5-implement-pantry-filters-and-search: backlog
+  epic-3: done
+  3-1-build-pantry-list-view: done
+  3-2-implement-add-food-item-form: done
+  3-3-implement-edit-food-item: done
+  3-4-implement-delete-food-item: done
+  3-5-implement-pantry-filters-and-search: deferred  # Deferred - not critical for MVP with stub data
   epic-3-retrospective: optional
 
   # Epic 4: Offline-First Infrastructure
