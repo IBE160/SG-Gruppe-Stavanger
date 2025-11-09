@@ -49,10 +49,10 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: User Authentication and Profile
-  epic-2: backlog
-  2-1-build-registration-page: backlog
-  2-2-build-login-page: backlog
-  2-3-implement-user-profile-page: backlog
+  epic-2: done
+  2-1-build-registration-page: done
+  2-2-build-login-page: done
+  2-3-implement-user-profile-page: done
   epic-2-retrospective: optional
 
   # Epic 3: Food Inventory Management
