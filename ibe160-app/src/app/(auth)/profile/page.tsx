@@ -37,6 +37,12 @@ export default async function ProfilePage() {
                 Recipes
               </Link>
               <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Grocery
+              </Link>
+              <Link
                 href="/profile"
                 className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
               >
