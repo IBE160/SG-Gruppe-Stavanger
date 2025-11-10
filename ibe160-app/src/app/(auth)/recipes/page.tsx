@@ -7,6 +7,7 @@ import { useRecipeSearch } from "@/hooks/useRecipes"
 import { usePantryItems } from "@/hooks/usePantry"
 import { searchByIngredients } from "@/lib/spoonacular"
 import { useQuery, useMutation } from "@tanstack/react-query"
+import { Search, ChefHat, Sparkles, Clock, Users, Lightbulb, ShoppingBag, UtensilsCrossed } from "lucide-react"
 
 export default function RecipesPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -107,10 +108,13 @@ export default function RecipesPage() {
 
         {/* Info Banner */}
         <div className="airbnb-card p-6 mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-          <p className="text-sm text-gray-800">
-            🍳 <strong>Powered by Spoonacular & Google Gemini AI:</strong> Search recipes by name,
-            use your pantry ingredients, or ask AI for personalized suggestions!
-          </p>
+          <div className="flex items-start gap-3">
+            <ChefHat className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-gray-800">
+              <strong>Powered by Spoonacular & Google Gemini AI:</strong> Search recipes by name,
+              use your pantry ingredients, or ask AI for personalized suggestions!
+            </p>
+          </div>
         </div>
 
         {/* Search Mode Toggle */}
@@ -118,33 +122,36 @@ export default function RecipesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <button
               onClick={() => setSearchMode("text")}
-              className={`px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                 searchMode === "text"
                   ? "airbnb-button-primary"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
-              🔍 Search by Name
+              <Search className="w-5 h-5" />
+              Search by Name
             </button>
             <button
               onClick={() => setSearchMode("ingredients")}
-              className={`px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                 searchMode === "ingredients"
                   ? "airbnb-button-primary"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
-              🥘 Use My Pantry ({pantryItems.length})
+              <ShoppingBag className="w-5 h-5" />
+              Use My Pantry ({pantryItems.length})
             </button>
             <button
               onClick={() => setSearchMode("ai")}
-              className={`px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                 searchMode === "ai"
                   ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
-              🤖 AI Search
+              <Sparkles className="w-5 h-5" />
+              AI Search
             </button>
           </div>
 
@@ -190,22 +197,26 @@ export default function RecipesPage() {
                   value={aiQuery}
                   onChange={(e) => setAiQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleAISearch()}
-                  className="airbnb-input pr-24"
+                  className="airbnb-input pr-28"
                 />
                 <button
                   onClick={handleAISearch}
                   disabled={aiQuery.trim().length === 0}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  🤖 Search
+                  <Sparkles className="w-4 h-4" />
+                  Search
                 </button>
               </div>
               <div className="bg-purple-50 border border-purple-200 rounded-lg px-4 py-3">
-                <p className="text-sm text-purple-800">
-                  <strong>💡 AI Tips:</strong> Ask for recipes based on dietary preferences, cuisine
-                  styles, cooking time, or specific ingredients. The AI respects your user
-                  preferences automatically!
-                </p>
+                <div className="flex items-start gap-2">
+                  <Lightbulb className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-purple-800">
+                    <strong>AI Tips:</strong> Ask for recipes based on dietary preferences, cuisine
+                    styles, cooking time, or specific ingredients. The AI respects your user
+                    preferences automatically!
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -237,11 +248,19 @@ export default function RecipesPage() {
         {/* Empty State */}
         {!isLoading && !error && recipes.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="flex justify-center mb-4">
+              {searchMode === "ai" ? (
+                <Sparkles className="w-16 h-16 text-gray-300" />
+              ) : (
+                <Search className="w-16 h-16 text-gray-300" />
+              )}
+            </div>
             <p className="text-gray-600 text-lg">
               {searchMode === "text"
                 ? "Enter a search term to find recipes"
-                : "Add items to your pantry to get recipe suggestions"}
+                : searchMode === "ai"
+                  ? "Ask AI for recipe suggestions"
+                  : "Add items to your pantry to get recipe suggestions"}
             </p>
           </div>
         )}
@@ -269,7 +288,7 @@ export default function RecipesPage() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <div className="text-7xl">🍽️</div>
+                      <UtensilsCrossed className="w-20 h-20 text-orange-400" />
                     )}
                   </div>
                   <div className="p-6">
@@ -277,8 +296,14 @@ export default function RecipesPage() {
                       {recipe.title}
                     </h3>
                     <div className="flex gap-4 text-sm text-gray-600 mb-4">
-                      <span>⏱️ {recipe.readyInMinutes || recipe.cookingTime || "N/A"} min</span>
-                      <span>👥 {recipe.servings} servings</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {recipe.readyInMinutes || recipe.cookingTime || "N/A"} min
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        {recipe.servings} servings
+                      </span>
                     </div>
                     {recipe.tags && recipe.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-4">
