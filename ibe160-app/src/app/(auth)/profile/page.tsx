@@ -91,15 +91,6 @@ export default async function ProfilePage() {
             </div>
           </div>
         </div>
-
-        <div className="mt-6 bg-green-50 border border-green-200 rounded-lg px-6 py-4">
-          <h2 className="text-lg font-semibold text-green-900 mb-2">
-            Welcome to ibe160, {session.user.name?.split(" ")[0] || "there"}! 🎉
-          </h2>
-          <p className="text-sm text-green-700">
-            Start by adding items to your pantry to get AI-powered recipe suggestions and reduce food waste.
-          </p>
-        </div>
       </div>
     </div>
   )
