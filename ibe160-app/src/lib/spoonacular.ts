@@ -27,6 +27,7 @@ export interface RecipeDetails extends Recipe {
 export async function searchRecipes(query: string, number = 12): Promise<Recipe[]> {
   // Fallback for sandbox/demo if no API key
   if (!API_KEY) {
+    console.warn("⚠️ Spoonacular API key missing - using demo data")
     return stubRecipes.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()))
   }
 
@@ -34,14 +35,22 @@ export async function searchRecipes(query: string, number = 12): Promise<Recipe[
     const url = `${BASE_URL}/recipes/complexSearch?apiKey=${API_KEY}&query=${encodeURIComponent(query)}&number=${number}&addRecipeInformation=true`
     const response = await fetch(url)
 
+    // Check if API key is invalid or access denied
+    if (response.status === 401 || response.status === 403) {
+      console.error("🔑 Spoonacular API: Invalid or inactive API key - using demo data")
+      return stubRecipes.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()))
+    }
+
     if (!response.ok) {
-      throw new Error("Failed to fetch recipes")
+      throw new Error(`Spoonacular API error: ${response.status}`)
     }
 
     const data = await response.json()
+    console.log("✅ Spoonacular API call successful")
     return data.results || []
   } catch (error) {
     console.error("Spoonacular API error:", error)
+    console.warn("⚠️ Falling back to demo data")
     // Fallback to stub data
     return stubRecipes.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()))
   }
@@ -53,6 +62,7 @@ export async function searchByIngredients(
   number = 12
 ): Promise<Recipe[]> {
   if (!API_KEY) {
+    console.warn("⚠️ Spoonacular API key missing - using demo data")
     return stubRecipes
   }
 
@@ -61,14 +71,22 @@ export async function searchByIngredients(
     const url = `${BASE_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${encodeURIComponent(ingredientString)}&number=${number}`
     const response = await fetch(url)
 
+    // Check if API key is invalid or access denied
+    if (response.status === 401 || response.status === 403) {
+      console.error("🔑 Spoonacular API: Invalid or inactive API key - using demo data")
+      return stubRecipes
+    }
+
     if (!response.ok) {
-      throw new Error("Failed to fetch recipes by ingredients")
+      throw new Error(`Spoonacular API error: ${response.status}`)
     }
 
     const data = await response.json()
+    console.log("✅ Spoonacular API call successful (by ingredients)")
     return data || []
   } catch (error) {
     console.error("Spoonacular API error:", error)
+    console.warn("⚠️ Falling back to demo data")
     return stubRecipes
   }
 }
