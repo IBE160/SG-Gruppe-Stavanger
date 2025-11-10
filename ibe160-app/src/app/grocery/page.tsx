@@ -240,6 +240,7 @@ export default function GroceryPage() {
             <p className="text-gray-600">Add items you need to buy to get started!</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   )
