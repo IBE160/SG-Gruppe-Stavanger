@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { Settings, Target, Salad, Ban, Globe, ThumbsDown, Bell, Check } from "lucide-react"
 
 interface UserPreferences {
   dietaryRestrictions: string[]
@@ -160,7 +161,10 @@ export default function PreferencesPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">⚙️ Preferences & Dietary Profile</h1>
+          <div className="flex items-center gap-3">
+            <Settings className="w-8 h-8 text-gray-900" />
+            <h1 className="text-3xl font-bold text-gray-900">Preferences & Dietary Profile</h1>
+          </div>
           <div className="flex gap-4">
             <Link href="/pantry" className="text-sm text-blue-600 hover:underline">
               Pantry
@@ -176,15 +180,21 @@ export default function PreferencesPage() {
 
         {/* Info Banner */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <p className="text-sm text-blue-700">
-            🎯 <strong>Personalize Your Experience:</strong> Set your dietary restrictions,
-            allergies, and preferences to get tailored recipe recommendations!
-          </p>
+          <div className="flex items-start gap-3">
+            <Target className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-blue-700">
+              <strong>Personalize Your Experience:</strong> Set your dietary restrictions,
+              allergies, and preferences to get tailored recipe recommendations!
+            </p>
+          </div>
         </div>
 
         {/* Dietary Restrictions */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🥗 Dietary Restrictions</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <Salad className="w-6 h-6 text-green-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Dietary Restrictions</h2>
+          </div>
           <div className="grid grid-cols-3 gap-3">
             {DIETARY_OPTIONS.map((option) => (
               <button
@@ -195,13 +205,13 @@ export default function PreferencesPage() {
                     dietaryRestrictions: toggleArrayItem(preferences.dietaryRestrictions, option),
                   })
                 }
-                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
+                className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
                   preferences.dietaryRestrictions.includes(option)
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
                 }`}
               >
-                {preferences.dietaryRestrictions.includes(option) ? "✓ " : ""}
+                {preferences.dietaryRestrictions.includes(option) && <Check className="w-4 h-4" />}
                 {option}
               </button>
             ))}
@@ -210,7 +220,10 @@ export default function PreferencesPage() {
 
         {/* Allergies */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🚫 Allergies & Intolerances</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <Ban className="w-6 h-6 text-red-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Allergies & Intolerances</h2>
+          </div>
           <div className="grid grid-cols-3 gap-3">
             {ALLERGY_OPTIONS.map((option) => (
               <button
@@ -221,13 +234,13 @@ export default function PreferencesPage() {
                     allergies: toggleArrayItem(preferences.allergies, option),
                   })
                 }
-                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
+                className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
                   preferences.allergies.includes(option)
                     ? "border-red-500 bg-red-50 text-red-700"
                     : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
                 }`}
               >
-                {preferences.allergies.includes(option) ? "✓ " : ""}
+                {preferences.allergies.includes(option) && <Check className="w-4 h-4" />}
                 {option}
               </button>
             ))}
@@ -236,7 +249,10 @@ export default function PreferencesPage() {
 
         {/* Cuisine Preferences */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🌍 Favorite Cuisines</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <Globe className="w-6 h-6 text-blue-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Favorite Cuisines</h2>
+          </div>
           <div className="grid grid-cols-4 gap-3">
             {CUISINE_OPTIONS.map((option) => (
               <button
@@ -247,13 +263,13 @@ export default function PreferencesPage() {
                     cuisinePreferences: toggleArrayItem(preferences.cuisinePreferences, option),
                   })
                 }
-                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
+                className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
                   preferences.cuisinePreferences.includes(option)
                     ? "border-blue-500 bg-blue-50 text-blue-700"
                     : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
                 }`}
               >
-                {preferences.cuisinePreferences.includes(option) ? "✓ " : ""}
+                {preferences.cuisinePreferences.includes(option) && <Check className="w-4 h-4" />}
                 {option}
               </button>
             ))}
@@ -262,7 +278,10 @@ export default function PreferencesPage() {
 
         {/* Disliked Ingredients */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">👎 Disliked Ingredients</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <ThumbsDown className="w-6 h-6 text-orange-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Disliked Ingredients</h2>
+          </div>
           <div className="flex gap-3 mb-4">
             <input
               type="text"
@@ -302,7 +321,10 @@ export default function PreferencesPage() {
 
         {/* Notifications */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔔 Notification Settings</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <Bell className="w-6 h-6 text-yellow-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Notification Settings</h2>
+          </div>
           <div className="space-y-4">
             <label className="flex items-center gap-3">
               <input
