@@ -1,9 +1,9 @@
 // Google Gemini AI Integration
-// Using Gemini 1.5 Flash for cost-effective AI generation
+// Using Gemini 2.0 Flash (experimental) for AI generation
 
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || ""
-const GEMINI_MODEL = "gemini-1.5-flash-latest"
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`
+const GEMINI_MODEL = "gemini-2.0-flash-exp"
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
 
 interface GeminiRequest {
   contents: {
