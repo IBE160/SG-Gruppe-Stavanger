@@ -1,74 +1,29 @@
 // Pantry page - displays user's food inventory
-// Stub implementation for sandbox (connects to stub API)
+// Now with React Query for offline-first experience
 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { PantryItemCard } from "@/components/PantryItemCard"
 import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Toast } from "@/components/Toast"
-
-interface FoodItem {
-  id: string
-  name: string
-  category: string
-  quantity: number
-  unit: string
-  bestBeforeDate: string
-  createdAt: string
-}
+import { usePantryItems, useDeleteItem, type FoodItem } from "@/hooks/usePantry"
 
 export default function PantryPage() {
-  const [items, setItems] = useState<FoodItem[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { data: items = [], isLoading, error, refetch } = usePantryItems()
+  const deleteItemMutation = useDeleteItem()
+
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<FoodItem | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [deletingItem, setDeletingItem] = useState<FoodItem | null>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        setIsLoading(true)
-        const response = await fetch("/api/pantry")
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch pantry items")
-        }
-
-        const data = await response.json()
-        setItems(data.items || [])
-      } catch (err) {
-        console.error("Error fetching pantry items:", err)
-        setError("Failed to load your pantry. Please try again.")
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchItems()
-  }, [])
-
-  const handleRetry = () => {
-    setError(null)
-    setIsLoading(true)
-    fetch("/api/pantry")
-      .then((res) => res.json())
-      .then((data) => setItems(data.items || []))
-      .catch(() => setError("Failed to load your pantry. Please try again."))
-      .finally(() => setIsLoading(false))
-  }
-
   const handleItemAdded = () => {
-    // Refresh the list after adding an item
-    handleRetry()
     setToast({ message: "Item added successfully!", type: "success" })
   }
 
@@ -78,8 +33,6 @@ export default function PantryPage() {
   }
 
   const handleItemUpdated = () => {
-    // Refresh the list after updating an item
-    handleRetry()
     setToast({ message: "Item updated successfully!", type: "success" })
   }
 
@@ -91,27 +44,14 @@ export default function PantryPage() {
   const handleDeleteConfirm = async () => {
     if (!deletingItem) return
 
-    setIsDeleting(true)
-
     try {
-      const response = await fetch(`/api/pantry/${deletingItem.id}`, {
-        method: "DELETE",
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to delete item")
-      }
-
-      // Close dialog and refresh list
+      await deleteItemMutation.mutateAsync(deletingItem.id)
       setIsDeleteDialogOpen(false)
       setDeletingItem(null)
-      handleRetry()
       setToast({ message: "Item deleted successfully!", type: "success" })
     } catch (err) {
       console.error("Error deleting item:", err)
       setToast({ message: "Failed to delete item. Please try again.", type: "error" })
-    } finally {
-      setIsDeleting(false)
     }
   }
 
@@ -141,6 +81,13 @@ export default function PantryPage() {
           </div>
         </div>
 
+        {/* Offline-First Indicator */}
+        <div className="mb-4 bg-green-50 border border-green-200 rounded-lg px-4 py-2">
+          <p className="text-sm text-green-700">
+            ✓ <strong>Offline-First:</strong> React Query enabled - changes sync automatically!
+          </p>
+        </div>
+
         {/* Loading State */}
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -168,9 +115,9 @@ export default function PantryPage() {
         {/* Error State */}
         {error && !isLoading && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <p className="text-red-600 mb-4">{error}</p>
+            <p className="text-red-600 mb-4">Failed to load your pantry. Please try again.</p>
             <button
-              onClick={handleRetry}
+              onClick={() => refetch()}
               className="px-6 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700"
             >
               Retry
@@ -195,9 +142,7 @@ export default function PantryPage() {
                   d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                 />
               </svg>
-              <h2 className="mt-4 text-2xl font-semibold text-gray-900">
-                Your pantry is empty
-              </h2>
+              <h2 className="mt-4 text-2xl font-semibold text-gray-900">Your pantry is empty</h2>
               <p className="mt-2 text-gray-600">
                 Add your first ingredient to start tracking expiration dates!
               </p>
@@ -216,7 +161,7 @@ export default function PantryPage() {
           <>
             <div className="mb-4 flex justify-between items-center">
               <p className="text-sm text-gray-600">
-                Last synced: {new Date().toLocaleTimeString()}
+                {items.length} item{items.length !== 1 ? "s" : ""} in pantry
               </p>
               <button
                 onClick={() => setIsAddDialogOpen(true)}
@@ -266,7 +211,7 @@ export default function PantryPage() {
           cancelText="Cancel"
           onConfirm={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
-          isLoading={isDeleting}
+          isLoading={deleteItemMutation.isPending}
         />
 
         {/* Toast Notification */}

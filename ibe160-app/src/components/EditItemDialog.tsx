@@ -4,16 +4,7 @@ import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { foodItemSchema, type FoodItemInput } from "@/lib/validation/pantry"
-
-interface FoodItem {
-  id: string
-  name: string
-  category: string
-  quantity: number
-  unit: string
-  bestBeforeDate: string
-  createdAt: string
-}
+import { useUpdateItem, type FoodItem } from "@/hooks/usePantry"
 
 interface EditItemDialogProps {
   isOpen: boolean
@@ -23,8 +14,8 @@ interface EditItemDialogProps {
 }
 
 export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDialogProps) {
-  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string>("")
+  const updateItemMutation = useUpdateItem()
 
   const {
     register,
@@ -51,27 +42,15 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
   const onSubmit = async (data: FoodItemInput) => {
     if (!item) return
 
-    setIsLoading(true)
     setError("")
 
     try {
-      const response = await fetch(`/api/pantry/${item.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error?.message || "Failed to update item")
-      }
-
+      await updateItemMutation.mutateAsync({ ...data, id: item.id, createdAt: item.createdAt })
       reset()
       onSuccess()
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong")
-      setIsLoading(false)
     }
   }
 
@@ -86,7 +65,7 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600"
-              disabled={isLoading}
+              disabled={updateItemMutation.isPending}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -206,17 +185,17 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
               <button
                 type="button"
                 onClick={onClose}
-                disabled={isLoading}
+                disabled={updateItemMutation.isPending}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={updateItemMutation.isPending}
                 className="flex-1 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Updating..." : "Update Item"}
+                {updateItemMutation.isPending ? "Updating..." : "Update Item"}
               </button>
             </div>
           </form>

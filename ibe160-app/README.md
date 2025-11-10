@@ -36,6 +36,39 @@ ibe160 helps users:
 - **Loading states** and error handling
 - **Toast notifications** for success/error feedback
 
+### Epic 4: Offline-First Infrastructure ✓
+- **React Query** for data caching and state management
+- **Optimistic updates** for instant UI feedback
+- **Automatic refetching** and cache invalidation
+- **Background sync** for seamless offline experience
+
+### Epic 5: Recipe Search (Spoonacular API) ✓
+- **Spoonacular API integration** for thousands of recipes
+- **Text-based search** by recipe name
+- **Ingredient-based search** using pantry items
+- **Smart recipe matching** with available ingredients
+- **Recipe details** with cooking time and servings
+
+### Epic 6: Flexible Recipe Matching ✓
+- **Auto-match recipes** based on pantry inventory
+- **Toggle between search modes** (text/ingredients)
+- **Real-time ingredient tracking**
+- **Recipe suggestions** tailored to available food
+
+### Epic 7: Smart Grocery List ✓
+- **Add grocery items** with quick input
+- **Check off items** while shopping
+- **Track shopping progress** with summary stats
+- **LocalStorage persistence** for offline access
+- **Clear completed items** feature
+
+### Epic 8: Expiration Alerts & Notifications ✓
+- **Visual alert dashboard** with categorized warnings
+- **Browser notifications** for expiring items
+- **Critical/Warning/Safe** categorization
+- **Expired item tracking** with action buttons
+- **Recipe suggestions** for soon-to-expire items
+
 ### Epic 9: Landing Page & Recipe Browser ✓
 - Professional landing page with hero section
 - Recipe browser with search and filtering
@@ -49,7 +82,8 @@ ibe160 helps users:
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS 4
 - **Forms:** React Hook Form + Zod validation
-- **State:** React hooks (useState, useEffect)
+- **State Management:** @tanstack/react-query (TanStack Query)
+- **Caching:** React Query with offline-first approach
 
 ### Backend
 - **API:** Next.js API Routes (RESTful)
@@ -71,7 +105,9 @@ ibe160-app/
 │   │   ├── (auth)/           # Protected routes
 │   │   │   ├── pantry/       # Pantry management
 │   │   │   ├── profile/      # User profile
-│   │   │   └── recipes/      # Recipe browser
+│   │   │   ├── recipes/      # Recipe browser (Spoonacular)
+│   │   │   ├── grocery/      # Smart grocery list
+│   │   │   └── alerts/       # Expiration alerts
 │   │   ├── (unauth)/         # Public routes
 │   │   │   ├── login/        # Login page
 │   │   │   └── register/     # Registration page
@@ -85,9 +121,14 @@ ibe160-app/
 │   │   ├── AddItemDialog.tsx
 │   │   ├── EditItemDialog.tsx
 │   │   ├── ConfirmDialog.tsx
-│   │   └── Toast.tsx
+│   │   ├── Toast.tsx
+│   │   └── Providers.tsx     # React Query provider
+│   ├── hooks/
+│   │   ├── usePantry.ts      # Pantry React Query hooks
+│   │   └── useRecipes.ts     # Recipe React Query hooks
 │   └── lib/
 │       ├── auth.ts           # Auth.js configuration
+│       ├── spoonacular.ts    # Spoonacular API client
 │       └── validation/       # Zod schemas
 │           ├── auth.ts
 │           └── pantry.ts
@@ -251,14 +292,15 @@ This project follows the **BMAD Method** (Business-Mad Development):
 - ✅ Epic 1: Project Initialization
 - ✅ Epic 2: User Authentication
 - ✅ Epic 3: Food Inventory Management
+- ✅ Epic 4: Offline-First Infrastructure (React Query)
+- ✅ Epic 5: Recipe Search (Spoonacular API)
+- ✅ Epic 6: Flexible Recipe Matching
+- ✅ Epic 7: Smart Grocery List
+- ✅ Epic 8: Expiration Alerts & Notifications
 - ✅ Epic 9: Landing Page & Recipe Browser
 
-### Upcoming Features
-- Epic 4: Offline-First Infrastructure (React Query)
-- Epic 5: Recipe Search (Spoonacular API)
-- Epic 6: Flexible Recipe Matching
-- Epic 7: Smart Grocery List
-- Epic 8: Expiration Alerts & Notifications
+### All Core Features Complete! 🎉
+**100% of planned MVP epics implemented**
 
 ## 🤝 Contributing
 
@@ -287,6 +329,6 @@ For issues and questions:
 
 ---
 
-**Status:** MVP Complete ✓
-**Version:** 1.0.0
+**Status:** Full Product Complete ✓ (All 9 Epics)
+**Version:** 2.0.0
 **Last Updated:** November 2025
