@@ -90,10 +90,11 @@ export function useUpdateItem() {
 
   return useMutation({
     mutationFn: async (item: FoodItem) => {
-      const response = await fetch(`/api/pantry/${item.id}`, {
+      const { id, createdAt, ...updateData } = item
+      const response = await fetch(`/api/pantry/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(item),
+        body: JSON.stringify(updateData),
       })
       if (!response.ok) {
         throw new Error("Failed to update item")

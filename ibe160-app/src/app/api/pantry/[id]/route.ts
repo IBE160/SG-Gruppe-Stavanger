@@ -13,10 +13,13 @@ export async function PUT(
     const { id } = await params
     const body = await request.json()
 
+    console.log("[PUT] Updating item:", id, "with data:", body)
+
     // Validate input
     const validation = foodItemSchema.safeParse(body)
     if (!validation.success) {
       const firstError = validation.error.issues[0]
+      console.error("[PUT] Validation error:", firstError)
       return NextResponse.json(
         { error: { code: "VALIDATION_ERROR", message: firstError.message } },
         { status: 422 }
@@ -33,12 +36,14 @@ export async function PUT(
     })
 
     if (!updatedItem) {
+      console.error("[PUT] Item not found:", id)
       return NextResponse.json(
         { error: { code: "NOT_FOUND", message: "Item not found" } },
         { status: 404 }
       )
     }
 
+    console.log("[PUT] Successfully updated item:", updatedItem)
     return NextResponse.json({ item: updatedItem })
   } catch (error) {
     console.error("Error updating pantry item:", error)
