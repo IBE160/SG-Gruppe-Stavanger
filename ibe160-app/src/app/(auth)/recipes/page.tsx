@@ -44,7 +44,7 @@ export default function RecipesPage() {
   // AI-enhanced search with Google Gemini
   const {
     data: aiResults = [],
-    isLoading: aiLoading,
+    isPending: aiLoading,
     error: aiError,
     mutate: searchAI,
   } = useMutation({

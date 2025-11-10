@@ -3,37 +3,7 @@
 
 import { NextResponse } from "next/server"
 import { foodItemSchema } from "@/lib/validation/pantry"
-
-// In-memory store for sandbox (replaced by database in production)
-let stubItems = [
-  {
-    id: "1",
-    name: "Milk",
-    category: "dairy",
-    quantity: 1,
-    unit: "L",
-    bestBeforeDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    name: "Cherry Tomatoes",
-    category: "produce",
-    quantity: 500,
-    unit: "g",
-    bestBeforeDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "3",
-    name: "Chicken Breast",
-    category: "meat",
-    quantity: 800,
-    unit: "g",
-    bestBeforeDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-]
+import { getStubItems, addStubItem } from "@/lib/stubData"
 
 export async function GET() {
   try {
@@ -41,7 +11,8 @@ export async function GET() {
     // In production: const session = await auth()
     // In production: const items = await prisma.foodItem.findMany({ where: { userId: session.user.id } })
 
-    return NextResponse.json({ items: stubItems })
+    const items = getStubItems()
+    return NextResponse.json({ items })
   } catch (error) {
     console.error("Error fetching pantry items:", error)
     return NextResponse.json(
@@ -72,10 +43,11 @@ export async function POST(request: Request) {
     const newItem = {
       id: `item-${Date.now()}`,
       ...validation.data,
+      bestBeforeDate: new Date(validation.data.bestBeforeDate).toISOString(),
       createdAt: new Date().toISOString(),
     }
 
-    stubItems.push(newItem)
+    addStubItem(newItem)
 
     return NextResponse.json({ item: newItem }, { status: 201 })
   } catch (error) {

@@ -3,9 +3,7 @@
 
 import { NextResponse } from "next/server"
 import { foodItemSchema } from "@/lib/validation/pantry"
-
-// Import the shared stubItems from parent route
-// In a real app, this would use database transactions
+import { updateStubItem, deleteStubItem } from "@/lib/stubData"
 
 export async function PUT(
   request: Request,
@@ -25,15 +23,20 @@ export async function PUT(
       )
     }
 
-    // Stub: This would update the database in production
+    // Stub: Update in-memory store
     // In production: const session = await auth()
     // In production: const item = await prisma.foodItem.update({ where: { id, userId: session.user.id }, data: validation.data })
 
-    // For stub: Return the updated item (in-memory update handled by pantry page refresh)
-    const updatedItem = {
-      id,
+    const updatedItem = updateStubItem(id, {
       ...validation.data,
-      createdAt: new Date().toISOString(),
+      bestBeforeDate: new Date(validation.data.bestBeforeDate).toISOString(),
+    })
+
+    if (!updatedItem) {
+      return NextResponse.json(
+        { error: { code: "NOT_FOUND", message: "Item not found" } },
+        { status: 404 }
+      )
     }
 
     return NextResponse.json({ item: updatedItem })
@@ -53,11 +56,19 @@ export async function DELETE(
   try {
     const { id } = await params
 
-    // Stub: This would delete from database in production
+    // Stub: Delete from in-memory store
     // In production: const session = await auth()
     // In production: await prisma.foodItem.delete({ where: { id, userId: session.user.id } })
 
-    // For stub: Return success (deletion handled by pantry page refresh)
+    const deleted = deleteStubItem(id)
+
+    if (!deleted) {
+      return NextResponse.json(
+        { error: { code: "NOT_FOUND", message: "Item not found" } },
+        { status: 404 }
+      )
+    }
+
     return NextResponse.json({ success: true, message: "Item deleted successfully" })
   } catch (error) {
     console.error("Error deleting pantry item:", error)

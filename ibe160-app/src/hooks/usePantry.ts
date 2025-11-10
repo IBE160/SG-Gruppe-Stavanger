@@ -33,7 +33,7 @@ export function usePantryItems() {
   })
 }
 
-// Add item mutation
+// Add item mutation with optimistic update
 export function useAddItem() {
   const queryClient = useQueryClient()
 
@@ -49,14 +49,42 @@ export function useAddItem() {
       }
       return response.json()
     },
-    onSuccess: async () => {
-      // Wait for the cache to be refreshed before closing dialog
+    // Optimistic update - update UI immediately before API call completes
+    onMutate: async (newItem) => {
+      // Cancel any outgoing refetches to avoid overwriting our optimistic update
+      await queryClient.cancelQueries({ queryKey: ["pantry"] })
+
+      // Snapshot the previous value
+      const previousItems = queryClient.getQueryData<FoodItem[]>(["pantry"])
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<FoodItem[]>(["pantry"], (old) => {
+        const optimisticItem: FoodItem = {
+          id: `temp-${Date.now()}`, // Temporary ID
+          ...newItem,
+          bestBeforeDate: new Date(newItem.bestBeforeDate).toISOString(),
+          createdAt: new Date().toISOString(),
+        }
+        return [...(old || []), optimisticItem]
+      })
+
+      // Return context with the previous value
+      return { previousItems }
+    },
+    // If mutation fails, roll back to previous value
+    onError: (err, newItem, context) => {
+      if (context?.previousItems) {
+        queryClient.setQueryData(["pantry"], context.previousItems)
+      }
+    },
+    // Always refetch after error or success to ensure we have the latest data
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })
 }
 
-// Update item mutation
+// Update item mutation with optimistic update
 export function useUpdateItem() {
   const queryClient = useQueryClient()
 
@@ -72,14 +100,30 @@ export function useUpdateItem() {
       }
       return response.json()
     },
-    onSuccess: async () => {
-      // Wait for the cache to be refreshed before closing dialog
+    // Optimistic update
+    onMutate: async (updatedItem) => {
+      await queryClient.cancelQueries({ queryKey: ["pantry"] })
+      const previousItems = queryClient.getQueryData<FoodItem[]>(["pantry"])
+
+      queryClient.setQueryData<FoodItem[]>(["pantry"], (old) => {
+        if (!old) return []
+        return old.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+      })
+
+      return { previousItems }
+    },
+    onError: (err, updatedItem, context) => {
+      if (context?.previousItems) {
+        queryClient.setQueryData(["pantry"], context.previousItems)
+      }
+    },
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })
 }
 
-// Delete item mutation
+// Delete item mutation with optimistic update
 export function useDeleteItem() {
   const queryClient = useQueryClient()
 
@@ -93,8 +137,24 @@ export function useDeleteItem() {
       }
       return response.json()
     },
-    onSuccess: async () => {
-      // Wait for the cache to be refreshed before closing dialog
+    // Optimistic update
+    onMutate: async (deletedId) => {
+      await queryClient.cancelQueries({ queryKey: ["pantry"] })
+      const previousItems = queryClient.getQueryData<FoodItem[]>(["pantry"])
+
+      queryClient.setQueryData<FoodItem[]>(["pantry"], (old) => {
+        if (!old) return []
+        return old.filter((item) => item.id !== deletedId)
+      })
+
+      return { previousItems }
+    },
+    onError: (err, deletedId, context) => {
+      if (context?.previousItems) {
+        queryClient.setQueryData(["pantry"], context.previousItems)
+      }
+    },
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })

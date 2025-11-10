@@ -109,6 +109,20 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     "ground beef": "photo-1603048297172-c92544798d5a",
     "kjøttdeig": "photo-1603048297172-c92544798d5a",
 
+    // Fruits / Frukt
+    "apple": "photo-1568702846914-96b305d2aaeb",
+    "apples": "photo-1568702846914-96b305d2aaeb",
+    "eple": "photo-1568702846914-96b305d2aaeb",
+    "epler": "photo-1568702846914-96b305d2aaeb",
+    "banana": "photo-1571771894821-ce9b6c11b08e",
+    "bananas": "photo-1571771894821-ce9b6c11b08e",
+    "banan": "photo-1571771894821-ce9b6c11b08e",
+    "bananer": "photo-1571771894821-ce9b6c11b08e",
+    "orange": "photo-1582979512210-99b6a53386f9",
+    "oranges": "photo-1582979512210-99b6a53386f9",
+    "appelsin": "photo-1582979512210-99b6a53386f9",
+    "appelsiner": "photo-1582979512210-99b6a53386f9",
+
     // Pantry / Spikermat
     "bread": "photo-1509440159596-0249088772ff",
     "brød": "photo-1509440159596-0249088772ff",
