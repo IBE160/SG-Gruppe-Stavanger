@@ -44,8 +44,7 @@ export default function Home() {
               </h1>
 
               <p className="text-xl text-gray-600 leading-relaxed">
-                Track your pantry, get AI recipe suggestions, and receive alerts before food expires.
-                Join thousands reducing waste and saving <strong>$1,500/year</strong>.
+                Track your pantry, get AI recipe suggestions, and reduce food waste.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -155,185 +154,67 @@ export default function Home() {
         </div>
       </div>
 
-      {/* How It Works - Simple 3 Steps */}
-      <div className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              How it works
-            </h2>
-            <p className="text-xl text-gray-600">
-              From pantry to plate in 3 simple steps
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="relative">
-              <div className="text-center space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 text-2xl font-bold">
-                  1
+      {/* Features Grid */}
+      <div className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="airbnb-card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-purple-600" />
                 </div>
-                <div className="space-y-2">
-                  <div className="flex justify-center">
-                    <Camera className="w-12 h-12 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Add Your Ingredients</h3>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    AI Recipe Search
+                  </h3>
                   <p className="text-gray-600">
-                    Scan barcodes or type in what's in your kitchen
+                    Get personalized recipes powered by Google Gemini AI
                   </p>
                 </div>
               </div>
-              {/* Arrow */}
-              <div className="hidden md:block absolute top-8 -right-4 text-gray-300">
-                <ArrowRight className="w-8 h-8" />
-              </div>
             </div>
 
-            <div className="relative">
-              <div className="text-center space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 text-purple-600 text-2xl font-bold">
-                  2
+            <div className="airbnb-card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center">
+                  <Bell className="w-6 h-6 text-yellow-600" />
                 </div>
-                <div className="space-y-2">
-                  <div className="flex justify-center">
-                    <Sparkles className="w-12 h-12 text-purple-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Get AI Recipes</h3>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Expiration Alerts
+                  </h3>
                   <p className="text-gray-600">
-                    AI suggests recipes based on what you have
+                    Get notified before food expires to reduce waste
                   </p>
                 </div>
               </div>
-              {/* Arrow */}
-              <div className="hidden md:block absolute top-8 -right-4 text-gray-300">
-                <ArrowRight className="w-8 h-8" />
-              </div>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600 text-2xl font-bold">
-                3
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-center">
-                  <Bell className="w-12 h-12 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">Never Waste Again</h3>
-                <p className="text-gray-600">
-                  Get alerts before food expires, save money
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Features Grid - Simplified */}
-      <div className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Powered by AI & Smart Alerts
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="airbnb-card p-6 hover-lift text-center">
-              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-blue-50 mx-auto">
-                <Camera className="w-7 h-7 text-blue-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Barcode Scanner
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Scan products instantly
-              </p>
-            </div>
-
-            <div className="airbnb-card p-6 hover-lift text-center">
-              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-purple-50 mx-auto">
-                <Sparkles className="w-7 h-7 text-purple-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                AI Recipe Search
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Google Gemini powered
-              </p>
-            </div>
-
-            <div className="airbnb-card p-6 hover-lift text-center">
-              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-yellow-50 mx-auto">
-                <Bell className="w-7 h-7 text-yellow-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Smart Alerts
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Email & push notifications
-              </p>
-            </div>
-
-            <div className="airbnb-card p-6 hover-lift text-center">
-              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-50 mx-auto">
-                <ShoppingCart className="w-7 h-7 text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Shopping Lists
-              </h3>
-              <p className="text-gray-600 text-sm">
-                AI-powered suggestions
-              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="py-20 bg-gradient-to-br from-green-600 to-blue-600">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to stop wasting food?
+      <div className="py-16 bg-gradient-to-br from-green-600 to-blue-600">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Ready to get started?
           </h2>
-          <p className="text-xl text-green-50 mb-8 leading-relaxed">
-            Join thousands making a difference. Start tracking your pantry today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-green-600 text-lg font-bold rounded-xl hover:shadow-2xl transition-all"
-            >
-              <Zap className="w-5 h-5" />
-              Get Started Free
-            </Link>
-            <Link
-              href="/recipes"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-700 text-white text-lg font-semibold rounded-xl hover:bg-green-800 transition-all"
-            >
-              <Sparkles className="w-5 h-5" />
-              Try AI Search
-            </Link>
-          </div>
+          <Link
+            href="/register"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-green-600 text-lg font-bold rounded-xl hover:shadow-2xl transition-all"
+          >
+            <Zap className="w-5 h-5" />
+            Get Started Free
+          </Link>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Salad className="w-7 h-7 text-green-600" />
-              <span className="text-xl font-semibold text-gray-900">ibe160</span>
-            </div>
-            <p className="text-gray-600 text-sm">
-              Built with Next.js 16, TypeScript, Tailwind CSS 4 & Google Gemini AI
-            </p>
-            <div className="flex gap-6 text-sm text-gray-600">
-              <Link href="/privacy" className="hover:text-gray-900 transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-gray-900 transition-colors">Terms</Link>
-              <Link href="/contact" className="hover:text-gray-900 transition-colors">Contact</Link>
-            </div>
-          </div>
+      <footer className="border-t border-gray-200 py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-gray-600 text-sm">
+            Built with Next.js, TypeScript & Google Gemini AI
+          </p>
         </div>
       </footer>
     </div>
