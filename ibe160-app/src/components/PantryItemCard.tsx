@@ -96,13 +96,18 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     "kyllingbryst": "photo-1604503468506-a8da13d82791",
     "beef": "photo-1602470520998-f4a52199a3d6",
     "biff": "photo-1602470520998-f4a52199a3d6",
+    "steak": "photo-1602470520998-f4a52199a3d6",
+    "stek": "photo-1602470520998-f4a52199a3d6",
     "storfe": "photo-1602470520998-f4a52199a3d6",
-    "pork": "photo-1602470520998-f4a52199a3d6",
-    "svinekjøtt": "photo-1602470520998-f4a52199a3d6",
+    "pork": "photo-1588347818036-5e643c2b2e0f",
+    "svinekjøtt": "photo-1588347818036-5e643c2b2e0f",
+    "bacon": "photo-1528607929212-2636ec44253e",
     "salmon": "photo-1485921325833-c519f76c4927",
     "laks": "photo-1485921325833-c519f76c4927",
     "fish": "photo-1485921325833-c519f76c4927",
     "fisk": "photo-1485921325833-c519f76c4927",
+    "ground beef": "photo-1603048297172-c92544798d5a",
+    "kjøttdeig": "photo-1603048297172-c92544798d5a",
 
     // Pantry / Spikermat
     "bread": "photo-1509440159596-0249088772ff",
@@ -111,7 +116,6 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     "ris": "photo-1586201375761-83865001e31c",
     "pasta": "photo-1551462147-ff29053bfc14",
     "eggs": "photo-1582722872445-44dc5f7e3c8f",
-    "egg": "photo-1582722872445-44dc5f7e3c8f",
     "egg": "photo-1582722872445-44dc5f7e3c8f",
     "egge": "photo-1582722872445-44dc5f7e3c8f",
   }
