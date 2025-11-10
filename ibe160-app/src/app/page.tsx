@@ -150,13 +150,6 @@ export default function Home() {
               <p className="text-lg text-gray-600 leading-relaxed">
                 Just describe what you're craving. Our AI powered by Google Gemini creates personalized recipes based on your pantry and preferences.
               </p>
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                Try it free
-                <span className="text-lg">→</span>
-              </Link>
             </div>
             <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100 shadow-xl">
               <img
@@ -187,13 +180,6 @@ export default function Home() {
               <p className="text-lg text-gray-600 leading-relaxed">
                 Get timely notifications before your ingredients expire. Track everything in your pantry and use food before it goes bad.
               </p>
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                Get started
-                <span className="text-lg">→</span>
-              </Link>
             </div>
           </div>
         </div>
