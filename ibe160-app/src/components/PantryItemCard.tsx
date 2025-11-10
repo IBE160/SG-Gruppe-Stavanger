@@ -142,13 +142,14 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     const photoId = foodImageMap[normalizedName]
 
     if (photoId) {
-      // Higher quality with better crop settings
-      return `https://images.unsplash.com/${photoId}?w=600&h=400&fit=crop&q=90`
+      // High quality with optimized settings for food photography
+      return `https://images.unsplash.com/${photoId}?w=600&h=400&fit=crop&q=90&auto=format`
     }
 
-    // Default fallback: search by name with higher quality
-    const searchTerm = encodeURIComponent(normalizedName + " food")
-    return `https://source.unsplash.com/600x400/?${searchTerm}`
+    // Fallback: Use a curated collection of food photos
+    // Collection IDs: 3816513 (food), 1353119 (ingredients)
+    const collectionId = "3816513"
+    return `https://source.unsplash.com/collection/${collectionId}/600x400?${normalizedName}`
   }
 
   return (
