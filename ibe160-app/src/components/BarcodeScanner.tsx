@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library"
-import { Camera, X, CheckCircle2 } from "lucide-react"
+import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void
@@ -13,9 +13,20 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
+  const [manualMode, setManualMode] = useState(false)
+  const [manualBarcode, setManualBarcode] = useState("")
   const readerRef = useRef<BrowserMultiFormatReader | null>(null)
 
+  const handleManualSubmit = () => {
+    if (manualBarcode.trim()) {
+      onScan(manualBarcode.trim())
+      setManualBarcode("")
+    }
+  }
+
   useEffect(() => {
+    if (manualMode) return // Skip camera if in manual mode
+
     const codeReader = new BrowserMultiFormatReader()
     readerRef.current = codeReader
 
@@ -35,6 +46,7 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           (result, error) => {
             if (result) {
               const barcode = result.getText()
+              console.log("Barcode detected:", barcode)
               onScan(barcode)
               setScanning(false)
               codeReader.reset()
@@ -57,7 +69,7 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
         readerRef.current.reset()
       }
     }
-  }, [onScan])
+  }, [onScan, manualMode])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4">
@@ -79,15 +91,64 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
         </div>
 
         <div className="p-6">
-          {error ? (
+          {manualMode ? (
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                <p className="text-sm text-blue-700 flex items-center gap-2">
+                  <Keyboard className="w-5 h-5 flex-shrink-0" />
+                  <span>Enter the barcode number manually (e.g., 8419100020716)</span>
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="barcode" className="block text-sm font-semibold text-gray-900 mb-2">
+                  Barcode Number
+                </label>
+                <input
+                  type="text"
+                  id="barcode"
+                  value={manualBarcode}
+                  onChange={(e) => setManualBarcode(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleManualSubmit()}
+                  placeholder="Enter barcode..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-lg"
+                  autoFocus
+                />
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setManualMode(false)}
+                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  Back to Camera
+                </button>
+                <button
+                  onClick={handleManualSubmit}
+                  disabled={!manualBarcode.trim()}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
               <p className="text-red-700 mb-4 font-medium">{error}</p>
-              <button
-                onClick={onClose}
-                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors"
-              >
-                Close
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setManualMode(true)}
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors"
+                >
+                  Enter Manually
+                </button>
+                <button
+                  onClick={onClose}
+                  className="flex-1 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ) : (
             <>
@@ -125,10 +186,17 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                 </p>
               </div>
 
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setManualMode(true)}
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Keyboard className="w-5 h-5" />
+                  Enter Manually
+                </button>
                 <button
                   onClick={onClose}
-                  className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
