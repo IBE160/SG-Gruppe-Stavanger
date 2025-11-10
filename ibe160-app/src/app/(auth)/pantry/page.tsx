@@ -255,8 +255,12 @@ export default function PantryPage() {
         {/* Add Item Dialog */}
         <AddItemDialog
           isOpen={isAddDialogOpen}
-          onClose={() => setIsAddDialogOpen(false)}
+          onClose={() => {
+            setIsAddDialogOpen(false)
+            setScannedProduct(null)
+          }}
           onSuccess={handleItemAdded}
+          scannedProduct={scannedProduct}
         />
 
         {/* Edit Item Dialog */}

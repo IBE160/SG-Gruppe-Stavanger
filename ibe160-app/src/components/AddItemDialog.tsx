@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { foodItemSchema, type FoodItemInput } from "@/lib/validation/pantry"
@@ -10,9 +10,15 @@ interface AddItemDialogProps {
   isOpen: boolean
   onClose: () => void
   onSuccess: () => void
+  scannedProduct?: {
+    name: string
+    brand?: string
+    category?: string
+    quantity?: string
+  } | null
 }
 
-export function AddItemDialog({ isOpen, onClose, onSuccess }: AddItemDialogProps) {
+export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: AddItemDialogProps) {
   const [error, setError] = useState<string>("")
   const addItemMutation = useAddItem()
 
@@ -21,9 +27,42 @@ export function AddItemDialog({ isOpen, onClose, onSuccess }: AddItemDialogProps
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FoodItemInput>({
     resolver: zodResolver(foodItemSchema),
   })
+
+  // Pre-fill form with scanned product data
+  useEffect(() => {
+    if (scannedProduct && isOpen) {
+      if (scannedProduct.name) {
+        setValue("name", scannedProduct.name)
+      }
+      if (scannedProduct.category) {
+        // Map category from API to our categories
+        const categoryMap: Record<string, string> = {
+          "dairy": "dairy",
+          "produce": "produce",
+          "vegetables": "produce",
+          "fruits": "produce",
+          "meat": "meat",
+          "meats": "meat",
+          "fish": "meat",
+          "grains": "grains",
+          "cereals": "grains",
+        }
+        const mappedCategory = categoryMap[scannedProduct.category.toLowerCase()] || "other"
+        setValue("category", mappedCategory as any)
+      }
+      // Set default quantity and unit
+      setValue("quantity", 1)
+      setValue("unit", "pieces")
+      // Set default expiry to 7 days from now
+      const defaultExpiry = new Date()
+      defaultExpiry.setDate(defaultExpiry.getDate() + 7)
+      setValue("bestBeforeDate", defaultExpiry.toISOString().split("T")[0])
+    }
+  }, [scannedProduct, isOpen, setValue])
 
   const onSubmit = async (data: FoodItemInput) => {
     setError("")
@@ -65,6 +104,18 @@ export function AddItemDialog({ isOpen, onClose, onSuccess }: AddItemDialogProps
           {error && (
             <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
               {error}
+            </div>
+          )}
+
+          {scannedProduct && (
+            <div className="mb-6 bg-green-50 border border-green-200 rounded-xl p-4">
+              <p className="text-sm text-green-700">
+                <strong>Product found:</strong> {scannedProduct.name}
+                {scannedProduct.brand && <span> by {scannedProduct.brand}</span>}
+              </p>
+              <p className="text-xs text-green-600 mt-1">
+                Form pre-filled - adjust quantity and expiry date as needed
+              </p>
             </div>
           )}
 
