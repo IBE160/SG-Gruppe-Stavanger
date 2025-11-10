@@ -1,5 +1,7 @@
 // PantryItemCard component for displaying food items
 
+import { Milk, Salad, Drumstick, Wheat, Package, AlertTriangle } from "lucide-react"
+
 interface FoodItem {
   id: string
   name: string
@@ -31,13 +33,21 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     year: "numeric",
   })
 
-  // Category emoji mapping
-  const categoryEmojis: Record<string, string> = {
-    dairy: "🥛",
-    produce: "🥗",
-    meat: "🍗",
-    grains: "🌾",
-    other: "📦",
+  // Category icon mapping
+  const CategoryIcon = () => {
+    const iconProps = { className: "w-8 h-8", strokeWidth: 2 }
+    switch (item.category) {
+      case "dairy":
+        return <Milk {...iconProps} className="w-8 h-8 text-blue-600" />
+      case "produce":
+        return <Salad {...iconProps} className="w-8 h-8 text-green-600" />
+      case "meat":
+        return <Drumstick {...iconProps} className="w-8 h-8 text-red-600" />
+      case "grains":
+        return <Wheat {...iconProps} className="w-8 h-8 text-yellow-600" />
+      default:
+        return <Package {...iconProps} className="w-8 h-8 text-gray-600" />
+    }
   }
 
   return (
@@ -48,7 +58,7 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="text-3xl">{categoryEmojis[item.category] || "📦"}</div>
+          <div className="flex-shrink-0"><CategoryIcon /></div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
             <p className="text-sm text-gray-600 capitalize">{item.category}</p>
@@ -77,7 +87,7 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
         {isExpiringSoon && (
           <div className="mt-2 text-xs text-red-600 font-medium flex items-center gap-1">
-            <span>⚠️</span>
+            <AlertTriangle className="w-4 h-4" />
             <span>Expiring in {daysUntilExpiry} day{daysUntilExpiry !== 1 ? "s" : ""}!</span>
           </div>
         )}

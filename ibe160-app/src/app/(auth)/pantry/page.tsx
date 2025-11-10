@@ -5,6 +5,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { Camera, Plus } from "lucide-react"
 import { PantryItemCard } from "@/components/PantryItemCard"
 import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
@@ -198,12 +199,14 @@ export default function PantryPage() {
                   onClick={() => setIsScannerOpen(true)}
                   className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 flex items-center gap-2"
                 >
-                  📷 Scan Barcode
+                  <Camera className="w-5 h-5" />
+                  Scan Barcode
                 </button>
                 <button
                   onClick={() => setIsAddDialogOpen(true)}
-                  className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 flex items-center gap-2"
                 >
+                  <Plus className="w-5 h-5" />
                   Add Item
                 </button>
               </div>
