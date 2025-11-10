@@ -11,58 +11,85 @@ export interface StubFoodItem {
   createdAt: string
 }
 
-// In-memory store (replaced by database in production)
-export let stubItems: StubFoodItem[] = [
-  {
-    id: "1",
-    name: "Milk",
-    category: "dairy",
-    quantity: 1,
-    unit: "L",
-    bestBeforeDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    name: "Cherry Tomatoes",
-    category: "produce",
-    quantity: 500,
-    unit: "g",
-    bestBeforeDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "3",
-    name: "Chicken Breast",
-    category: "meat",
-    quantity: 800,
-    unit: "g",
-    bestBeforeDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-]
+// Use global to persist across HMR in dev mode
+declare global {
+  var __stubItems: StubFoodItem[] | undefined
+}
+
+// Initialize default items only once
+if (!global.__stubItems) {
+  global.__stubItems = [
+    {
+      id: "1",
+      name: "Milk",
+      category: "dairy",
+      quantity: 1,
+      unit: "L",
+      bestBeforeDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "2",
+      name: "Cherry Tomatoes",
+      category: "produce",
+      quantity: 500,
+      unit: "g",
+      bestBeforeDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "3",
+      name: "Chicken Breast",
+      category: "meat",
+      quantity: 800,
+      unit: "g",
+      bestBeforeDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+  ]
+  console.log("[stubData] Initialized with default items")
+}
 
 // Helper functions to manage stub data
 export function getStubItems(): StubFoodItem[] {
-  return stubItems
+  console.log("[stubData] Getting items, count:", global.__stubItems?.length)
+  return global.__stubItems || []
 }
 
 export function addStubItem(item: StubFoodItem): void {
-  stubItems.push(item)
+  if (!global.__stubItems) global.__stubItems = []
+  global.__stubItems.push(item)
+  console.log("[stubData] Added item:", item.id, item.name, "- Total items:", global.__stubItems.length)
 }
 
 export function updateStubItem(id: string, data: Partial<StubFoodItem>): StubFoodItem | null {
-  const index = stubItems.findIndex((item) => item.id === id)
-  if (index === -1) return null
+  if (!global.__stubItems) {
+    console.error("[stubData] No items array found!")
+    return null
+  }
 
-  stubItems[index] = { ...stubItems[index], ...data }
-  return stubItems[index]
+  const index = global.__stubItems.findIndex((item) => item.id === id)
+  console.log("[stubData] Updating item:", id, "- Found at index:", index, "- Total items:", global.__stubItems.length)
+
+  if (index === -1) {
+    console.error("[stubData] Item not found:", id, "- Available IDs:", global.__stubItems.map(i => i.id))
+    return null
+  }
+
+  global.__stubItems[index] = { ...global.__stubItems[index], ...data }
+  console.log("[stubData] Updated item:", global.__stubItems[index])
+  return global.__stubItems[index]
 }
 
 export function deleteStubItem(id: string): boolean {
-  const index = stubItems.findIndex((item) => item.id === id)
+  if (!global.__stubItems) return false
+
+  const index = global.__stubItems.findIndex((item) => item.id === id)
+  console.log("[stubData] Deleting item:", id, "- Found at index:", index)
+
   if (index === -1) return false
 
-  stubItems.splice(index, 1)
+  global.__stubItems.splice(index, 1)
+  console.log("[stubData] Deleted item - Remaining items:", global.__stubItems.length)
   return true
 }
