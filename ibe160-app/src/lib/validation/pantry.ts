@@ -14,9 +14,11 @@ export const foodItemSchema = z.object({
   bestBeforeDate: z.string().refine(
     (date) => {
       const parsed = new Date(date)
-      return parsed > new Date()
+      const today = new Date()
+      today.setHours(0, 0, 0, 0) // Reset to start of day
+      return parsed >= today
     },
-    { message: "Expiration date must be in the future" }
+    { message: "Expiration date cannot be in the past" }
   ),
 })
 

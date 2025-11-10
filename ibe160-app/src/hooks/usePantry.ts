@@ -91,15 +91,24 @@ export function useUpdateItem() {
   return useMutation({
     mutationFn: async (item: FoodItem) => {
       const { id, createdAt, ...updateData } = item
+      console.log("[usePantry] Updating item ID:", id)
+      console.log("[usePantry] Update data:", updateData)
+
       const response = await fetch(`/api/pantry/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),
       })
+
       if (!response.ok) {
-        throw new Error("Failed to update item")
+        const errorData = await response.json().catch(() => null)
+        console.error("[usePantry] Update failed:", response.status, errorData)
+        throw new Error(errorData?.error?.message || "Failed to update item")
       }
-      return response.json()
+
+      const result = await response.json()
+      console.log("[usePantry] Update successful:", result)
+      return result
     },
     // Optimistic update
     onMutate: async (updatedItem) => {
