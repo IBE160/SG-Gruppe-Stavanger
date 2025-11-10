@@ -25,6 +25,10 @@ interface GeminiResponse {
 
 export async function generateWithGemini(prompt: string): Promise<string> {
   try {
+    if (!GOOGLE_AI_API_KEY) {
+      throw new Error("Google AI API key is missing")
+    }
+
     const requestBody: GeminiRequest = {
       contents: [
         {
@@ -37,7 +41,10 @@ export async function generateWithGemini(prompt: string): Promise<string> {
       ],
     }
 
-    const response = await fetch(`${GEMINI_API_URL}?key=${GOOGLE_AI_API_KEY}`, {
+    const url = `${GEMINI_API_URL}?key=${GOOGLE_AI_API_KEY}`
+    console.log("🤖 Calling Gemini API:", GEMINI_MODEL)
+
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,11 +53,19 @@ export async function generateWithGemini(prompt: string): Promise<string> {
     })
 
     if (!response.ok) {
-      throw new Error(`Gemini API error: ${response.statusText}`)
+      const errorText = await response.text()
+      console.error("❌ Gemini API error:", {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText,
+        url: GEMINI_API_URL,
+      })
+      throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
     }
 
     const data: GeminiResponse = await response.json()
     const text = data.candidates[0]?.content?.parts[0]?.text || ""
+    console.log("✅ Gemini API success, generated", text.length, "characters")
     return text
   } catch (error) {
     console.error("Gemini API error:", error)
