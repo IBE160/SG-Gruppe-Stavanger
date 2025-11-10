@@ -13,6 +13,7 @@ export default function RecipesPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [aiQuery, setAiQuery] = useState("")
   const [searchMode, setSearchMode] = useState<"text" | "ingredients" | "ai">("text")
+  const [selectedRecipe, setSelectedRecipe] = useState<any>(null)
 
   // Fetch pantry items for ingredient-based search
   const { data: pantryItems = [] } = usePantryItems()
@@ -328,15 +329,95 @@ export default function RecipesPage() {
                         View Recipe
                       </a>
                     ) : (
-                      <div className="text-sm text-gray-500 italic">
-                        AI-generated recipe (expand for details)
-                      </div>
+                      <button
+                        onClick={() => setSelectedRecipe(recipe)}
+                        className="w-full px-4 py-2 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
+                      >
+                        View Details
+                      </button>
                     )}
                   </div>
                 </div>
               ))}
             </div>
           </>
+        )}
+
+        {/* Recipe Details Modal */}
+        {selectedRecipe && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedRecipe(null)}
+          >
+            <div
+              className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h2 className="text-2xl font-bold text-gray-900 pr-8">
+                    {selectedRecipe.title}
+                  </h2>
+                  <button
+                    onClick={() => setSelectedRecipe(null)}
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="flex gap-4 text-sm text-gray-600 mb-6">
+                  {selectedRecipe.cookingTime > 0 && (
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      {selectedRecipe.cookingTime} min
+                    </span>
+                  )}
+                  {selectedRecipe.servings > 0 && (
+                    <span className="flex items-center gap-1">
+                      <Users className="w-4 h-4" />
+                      {selectedRecipe.servings} servings
+                    </span>
+                  )}
+                </div>
+
+                {selectedRecipe.ingredients && selectedRecipe.ingredients.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Ingredients</h3>
+                    <ul className="list-disc list-inside space-y-1">
+                      {selectedRecipe.ingredients.map((ingredient: string, idx: number) => (
+                        <li key={idx} className="text-gray-700">
+                          {ingredient}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {selectedRecipe.instructions && (
+                  <div className="mb-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Instructions</h3>
+                    <div className="text-gray-700 whitespace-pre-line">
+                      {selectedRecipe.instructions}
+                    </div>
+                  </div>
+                )}
+
+                {selectedRecipe.tags && selectedRecipe.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {selectedRecipe.tags.map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

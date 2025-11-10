@@ -111,23 +111,26 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
   } catch (error) {
     console.error("AI recipe search failed, using fallback:", error)
 
-    // Fallback to demo recipes when AI fails (quota exceeded, API down, etc.)
+    // Fallback message when AI is unavailable
+    // Provides helpful guidance to user
     return [
       {
-        title: `${query} - AI Demo Recipe 1`,
-        ingredients: ["Main ingredient", "Seasoning", "Vegetables"],
-        cookingTime: 30,
-        servings: 4,
-        instructions: "AI temporarily unavailable. This is a demo recipe. Try the regular recipe search for real results!",
-        tags: ["demo", "ai-fallback"],
-      },
-      {
-        title: `${query} - AI Demo Recipe 2`,
-        ingredients: ["Protein source", "Herbs", "Side dish"],
-        cookingTime: 25,
-        servings: 2,
-        instructions: "AI quota exceeded. This is a placeholder. The AI will work again in a few seconds!",
-        tags: ["demo", "ai-fallback"],
+        id: 99991,
+        title: `AI Search Temporarily Unavailable`,
+        ingredients: ["The Google Gemini AI service is currently unavailable"],
+        cookingTime: 0,
+        servings: 0,
+        instructions: `The AI recipe search is temporarily unavailable due to API quota limits or service issues.
+
+Please try one of these alternatives:
+1. Use the "Search by Name" tab to find recipes with Spoonacular
+2. Use the "Use My Pantry" tab to find recipes based on your ingredients
+3. Wait a few moments and try the AI search again
+
+The AI service will automatically resume when available.`,
+        tags: ["system-message"],
+        image: "",
+        sourceUrl: "",
       },
     ]
   }
