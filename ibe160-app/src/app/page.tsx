@@ -47,37 +47,13 @@ export default function Home() {
                 Track your pantry, get AI recipe suggestions, and reduce food waste.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/register"
-                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold rounded-xl hover:shadow-lg transition-all"
-                >
-                  Get Started Free
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 text-lg font-semibold rounded-xl hover:border-gray-400 transition-all"
-                >
-                  Sign In
-                </Link>
-              </div>
-
-              {/* Trust Signals */}
-              <div className="flex items-center gap-6 pt-4">
-                <div className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm text-gray-600">Free to use</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm text-gray-600">No credit card</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm text-gray-600">Setup in 2 min</span>
-                </div>
-              </div>
+              <Link
+                href="/register"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold rounded-xl hover:shadow-lg transition-all"
+              >
+                Get Started Free
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
 
             {/* Right: Visual Preview */}
@@ -125,35 +101,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="bg-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-12 text-center">
-            <div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <TrendingDown className="w-8 h-8 text-green-400" />
-                <div className="text-5xl font-bold">30%</div>
-              </div>
-              <div className="text-gray-400 text-lg">Less food waste</div>
-            </div>
-            <div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <DollarSign className="w-8 h-8 text-green-400" />
-                <div className="text-5xl font-bold">$1.5K</div>
-              </div>
-              <div className="text-gray-400 text-lg">Saved per year</div>
-            </div>
-            <div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <ChefHat className="w-8 h-8 text-green-400" />
-                <div className="text-5xl font-bold">1000+</div>
-              </div>
-              <div className="text-gray-400 text-lg">AI recipes</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Features Grid */}
       <div className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-6">
@@ -190,22 +137,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="py-16 bg-gradient-to-br from-green-600 to-blue-600">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to get started?
-          </h2>
-          <Link
-            href="/register"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-green-600 text-lg font-bold rounded-xl hover:shadow-2xl transition-all"
-          >
-            <Zap className="w-5 h-5" />
-            Get Started Free
-          </Link>
         </div>
       </div>
 
