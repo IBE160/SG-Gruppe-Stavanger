@@ -16,6 +16,12 @@ export default function Home() {
 
           <div className="flex gap-4 justify-center">
             <Link
+              href="/pantry"
+              className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors shadow-lg"
+            >
+              🎯 Try Demo Now
+            </Link>
+            <Link
               href="/register"
               className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
             >
@@ -72,12 +78,20 @@ export default function Home() {
             Households waste over 1 billion meals per day globally.
             Let's change that together.
           </p>
-          <Link
-            href="/register"
-            className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            Start Your Journey
-          </Link>
+          <div className="flex gap-4 justify-center">
+            <Link
+              href="/pantry"
+              className="inline-block px-8 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-lg"
+            >
+              🎯 Try Demo
+            </Link>
+            <Link
+              href="/register"
+              className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              Start Your Journey
+            </Link>
+          </div>
         </div>
 
         {/* Footer */}
