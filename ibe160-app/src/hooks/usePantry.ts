@@ -49,8 +49,9 @@ export function useAddItem() {
       }
       return response.json()
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pantry"] })
+    onSuccess: async () => {
+      // Wait for the cache to be refreshed before closing dialog
+      await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })
 }
@@ -71,8 +72,9 @@ export function useUpdateItem() {
       }
       return response.json()
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pantry"] })
+    onSuccess: async () => {
+      // Wait for the cache to be refreshed before closing dialog
+      await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })
 }
@@ -91,8 +93,9 @@ export function useDeleteItem() {
       }
       return response.json()
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pantry"] })
+    onSuccess: async () => {
+      // Wait for the cache to be refreshed before closing dialog
+      await queryClient.invalidateQueries({ queryKey: ["pantry"] })
     },
   })
 }
