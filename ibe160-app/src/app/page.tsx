@@ -1,4 +1,8 @@
 import Link from "next/link"
+import {
+  Camera, Sparkles, Bell, ShoppingCart, Palette, BarChart3,
+  Users, Gamepad2, Check, Target, Salad
+} from "lucide-react"
 
 export default function Home() {
   return (
@@ -8,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🥗</span>
+              <Salad className="w-7 h-7 text-green-600" />
               <span className="text-xl font-semibold text-gray-900">ibe160</span>
             </div>
             <div className="flex items-center gap-4">
@@ -36,8 +40,9 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/pantry" className="airbnb-button-primary text-lg px-8 py-4 w-full sm:w-auto">
-                🎯 Try Demo Now
+              <Link href="/pantry" className="airbnb-button-primary text-lg px-8 py-4 w-full sm:w-auto flex items-center justify-center gap-2">
+                <Target className="w-5 h-5" />
+                Try Demo Now
               </Link>
               <Link href="/register" className="airbnb-button-secondary text-lg px-8 py-4 w-full sm:w-auto">
                 Get Started Free
@@ -59,7 +64,9 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">📸</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-blue-50">
+              <Camera className="w-6 h-6 text-blue-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Barcode Scanning
             </h3>
@@ -69,7 +76,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">🤖</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-purple-50">
+              <Sparkles className="w-6 h-6 text-purple-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               AI Recipe Search
             </h3>
@@ -79,7 +88,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">🔔</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-yellow-50">
+              <Bell className="w-6 h-6 text-yellow-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Smart Alerts
             </h3>
@@ -89,7 +100,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">🛒</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+              <ShoppingCart className="w-6 h-6 text-green-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Shopping Lists
             </h3>
@@ -99,7 +112,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">🎨</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-pink-50">
+              <Palette className="w-6 h-6 text-pink-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Creative Mode
             </h3>
@@ -109,7 +124,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">📊</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50">
+              <BarChart3 className="w-6 h-6 text-indigo-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Nutrition Analysis
             </h3>
@@ -119,7 +136,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">👨‍👩‍👧‍👦</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-orange-50">
+              <Users className="w-6 h-6 text-orange-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Family Sharing
             </h3>
@@ -129,7 +148,9 @@ export default function Home() {
           </div>
 
           <div className="airbnb-card p-8 hover-lift">
-            <div className="text-4xl mb-4">🎮</div>
+            <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-red-50">
+              <Gamepad2 className="w-6 h-6 text-red-600" />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
               Gamification
             </h3>
@@ -170,8 +191,9 @@ export default function Home() {
             Join thousands making a difference. Start tracking your pantry today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/pantry" className="airbnb-button-primary text-lg px-8 py-4">
-              🎯 Try Demo Now
+            <Link href="/pantry" className="airbnb-button-primary text-lg px-8 py-4 flex items-center justify-center gap-2">
+              <Target className="w-5 h-5" />
+              Try Demo Now
             </Link>
             <Link href="/register" className="airbnb-button-secondary text-lg px-8 py-4">
               Sign Up Free
@@ -189,7 +211,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="flex items-start gap-4">
-              <div className="text-green-500 text-2xl">✓</div>
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check className="w-4 h-4 text-green-600" />
+              </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">User Preferences</h3>
                 <p className="text-gray-600">Dietary restrictions, allergies, cuisine preferences</p>
@@ -197,7 +221,9 @@ export default function Home() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="text-green-500 text-2xl">✓</div>
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check className="w-4 h-4 text-green-600" />
+              </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">AI-Enhanced Search</h3>
                 <p className="text-gray-600">Google Gemini powered recipe suggestions</p>
@@ -205,7 +231,9 @@ export default function Home() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="text-green-500 text-2xl">✓</div>
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check className="w-4 h-4 text-green-600" />
+              </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">Smart Shopping</h3>
                 <p className="text-gray-600">AI suggestions based on expiring items</p>
@@ -213,7 +241,9 @@ export default function Home() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="text-green-500 text-2xl">✓</div>
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check className="w-4 h-4 text-green-600" />
+              </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">Push & Email Alerts</h3>
                 <p className="text-gray-600">Daily notifications for expiring food</p>
@@ -228,7 +258,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🥗</span>
+              <Salad className="w-7 h-7 text-green-600" />
               <span className="text-xl font-semibold text-gray-900">ibe160</span>
             </div>
             <p className="text-gray-600 text-sm">
