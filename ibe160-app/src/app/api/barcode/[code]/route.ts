@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server"
 // GET /api/barcode/[code] - Lookup product info by barcode
 export async function GET(
   req: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
-    const { code } = params
+    const { code } = await params
 
     // Use Open Food Facts API (free, no API key required)
     const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
