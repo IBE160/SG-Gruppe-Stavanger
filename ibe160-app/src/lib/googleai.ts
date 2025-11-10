@@ -73,7 +73,7 @@ export async function generateWithGemini(prompt: string): Promise<string> {
   }
 }
 
-// AI-Enhanced Recipe Search
+// AI-Enhanced Recipe Search with Spoonacular Fallback
 export async function aiRecipeSearch(query: string, userPreferences?: any) {
   try {
     const prompt = `You are a recipe recommendation AI. Given the user's query and preferences, suggest 5 relevant recipes.
@@ -109,30 +109,31 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
     }
     return JSON.parse(jsonMatch[0])
   } catch (error) {
-    console.error("AI recipe search failed, using fallback:", error)
+    console.error("AI recipe search failed, falling back to Spoonacular:", error)
 
-    // Fallback message when AI is unavailable
-    // Provides helpful guidance to user
-    return [
-      {
-        id: 99991,
-        title: `AI Search Temporarily Unavailable`,
-        ingredients: ["The Google Gemini AI service is currently unavailable"],
-        cookingTime: 0,
-        servings: 0,
-        instructions: `The AI recipe search is temporarily unavailable due to API quota limits or service issues.
+    // Fallback: Use Spoonacular API with the query
+    try {
+      const { searchRecipes } = await import('./spoonacular')
+      const recipes = await searchRecipes(query, 5)
 
-Please try one of these alternatives:
-1. Use the "Search by Name" tab to find recipes with Spoonacular
-2. Use the "Use My Pantry" tab to find recipes based on your ingredients
-3. Wait a few moments and try the AI search again
+      if (recipes && recipes.length > 0) {
+        console.log("✅ Falling back to Spoonacular - found", recipes.length, "recipes")
+        return recipes.map((recipe: any) => ({
+          id: recipe.id,
+          title: recipe.title,
+          image: recipe.image,
+          readyInMinutes: recipe.readyInMinutes,
+          servings: recipe.servings,
+          sourceUrl: recipe.sourceUrl,
+        }))
+      }
+    } catch (spoonacularError) {
+      console.error("Spoonacular fallback also failed:", spoonacularError)
+    }
 
-The AI service will automatically resume when available.`,
-        tags: ["system-message"],
-        image: "",
-        sourceUrl: "",
-      },
-    ]
+    // Final fallback: return demo recipes relevant to query
+    console.warn("⚠️ Both AI and Spoonacular failed - using demo recipes")
+    return []
   }
 }
 
