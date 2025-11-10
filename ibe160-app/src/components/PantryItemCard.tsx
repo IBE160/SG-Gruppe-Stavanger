@@ -55,36 +55,65 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     }
   }
 
-  // Map common food names to Unsplash photo IDs
+  // Map common food names to Unsplash photo IDs (including Norwegian names)
   const foodImageMap: Record<string, string> = {
+    // Dairy / Meieri
     "milk": "photo-1563636619-e9143da7973b",
+    "melk": "photo-1563636619-e9143da7973b",
     "cheese": "photo-1486297678162-eb2a19b0a32d",
+    "ost": "photo-1486297678162-eb2a19b0a32d",
     "yogurt": "photo-1488477181946-6428a0291777",
+    "yoghurt": "photo-1488477181946-6428a0291777",
     "butter": "photo-1589985270826-4b7bb135bc9d",
+    "smør": "photo-1589985270826-4b7bb135bc9d",
 
+    // Vegetables / Grønnsaker
     "tomato": "photo-1592924357228-91a4daadcfea",
     "tomatoes": "photo-1592924357228-91a4daadcfea",
+    "tomat": "photo-1592924357228-91a4daadcfea",
+    "tomater": "photo-1592924357228-91a4daadcfea",
     "cherry tomatoes": "photo-1606923829579-0cb981a83e2e",
+    "kirsebærtomater": "photo-1606923829579-0cb981a83e2e",
     "lettuce": "photo-1622206151226-18ca2c9ab4a1",
+    "salat": "photo-1622206151226-18ca2c9ab4a1",
     "carrot": "photo-1598170845058-32b9d6a5da37",
     "carrots": "photo-1598170845058-32b9d6a5da37",
+    "gulrot": "photo-1598170845058-32b9d6a5da37",
+    "gulrøtter": "photo-1598170845058-32b9d6a5da37",
     "onion": "photo-1508747703725-719777637510",
+    "løk": "photo-1508747703725-719777637510",
     "potato": "photo-1518977676601-b53f82aba655",
     "potatoes": "photo-1518977676601-b53f82aba655",
+    "potet": "photo-1518977676601-b53f82aba655",
+    "poteter": "photo-1518977676601-b53f82aba655",
     "broccoli": "photo-1628773822503-930a7eaecf80",
+    "brokkoli": "photo-1628773822503-930a7eaecf80",
 
+    // Meat / Kjøtt
     "chicken": "photo-1604503468506-a8da13d82791",
     "chicken breast": "photo-1604503468506-a8da13d82791",
+    "kylling": "photo-1604503468506-a8da13d82791",
+    "kyllingbryst": "photo-1604503468506-a8da13d82791",
     "beef": "photo-1602470520998-f4a52199a3d6",
+    "biff": "photo-1602470520998-f4a52199a3d6",
+    "storfe": "photo-1602470520998-f4a52199a3d6",
     "pork": "photo-1602470520998-f4a52199a3d6",
+    "svinekjøtt": "photo-1602470520998-f4a52199a3d6",
     "salmon": "photo-1485921325833-c519f76c4927",
+    "laks": "photo-1485921325833-c519f76c4927",
     "fish": "photo-1485921325833-c519f76c4927",
+    "fisk": "photo-1485921325833-c519f76c4927",
 
+    // Pantry / Spikermat
     "bread": "photo-1509440159596-0249088772ff",
+    "brød": "photo-1509440159596-0249088772ff",
     "rice": "photo-1586201375761-83865001e31c",
+    "ris": "photo-1586201375761-83865001e31c",
     "pasta": "photo-1551462147-ff29053bfc14",
     "eggs": "photo-1582722872445-44dc5f7e3c8f",
     "egg": "photo-1582722872445-44dc5f7e3c8f",
+    "egg": "photo-1582722872445-44dc5f7e3c8f",
+    "egge": "photo-1582722872445-44dc5f7e3c8f",
   }
 
   const getUnsplashImage = (name: string) => {
