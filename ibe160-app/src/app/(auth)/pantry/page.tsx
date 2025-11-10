@@ -10,6 +10,7 @@ import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Toast } from "@/components/Toast"
+import BarcodeScanner from "@/components/BarcodeScanner"
 import { usePantryItems, useDeleteItem, type FoodItem } from "@/hooks/usePantry"
 
 export default function PantryPage() {
@@ -17,11 +18,13 @@ export default function PantryPage() {
   const deleteItemMutation = useDeleteItem()
 
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [isScannerOpen, setIsScannerOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<FoodItem | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [deletingItem, setDeletingItem] = useState<FoodItem | null>(null)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
+  const [scannedProduct, setScannedProduct] = useState<any>(null)
 
   const handleItemAdded = () => {
     setToast({ message: "Item added successfully!", type: "success" })
@@ -58,6 +61,33 @@ export default function PantryPage() {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false)
     setDeletingItem(null)
+  }
+
+  const handleBarcodeScan = async (barcode: string) => {
+    setIsScannerOpen(false)
+    setToast({ message: `Barcode detected: ${barcode}. Looking up product...`, type: "success" })
+
+    try {
+      const res = await fetch(`/api/barcode/${barcode}`)
+      if (res.ok) {
+        const product = await res.json()
+        setScannedProduct(product)
+        setIsAddDialogOpen(true)
+      } else {
+        setToast({
+          message: "Product not found. Please add manually.",
+          type: "error",
+        })
+        setIsAddDialogOpen(true)
+      }
+    } catch (error) {
+      console.error("Barcode lookup error:", error)
+      setToast({
+        message: "Failed to lookup product. Please add manually.",
+        type: "error",
+      })
+      setIsAddDialogOpen(true)
+    }
   }
 
   return (
@@ -163,12 +193,20 @@ export default function PantryPage() {
               <p className="text-sm text-gray-600">
                 {items.length} item{items.length !== 1 ? "s" : ""} in pantry
               </p>
-              <button
-                onClick={() => setIsAddDialogOpen(true)}
-                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
-              >
-                Add Item
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setIsScannerOpen(true)}
+                  className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 flex items-center gap-2"
+                >
+                  📷 Scan Barcode
+                </button>
+                <button
+                  onClick={() => setIsAddDialogOpen(true)}
+                  className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
+                >
+                  Add Item
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -213,6 +251,11 @@ export default function PantryPage() {
           onCancel={handleDeleteCancel}
           isLoading={deleteItemMutation.isPending}
         />
+
+        {/* Barcode Scanner */}
+        {isScannerOpen && (
+          <BarcodeScanner onScan={handleBarcodeScan} onClose={() => setIsScannerOpen(false)} />
+        )}
 
         {/* Toast Notification */}
         {toast && (
