@@ -4,7 +4,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell } from "lucide-react"
+import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell, Salad } from "lucide-react"
 
 export default async function ProfilePage() {
   const session = await auth()
@@ -14,18 +14,50 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-6 py-8">
-            <div className="flex items-center gap-3 mb-6">
-              <User className="w-8 h-8 text-gray-600" />
-              <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
-            </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Airbnb Style */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Profile
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </div>
 
-            <div className="space-y-6">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Profile</h1>
+            <p className="text-gray-600">Manage your account and preferences</p>
+          </div>
+
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
+            <div className="space-y-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
                   <User className="w-4 h-4" />
                   Name
                 </label>
@@ -35,7 +67,7 @@ export default async function ProfilePage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
                   <Mail className="w-4 h-4" />
                   Email
                 </label>
@@ -43,31 +75,32 @@ export default async function ProfilePage() {
               </div>
 
               <div className="pt-6 border-t border-gray-200 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <h3 className="text-sm font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                <div className="grid grid-cols-2 gap-3">
                   <Link
                     href="/pantry"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
                     <Package className="w-5 h-5" />
                     My Pantry
                   </Link>
                   <Link
                     href="/recipes"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
                     <ChefHat className="w-5 h-5" />
                     Recipes
                   </Link>
                   <Link
                     href="/grocery"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Grocery List
                   </Link>
                   <Link
                     href="/preferences"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
                     <Bell className="w-5 h-5" />
                     Preferences
@@ -81,7 +114,7 @@ export default async function ProfilePage() {
                 >
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors"
                   >
                     <LogOut className="w-5 h-5" />
                     Sign out
