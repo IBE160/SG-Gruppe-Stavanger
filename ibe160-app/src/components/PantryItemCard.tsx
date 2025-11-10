@@ -159,6 +159,20 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     "oranges": "photo-1582979512210-99b6a53386f9",
     "appelsin": "photo-1582979512210-99b6a53386f9",
     "appelsiner": "photo-1582979512210-99b6a53386f9",
+    "strawberry": "photo-1464965911861-746a04b4bca6",
+    "strawberries": "photo-1464965911861-746a04b4bca6",
+    "jordbær": "photo-1464965911861-746a04b4bca6",
+    "blueberry": "photo-1498557850523-fd3d118b962e",
+    "blueberries": "photo-1498557850523-fd3d118b962e",
+    "blåbær": "photo-1498557850523-fd3d118b962e",
+    "grape": "photo-1599819177-ff7d52d81c88",
+    "grapes": "photo-1599819177-ff7d52d81c88",
+    "druer": "photo-1599819177-ff7d52d81c88",
+    "lemon": "photo-1590502593747-42a996133562",
+    "lemons": "photo-1590502593747-42a996133562",
+    "sitron": "photo-1590502593747-42a996133562",
+    "avocado": "photo-1523049673857-eb18f1d7b578",
+    "avokado": "photo-1523049673857-eb18f1d7b578",
 
     // Pantry / Spikermat
     "bread": "photo-1509440159596-0249088772ff",
@@ -169,6 +183,19 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     "eggs": "photo-1582722872445-44dc5f7e3c8f",
     "egg": "photo-1582722872445-44dc5f7e3c8f",
     "egge": "photo-1582722872445-44dc5f7e3c8f",
+    "flour": "photo-1556910110-a5a63dfd393c",
+    "mel": "photo-1556910110-a5a63dfd393c",
+    "sugar": "photo-1587241321921-91aaab3e5b3e",
+    "sukker": "photo-1587241321921-91aaab3e5b3e",
+    "oil": "photo-1474979266404-7eaacbcd87c5",
+    "olive oil": "photo-1474979266404-7eaacbcd87c5",
+    "olje": "photo-1474979266404-7eaacbcd87c5",
+    "salt": "photo-1532336414038-cf19250c5757",
+    "coffee": "photo-1447933601403-0c6688de566e",
+    "kaffe": "photo-1447933601403-0c6688de566e",
+    "nescafe": "photo-1447933601403-0c6688de566e",
+    "tea": "photo-1564890369478-c89ca6d9cde9",
+    "te": "photo-1564890369478-c89ca6d9cde9",
   }
 
   const getUnsplashImage = (name: string) => {
@@ -180,10 +207,8 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
       return `https://images.unsplash.com/${photoId}?w=600&h=400&fit=crop&q=90&auto=format`
     }
 
-    // Fallback: Use a curated collection of food photos
-    // Collection IDs: 3816513 (food), 1353119 (ingredients)
-    const collectionId = "3816513"
-    return `https://source.unsplash.com/collection/${collectionId}/600x400?${normalizedName}`
+    // No fallback - just return null and use gradient background
+    return null
   }
 
   return (
@@ -194,15 +219,22 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     >
       {/* Food Image */}
       <div className={`relative h-48 bg-gradient-to-br ${getCategoryGradient(item.category)}`}>
-        <img
-          src={getUnsplashImage(item.name)}
-          alt={item.name}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            // Fallback to gradient background if image fails to load
-            e.currentTarget.style.display = 'none'
-          }}
-        />
+        {getUnsplashImage(item.name) ? (
+          <img
+            src={getUnsplashImage(item.name)!}
+            alt={item.name}
+            className="w-full h-full object-cover"
+            loading="lazy"
+            onError={(e) => {
+              // Fallback to gradient background if image fails to load
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-6xl opacity-20">🍽️</span>
+          </div>
+        )}
         {isExpiringSoon && (
           <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5" />
