@@ -1,7 +1,7 @@
 import Link from "next/link"
 import {
   Camera, Sparkles, Bell, ShoppingCart, ChefHat, Zap,
-  ArrowRight, Check, TrendingDown, DollarSign, Salad
+  Check, TrendingDown, DollarSign, Salad
 } from "lucide-react"
 
 export default function Home() {
@@ -46,14 +46,6 @@ export default function Home() {
               <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
                 Track your pantry, get AI recipe suggestions, and reduce food waste.
               </p>
-
-              <Link
-                href="/register"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-green-600 to-green-500 text-white text-base font-medium rounded-xl hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
 
             {/* Right: Visual Preview */}
