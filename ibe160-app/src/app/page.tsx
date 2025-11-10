@@ -7,19 +7,19 @@ import {
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      {/* Navigation - Airbnb Style */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Salad className="w-7 h-7 text-green-600" />
-              <span className="text-xl font-semibold text-gray-900">ibe160</span>
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
             </div>
-            <div className="flex items-center gap-4">
-              <Link href="/login" className="text-gray-700 font-medium hover:text-gray-900 transition-colors">
+            <div className="flex items-center gap-3">
+              <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
                 Sign in
               </Link>
-              <Link href="/register" className="airbnb-button-primary">
+              <Link href="/register" className="text-sm font-medium text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors">
                 Get Started
               </Link>
             </div>
@@ -27,73 +27,73 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section - Massive & Visual */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-white to-blue-50">
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* Hero Section - Airbnb Style */}
+      <div className="relative overflow-hidden bg-white">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Value Prop */}
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-sm font-medium text-green-700">
-                <Sparkles className="w-4 h-4" />
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
+                <Sparkles className="w-3.5 h-3.5" />
                 AI-Powered Food Waste Solution
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-                Stop wasting food.
-                <span className="block text-green-600 mt-2">Start saving money.</span>
+              <h1 className="text-5xl lg:text-6xl font-semibold text-gray-900 leading-[1.1] tracking-tight">
+                Stop wasting food.<br/>
+                <span className="text-green-600">Start saving money.</span>
               </h1>
 
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
                 Track your pantry, get AI recipe suggestions, and reduce food waste.
               </p>
 
               <Link
                 href="/register"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold rounded-xl hover:shadow-lg transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-green-600 to-green-500 text-white text-base font-medium rounded-xl hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
               >
-                Get Started Free
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Get Started
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
             {/* Right: Visual Preview */}
             <div className="relative">
-              <div className="airbnb-card p-8 bg-white shadow-2xl">
-                <div className="space-y-6">
+              <div className="bg-white rounded-3xl border border-gray-200 shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300">
+                <div className="space-y-5">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                      <Salad className="w-6 h-6 text-green-600" />
+                    <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                      <Salad className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Your Pantry</h3>
-                      <p className="text-sm text-gray-600">12 items tracked</p>
+                      <h3 className="font-semibold text-gray-900 text-sm">Your Pantry</h3>
+                      <p className="text-xs text-gray-500">12 items tracked</p>
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <span className="text-sm font-medium">Tomatoes</span>
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                      <span className="text-sm font-medium text-gray-900">Tomatoes</span>
                       <span className="text-xs text-green-600 font-medium">Fresh</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                      <span className="text-sm font-medium">Milk</span>
+                    <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border border-yellow-100 hover:bg-yellow-100 transition-colors">
+                      <span className="text-sm font-medium text-gray-900">Milk</span>
                       <span className="text-xs text-yellow-700 font-medium">2 days left</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <span className="text-sm font-medium">Chicken</span>
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                      <span className="text-sm font-medium text-gray-900">Chicken</span>
                       <span className="text-xs text-green-600 font-medium">Fresh</span>
                     </div>
                   </div>
 
-                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg">
-                    <Sparkles className="w-5 h-5" />
+                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
+                    <Sparkles className="w-4 h-4" />
                     Find Recipes with AI
                   </button>
                 </div>
               </div>
 
               {/* Floating badge */}
-              <div className="absolute -top-4 -right-4 px-4 py-2 bg-green-600 text-white rounded-full text-sm font-semibold shadow-lg">
+              <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-green-600 text-white rounded-full text-xs font-medium shadow-lg">
                 ✨ AI Powered
               </div>
             </div>
@@ -101,36 +101,36 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Features Grid */}
-      <div className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="airbnb-card p-8 hover-lift">
+      {/* Features Grid - Airbnb Style */}
+      <div className="py-20 bg-gray-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1.5">
                     AI Recipe Search
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-sm text-gray-600 leading-relaxed">
                     Get personalized recipes powered by Google Gemini AI
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="airbnb-card p-8 hover-lift">
+            <div className="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
                   <Bell className="w-6 h-6 text-yellow-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1.5">
                     Expiration Alerts
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-sm text-gray-600 leading-relaxed">
                     Get notified before food expires to reduce waste
                   </p>
                 </div>
@@ -140,10 +140,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 bg-white">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-gray-600 text-sm">
+      {/* Footer - Airbnb Style */}
+      <footer className="border-t border-gray-200 py-12 bg-white">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
+          <p className="text-gray-500 text-xs">
             Built with Next.js, TypeScript & Google Gemini AI
           </p>
         </div>
