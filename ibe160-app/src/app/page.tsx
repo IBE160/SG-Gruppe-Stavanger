@@ -66,7 +66,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 text-sm">Your Pantry</h3>
-                      <p className="text-xs text-gray-500">12 items tracked</p>
+                      <p className="text-xs text-gray-500">Track your ingredients</p>
                     </div>
                   </div>
 
@@ -85,10 +85,13 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
+                  <Link
+                    href="/register"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
+                  >
                     <Sparkles className="w-4 h-4" />
                     Find Recipes with AI
-                  </button>
+                  </Link>
                 </div>
               </div>
 
