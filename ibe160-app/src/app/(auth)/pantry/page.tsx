@@ -5,7 +5,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Camera, Plus } from "lucide-react"
+import { Camera, Plus, Salad, LogOut } from "lucide-react"
 import { PantryItemCard } from "@/components/PantryItemCard"
 import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
@@ -13,6 +13,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Toast } from "@/components/Toast"
 import BarcodeScanner from "@/components/BarcodeScanner"
 import { usePantryItems, useDeleteItem, type FoodItem } from "@/hooks/usePantry"
+import { signOut } from "next-auth/react"
 
 export default function PantryPage() {
   const { data: items = [], isLoading, error, refetch } = usePantryItems()
@@ -92,28 +93,54 @@ export default function PantryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Pantry</h1>
-          <div className="flex gap-4">
-            <Link
-              href="/recipes"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-            >
-              Recipes
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Airbnb Style */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
             </Link>
-            <Link
-              href="/profile"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-            >
-              Profile
-            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        <div className="mb-8">
+          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">My Pantry</h1>
+          <p className="text-gray-600">Track your ingredients and reduce food waste</p>
         </div>
 
         {/* Offline-First Indicator */}
-        <div className="mb-4 bg-green-50 border border-green-200 rounded-lg px-4 py-2">
+        <div className="mb-6 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
           <p className="text-sm text-green-700">
             ✓ <strong>Offline-First:</strong> React Query enabled - changes sync automatically!
           </p>
@@ -145,11 +172,11 @@ export default function PantryPage() {
 
         {/* Error State */}
         {error && !isLoading && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <p className="text-red-600 mb-4">Failed to load your pantry. Please try again.</p>
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+            <p className="text-red-700 mb-4 font-medium">Failed to load your pantry. Please try again.</p>
             <button
               onClick={() => refetch()}
-              className="px-6 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700"
+              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors"
             >
               Retry
             </button>
@@ -158,31 +185,31 @@ export default function PantryPage() {
 
         {/* Empty State */}
         {!isLoading && !error && items.length === 0 && (
-          <div className="bg-white shadow rounded-lg p-8 text-center">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-12 text-center">
             <div className="max-w-md mx-auto">
-              <svg
-                className="mx-auto h-24 w-24 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                />
-              </svg>
-              <h2 className="mt-4 text-2xl font-semibold text-gray-900">Your pantry is empty</h2>
-              <p className="mt-2 text-gray-600">
+              <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                <Salad className="w-10 h-10 text-gray-400" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900 tracking-tight mb-2">Your pantry is empty</h2>
+              <p className="text-gray-600 mb-8">
                 Add your first ingredient to start tracking expiration dates!
               </p>
-              <button
-                onClick={() => setIsAddDialogOpen(true)}
-                className="mt-6 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
-              >
-                Add Item
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={() => setIsScannerOpen(true)}
+                  className="px-6 py-3 bg-white border border-gray-300 text-gray-900 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Camera className="w-5 h-5" />
+                  Scan Barcode
+                </button>
+                <button
+                  onClick={() => setIsAddDialogOpen(true)}
+                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add Item
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -190,21 +217,21 @@ export default function PantryPage() {
         {/* Items Grid */}
         {!isLoading && !error && items.length > 0 && (
           <>
-            <div className="mb-4 flex justify-between items-center">
-              <p className="text-sm text-gray-600">
+            <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <p className="text-sm font-medium text-gray-600">
                 {items.length} item{items.length !== 1 ? "s" : ""} in pantry
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setIsScannerOpen(true)}
-                  className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 flex items-center gap-2"
+                  className="px-5 py-2.5 bg-white border border-gray-300 text-gray-900 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center gap-2"
                 >
                   <Camera className="w-5 h-5" />
                   Scan Barcode
                 </button>
                 <button
                   onClick={() => setIsAddDialogOpen(true)}
-                  className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 flex items-center gap-2"
+                  className="px-5 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm hover:shadow-md flex items-center gap-2"
                 >
                   <Plus className="w-5 h-5" />
                   Add Item

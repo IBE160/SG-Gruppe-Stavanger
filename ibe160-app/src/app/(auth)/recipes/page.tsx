@@ -7,7 +7,8 @@ import { useRecipeSearch } from "@/hooks/useRecipes"
 import { usePantryItems } from "@/hooks/usePantry"
 import { searchByIngredients } from "@/lib/spoonacular"
 import { useQuery, useMutation } from "@tanstack/react-query"
-import { Search, ChefHat, Sparkles, Clock, Users, Lightbulb, ShoppingBag, UtensilsCrossed } from "lucide-react"
+import { Search, ChefHat, Sparkles, Clock, Users, Lightbulb, ShoppingBag, UtensilsCrossed, Salad, LogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 
 export default function RecipesPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -88,28 +89,54 @@ export default function RecipesPage() {
         : aiError
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Recipe Browser</h1>
-          <div className="flex gap-4">
-            <Link
-              href="/pantry"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-            >
-              Pantry
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Airbnb Style */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
             </Link>
-            <Link
-              href="/profile"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-            >
-              Profile
-            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        <div className="mb-8">
+          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Recipe Browser</h1>
+          <p className="text-gray-600">Discover recipes with AI, search by name, or use your pantry</p>
         </div>
 
         {/* Info Banner */}
-        <div className="airbnb-card p-6 mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-6 mb-8">
           <div className="flex items-start gap-3">
             <ChefHat className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-gray-800">
@@ -120,13 +147,13 @@ export default function RecipesPage() {
         </div>
 
         {/* Search Mode Toggle */}
-        <div className="airbnb-card p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <button
               onClick={() => setSearchMode("text")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
                 searchMode === "text"
-                  ? "airbnb-button-primary"
+                  ? "bg-gray-900 text-white shadow-md"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -135,9 +162,9 @@ export default function RecipesPage() {
             </button>
             <button
               onClick={() => setSearchMode("ingredients")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
                 searchMode === "ingredients"
-                  ? "airbnb-button-primary"
+                  ? "bg-gray-900 text-white shadow-md"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -146,7 +173,7 @@ export default function RecipesPage() {
             </button>
             <button
               onClick={() => setSearchMode("ai")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
                 searchMode === "ai"
                   ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -164,7 +191,7 @@ export default function RecipesPage() {
               placeholder="Search for recipes (e.g., pasta, chicken, tacos)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="airbnb-input"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
             />
           )}
 
