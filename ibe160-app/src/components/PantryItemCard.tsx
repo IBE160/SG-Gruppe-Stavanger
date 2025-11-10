@@ -92,12 +92,13 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     const photoId = foodImageMap[normalizedName]
 
     if (photoId) {
-      return `https://images.unsplash.com/${photoId}?w=200&h=200&fit=crop`
+      // Higher quality with better crop settings
+      return `https://images.unsplash.com/${photoId}?w=600&h=400&fit=crop&q=90`
     }
 
-    // Default fallback: search by name
+    // Default fallback: search by name with higher quality
     const searchTerm = encodeURIComponent(normalizedName + " food")
-    return `https://source.unsplash.com/200x200/?${searchTerm}`
+    return `https://source.unsplash.com/600x400/?${searchTerm}`
   }
 
   return (
