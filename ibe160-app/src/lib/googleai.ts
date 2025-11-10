@@ -75,7 +75,8 @@ export async function generateWithGemini(prompt: string): Promise<string> {
 
 // AI-Enhanced Recipe Search
 export async function aiRecipeSearch(query: string, userPreferences?: any) {
-  const prompt = `You are a recipe recommendation AI. Given the user's query and preferences, suggest 5 relevant recipes.
+  try {
+    const prompt = `You are a recipe recommendation AI. Given the user's query and preferences, suggest 5 relevant recipes.
 
 User Query: "${query}"
 
@@ -99,9 +100,8 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
   }
 ]`
 
-  const response = await generateWithGemini(prompt)
+    const response = await generateWithGemini(prompt)
 
-  try {
     // Extract JSON from response (remove markdown code blocks if present)
     const jsonMatch = response.match(/\[[\s\S]*\]/)
     if (!jsonMatch) {
@@ -109,8 +109,27 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
     }
     return JSON.parse(jsonMatch[0])
   } catch (error) {
-    console.error("Failed to parse AI response:", error)
-    return []
+    console.error("AI recipe search failed, using fallback:", error)
+
+    // Fallback to demo recipes when AI fails (quota exceeded, API down, etc.)
+    return [
+      {
+        title: `${query} - AI Demo Recipe 1`,
+        ingredients: ["Main ingredient", "Seasoning", "Vegetables"],
+        cookingTime: 30,
+        servings: 4,
+        instructions: "AI temporarily unavailable. This is a demo recipe. Try the regular recipe search for real results!",
+        tags: ["demo", "ai-fallback"],
+      },
+      {
+        title: `${query} - AI Demo Recipe 2`,
+        ingredients: ["Protein source", "Herbs", "Side dish"],
+        cookingTime: 25,
+        servings: 2,
+        instructions: "AI quota exceeded. This is a placeholder. The AI will work again in a few seconds!",
+        tags: ["demo", "ai-fallback"],
+      },
+    ]
   }
 }
 
