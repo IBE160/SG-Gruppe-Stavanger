@@ -19,6 +19,55 @@ export default function RecipesPage() {
   // Fetch pantry items for ingredient-based search
   const { data: pantryItems = [] } = usePantryItems()
 
+  // Fallback image mapping for when Spoonacular images fail
+  const getFallbackImage = (title: string): string => {
+    const lowerTitle = title.toLowerCase()
+
+    // Map recipe keywords to Unsplash food photos
+    if (lowerTitle.includes('pasta') || lowerTitle.includes('spaghetti') || lowerTitle.includes('penne')) {
+      return 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('pizza')) {
+      return 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('salad') || lowerTitle.includes('salat')) {
+      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('chicken') || lowerTitle.includes('kylling')) {
+      return 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('burger') || lowerTitle.includes('hamburger')) {
+      return 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('curry')) {
+      return 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('soup') || lowerTitle.includes('suppe')) {
+      return 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('steak') || lowerTitle.includes('beef')) {
+      return 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('fish') || lowerTitle.includes('salmon') || lowerTitle.includes('fisk')) {
+      return 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('taco')) {
+      return 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('sushi')) {
+      return 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('dessert') || lowerTitle.includes('cake') || lowerTitle.includes('cookie')) {
+      return 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=400&fit=crop&q=80'
+    }
+    if (lowerTitle.includes('breakfast') || lowerTitle.includes('pancake') || lowerTitle.includes('waffle')) {
+      return 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=400&fit=crop&q=80'
+    }
+
+    // Default food fallback
+    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop&q=80'
+  }
+
   // Text-based search
   const {
     data: textResults = [],
@@ -317,11 +366,22 @@ export default function RecipesPage() {
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={(e) => {
-                          // Hide image and show fallback icon on error
-                          e.currentTarget.style.display = 'none'
-                          const parent = e.currentTarget.parentElement
-                          if (parent) {
-                            parent.innerHTML = '<svg class="w-20 h-20 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>'
+                          const img = e.currentTarget
+                          // Check if we've already tried fallback
+                          if (img.dataset.fallbackTried === 'true') {
+                            // If fallback also failed, hide and show icon
+                            img.style.display = 'none'
+                            const parent = img.parentElement
+                            if (parent && !parent.querySelector('.fallback-icon')) {
+                              const icon = document.createElement('div')
+                              icon.className = 'fallback-icon'
+                              icon.innerHTML = '<svg class="w-20 h-20 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>'
+                              parent.appendChild(icon)
+                            }
+                          } else {
+                            // Try fallback Unsplash image
+                            img.dataset.fallbackTried = 'true'
+                            img.src = getFallbackImage(recipe.title)
                           }
                         }}
                       />
