@@ -1,14 +1,16 @@
-// Registration API route (stub for sandbox)
+// Registration API route
 // POST /api/auth/register
-// TODO: Replace with real implementation when Prisma engines available
+// Creates new user in Supabase database
 
 import { NextRequest, NextResponse } from "next/server"
+import { hash } from "bcryptjs"
 import { registerSchema } from "@/lib/validation/auth"
+import prisma from "@/lib/prisma"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
+
     // Validate input
     const validation = registerSchema.safeParse(body)
     if (!validation.success) {
@@ -19,16 +21,39 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Stub response for sandbox
-    // In production, this will hash password and create user in database
-    return NextResponse.json(
-      {
-        data: {
-          id: "stub-user-id",
-          email: validation.data.email,
-          name: validation.data.name || null,
-        },
+    const { email, password, name } = validation.data
+
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    })
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: { code: "USER_EXISTS", message: "User with this email already exists" } },
+        { status: 409 }
+      )
+    }
+
+    // Hash password
+    const passwordHash = await hash(password, 12)
+
+    // Create user in database
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name: name || null,
+        passwordHash,
       },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+    })
+
+    return NextResponse.json(
+      { data: user },
       { status: 201 }
     )
   } catch (error) {

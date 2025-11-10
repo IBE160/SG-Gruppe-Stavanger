@@ -1,6 +1,6 @@
-// Auth.js API route handler (stub)
-// TODO: Replace with real auth when Prisma engines available
+// Auth.js API route handler
+// Using real authentication with Prisma + Supabase
 
-import { handlers } from "@/lib/auth-stub"
+import { handlers } from "@/lib/auth"
 
 export const { GET, POST } = handlers
