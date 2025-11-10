@@ -1,6 +1,6 @@
-// PantryItemCard component for displaying food items
+// PantryItemCard component for displaying food items with images
 
-import { Milk, Salad, Drumstick, Wheat, Package, AlertTriangle } from "lucide-react"
+import { AlertTriangle } from "lucide-react"
 
 interface FoodItem {
   id: string
@@ -33,86 +33,148 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     year: "numeric",
   })
 
-  // Category icon mapping
-  const CategoryIcon = () => {
-    const iconProps = { className: "w-8 h-8", strokeWidth: 2 }
-    switch (item.category) {
+  // Generate image URL from Unsplash based on item name
+  const getImageUrl = (name: string) => {
+    const query = encodeURIComponent(name.toLowerCase())
+    return `https://images.unsplash.com/photo-1${Math.abs(name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % 100000000}?w=200&h=200&fit=crop&q=80`
+  }
+
+  // Fallback gradient based on category
+  const getCategoryGradient = (category: string) => {
+    switch (category) {
       case "dairy":
-        return <Milk {...iconProps} className="w-8 h-8 text-blue-600" />
+        return "from-blue-100 to-blue-200"
       case "produce":
-        return <Salad {...iconProps} className="w-8 h-8 text-green-600" />
+        return "from-green-100 to-green-200"
       case "meat":
-        return <Drumstick {...iconProps} className="w-8 h-8 text-red-600" />
+        return "from-red-100 to-red-200"
       case "grains":
-        return <Wheat {...iconProps} className="w-8 h-8 text-yellow-600" />
+        return "from-yellow-100 to-yellow-200"
       default:
-        return <Package {...iconProps} className="w-8 h-8 text-gray-600" />
+        return "from-gray-100 to-gray-200"
     }
+  }
+
+  // Map common food names to Unsplash photo IDs
+  const foodImageMap: Record<string, string> = {
+    "milk": "photo-1563636619-e9143da7973b",
+    "cheese": "photo-1486297678162-eb2a19b0a32d",
+    "yogurt": "photo-1488477181946-6428a0291777",
+    "butter": "photo-1589985270826-4b7bb135bc9d",
+
+    "tomato": "photo-1592924357228-91a4daadcfea",
+    "tomatoes": "photo-1592924357228-91a4daadcfea",
+    "cherry tomatoes": "photo-1606923829579-0cb981a83e2e",
+    "lettuce": "photo-1622206151226-18ca2c9ab4a1",
+    "carrot": "photo-1598170845058-32b9d6a5da37",
+    "carrots": "photo-1598170845058-32b9d6a5da37",
+    "onion": "photo-1508747703725-719777637510",
+    "potato": "photo-1518977676601-b53f82aba655",
+    "potatoes": "photo-1518977676601-b53f82aba655",
+    "broccoli": "photo-1628773822503-930a7eaecf80",
+
+    "chicken": "photo-1604503468506-a8da13d82791",
+    "chicken breast": "photo-1604503468506-a8da13d82791",
+    "beef": "photo-1602470520998-f4a52199a3d6",
+    "pork": "photo-1602470520998-f4a52199a3d6",
+    "salmon": "photo-1485921325833-c519f76c4927",
+    "fish": "photo-1485921325833-c519f76c4927",
+
+    "bread": "photo-1509440159596-0249088772ff",
+    "rice": "photo-1586201375761-83865001e31c",
+    "pasta": "photo-1551462147-ff29053bfc14",
+    "eggs": "photo-1582722872445-44dc5f7e3c8f",
+    "egg": "photo-1582722872445-44dc5f7e3c8f",
+  }
+
+  const getUnsplashImage = (name: string) => {
+    const normalizedName = name.toLowerCase().trim()
+    const photoId = foodImageMap[normalizedName]
+
+    if (photoId) {
+      return `https://images.unsplash.com/${photoId}?w=200&h=200&fit=crop`
+    }
+
+    // Default fallback: search by name
+    const searchTerm = encodeURIComponent(normalizedName + " food")
+    return `https://source.unsplash.com/200x200/?${searchTerm}`
   }
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md p-4 border-2 ${
-        isExpiringSoon ? "border-red-300 bg-red-50" : "border-gray-200"
+      className={`bg-white rounded-2xl border overflow-hidden transition-all hover:shadow-lg ${
+        isExpiringSoon ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-gray-300"
       }`}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex-shrink-0"><CategoryIcon /></div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
-            <p className="text-sm text-gray-600 capitalize">{item.category}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-600">Quantity:</span>
-          <span className="text-sm font-medium text-gray-900">
-            {item.quantity} {item.unit}
-          </span>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-600">Expires:</span>
-          <span
-            className={`text-sm font-medium ${
-              isExpiringSoon ? "text-red-600" : "text-gray-900"
-            }`}
-          >
-            {expiryDate}
-          </span>
-        </div>
-
+      {/* Food Image */}
+      <div className={`relative h-48 bg-gradient-to-br ${getCategoryGradient(item.category)}`}>
+        <img
+          src={getUnsplashImage(item.name)}
+          alt={item.name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to gradient background if image fails to load
+            e.currentTarget.style.display = 'none'
+          }}
+        />
         {isExpiringSoon && (
-          <div className="mt-2 text-xs text-red-600 font-medium flex items-center gap-1">
-            <AlertTriangle className="w-4 h-4" />
-            <span>Expiring in {daysUntilExpiry} day{daysUntilExpiry !== 1 ? "s" : ""}!</span>
+          <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1">
+            <AlertTriangle className="w-3.5 h-3.5" />
+            {daysUntilExpiry} day{daysUntilExpiry !== 1 ? "s" : ""}
           </div>
         )}
       </div>
 
-      {(onEdit || onDelete) && (
-        <div className="mt-4 pt-4 border-t border-gray-200 flex gap-2">
-          {onEdit && (
-            <button
-              onClick={() => onEdit(item)}
-              className="flex-1 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
-            >
-              Edit
-            </button>
-          )}
-          {onDelete && (
-            <button
-              onClick={() => onDelete(item)}
-              className="flex-1 px-3 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
-            >
-              Delete
-            </button>
-          )}
+      {/* Content */}
+      <div className="p-5">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
+          <p className="text-sm text-gray-500 capitalize">{item.category}</p>
         </div>
-      )}
+
+        <div className="space-y-2.5 mb-4">
+          <div className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
+            <span className="text-sm text-gray-600">Quantity</span>
+            <span className="text-sm font-medium text-gray-900">
+              {item.quantity} {item.unit}
+            </span>
+          </div>
+
+          <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${
+            isExpiringSoon ? "bg-red-100" : "bg-gray-50"
+          }`}>
+            <span className="text-sm text-gray-600">Expires</span>
+            <span
+              className={`text-sm font-medium ${
+                isExpiringSoon ? "text-red-700" : "text-gray-900"
+              }`}
+            >
+              {expiryDate}
+            </span>
+          </div>
+        </div>
+
+        {(onEdit || onDelete) && (
+          <div className="flex gap-2 pt-3 border-t border-gray-100">
+            {onEdit && (
+              <button
+                onClick={() => onEdit(item)}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+              >
+                Edit
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={() => onDelete(item)}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
+              >
+                Delete
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
