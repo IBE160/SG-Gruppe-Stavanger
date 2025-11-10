@@ -143,7 +143,7 @@ export default function RecipesPage() {
       <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/pantry" className="flex items-center gap-2">
               <Salad className="w-6 h-6 text-green-600" />
               <span className="text-lg font-semibold text-gray-900">ibe160</span>
             </Link>
