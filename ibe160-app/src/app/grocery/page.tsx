@@ -88,6 +88,12 @@ export default function GroceryPage() {
                 Recipes
               </Link>
               <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Grocery
+              </Link>
+              <Link
                 href="/profile"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
               >
@@ -116,7 +122,7 @@ export default function GroceryPage() {
           </div>
 
           {/* Info Banner */}
-          <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-8">
+          <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-6">
             <p className="text-sm text-green-700">
               ✓ <strong>Smart Shopping:</strong> Add items you need, check them off as you shop,
               and keep track of your grocery needs!
@@ -124,7 +130,7 @@ export default function GroceryPage() {
           </div>
 
           {/* Add Item Form */}
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-8">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Item</h2>
             <div className="flex gap-3">
               <input
@@ -137,7 +143,7 @@ export default function GroceryPage() {
               />
               <button
                 onClick={addItem}
-                className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm"
               >
                 Add
               </button>
@@ -145,7 +151,7 @@ export default function GroceryPage() {
           </div>
 
         {/* Summary Stats */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-2xl font-bold text-gray-900">{items.length}</p>
@@ -163,7 +169,7 @@ export default function GroceryPage() {
           {checkedItems.length > 0 && (
             <button
               onClick={clearChecked}
-              className="mt-4 w-full px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200"
+              className="mt-4 w-full px-4 py-2.5 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors"
             >
               Clear Checked Items ({checkedItems.length})
             </button>
@@ -172,17 +178,17 @@ export default function GroceryPage() {
 
         {/* Items to Buy */}
         {uncheckedItems.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">To Buy</h2>
             <div className="space-y-2">
               {uncheckedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  className="flex items-center gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
                 >
                   <button
                     onClick={() => toggleItem(item.id)}
-                    className="w-6 h-6 border-2 border-gray-300 rounded-md hover:border-blue-500 flex items-center justify-center"
+                    className="w-6 h-6 border-2 border-gray-300 rounded-md hover:border-blue-500 flex items-center justify-center transition-colors"
                   >
                     {item.checked && <span className="text-blue-600">✓</span>}
                   </button>
@@ -191,7 +197,7 @@ export default function GroceryPage() {
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="text-red-600 hover:text-red-700 text-sm font-medium"
+                    className="text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
                   >
                     Remove
                   </button>
@@ -203,17 +209,17 @@ export default function GroceryPage() {
 
         {/* Checked Items */}
         {checkedItems.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">In Cart</h2>
             <div className="space-y-2">
               {checkedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-green-50"
+                  className="flex items-center gap-3 p-3 border border-green-200 rounded-xl bg-green-50"
                 >
                   <button
                     onClick={() => toggleItem(item.id)}
-                    className="w-6 h-6 border-2 border-green-500 bg-green-500 rounded-md flex items-center justify-center"
+                    className="w-6 h-6 border-2 border-green-500 bg-green-500 rounded-md flex items-center justify-center transition-colors"
                   >
                     <span className="text-white font-bold">✓</span>
                   </button>
@@ -222,7 +228,7 @@ export default function GroceryPage() {
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="text-red-600 hover:text-red-700 text-sm font-medium"
+                    className="text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
                   >
                     Remove
                   </button>
@@ -234,10 +240,14 @@ export default function GroceryPage() {
 
         {/* Empty State */}
         {items.length === 0 && (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
-            <div className="text-6xl mb-4">🛒</div>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your list is empty</h2>
-            <p className="text-gray-600">Add items you need to buy to get started!</p>
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-12 text-center">
+            <div className="max-w-md mx-auto">
+              <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                <ShoppingCart className="w-10 h-10 text-gray-400" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900 tracking-tight mb-2">Your list is empty</h2>
+              <p className="text-gray-600">Add items you need to buy to get started!</p>
+            </div>
           </div>
         )}
         </div>
