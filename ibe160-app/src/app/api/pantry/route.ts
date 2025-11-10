@@ -1,17 +1,27 @@
 // API route for pantry items
-// Stub implementation for sandbox (Prisma engines unavailable)
+// Now using Prisma + Supabase for persistent storage
 
 import { NextResponse } from "next/server"
 import { foodItemSchema } from "@/lib/validation/pantry"
-import { getStubItems, addStubItem } from "@/lib/stubData"
+import { auth } from "@/lib/auth"
+import prisma from "@/lib/prisma"
 
 export async function GET() {
   try {
-    // Stub: Return in-memory data for sandbox
-    // In production: const session = await auth()
-    // In production: const items = await prisma.foodItem.findMany({ where: { userId: session.user.id } })
+    const session = await auth()
 
-    const items = getStubItems()
+    if (!session || !session.user?.id) {
+      return NextResponse.json(
+        { error: { code: "UNAUTHORIZED", message: "Please sign in" } },
+        { status: 401 }
+      )
+    }
+
+    const items = await prisma.foodItem.findMany({
+      where: { userId: session.user.id },
+      orderBy: { bestBeforeDate: "asc" }
+    })
+
     return NextResponse.json({ items })
   } catch (error) {
     console.error("Error fetching pantry items:", error)
@@ -24,6 +34,15 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const session = await auth()
+
+    if (!session || !session.user?.id) {
+      return NextResponse.json(
+        { error: { code: "UNAUTHORIZED", message: "Please sign in" } },
+        { status: 401 }
+      )
+    }
+
     const body = await request.json()
 
     // Validate input
@@ -36,20 +55,19 @@ export async function POST(request: Request) {
       )
     }
 
-    // Stub: Add to in-memory store
-    // In production: const session = await auth()
-    // In production: const item = await prisma.foodItem.create({ data: { ...validation.data, userId: session.user.id } })
+    // Create item in Supabase database
+    const item = await prisma.foodItem.create({
+      data: {
+        name: validation.data.name,
+        category: validation.data.category,
+        quantity: validation.data.quantity,
+        unit: validation.data.unit,
+        bestBeforeDate: new Date(validation.data.bestBeforeDate),
+        userId: session.user.id,
+      }
+    })
 
-    const newItem = {
-      id: `item-${Date.now()}`,
-      ...validation.data,
-      bestBeforeDate: new Date(validation.data.bestBeforeDate).toISOString(),
-      createdAt: new Date().toISOString(),
-    }
-
-    addStubItem(newItem)
-
-    return NextResponse.json({ item: newItem }, { status: 201 })
+    return NextResponse.json({ item }, { status: 201 })
   } catch (error) {
     console.error("Error adding pantry item:", error)
     return NextResponse.json(

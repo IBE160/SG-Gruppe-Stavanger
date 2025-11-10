@@ -1,15 +1,25 @@
 // API route for individual pantry item operations
-// Stub implementation for sandbox (Prisma engines unavailable)
+// Now using Prisma + Supabase for persistent storage
 
 import { NextResponse } from "next/server"
 import { foodItemSchema } from "@/lib/validation/pantry"
-import { updateStubItem, deleteStubItem } from "@/lib/stubData"
+import { auth } from "@/lib/auth"
+import prisma from "@/lib/prisma"
 
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth()
+
+    if (!session || !session.user?.id) {
+      return NextResponse.json(
+        { error: { code: "UNAUTHORIZED", message: "Please sign in" } },
+        { status: 401 }
+      )
+    }
+
     const { id } = await params
     const body = await request.json()
 
@@ -26,22 +36,33 @@ export async function PUT(
       )
     }
 
-    // Stub: Update in-memory store
-    // In production: const session = await auth()
-    // In production: const item = await prisma.foodItem.update({ where: { id, userId: session.user.id }, data: validation.data })
-
-    const updatedItem = updateStubItem(id, {
-      ...validation.data,
-      bestBeforeDate: new Date(validation.data.bestBeforeDate).toISOString(),
+    // Update in Supabase database (only if item belongs to user)
+    const item = await prisma.foodItem.updateMany({
+      where: {
+        id: id,
+        userId: session.user.id // Security: only update own items
+      },
+      data: {
+        name: validation.data.name,
+        category: validation.data.category,
+        quantity: validation.data.quantity,
+        unit: validation.data.unit,
+        bestBeforeDate: new Date(validation.data.bestBeforeDate),
+      }
     })
 
-    if (!updatedItem) {
-      console.error("[PUT] Item not found:", id)
+    if (item.count === 0) {
+      console.error("[PUT] Item not found or unauthorized:", id)
       return NextResponse.json(
         { error: { code: "NOT_FOUND", message: "Item not found" } },
         { status: 404 }
       )
     }
+
+    // Fetch and return updated item
+    const updatedItem = await prisma.foodItem.findUnique({
+      where: { id }
+    })
 
     console.log("[PUT] Successfully updated item:", updatedItem)
     return NextResponse.json({ item: updatedItem })
@@ -59,15 +80,26 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth()
+
+    if (!session || !session.user?.id) {
+      return NextResponse.json(
+        { error: { code: "UNAUTHORIZED", message: "Please sign in" } },
+        { status: 401 }
+      )
+    }
+
     const { id } = await params
 
-    // Stub: Delete from in-memory store
-    // In production: const session = await auth()
-    // In production: await prisma.foodItem.delete({ where: { id, userId: session.user.id } })
+    // Delete from Supabase database (only if item belongs to user)
+    const deleted = await prisma.foodItem.deleteMany({
+      where: {
+        id: id,
+        userId: session.user.id // Security: only delete own items
+      }
+    })
 
-    const deleted = deleteStubItem(id)
-
-    if (!deleted) {
+    if (deleted.count === 0) {
       return NextResponse.json(
         { error: { code: "NOT_FOUND", message: "Item not found" } },
         { status: 404 }
