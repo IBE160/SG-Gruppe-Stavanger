@@ -70,18 +70,48 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                      <span className="text-sm font-medium text-gray-900">Tomatoes</span>
-                      <span className="text-xs text-green-600 font-medium">Fresh</span>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
+                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-red-100 to-orange-100 flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=100&h=100&fit=crop"
+                          alt="Tomatoes"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">Tomatoes</p>
+                        <p className="text-xs text-gray-500">250g</p>
+                      </div>
+                      <span className="text-xs text-green-600 font-medium px-2 py-1 bg-green-50 rounded-full">Fresh</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border border-yellow-100 hover:bg-yellow-100 transition-colors">
-                      <span className="text-sm font-medium text-gray-900">Milk</span>
-                      <span className="text-xs text-yellow-700 font-medium">2 days left</span>
+                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-yellow-200 hover:border-yellow-300 hover:shadow-sm transition-all">
+                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100&h=100&fit=crop"
+                          alt="Milk"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">Milk</p>
+                        <p className="text-xs text-gray-500">1L</p>
+                      </div>
+                      <span className="text-xs text-yellow-700 font-medium px-2 py-1 bg-yellow-50 rounded-full">2 days</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                      <span className="text-sm font-medium text-gray-900">Chicken</span>
-                      <span className="text-xs text-green-600 font-medium">Fresh</span>
+                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
+                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-orange-100 to-amber-100 flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=100&h=100&fit=crop"
+                          alt="Chicken"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">Chicken</p>
+                        <p className="text-xs text-gray-500">500g</p>
+                      </div>
+                      <span className="text-xs text-green-600 font-medium px-2 py-1 bg-green-50 rounded-full">Fresh</span>
                     </div>
                   </div>
 
