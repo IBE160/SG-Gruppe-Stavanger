@@ -1,13 +1,16 @@
-// Profile page (stub for sandbox)
-// TODO: Connect to real auth when available
+// Profile page - displays user information and navigation
+// Connected to real authentication
 
 import Link from "next/link"
+import { auth, signOut } from "@/lib/auth"
+import { redirect } from "next/navigation"
+import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell } from "lucide-react"
 
 export default async function ProfilePage() {
-  // Stub: In production, this will use real auth session
-  const stubUser = {
-    email: "user@example.com",
-    name: "Demo User",
+  const session = await auth()
+
+  if (!session?.user) {
+    redirect("/login")
   }
 
   return (
@@ -15,72 +18,86 @@ export default async function ProfilePage() {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6">Profile</h1>
+            <div className="flex items-center gap-3 mb-6">
+              <User className="w-8 h-8 text-gray-600" />
+              <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
+            </div>
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <User className="w-4 h-4" />
                   Name
                 </label>
                 <p className="text-lg text-gray-900">
-                  {stubUser.name || "Not set"}
+                  {session.user.name || "Not set"}
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
                   Email
                 </label>
-                <p className="text-lg text-gray-900">{stubUser.email}</p>
+                <p className="text-lg text-gray-900">{session.user.email}</p>
               </div>
 
               <div className="pt-6 border-t border-gray-200 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Link
                     href="/pantry"
-                    className="inline-block px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-center"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
+                    <Package className="w-5 h-5" />
                     My Pantry
                   </Link>
                   <Link
                     href="/recipes"
-                    className="inline-block px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-center"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
+                    <ChefHat className="w-5 h-5" />
                     Recipes
                   </Link>
                   <Link
                     href="/grocery"
-                    className="inline-block px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-center"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
+                    <ShoppingCart className="w-5 h-5" />
                     Grocery List
                   </Link>
                   <Link
-                    href="/alerts"
-                    className="inline-block px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-center"
+                    href="/preferences"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
-                    Expiration Alerts
+                    <Bell className="w-5 h-5" />
+                    Preferences
                   </Link>
                 </div>
-                <Link
-                  href="/login"
-                  className="inline-block px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                <form
+                  action={async () => {
+                    "use server"
+                    await signOut({ redirectTo: "/" })
+                  }}
                 >
-                  Sign out
-                </Link>
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    Sign out
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg px-6 py-4">
-          <h2 className="text-lg font-semibold text-blue-900 mb-2">
-            Welcome to ibe160! 🎉
+        <div className="mt-6 bg-green-50 border border-green-200 rounded-lg px-6 py-4">
+          <h2 className="text-lg font-semibold text-green-900 mb-2">
+            Welcome to ibe160, {session.user.name?.split(" ")[0] || "there"}! 🎉
           </h2>
-          <p className="text-sm text-blue-700">
-            Start by adding items to your pantry to get recipe suggestions and reduce food waste.
-          </p>
-          <p className="mt-2 text-xs text-blue-600">
-            Note: Auth stubs in place for sandbox. Full auth will work in production.
+          <p className="text-sm text-green-700">
+            Start by adding items to your pantry to get AI-powered recipe suggestions and reduce food waste.
           </p>
         </div>
       </div>
