@@ -116,7 +116,7 @@ export default function Home() {
                   </div>
 
                   <Link
-                    href="/register"
+                    href="/login"
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
                   >
                     <Sparkles className="w-4 h-4" />
@@ -134,51 +134,116 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Features Grid - Airbnb Style */}
-      <div className="py-20 bg-gray-50">
+      {/* Features - Full Width Airbnb Style */}
+      <div className="bg-gray-50 py-16 lg:py-24">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1.5">
-                    AI Recipe Search
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Get personalized recipes powered by Google Gemini AI
-                  </p>
-                </div>
+          {/* Feature 1: AI Recipe Search */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 lg:mb-24">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
+                <Sparkles className="w-3.5 h-3.5" />
+                AI Powered
               </div>
+              <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 tracking-tight">
+                Recipe search that understands you
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Just describe what you're craving. Our AI powered by Google Gemini creates personalized recipes based on your pantry and preferences.
+              </p>
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Try it free
+                <span className="text-lg">→</span>
+              </Link>
             </div>
+            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100 shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop"
+                alt="AI Recipe Search"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
 
-            <div className="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
-                  <Bell className="w-6 h-6 text-yellow-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1.5">
-                    Expiration Alerts
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Get notified before food expires to reduce waste
-                  </p>
-                </div>
+          {/* Feature 2: Expiration Alerts */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-yellow-100 to-orange-100 shadow-xl lg:order-first">
+              <img
+                src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=800&h=600&fit=crop"
+                alt="Food tracking"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-4 lg:order-last">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 text-yellow-700 rounded-full text-xs font-medium">
+                <Bell className="w-3.5 h-3.5" />
+                Smart Alerts
               </div>
+              <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 tracking-tight">
+                Never waste food again
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Get timely notifications before your ingredients expire. Track everything in your pantry and use food before it goes bad.
+              </p>
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Get started
+                <span className="text-lg">→</span>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer - Airbnb Style */}
-      <footer className="border-t border-gray-200 py-12 bg-white">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
-          <p className="text-gray-500 text-xs">
-            Built with Next.js, TypeScript & Google Gemini AI
-          </p>
+      <footer className="border-t border-gray-200 bg-gray-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Product</h4>
+              <ul className="space-y-2">
+                <li><Link href="/register" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Get Started</Link></li>
+                <li><Link href="/login" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sign In</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Features</h4>
+              <ul className="space-y-2">
+                <li><span className="text-sm text-gray-600">AI Recipe Search</span></li>
+                <li><span className="text-sm text-gray-600">Pantry Tracking</span></li>
+                <li><span className="text-sm text-gray-600">Expiration Alerts</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">About</h4>
+              <ul className="space-y-2">
+                <li><span className="text-sm text-gray-600">Food Waste Reduction</span></li>
+                <li><span className="text-sm text-gray-600">Sustainability</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Technology</h4>
+              <ul className="space-y-2">
+                <li><span className="text-sm text-gray-600">Google Gemini AI</span></li>
+                <li><span className="text-sm text-gray-600">Next.js & TypeScript</span></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-gray-200">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Salad className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-semibold text-gray-900">ibe160</span>
+              </div>
+              <p className="text-xs text-gray-500">
+                © 2025 ibe160. Reducing food waste, one ingredient at a time.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
