@@ -55,7 +55,8 @@ export default function RecipesPage() {
       if (!res.ok) {
         throw new Error("AI search failed")
       }
-      return res.json()
+      const data = await res.json()
+      return data.recipes || []
     },
   })
 
