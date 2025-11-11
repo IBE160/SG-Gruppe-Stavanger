@@ -65,6 +65,24 @@ To evolve the platform into a comprehensive kitchen assistant that not only redu
 
 ---
 
+## User Experience and Design
+
+### UV Design Principles
+*   **Clarity:** Ensure all elements are easy to understand and interpret.
+*   **Efficiency:** Streamline user flows to minimize effort and time for common tasks.
+*   **Consistency:** Maintain a uniform look, feel, and behavior across the application.
+*   **Feedback:** Provide clear and immediate feedback for user actions.
+*   **Accessibility:** Design for all users, including those with disabilities.
+
+### User Interface Design Goals
+*   **Intuitive Navigation:** Users should easily find what they need without guidance.
+*   **Clean and Modern Aesthetic:** A visually appealing interface that is pleasant to use.
+*   **Mobile-First Responsiveness:** Optimized experience across various devices and screen sizes.
+*   **Minimalist Approach:** Avoid clutter, focusing on essential information and actions.
+*   **Engaging Interactions:** Create delightful and memorable user interactions.
+
+---
+
 ## Requirements
 
 ### Functional Requirements
@@ -107,6 +125,28 @@ To evolve the platform into a comprehensive kitchen assistant that not only redu
 *   **Journey 4: Getting dinner inspiration at the store.** A user at the store browses recipes for inspiration. When they select a recipe, the app clearly indicates which ingredients they already have and which they need to buy.
 *   **Journey 5: Using expiring food.** A user receives an in-app notification about items nearing their expiration date. They are then presented with a list of recipes that use those specific ingredients, helping them to cook a meal and prevent food waste.
 *   **Journey 6: First-time user onboarding.** A new user logs in for the first time and is greeted with a helpful empty state that guides them to add their first ingredient. The intuitive interface allows them to successfully add an item and get a recipe suggestion within their first session, without needing a tutorial.
+
+---
+
+## Epics
+
+*   **Epic 1: User Authentication & Profile Management**
+    *   As a user, I want to securely register and log in so that I can access my personalized inventory and recipes.
+    *   As a user, I want to manage my profile information (e.g., email, password) so that I can keep my account up-to-date.
+*   **Epic 2: Inventory Management**
+    *   As a user, I want to add, edit, and delete food items from my inventory so that I can accurately track what I have.
+    *   As a user, I want to view an overview of my pantry and fridge so that I know what ingredients are available.
+    *   As a user, I want to receive notifications for expiring food items so that I can use them before they go bad.
+*   **Epic 3: Recipe Discovery & Meal Planning**
+    *   As a user, I want to browse and search for recipes based on available ingredients so that I can find meal ideas easily.
+    *   As a user, I want to get recipe suggestions even if I'm missing a few ingredients so that I'm not limited by my current inventory.
+    *   As a user, I want to generate a grocery list for a selected recipe, excluding items I already own, so that I can efficiently shop for missing ingredients.
+*   **Epic 4: Offline Functionality & Data Sync**
+    *   As a user, I want to access my inventory and recipes even without an internet connection so that I can use the app anywhere.
+    *   As a user, I want to see when my data was last synced so that I can trust the information displayed.
+*   **Epic 5: User Onboarding & Guidance**
+    *   As a new user, I want clear guidance on how to get started so that I can quickly understand the app's core functionality.
+    *   As a user, I want to see helpful empty states so that I'm never confused about what to do next.
 
 ---
 
