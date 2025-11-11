@@ -26,20 +26,21 @@ project: "ibe160"
 project_type: "software"
 project_level: "3"
 field_type: "brownfield"
-workflow_path: "brownfield-level-3.yaml"
+workflow_path: "method-brownfield.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
-  document-project: required
+  document-project: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
 
   # Phase 1: Analysis
-  brainstorm-project: optional
-  research: recommended
-  product-brief: recommended
+  brainstorm-project: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  research: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  product-brief: C:\IBE160\SG-Gruppe-Stavanger\docs\product-brief-ibe160-2025-11-03.md
 
   # Phase 2: Planning
   prd: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
-  validate-prd: optional
+  create-epics-and-stories: C:\IBE160\SG-Gruppe-Stavanger\docs\epics.md
+  validate-prd: C:\IBE160\SG-Gruppe-Stavanger\docs\validation-report-2025-11-11T21-18-44.md
   create-design: conditional
 
   # Phase 3: Solutioning

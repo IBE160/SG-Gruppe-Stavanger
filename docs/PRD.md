@@ -87,20 +87,27 @@ To evolve the platform into a comprehensive kitchen assistant that not only redu
 
 ### Functional Requirements
 
+#### User Management
 *   **FR001:** Users must be able to register and log in securely using an email and password.
+*   **FR012:** System must maintain long session persistence (30+ days) to prevent frustrating re-logins, especially for mobile users.
+
+#### Inventory Management
 *   **FR002:** Users must be able to add food items to their inventory, including name, quantity, and expiration date.
 *   **FR003:** Users must be able to view, edit, and delete items from their inventory.
 *   **FR004:** The system must provide an overview of the user's pantry and fridge.
-*   **FR005:** The system must generate a grocery list for a selected recipe, excluding items the user already has in their inventory.
-*   **FR006:** The system must allow users to browse, search, and view recipes from the Spoonacular API.
-*   **FR007:** The system must suggest recipes even if the user is missing one or two ingredients.
-*   **FR008:** The system must require user confirmation before deducting ingredients from the inventory after a meal is cooked.
 *   **FR009:** The system must display in-app notifications for food items nearing their expiration date (2-3 days before).
-*   **FR010:** The system must recommend recipes that use ingredients close to their expiration date.
-*   **FR012:** System must maintain long session persistence (30+ days) to prevent frustrating re-logins, especially for mobile users.
-*   **FR013:** System must display "Last synced: [timestamp]" indicator to communicate data freshness, especially in offline scenarios.
-*   **FR014:** System must provide helpful empty states with clear guidance for new users (e.g., "Add your first ingredient to get started").
+*   **FR010:** The system must recommend recipes that use ingredients close to their expiration date. (Depends on FR009, FR006)
+
+#### Recipe & Meal Planning
+*   **FR005:** The system must generate a grocery list for a selected recipe, excluding items the user already has in their inventory. (Depends on FR002)
+*   **FR006:** The system must allow users to browse, search, and view recipes from the Spoonacular API.
+*   **FR007:** The system must suggest recipes even if the user is missing one or two ingredients. (Depends on FR002)
 *   **FR015:** System must implement fuzzy search for ingredient name variations to improve matching accuracy (e.g., "tomato" matches "canned tomatoes", "cherry tomatoes").
+
+#### System & User Experience
+*   **FR008:** The system must require user confirmation before deducting ingredients from the inventory after a meal is cooked. (Depends on FR002, FR006)
+*   **FR013:** System must display "Last synced: [timestamp]" indicator to communicate data freshness, especially in offline scenarios. (Depends on NFR004)
+*   **FR014:** System must provide helpful empty states with clear guidance for new users (e.g., "Add your first ingredient to get started"). (Depends on FR002, FR006)
 *   **FR016:** System must display clear loading states and user-friendly error messages with retry options when operations fail.
 
 ### Non-Functional Requirements
@@ -131,22 +138,11 @@ To evolve the platform into a comprehensive kitchen assistant that not only redu
 ## Epics
 
 *   **Epic 1: User Authentication & Profile Management**
-    *   As a user, I want to securely register and log in so that I can access my personalized inventory and recipes.
-    *   As a user, I want to manage my profile information (e.g., email, password) so that I can keep my account up-to-date.
 *   **Epic 2: Inventory Management**
-    *   As a user, I want to add, edit, and delete food items from my inventory so that I can accurately track what I have.
-    *   As a user, I want to view an overview of my pantry and fridge so that I know what ingredients are available.
-    *   As a user, I want to receive notifications for expiring food items so that I can use them before they go bad.
 *   **Epic 3: Recipe Discovery & Meal Planning**
-    *   As a user, I want to browse and search for recipes based on available ingredients so that I can find meal ideas easily.
-    *   As a user, I want to get recipe suggestions even if I'm missing a few ingredients so that I'm not limited by my current inventory.
-    *   As a user, I want to generate a grocery list for a selected recipe, excluding items I already own, so that I can efficiently shop for missing ingredients.
 *   **Epic 4: Offline Functionality & Data Sync**
-    *   As a user, I want to access my inventory and recipes even without an internet connection so that I can use the app anywhere.
-    *   As a user, I want to see when my data was last synced so that I can trust the information displayed.
 *   **Epic 5: User Onboarding & Guidance**
-    *   As a new user, I want clear guidance on how to get started so that I can quickly understand the app's core functionality.
-    *   As a user, I want to see helpful empty states so that I'm never confused about what to do next.
+*   **Epic 6: System Feedback & Usability**
 
 ---
 
