@@ -1,1100 +1,1739 @@
-# {{project_name}} UX Design Specification
+# UX Documentation: ibe160 App
 
-_Created on {{date}} by {{user_name}}_
-_Generated using BMad Method - Create UX Design Workflow v1.0_
-
----
-
-## Executive Summary
-
-A mobile-responsive web application that helps users reduce food waste and discover meal inspiration by intelligently managing their kitchen inventory. The long-term vision is to evolve into a comprehensive kitchen assistant that not only reduces food waste but also helps users make healthier and more sustainable food choices.
+**AI-powered food waste app with a modern design system**
 
 ---
 
-## 1. Design System Foundation
+## Table of Contents
 
-### 1.1 Design System Choice
-
-**Chosen Design System:** shadcn/ui
-
-**Rationale:**
-- **Timeline Alignment:** The 6-week MVP timeline necessitates using production-ready components, which shadcn/ui provides, avoiding the need to build basic UI elements from scratch. The copy-paste approach ensures full code control.
-- **Accessibility:** WCAG 2.1 AA compliance is a project goal, and shadcn/ui, built on Radix UI primitives, offers battle-tested accessibility features including keyboard navigation, ARIA labels, and focus management.
-- **Mobile-First:** Components are responsive out-of-the-box and touch-friendly, integrating seamlessly with Tailwind CSS for mobile-first breakpoints.
-- **Emotional Target:** The clean, professional, and trustworthy design aesthetic of shadcn/ui directly supports the "Resourceful + Relief" emotional target, allowing users to focus on core functionality rather than UI flourishes.
-- **Technical Alignment:** shadcn/ui is already listed in the project's technical framework, and its excellent TypeScript support and synergy with Tailwind CSS make it a natural fit for the team's skills.
-
----
-
-## 2. Core User Experience
-
-### 2.1 Defining Experience
-
-The defining experience of the application is best captured by the phrase: **"It's the app that looks at your pantry and says 'you can make this'."**
-
-This is not a simple recipe search, but a discovery engine that starts with what the user already has and shows them what is possible.
-
-**The Core Interaction Loop:**
-1.  The user opens the app and sees their current inventory.
-2.  The app instantly presents recipe matches based on that inventory.
-3.  Crucially, the app includes suggestions where the user is only missing one or two ingredients.
-
-**The Moment of Delight (The "Magic"):**
-The key differentiator and the core of the user experience is the contextual presentation of recipes:
--   **Perfect Match:** "🟢 **Chicken Stir Fry** - You have everything!"
--   **Near Match:** "🟡 **Pad Thai** - You need: fish sauce, lime"
-
-This "near match" feature is what makes the app unique. Instead of hiding recipes the user can't make, it empowers them by showing how close they are, transforming a "no" into an actionable "almost." This directly supports the emotional goal of making the user feel resourceful and relieved.
-
-**The Defining Screen:**
-The recipe discovery view is the epicenter of this experience. It must clearly display:
--   Recipes scored or categorized by match quality (e.g., perfect match, near match).
--   A clear and concise list of any missing ingredients for "near match" recipes.
--   Contextual calls-to-action that change based on the match quality (e.g., "Cook This" vs. "Add 2 Items & Cook").
-
-This interaction—the intelligent, contextual matching of inventory to recipes—is the app's "swipe to match" moment and the foundation of its competitive moat.
-
-### 2.2 Novel UX Patterns
-
-The core differentiator of the app is the **"Smart Recipe Match"** interaction. This pattern is designed to be the defining "magic moment" for the user, transforming the anxiety of meal planning into a feeling of resourceful discovery.
-
-**Pattern Name:** Smart Recipe Match
-
-**User Goal:** To quickly understand what meals can be made with current inventory, see the effort required for each, and feel a sense of possibility rather than scarcity.
-
-**Trigger:**
--   **Primary:** Automatic on app open for logged-in users. The home screen *is* the recipe match screen.
--   **Secondary:** A dedicated "What Can I Cook?" navigation item, a pull-to-refresh gesture, and automatic refresh after pantry updates.
-
-**Interaction Flow & Visual Feedback:**
-1.  **Categorization:** On load, recipes are automatically categorized into three collapsible sections, color-coded for immediate visual scanning:
-    -   **🟢 Ready to Cook:** Perfect matches. Collapsed by default to prioritize actionable opportunities.
-    -   **🟡 Almost There:** Missing 1-2 ingredients. Expanded by default as this is the core "magic" of the app.
-    -   **⚪ Need More:** Missing 3+ ingredients. Collapsed by default.
-2.  **Recipe Cards:** Each recipe is displayed on a card with key information glanceable:
-    -   Recipe name, image, cooking time, and servings.
-    -   A prominent color-coded badge (🟢, 🟡, ⚪) indicating match status.
-    -   For 🟡 cards, a summary of missing items (e.g., "Missing: fish sauce, lime (2)").
-    -   Contextual buttons (e.g., "Cook This" vs. "Add to List").
-3.  **Progressive Disclosure:** Tapping a card expands it or opens a bottom sheet on mobile, showing a full ingredient list with visual checkmarks (✅ for owned, ❌ for missing) to provide detail without cluttering the main view.
-
-**States:**
--   **Loading:** A skeleton screen with shimmering placeholders and a message like "🔍 Finding your perfect matches..." to manage perceived latency.
--   **Ideal State:** The three-tiered list of recipes, populated and interactive.
--   **Empty State (Zero Matches):** A "catastrophic failure" is avoided by always showing fallback tiers (e.g., popular recipes). If the pantry is truly empty, the UI reframes it as an opportunity: "🍳 Let's get you started! Add a few ingredients to see recipe suggestions."
--   **Error State (API Down):** The app enters a "⚠️ Limited mode," clearly communicating the issue and serving recipes from an offline cache. A "Retry" button is provided.
-
-**Platform Considerations:**
--   **Mobile (Primary):**
-    -   Layout is a single vertical list with collapsible sections.
-    -   Swipe gestures on cards for quick actions (e.g., swipe right to "Add to List").
-    -   A persistent Floating Action Button (FAB) for "Add Food."
-    -   Recipe details appear in a bottom sheet that can be swiped up.
-    -   Subtle haptic feedback for key actions like "recipe unlocked."
--   **Desktop:**
-    -   Layout is a multi-column grid to better utilize space.
-    -   Hover states reveal details like the full ingredient checklist.
-    -   Keyboard shortcuts for navigation (`/` to search, `↑↓` to navigate, `Enter` to select).
-    -   A persistent sidebar for navigation.
-
-**Accessibility:**
--   Color-coding (🟢, 🟡, ⚪) will be paired with icons and text labels to ensure it's not the only means of conveying information.
--   All interactive elements will be keyboard-navigable and have clear focus states.
--   ARIA labels will be used to describe the status of recipes and components to screen readers.
-
-**Inspiration:**
--   **Spotify's "Made For You":** Using visual cues (like ingredient icons) to build confidence in recommendations.
--   **Duolingo's Lesson Screen:** A visual hierarchy of readiness (completed, current, locked) that maps directly to the 🟢🟡⚪ system.
--   **Google Maps' Route Options:** Presenting choices with clear trade-offs (e.g., "Ready Now" vs. "Quick Shop Trip").
--   **Notion's "/" Command:** Using smart autocomplete for friction-free data entry when adding items to a shopping list.
-
-### 2.3 Core Experience Principles
-
-Based on the defining experience and the "Smart Recipe Match" pattern, the following principles will guide all UX design decisions:
-
-**Speed: Instantaneous and Responsive**
--   The app must feel instantaneous, especially for the core recipe discovery flow. Perceived speed will be prioritized over raw technical speed through the use of optimistic UI (loading cached data first), background pre-fetching, and skeleton screens with micro-animations to mask latency.
-
-**Guidance: Proactive and Empowering**
--   The app will proactively guide users toward feeling resourceful, turning potential dead ends (like zero search results) into actionable opportunities. This will be achieved through the 🟢🟡⚪ matching system, helpful empty states that suggest next steps, and contextual suggestions that feel anticipatory.
-
-**Flexibility: Forgiving and In Control**
--   The app will provide users with choices and control, allowing them to recover from mistakes and adapt the app to their needs. This is exemplified by features like the "Undo Ingredient Use" option, clear confirmation dialogs before destructive actions, and the choice to see "Almost There" recipes instead of having them hidden.
-
-**Feedback: Clear and Delightful**
--   Feedback will be immediate, clear, and often delightful, reinforcing the user's sense of accomplishment and progress. This will be delivered through purposeful micro-interactions (e.g., the "recipe unlocked" animation), celebratory messages ("You saved 2 items from waste!"), and transparent status indicators (e.g., "Last synced:", "Limited mode").
+1. [Overall Concept](#overall-concept)
+2. [Design System](#design-system)
+3. [Navigation Structure](#navigation-structure)
+4. [Page Views and Functionality](#page-views-and-functionality)
+5. [Components](#components)
+6. [Interaction Patterns](#interaction-patterns)
+7. [Responsiveness](#responsiveness)
+8. [Accessibility](#accessibility)
+9. [Technical UX](#technical-ux)
 
 ---
 
-## 3. Visual Foundation
+## Overall Concept
 
-### 3.1 Color System
+### Purpose
+ibe160 is an **AI-powered food waste app** that helps users to:
+- Track food items in the fridge/pantry
+- Get AI-based recipe suggestions
+- Reduce food waste through smart notifications
+- Plan purchases effectively
 
-The chosen color theme is **Theme 1: Fresh & Focused**. This theme leverages a calming, natural green as its primary color, aligning with the project's emphasis on fresh ingredients, health, and sustainability. It evokes a sense of organization and feels at home in a kitchen environment, directly supporting the "Resourceful + Relief" emotional target.
+### Target Audience
+- Environmentally conscious individuals
+- Students and young adults who want to save money
+- Families who want to reduce food waste
+- Tech-savvy users who enjoy AI assistance
 
-**Color Palette (Fresh & Focused):**
--   **Primary:** `#22c55e` (Green) - Used for primary actions, key interactive elements, and positive affirmations.
--   **Primary-Foreground:** `#ffffff` (White) - Text color for elements on primary backgrounds.
--   **Secondary:** `#f0fdf4` (Light Green) - Used for secondary backgrounds, subtle accents, and muted elements.
--   **Secondary-Foreground:** `#166534` (Dark Green) - Text color for elements on secondary backgrounds.
--   **Destructive:** `#ef4444` (Red) - Used for critical actions (e.g., delete) and error states.
--   **Destructive-Foreground:** `#fafafa` (White) - Text color for elements on destructive backgrounds.
--   **Status - Ready (🟢):** `#22c55e` (Green) - Integrated primary green for "Ready to Cook" status.
--   **Status - Almost (🟡):** `#f59e0b` (Orange/Amber) - A warm, inviting amber for "Almost There" status, indicating opportunity.
--   **Status - Need More (⚪):** `#e5e7eb` (Light Gray) - A neutral, subtle gray for "Need More" status.
--   **Background:** `#ffffff` (White) - Clean, generous white space for clarity.
--   **Foreground:** `#111827` (Dark Gray) - Primary text color for readability.
--   **Border:** `#e5e7eb` (Light Gray) - Subtle borders for structure.
--   **Input:** `#e5e7eb` (Light Gray) - Input field borders.
--   **Ring:** `#4ade80` (Accent Green) - Focus ring color.
+### Design Philosophy
+- **Airbnb-inspired aesthetics**: Clean, modern, airy
+- **Green identity**: Focus on sustainability and the environment
+- **AI-first**: Highlight intelligent functionality
+- **Visual**: Images and colors communicate status
 
-**Interactive Visualizations:**
+### Design Direction
 
-- Color Theme Explorer: [ux-color-themes.html](./ux-color-themes.html)
+**Chosen Direction: Clean & Card-Focused**
 
-### 3.2 Typography System
+After reviewing the design directions presented in the `ux-design-directions.html` showcase, the **Clean & Card-Focused** direction has been selected.
 
-The typography system is designed for clarity, readability, and an approachable yet professional feel, complementing the "Fresh & Focused" color palette. It leverages system fonts for performance and broad compatibility, with a clear hierarchy.
-
--   **Font Families:**
-    -   **Headings:** `Inter`, `ui-sans-serif`, `system-ui`, `-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, `Roboto`, `"Helvetica Neue"`, `Arial`, `"Noto Sans"`, `sans-serif`, `"Apple Color Emoji"`, `"Segoe UI Emoji"`, `"Segoe UI Symbol"`, `"Noto Color Emoji"`
-    -   **Body Text:** `Inter`, `ui-sans-serif`, `system-ui`, `-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, `Roboto`, `"Helvetica Neue"`, `Arial`, `"Noto Sans"`, `sans-serif`, `"Apple Color Emoji"`, `"Segoe UI Emoji"`, `"Segoe UI Symbol"`, `"Noto Color Emoji"`
-    -   **Monospace:** `ui-monospace`, `SFMono-Regular`, `Menlo`, `Monaco`, `Consolas`, `"Liberation Mono"`, `"Courier New"`, `monospace`
--   **Type Scale:**
-    -   `h1`: 2.25rem (36px)
-    -   `h2`: 1.875rem (30px)
-    -   `h3`: 1.5rem (24px)
-    -   `h4`: 1.25rem (20px)
-    -   `h5`: 1.125rem (18px)
-    -   `h6`: 1rem (16px)
-    -   `body`: 1rem (16px)
-    -   `small`: 0.875rem (14px)
-    -   `tiny`: 0.75rem (12px)
--   **Font Weights:** Regular (400), Medium (500), Semibold (600) for clear visual hierarchy.
--   **Line Heights:** Optimized for readability across all text sizes.
-
-### 3.3 Spacing and Layout Foundation
-
-A consistent spacing and layout system will ensure visual harmony, responsiveness, and ease of development using Tailwind CSS.
-
--   **Base Unit:** 4px. All spacing values will be multiples of 4px for a predictable rhythm.
--   **Spacing Scale:**
-    -   `xs`: 4px
-    -   `sm`: 8px
-    -   `md`: 16px
-    -   `lg`: 24px
-    -   `xl`: 32px
-    -   `2xl`: 48px
-    -   ... (extending as needed for larger gaps)
--   **Layout Grid:** A standard 12-column grid system, facilitated by Tailwind CSS, will be used for flexible and responsive content arrangement.
--   **Container Widths:**
-    -   `sm`: max-width: 640px
-    -   `md`: max-width: 768px
-    -   `lg`: max-width: 1024px
-    -   `xl`: max-width: 1280px
-    -   `2xl`: max-width: 1536px
-    These breakpoints will ensure optimal content presentation across various screen sizes, from mobile to large desktops.
+**Rationale:** This direction aligns best with the "Airbnb-inspired" aesthetic defined in the design philosophy. It provides a clean, modern, and airy feel that prioritizes scannability and clarity. The use of cards creates a well-organized and intuitive user experience, which is crucial for an app that manages information like pantry items and recipes.
 
 ---
 
-## 4. Design Direction
+## Design System
 
-### 4.1 Chosen Design Approach
+### Color Palette
 
-The chosen design direction is **Direction 3: Pantry Management (Clean & Card-Focused)**. This approach applies a clean, card-focused aesthetic to the Pantry Management screen, emphasizing clear item cards, easy-to-read expiration dates, and prominent actions. This direction aligns well with the "Resourceful + Relief" emotional target by providing a clear, scannable, and actionable overview of the user's inventory.
+#### Primary Colors
+```css
+/* Green - Brand and positive actions */
+--green-50: #f0fdf4
+--green-600: #16a34a /* Main color */
+--green-700: #15803d
 
-**Key Characteristics of Chosen Direction:**
--   **Screen Focus:** Pantry Management
--   **Layout:** Card-based, vertical stack for mobile, adaptable to grid for desktop.
--   **Visual Density:** Balanced, with generous white space around cards.
--   **Navigation:** Clear top navigation (as established in UX overview).
--   **Primary Action Prominence:** Prominent "Add Food" Floating Action Button (FAB) on mobile, clear "Edit" and "Use" actions on each card.
--   **Visual Style:** Clean, modern, utilizing the "Fresh & Focused" color theme.
-
-**Interactive Mockups:**
-
-- Design Direction Showcase: [ux-design-directions.html](./ux-design-directions.html)
-
-**Design Directions Explored:**
-
-1.  **Clean & Card-Focused (Smart Recipe Match):** A balanced approach with clear card boundaries, prominent recipe images, and collapsible sections for match status. Focuses on scannability and intuitive interaction.
-2.  **Compact & List-Driven (Smart Recipe Match):** A more minimalist approach, prioritizing information density with a list view. Less emphasis on large images, more on quick scanning of text and status.
-3.  **Pantry Management (Clean & Card-Focused):** Applies the "Clean & Card-Focused" aesthetic to the Pantry screen, featuring clear item cards, easy-to-read expiration dates, and prominent actions.
-4.  **Recipe Detail View (Clean & Card-Focused):** A clean, focused view for individual recipes, emphasizing readability of instructions and clear indication of ingredient availability.
-5.  **Visual & Immersive (Smart Recipe Match):** Emphasizes large, appealing recipe imagery with a more dynamic layout. Aims for a magazine-like feel to inspire and delight, while still clearly communicating match status.
-6.  **Pantry Management (Compact & List-Driven):** A high-density list view for pantry items, allowing users to quickly scan many items. Actions are accessible but less visually dominant.
-
-*Awaiting user feedback to finalize the preferred design direction(s).*
-
----
-
-#### User Journey: Adding Groceries to the Pantry
-
-**User Goal:** A user comes home from shopping and quickly adds new grocery items to their pantry, including name, quantity, and expiration date, with minimal friction.
-
-**Approach:** Smart Hybrid (Option C) - A single, dynamic screen that starts with the most important input (Name) and uses smart defaults for everything else, allowing for quick additions and flexible overrides.
-
-**Flow Steps:**
-
-1.  **Entry Point:**
-    -   **User sees:** A Floating Action Button (FAB) with a "+" icon, always visible at the bottom-right of the screen.
-    -   **User does:** Taps the FAB.
-    -   **System responds:** Opens a modal/bottom sheet titled "Add to Pantry" with a search input and "Quick Add" shortcuts (e.g., Eggs, Milk, Bread).
-
-2.  **Ingredient Input:**
-    -   **User sees:** Search input field ("Search ingredient...") and Quick Add buttons.
-    -   **User does:**
-        -   (Common Item) Taps a "Quick Add" button (e.g., "🥚 Eggs").
-        -   (Uncommon Item) Types in the search input (e.g., "chicken").
-    -   **System responds:**
-        -   (Quick Add) Pre-fills the item name and smart defaults (quantity, unit, expiration).
-        -   (Search) Displays instant autocomplete suggestions from Spoonacular API. If no match, shows "Can't find it? Add custom item."
-
-3.  **Item Details & Confirmation:**
-    -   **User sees:** Selected item name (e.g., "Chicken breast, boneless") with pre-filled smart defaults for Quantity (e.g., "500g"), Unit (e.g., "g"), and Expiration Date (e.g., "Nov 18"). Editable fields are present.
-    -   **User does:**
-        -   (Quick Add/Defaults Fine) Taps "Add to Pantry" button.
-        -   (Adjust Details) Taps on Quantity, Unit, or Expiration to adjust, then taps "Add to Pantry".
-    -   **System responds:**
-        -   Displays "✓ Added [item name]" toast notification.
-        -   Shows options: "[Add another item]" and "[Done]".
-        -   Updates a running count (e.g., "3 items added today").
-
-4.  **Bulk Entry / Completion:**
-    -   **User sees:** "✓ Added [item name]" toast, "[Add another item]", "[Done]" buttons.
-    -   **User does:**
-        -   (Bulk Entry) Taps "[Add another item]" to repeat step 2.
-        -   (Completion) Taps "[Done]".
-    -   **System responds:**
-        -   (Add another) Clears the input, ready for the next item.
-        -   (Done) Closes the modal/bottom sheet and returns to the previous screen (e.g., Pantry view).
-
-**Decision Points:**
-
--   **Item Already Exists:** If a user adds an item they already have, the system prompts: "You already have [item] ([quantity]). Replace with new expiration date, Add more (increase quantity), or Cancel?"
--   **Custom Item:** If Spoonacular search yields no results, a "Add custom item" button appears, allowing manual entry but with a warning that it won't auto-match recipes.
-
-**Error States & Recovery:**
-
--   **Typo in Quantity/Expiration:** User can navigate to the Pantry, tap the item, and edit inline. An "Undo" button is available for 5 seconds after adding.
--   **Accidental Tap on Quick Add:** A confirmation dialog appears (e.g., "Add Eggs (12 pieces) to pantry?") allowing the user to cancel or adjust before confirming.
-
-**Success State:**
-
--   **Immediate:** "✓ Added [item name]" toast, running count update.
--   **Visual:** Newly added items in the Pantry view have a subtle highlight/glow that fades.
--   **Emotional:** A "magic moment" banner appears (e.g., "🎉 Great! You can now make 12 recipes! [See What You Can Cook]") connecting data entry to immediate value.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app] --> B{FAB '+' tapped};
-    B --> C[Add to Pantry modal/sheet opens];
-    C --> D{User input: Quick Add or Search};
-
-    D -- Quick Add --> E[Item name & smart defaults pre-filled];
-    D -- Search --> F[Autocomplete suggestions];
-    F -- Select suggestion --> E;
-    F -- No match --> G[Add custom item option];
-    G --> H[Manual input for custom item];
-    H --> I[Custom item added];
-
-    E --> J{User reviews/edits details};
-    J -- Defaults fine / Edits complete --> K[Taps 'Add to Pantry'];
-
-    K --> L[Toast: '✓ Added [item]'];
-    L --> M{Options: 'Add another item' / 'Done'};
-
-    M -- Add another item --> C;
-    M -- Done --> N[Return to Pantry/Previous Screen];
-
-    N --> O[Pantry view updated with new item];
-    O --> P[Magic Moment: '🎉 You can now make X recipes!'];
-
-    subgraph Error Handling
-        Q[Item already exists] --> R{Prompt: Replace/Add more/Cancel};
-        S[Spoonacular no match] --> G;
-        T[Accidental Quick Add] --> U{Confirmation dialog};
-    end
+/* Gradient - AI functionality */
+--purple-600: #9333ea
+--pink-600: #db2777
+background: linear-gradient(to right, var(--purple-600), var(--pink-600))
 ```
 
-#### User Journey: Finding a Recipe for Dinner
+#### Status Colors
+```css
+/* Fresh (3+ days) */
+--status-fresh: #16a34a (green-600)
 
-**User Goal:** A hungry user quickly discovers recipes they can make with their current inventory, including options that require minimal additional ingredients, and proceeds to cook a chosen meal.
+/* Warning (2-3 days) */
+--status-warning: #ca8a04 (yellow-600)
 
-**Approach:** Accordion/Collapsible List (Option C) - The home screen presents recipe matches in collapsible, color-coded sections, prioritizing immediate value while showing other possibilities.
+/* Critical (0-1 day) */
+--status-critical: #ea580c (orange-600)
 
-**Flow Steps:**
-
-1.  **Entry Point (App Open):**
-    -   **User sees:** The "What Can You Cook?" screen immediately (<1 second load time).
-        -   **🟢 Ready to Cook** section (e.g., "Ready to Cook (3)") is auto-expanded, showing recipe cards.
-        -   **🟡 Almost There** (e.g., "Almost There (5)") and **⚪ Need More** (e.g., "Need More (12)") sections are collapsed, showing only their titles and recipe counts.
-    -   **User does:** Scans the "Ready to Cook" recipes or taps to expand "Almost There" or "Need More" sections.
-    -   **System responds:** Displays recipe cards with images, names, cooking times, servings, and match status (🟢, 🟡, ⚪). For 🟡 recipes, it shows "Missing: [items] ([count])".
-
-2.  **Recipe Selection & Detail View:**
-    -   **User sees:** Recipe cards in the list.
-    -   **User does:** Taps a recipe card (e.g., "Pad Thai" from "Almost There").
-    -   **System responds:** Opens a recipe detail view (e.g., a bottom sheet on mobile) for the selected recipe.
-        -   Displays recipe image, name, meta-info (time, servings).
-        -   Shows an ingredient list with clear indicators: ✓ for owned, ❌ for missing.
-        -   Presents contextual action buttons: "Add Missing to List" (for 🟡 recipes), "Cook This" (for 🟢 recipes), "Cook This Anyway" (for 🟡 recipes if user wants to proceed without missing items).
-        -   Instructions are progressively disclosed (e.g., visible on scroll or after tapping "Cook This").
-
-3.  **Action on Recipe:**
-    -   **User sees:** Recipe detail view with action buttons.
-    -   **User does:**
-        -   (For 🟢 recipe) Taps "Cook This".
-        -   (For 🟡 recipe) Taps "Add Missing to List".
-        -   (For 🟡 recipe) Taps "Cook This Anyway".
-    -   **System responds:**
-        -   **"Cook This" / "Cook This Anyway":** Presents a confirmation dialog: "Ready to cook [Recipe Name]? This will use from your pantry: [list of ingredients with quantities]." Offers "[Cancel]" and "[Yes, Let's Cook]" buttons.
-        -   **"Add Missing to List":** Adds missing ingredients to the grocery list. Displays a toast: "✓ Added to shopping list." Recipe is saved to "Planned Meals."
-
-4.  **Confirmation & Cooking:**
-    -   **User sees:** Confirmation dialog.
-    -   **User does:** Taps "[Yes, Let's Cook]".
-    -   **System responds:**
-        -   Displays a success toast: "✓ Enjoy your meal! 🍽️".
-        -   Automatically navigates to the recipe instructions view.
-        -   Deducts ingredients from the pantry in the background.
-        -   Moves the recipe to a "Recently Cooked" section.
-        -   Triggers a "🌱 You saved X items from waste!" notification if applicable.
-
-**Decision Points:**
-
--   **Initial Recipe List Expansion:** If 5+ 🟢 recipes, expand 🟢. If 0-2 🟢 recipes but 3+ 🟡 recipes, expand 🟡. If all are ⚪, show a helpful empty state with "Browse All Recipes" fallback.
--   **Missing Ingredients Action:** User can choose to "Add Missing to List" (for shopping) or "Cook This Anyway" (if they plan to substitute or omit).
--   **Accidental "Cook This"**: A confirmation dialog prevents accidental deductions. A time-limited "Undo" option (e.g., 10-15 minutes) is available in the Pantry for post-confirmation mistakes.
-
-**Error Recovery:**
-
--   **Zero Results:** If the pantry is empty/minimal, a helpful empty state guides the user to "Add Ingredients" or "Browse All Recipes" (from Spoonacular).
--   **API Down:** The app enters "Limited Mode," serving cached recipes and clearly communicating the status.
--   **Wrong Recipe Confirmed:** A time-limited "Undo Ingredient Use" option is available in the Pantry.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app] --> B{Recipe Match Screen};
-
-    subgraph Recipe Match Screen
-        B -- Auto-expanded --> C[🟢 Ready to Cook (X) section];
-        B -- Collapsed --> D[🟡 Almost There (Y) section];
-        B -- Collapsed --> E[⚪ Need More (Z) section];
-    end
-
-    C --> F{User taps 🟢 recipe card};
-    D --> G{User taps 🟡 recipe card};
-    E --> H{User taps ⚪ recipe card};
-
-    F -- View Details --> I[Recipe Detail View (🟢)];
-    G -- View Details --> J[Recipe Detail View (🟡)];
-    H -- View Details --> K[Recipe Detail View (⚪)];
-
-    I -- Taps 'Cook This' --> L[Confirmation Dialog];
-    J -- Taps 'Add Missing to List' --> M[Add to Grocery List];
-    J -- Taps 'Cook This Anyway' --> L;
-    K -- Taps 'View Recipe' --> J;
-
-    L -- 'Yes, Let's Cook' --> N[Success Toast: 'Enjoy your meal!'];
-    L -- 'Cancel' --> J;
-
-    N --> O[Navigate to Instructions View];
-    N --> P[Deduct ingredients from Pantry];
-    N --> Q[Move recipe to 'Recently Cooked'];
-    N --> R[Trigger 'Waste Saved' notification];
-
-    M --> S[Toast: 'Added to shopping list'];
-    M --> T[Recipe saved to 'Planned Meals'];
-
-    subgraph Error Handling
-        U[No recipes found] --> V[Helpful Empty State];
-        W[API Down] --> X[Limited Mode (cached recipes)];
-        Y[Accidental 'Cook This'] --> L;
-        Z[Confirmed wrong recipe] --> AA[Time-limited 'Undo' in Pantry];
-    end
+/* Expired */
+--status-expired: #dc2626 (red-600)
 ```
 
-#### User Journey: Checking Pantry While at the Store
-
-**User Goal:** A user in a grocery store, with potentially poor connectivity, quickly checks their pantry to avoid buying duplicates.
-
-**Approach:** Categorized Accordion (Option C) - The pantry is organized into collapsible categories, loading instantly from a local cache, with a prominent sync status to build trust.
-
-**Flow Steps:**
-
-1.  **Entry Point (App Open):**
-    -   **User sees:** The "My Pantry" screen loads instantly (<100ms) from the local cache.
-        -   A prominent, color-coded sync status is at the top (e.g., "⚠️ Last synced: 2 hours ago" or "📵 Offline - showing cached data").
-        -   A quick search bar is visible.
-        -   Items are grouped into collapsible categories (e.g., "Dairy & Eggs (4)", "Proteins (3)").
-    -   **User does:** Scans the categories or taps the search bar.
-    -   **System responds:** The UI is immediately interactive. If online, a background sync is attempted without blocking the UI.
-
-2.  **Finding an Item:**
-    -   **User sees:** The list of collapsed categories.
-    -   **User does:**
-        -   (Browse) Taps a category (e.g., "Dairy & Eggs") to expand it.
-        -   (Search) Taps the search bar and types an item name (e.g., "milk").
-    -   **System responds:**
-        -   (Browse) The category expands with a smooth animation, showing the items within, sorted alphabetically. Expiration dates are clearly visible.
-        -   (Search) The list filters in real-time to show matching items from the cache.
-
-3.  **Confirmation & Decision:**
-    -   **User sees:** The item they were looking for (e.g., "• Milk - 1L 📅 Nov 15").
-    -   **User does:** Mentally confirms they have the item.
-    -   **System responds:** No system action is needed. The UI has served its purpose by providing the information.
-
-4.  **Success:**
-    -   **User sees:** The information they needed.
-    -   **User does:** Makes a confident shopping decision (e.g., "I don't need to buy milk"). Puts their phone away.
-    -   **System responds:** The app has successfully prevented a duplicate purchase and reinforced its reliability.
-
-**Decision Points:**
-
--   **Data Freshness:** The user can tap the sync status to manually trigger a sync attempt if they are online and want the absolute latest data.
--   **Item Not Found:** If a search yields no results, the app presents an actionable message: "Not in your pantry. [Add to Shopping List?]"
--   **Sync Conflict (Edge Case):** If a background sync detects a conflict (e.g., item was used on another device), the UI will prompt the user to resolve it: "Conflict for 'Eggs'. Keep your change or use the server's version?"
-
-**Error Recovery:**
-
--   **No Connectivity:** The app functions perfectly using cached data. The "Offline" status is clearly communicated.
--   **Stale Data:** The prominent timestamp ("Last synced: 6 hours ago") manages user expectations. The data is still presented as the best available information.
--   **Accidental Deletion:** If a user tries to manage items in the store, any deletion action requires a confirmation dialog ("Delete Milk?"), followed by a 10-second "Undo" toast.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app in store] --> B{Pantry screen loads instantly from cache};
-    B --> C[Show prominent Sync Status (e.g., '⚠️ Last synced: 2h ago')];
-    B --> D[Display collapsible categories (e.g., 'Dairy', 'Proteins')];
-    B --> E[Display Quick Search bar];
-
-    subgraph User Interaction
-        D -- Taps category --> F[Category expands to show items];
-        E -- Types in search --> G[List filters to show matching items];
-    end
-
-    F --> H{User visually finds item};
-    G --> H;
-
-    H --> I[User makes shopping decision];
-    I --> J[Puts phone away];
-
-    subgraph Background & Edge Cases
-        K[Connectivity check] -- Online --> L[Attempt background sync];
-        K -- Offline --> M[Show '📵 Offline' status];
-        L -- Sync success --> N[Update timestamp: '✓ Synced just now'];
-        L -- Sync fail --> O[Update timestamp: 'Can't sync'];
-        P[Search finds no results] --> Q[Prompt: 'Add to Shopping List?'];
-    end
+#### Neutral Colors
+```css
+--gray-50: #f9fafb /* Background */
+--gray-100: #f3f4f6 /* Cards hover */
+--gray-200: #e5e7eb /* Borders */
+--gray-600: #4b5563 /* Secondary text */
+--gray-900: #111827 /* Primary text */
+--white: #ffffff /* Cards */
 ```
 
-#### User Journey: Getting Dinner Inspiration at the Store
+### Typography
 
-**User Goal:** A user in a grocery store browses recipes to decide what to make for dinner, leveraging their current pantry to minimize purchases.
-
-**Approach:** Automatic Context-Aware Mode (Option C) - The app detects (or is manually switched to) "Shopping Mode," which prioritizes recipes that are "Almost There" (missing 1-2 ingredients).
-
-**Flow Steps:**
-
-1.  **Entry Point (App Open in Store):**
-    -   **User sees:** The app loads into "🛒 Shopping Mode." The recipe list is immediately visible, with the **🟡 You're Close!** section auto-expanded.
-    -   **User does:** Scans the list of recipes that require only a few items.
-    -   **System responds:** Recipe cards are simplified for the shopping context, highlighting the number of missing items (e.g., "Need 2: fish sauce, lime").
-
-2.  **Recipe Selection & Shopping List Creation:**
-    -   **User sees:** A list of inspiring, achievable recipes.
-    -   **User does:** Taps a recipe card (e.g., "Pad Thai").
-    -   **System responds:** Opens a recipe detail view where the "Shopping List" (missing items) is prioritized at the top, followed by the "You Already Have" section.
-    -   **User does:** Taps the "[Add to Shopping List]" button.
-    -   **System responds:** Displays a toast "✓ Added to Shopping List" and updates a persistent shopping list icon in the header with a badge (e.g., "📋 2 items").
-
-3.  **Shopping & In-Store Interaction:**
-    -   **User sees:** The persistent shopping list icon.
-    -   **User does:** Taps the icon to view their consolidated shopping list, grouped by recipe. As they find items in the store, they tap the checkbox next to each item.
-    -   **System responds:** The checked-off item is visually marked as complete (e.g., strikethrough).
-
-4.  **Success (Post-Shopping):**
-    -   **User sees:** A completed shopping list ("✓ All items found!").
-    -   **User does:** Taps "[Mark as Purchased]".
-    -   **System responds:**
-        -   Displays a success message: "🎉 Items added to pantry! Pad Thai is now ready to cook!".
-        -   Automatically adds the purchased items to the user's pantry.
-        -   Updates the recipe's status from 🟡 to 🟢. The next time the user opens the app at home, the recipe will appear in the "Ready to Cook" section.
-
-**Decision Points:**
-
--   **Shopping Mode Activation:** The app will attempt to auto-detect a grocery store location (with permission) to activate Shopping Mode, but will always provide a manual toggle for user control.
--   **Multiple Recipes:** If the user adds items from multiple recipes, the shopping list will intelligently consolidate ingredients (e.g., "Fish Sauce (3 tbsp total)").
--   **Item Not Found in Store:** The user can tap "Can't find it?" on a shopping list item to see potential substitutes (a Phase 2 AI feature) or to simply skip the item.
-
-**Error Recovery:**
-
--   **Accidental Add to List:** A 10-second "Undo" banner appears after adding a recipe's ingredients to the list. The user can also remove all items for a specific recipe from the shopping list view.
--   **Forgot to Mark as Purchased:** If the user opens the app the next day with items still on their list, a smart prompt will ask, "Did you buy the 2 items from yesterday? [Yes, Add to Pantry]".
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app in store] --> B{App enters '🛒 Shopping Mode'};
-    B --> C[🟡 'You're Close' recipes shown first];
-    C --> D{User taps a recipe card};
-    D --> E[Recipe Detail View];
-    E --> F[Missing items ('Shopping List') shown at top];
-    F --> G{User taps 'Add to Shopping List'};
-    G --> H[Toast: '✓ Added to list'];
-    H --> I[Shopping list icon updates with badge (e.g., '📋 2')];
-
-    subgraph Shopping
-        I --> J{User taps shopping list icon};
-        J --> K[Consolidated Shopping List View];
-        K -- User finds items --> L[User checks off items on list];
-        L -- All items found --> M{User taps 'Mark as Purchased'};
-    end
-
-    M --> N[Success: '🎉 Items added to pantry!'];
-    N --> O[Purchased items added to Pantry data];
-    N --> P[Recipe status updated from 🟡 to 🟢];
-
-    subgraph Edge Cases
-        Q[Auto-detection of store] --> B;
-        R[Manual toggle] --> B;
-        S[User adds multiple recipes] --> T[Shopping list consolidates ingredients];
-    end
+#### Font Stack
+```css
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
 ```
 
-#### User Journey: Using Expiring Food
+#### Sizes and Weights
+```css
+/* Headings */
+h1: text-4xl (36px) font-semibold tracking-tight
+h2: text-3xl (30px) font-semibold tracking-tight
+h3: text-2xl (24px) font-semibold
 
-**User Goal:** A user is proactively notified about items nearing their expiration date and is guided to recipes that use those items, preventing food waste.
+/* Body */
+p: text-base (16px) leading-relaxed
+small: text-sm (14px)
+tiny: text-xs (12px)
 
-**Approach:** Integrated Banner (Option A) - A proactive, contextual banner on the home screen serves as the primary, opportunity-focused entry point to the "Use It Up!" feature.
-
-**Flow Steps:**
-
-1.  **Entry Point (Notification):**
-    -   **User sees:** A prominent, non-urgent banner at the top of the main recipe screen: "⚠️ 3 items expiring soon. You can still make 5 recipes! →". A badge may also appear on the "Pantry" tab.
-    -   **User does:** Taps the banner.
-    -   **System responds:** Navigates to a dedicated "Use It Up! 🌱" screen.
-
-2.  **"Use It Up!" Screen:**
-    -   **User sees:** A two-panel view.
-        -   **Top Panel:** A list of "Expiring Soon" items, sorted by urgency (e.g., "Chicken breast 📅 Tomorrow").
-        -   **Bottom Panel:** A list of "Recipes Using These," with the best matches (using the most expiring items) highlighted with a star (⭐).
-    -   **User does:** Scans the expiring items and the suggested recipes. Taps a recipe (e.g., "Chicken & Spinach Curry").
-    -   **System responds:** Opens the recipe detail view.
-
-3.  **Recipe Detail View (Expiring Context):**
-    -   **User sees:** The standard recipe detail view, but enhanced with context.
-        -   A banner at the top: "🌱 Saves 3 expiring items!".
-        -   Expiring ingredients in the list are marked with a clock icon (⏰).
-    -   **User does:** Taps "[Cook This]".
-    -   **System responds:** Presents an enhanced confirmation dialog.
-
-4.  **Confirmation & Impact Celebration:**
-    -   **User sees:** A confirmation dialog framed around the mission: "🌱 Prevent food waste? This recipe will use: [list of expiring items]". The call to action is "[Yes, Save This Food! 🌱]".
-    -   **User does:** Taps "[Yes, Save This Food! 🌱]".
-    -   **System responds:**
-        -   Displays a celebration message quantifying the impact: "✓ Amazing! 🌱 You just saved 3 items from waste. That's ~$8.50 and 0.9 lbs of food."
-        -   Navigates to the recipe instructions, deducts ingredients, and updates the user's monthly impact stats.
-
-**Decision Points:**
-
--   **Urgency Framing:** The notification's urgency is tiered. Items expiring today get a red, urgent prompt; items expiring in 2-3 days get a calmer, orange/amber prompt.
--   **No Recipe Matches:** If an expiring item has no matches, the app provides alternative actions: "Mark as used," "Delete," "Extend expiration," or "Search web for recipes."
--   **Partial Ingredient Use:** If a recipe uses only part of an expiring item, the app prompts the user with options for the remainder: "Find another recipe," "Freeze it," or "Mark full amount as used."
-
-**Error Recovery:**
-
--   **False Expiration Alarm:** The user can easily edit the expiration date from the "Use It Up!" screen.
--   **Dismissed Notification:** The banner on the home screen and the badge on the Pantry tab persist until the items are used or expire, ensuring the user doesn't forget.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app] --> B{See '⚠️ X items expiring soon' banner};
-    B --> C{User taps banner};
-    C --> D['Use It Up!' Screen];
-
-    subgraph 'Use It Up!' Screen
-        D --> E[Top Panel: List of expiring items];
-        D --> F[Bottom Panel: Filtered list of recipes];
-        F --> G[⭐ 'Best Match' recipe is highlighted];
-    end
-
-    G --> H{User taps a recipe};
-    H --> I[Recipe Detail View (Expiring Context)];
-    I --> J[Banner: '🌱 Saves X expiring items!'];
-    I --> K[Ingredients marked with '⏰' icon];
-
-    K --> L{User taps 'Cook This'};
-    L --> M[Confirmation Dialog: '🌱 Prevent food waste?'];
-    M -- 'Yes, Save This Food!' --> N[Celebration: '✓ Amazing! You saved X items...'];
-    M -- 'Cancel' --> I;
-
-    N --> O[Navigate to Instructions];
-    N --> P[Deduct ingredients & update stats];
-
-    subgraph Edge Cases
-        Q[No recipe matches for item] --> R[Prompt: Mark used/Delete/Extend date];
-        S[Recipe uses partial amount] --> T[Prompt: Find recipe for remainder/Freeze];
-    end
+/* Weights */
+font-medium: 500
+font-semibold: 600
+font-bold: 700
 ```
 
-#### User Journey: First-Time User Onboarding
+### Spacing
 
-**User Goal:** A new user signs up and is seamlessly guided to add their first few pantry items, leading to the "aha moment" of seeing personalized recipe matches within their first session.
-
-**Approach:** Guided Invitation (Option C) - A skippable, friendly onboarding flow that uses "Quick Add" shortcuts to make pantry setup effortless and immediately demonstrates the app's core value.
-
-**Flow Steps:**
-
-1.  **Entry Point (First App Open):**
-    -   **User sees:** A landing screen with the app's value proposition ("Stop Wasting Food"), and options to "[See How It Works]", "[Sign Up]", or "[Sign In]".
-    -   **User does:** Taps "[Sign Up]".
-    -   **System responds:** Presents a minimal signup form (Email/Password or Social Login).
-
-2.  **Account Creation:**
-    -   **User sees:** The signup form.
-    -   **User does:** Enters credentials or uses social login and taps "[Create Account]".
-    -   **System responds:** Shows a spinner, then "✓ Account created!", and immediately transitions to the pantry setup.
-
-3.  **Guided Pantry Setup:**
-    -   **User sees:** A screen titled "Let's Set Up Your Pantry" with a grid of "Quick Add" shortcuts for common household items (Eggs, Milk, Chicken, etc.).
-    -   **User does:** Taps 3-5 of the Quick Add items.
-    -   **System responds:** Each tapped item shows a "✓" checkmark. A counter updates ("Added: 3 items"). The "[Continue →]" button becomes active.
-
-4.  **The "Aha Moment" (First Recipe Discovery):**
-    -   **User sees:** A brief loading animation ("Finding recipes you can make...").
-    -   **User does:** Waits 1-2 seconds.
-    -   **System responds:** The screen transitions to the main recipe view, pre-populated with matches. A celebratory header reads "✨ You Can Make These! ✨". The **🟢 Ready to Cook** section is expanded, showing several recipes the user can make immediately with the items they just added.
-
-**Decision Points:**
-
--   **Value Preview:** Users can tap "[See How It Works]" before signing up to view a 3-screen animated demo of the app's core functionality.
--   **Pantry Setup Skip:** The user can choose to "[Skip for Now]" during the pantry setup. If they do, they are shown a gentle nudge ("Are you sure?"), but can still proceed. They will then land on an empty state that guides them to add items.
--   **Optional Preferences:** After adding items, a skippable screen asks for dietary restrictions to improve future matches, but does not block the user from proceeding.
-
-**Error Recovery:**
-
--   **Email Already Exists:** The signup form provides clear links to "Sign In Instead" or "Forgot Password".
--   **Lost Connection During Signup:** The app saves progress locally and allows the user to resume when connectivity is restored.
--   **User Closes App Mid-Onboarding:** The next time the app is opened, a prompt asks the user to "Continue Setup" or "Skip for Now", allowing them to resume where they left off.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app for first time] --> B{Landing Screen};
-    B -- Taps 'Sign Up' --> C[Signup Form];
-    B -- Taps 'See How It Works' --> D[3-Screen Demo];
-    D --> C;
-
-    C -- Enters credentials --> E{Account Creation};
-    E -- Success --> F[Guided Pantry Setup Screen];
-    E -- Failure (email exists) --> G[Error: Email exists];
-    G --> C;
-
-    subgraph Pantry Setup
-        F --> H{User taps 'Quick Add' items};
-        H --> I[Items get '✓' checkmark];
-        I --> J[Counter updates: 'Added: X items'];
-        J --> K{User taps 'Continue'};
-    end
-
-    F -- Taps 'Skip for Now' --> L[Empty State Recipe Screen];
-
-    K --> M[Loading: 'Finding recipes...'];
-    M --> N[✨ 'You Can Make These!' Screen];
-    N --> O[🟢 'Ready to Cook' section is expanded];
-    O --> P[User sees first recipe matches];
-
-    P --> Q{User taps a recipe};
-    Q --> R[Recipe Detail View];
-    R --> S[Onboarding Complete: User is activated];
+#### Container
+```css
+max-width: 1440px
+padding-x: 24px (mobile) → 80px (desktop)
+padding-y: 48px
 ```
 
-#### User Journey: Adding Groceries to the Pantry
+#### Gaps and Margins
+```css
+gap-2: 8px /* Dense elements */
+gap-3: 12px /* Compact groups */
+gap-4: 16px /* Standard spacing */
+gap-6: 24px /* Card grids */
+gap-8: 32px /* Section spacing */
+```
 
-**User Goal:** A user comes home from shopping and quickly adds new grocery items to their pantry, including name, quantity, and expiration date, with minimal friction.
+### Rounding
+```css
+rounded-lg: 8px /* Small elements */
+rounded-xl: 12px /* Buttons, inputs */
+rounded-2xl: 16px /* Cards, dialogs */
+rounded-3xl: 24px /* Hero sections */
+```
 
-**Approach:** Smart Hybrid (Option C) - A single, dynamic screen that starts with the most important input (Name) and uses smart defaults for everything else, allowing for quick additions and flexible overrides.
+### Shadows
+```css
+/* Cards */
+shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05)
+shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1)
+shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1)
 
-**Flow Steps:**
-
-1.  **Entry Point:**
-    -   **User sees:** A Floating Action Button (FAB) with a "+" icon, always visible at the bottom-right of the screen.
-    -   **User does:** Taps the FAB.
-    -   **System responds:** Opens a modal/bottom sheet titled "Add to Pantry" with a search input and "Quick Add" shortcuts (e.g., Eggs, Milk, Bread).
-
-2.  **Ingredient Input:**
-    -   **User sees:** Search input field ("Search ingredient...") and Quick Add buttons.
-    -   **User does:**
-        -   (Common Item) Taps a "Quick Add" button (e.g., "🥚 Eggs").
-        -   (Uncommon Item) Types in the search input (e.g., "chicken").
-    -   **System responds:**
-        -   (Quick Add) Pre-fills the item name and smart defaults (quantity, unit, expiration).
-        -   (Search) Displays instant autocomplete suggestions from Spoonacular API. If no match, shows "Can't find it? Add custom item."
-
-3.  **Item Details & Confirmation:**
-    -   **User sees:** Selected item name (e.g., "Chicken breast, boneless") with pre-filled smart defaults for Quantity (e.g., "500g"), Unit (e.g., "g"), and Expiration Date (e.g., "Nov 18"). Editable fields are present.
-    -   **User does:**
-        -   (Quick Add/Defaults Fine) Taps "Add to Pantry" button.
-        -   (Adjust Details) Taps on Quantity, Unit, or Expiration to adjust, then taps "Add to Pantry".
-    -   **System responds:**
-        -   Displays "✓ Added [item name]" toast notification.
-        -   Shows options: "[Add another item]" and "[Done]".
-        -   Updates a running count (e.g., "3 items added today").
-
-4.  **Bulk Entry / Completion:**
-    -   **User sees:** "✓ Added [item name]" toast, "[Add another item]", "[Done]" buttons.
-    -   **User does:**
-        -   (Bulk Entry) Taps "[Add another item]" to repeat step 2.
-        -   (Completion) Taps "[Done]".
-    -   **System responds:**
-        -   (Add another) Clears the input, ready for the next item.
-        -   (Done) Closes the modal/bottom sheet and returns to the previous screen (e.g., Pantry view).
-
-**Decision Points:**
-
--   **Item Already Exists:** If a user adds an item they already have, the system prompts: "You already have [item] ([quantity]). Replace with new expiration date, Add more (increase quantity), or Cancel?"
--   **Custom Item:** If Spoonacular search yields no results, a "Add custom item" button appears, allowing manual entry but with a warning that it won't auto-match recipes.
-
-**Error States & Recovery:**
-
--   **Typo in Quantity/Expiration:** User can navigate to the Pantry, tap the item, and edit inline. An "Undo" button is available for 5 seconds after adding.
--   **Accidental Tap on Quick Add:** A confirmation dialog appears (e.g., "Add Eggs (12 pieces) to pantry?") allowing the user to cancel or adjust before confirming.
-
-**Success State:**
-
--   **Immediate:** "✓ Added [item name]" toast, running count update.
--   **Visual:** Newly added items in the Pantry view have a subtle highlight/glow that fades.
--   **Emotional:** A "magic moment" banner appears (e.g., "🎉 Great! You can now make 12 recipes! [See What You Can Cook]") connecting data entry to immediate value.
-
-**Mermaid Diagram:**
-
-```mermaid
-graph TD
-    A[User opens app] --> B{FAB '+' tapped};
-    B --> C[Add to Pantry modal/sheet opens];
-    C --> D{User input: Quick Add or Search};
-
-    D -- Quick Add --> E[Item name & smart defaults pre-filled];
-    D -- Search --> F[Autocomplete suggestions];
-    F -- Select suggestion --> E;
-    F -- No match --> G[Add custom item option];
-    G --> H[Manual input for custom item];
-    H --> I[Custom item added];
-
-    E --> J{User reviews/edits details};
-    J -- Defaults fine / Edits complete --> K[Taps 'Add to Pantry'];
-
-    K --> L[Toast: '✓ Added [item]'];
-    L --> M{Options: 'Add another item' / 'Done'};
-
-    M -- Add another item --> C;
-    M -- Done --> N[Return to Pantry/Previous Screen];
-
-    N --> O[Pantry view updated with new item];
-    O --> P[Magic Moment: '🎉 You can now make X recipes!'];
-
-    subgraph Error Handling
-        Q[Item already exists] --> R{Prompt: Replace/Add more/Cancel};
-        S[Spoonacular no match] --> G;
-        T[Accidental Quick Add] --> U{Confirmation dialog};
-    end
+/* Hover states */
+hover:shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1)
 ```
 
 ---
 
-## 6. Component Library
+## Navigation Structure
 
-### 6.1 Component Strategy
+### Sticky Header (Authenticated Pages)
 
-Our component strategy is to leverage the **shadcn/ui** library for foundational, primitive components while building a small number of highly specialized, custom components for the app's unique features. This approach maximizes development speed and ensures a consistent, accessible base, while allowing for bespoke design where it matters most.
+```
+┌────────────────────────────────────────────────────────────┐
+│ 🥗 ibe160 [Pantry] [Recipes] [Grocery] [Profile] 🚪 │
+└────────────────────────────────────────────────────────────┘
+```
 
-**Foundational Components (from shadcn/ui):**
--   Accordion
--   Alert / Alert Dialog
--   Badge
--   Button
--   Card
--   Checkbox
--   Dialog / Drawer
--   Input
--   Label
--   Skeleton
--   Switch
--   Toast
+**Components:**
+- Logo: Salad icon + "ibe160" text
+- Navigation: Pill buttons with active state (bg-gray-50)
+- Sign out: Icon + text, hover effect
 
-**Custom Components to be Built:**
--   **`RecipeCard`**: The core component for displaying recipe matches. (Defined below)
--   **`PantryItemCard` / `PantryItemRow`**: For displaying items in the user's pantry.
--   **`ExpiringItemsBanner`**: A proactive banner for the home screen to drive the "Use It Up!" journey.
--   **`ShoppingList`**: A complex component for managing grocery lists with item consolidation and state management.
+**CSS:**
+```css
+.sticky-header {
+position: sticky;
+top: 0;
+z-index: 50;
+background: white;
+border-bottom: 1px solid #e5e7eb;
+}
 
-### 6.2 Custom Component Design: RecipeCard
+.nav-pill {
+padding: 8px 16px;
+border-radius: 8px;
+font-weight: 500;
+font-size: 14px;
+transition: background-color 150ms;
+}
 
-The `RecipeCard` is the most critical component in the UI, responsible for conveying recipe viability at a glance.
+.nav-pill:hover {
+background-color: #f9fafb;
+}
 
-**Purpose:**
--   **Primary:** To enable users to quickly evaluate a recipe's match status and decide whether to explore it further.
--   **Emotional:** To create the "you're this close!" moment for 🟡 matches and celebrate capability for 🟢 matches.
+.nav-pill.active {
+background-color: #f3f4f6;
+color: #111827;
+}
+```
 
-**Anatomy (Default Vertical Variant):**
-1.  **Recipe Image:** 16:9 aspect ratio, lazy-loaded, with a fallback state.
-2.  **Recipe Title:** Truncated to 2 lines.
-3.  **Match Status Badge (🟢🟡⚪):** A color-coded visual indicator in the top-right corner.
-4.  **Recipe Metadata:** A single line for cooking time and servings (e.g., "25 min · 4 servings").
-5.  **Context-Specific Text:** A line of text indicating match status (e.g., "✓ All ingredients available" or "Missing: fish sauce, lime (2)").
-6.  **Action Buttons:** Contextual buttons like "[Cook This]" or "[Quick Add]".
-7.  **Favorite Icon (❤️):** A tertiary action icon for saving to favorites.
+### Information Architecture
 
-**States:**
--   **Default:** Standard appearance with neutral background and shadow.
--   **Hover (Desktop):** Subtle zoom effect, deeper shadow, and reveals the favorite icon.
--   **Active/Selected:** Brief scale-down effect on tap for feedback.
--   **Loading:** A skeleton/shimmer placeholder for initial render.
--   **Error:** A fallback gradient or icon if the image fails to load, ensuring the layout doesn't break.
--   **Favorited:** A persistent filled heart icon.
--   **Recently Cooked:** A "✓ Cooked" badge and timestamp.
+```
+Landing Page (Unauthenticated)
+├── Hero Section
+├── Features (AI Search, Expiration Alerts)
+└── Footer with modals
 
-**Variants:**
--   **Size:** `Default` (for main grids), `Compact` (for lists/search results), and `Featured` (for hero sections).
--   **Layout:** `Vertical` (mobile-first default) and `Horizontal` (for desktop list views).
--   **Contextual Styles:** The card's content and actions adapt based on the context (`Home View`, `Shopping Mode`, `Expiring Items View`, etc.). For example, in Shopping Mode, the "Add to List" action is prioritized.
+Auth Flow
+├── Login
+└── Register
 
----
-
-## 7. UX Pattern Decisions
-
-### 7.1 Consistency Rules
-
-To ensure a cohesive, predictable, and delightful user experience, the following UX pattern decisions will be applied consistently across the application. These decisions are derived from our core principles, chosen design direction, and the detailed user journey designs.
-
-#### 7.1.1 Button Hierarchy
-
-**Decision:** A clear visual hierarchy for buttons will guide users to the most important actions.
--   **Primary Action:** High contrast, filled background (using `primary` color). Used for the single most important action on a screen (e.g., "Cook This", "Add to Pantry").
--   **Secondary Action:** Outline or ghost button style (using `secondary` colors or `border`). Used for important but not primary actions (e.g., "View Recipe", "Add to List", "Edit").
--   **Tertiary Action:** Text-only button. Used for less prominent actions (e.g., "Cancel", "Skip for Now").
--   **Destructive Action:** High contrast, filled background (using `destructive` color). Used for irreversible actions (e.g., "Delete").
-
-**Rationale:** Guides user attention, reduces cognitive load, and prevents accidental critical actions.
-**Example:** On a recipe card, "Cook This" (Primary) vs. "View Recipe" (Secondary).
-
-#### 7.1.2 Feedback Patterns
-
-**Decision:** Feedback will be immediate, clear, and often delightful, reinforcing user actions and app status.
--   **Success:** Short-lived toast notifications (e.g., "✓ Added to shopping list", "✓ Account created!"). Celebratory animations for key moments (e.g., "🎉 You unlocked X recipes!").
--   **Error:** Toast notifications for minor errors. Alert dialogs for critical errors requiring user intervention. Clear, human-readable messages (e.g., "⚠️ Can't sync - still offline").
--   **Warning:** Banners for non-critical but important information (e.g., "⚠️ 3 items expiring soon").
--   **Info:** Subtle banners or inline text for contextual information (e.g., "Last synced: 2 min ago").
--   **Loading:** Skeleton screens with shimmer effects for content loading. Small spinners for background processes.
-
-**Rationale:** Builds trust through transparency and provides positive reinforcement.
-**Example:** "✓ Added chicken breast" toast after adding an item.
-
-#### 7.1.3 Form Patterns
-
-**Decision:** Forms will prioritize speed and ease of use, especially on mobile, with smart defaults and clear validation.
--   **Label Position:** Top-aligned labels for single-column forms to optimize scanning.
--   **Required Field Indicator:** Subtle asterisk (*) next to the label.
--   **Validation Timing:** Real-time validation (on blur or on change) for immediate feedback.
--   **Error Display:** Inline error messages below the input field, with a red border on the input.
--   **Help Text:** Contextual help text below the label or as a tooltip for complex fields.
-
-**Rationale:** Minimizes data entry friction, especially for "Add to Pantry" flow.
-**Example:** Autocomplete suggestions for ingredient names, real-time password strength indicator.
-
-#### 7.1.4 Modal & Dialog Patterns
-
-**Decision:** Modals and dialogs will be used for focused tasks and critical confirmations, adapting to screen size.
--   **Size Variants:** Full-screen bottom sheet for mobile (e.g., "Add to Pantry", Recipe Detail View). Centered modal for desktop.
--   **Dismiss Behavior:** Click outside or Escape key to dismiss for non-critical modals. Explicit "Cancel" button for critical dialogs.
--   **Focus Management:** Focus automatically shifts to the primary action or first input field within the modal.
--   **Stacking:** Avoid stacking multiple modals. If a new modal is needed, the previous one should be dismissed.
-
-**Rationale:** Ensures user focus on a single task and prevents accidental actions.
-**Example:** "Add to Pantry" bottom sheet, "Ready to cook?" confirmation dialog.
-
-#### 7.1.5 Navigation Patterns
-
-**Decision:** Navigation will be intuitive and context-aware, adapting to the user's location and device.
--   **Primary Navigation:** Persistent bottom navigation bar for mobile (Recipes, Pantry, Grocery, Profile). Top navigation for desktop with clear links.
--   **Active State Indication:** Clear visual highlight for the currently active navigation item.
--   **Back Button Behavior:** Standard platform-native back button behavior (top-left arrow) for hierarchical navigation.
--   **Deep Linking:** Supported for direct access to specific recipes or pantry items (Phase 2).
-
-**Rationale:** Provides consistent orientation and easy access to core features.
-**Example:** Tapping the "Pantry" tab to view inventory.
-
-#### 7.1.6 Empty State Patterns
-
-**Decision:** Empty states will be helpful, guiding users to the next action rather than being dead ends.
--   **First Use:** Clear call to action (e.g., "Add your first ingredient to get started") with a prominent button.
--   **No Results:** Suggest alternative actions (e.g., "No recipes found for these filters. Try broadening your search" or "Add more items for better matches").
--   **Cleared Content:** Offer an "Undo" option if content was recently cleared.
-
-**Rationale:** Prevents user frustration and encourages engagement.
-**Example:** "Let's get started! Add a few ingredients..." on an empty pantry.
-
-#### 7.1.7 Confirmation Patterns
-
-**Decision:** Critical actions will require explicit user confirmation, with clear communication of consequences.
--   **Destructive Actions (Delete):** Alert dialog with clear "Cancel" and "Delete" buttons.
--   **Irreversible Actions (Cook This):** Confirmation dialog listing affected items (e.g., "This will use: [ingredients]"). Positive framing for the action button (e.g., "Yes, Let's Cook").
--   **Partial Actions (Add to List):** Toast notification with an "Undo" option for a short duration.
-
-**Rationale:** Prevents trust-breaking accidental actions and provides a safety net.
-**Example:** "Ready to cook Chicken Stir-Fry?" dialog before deducting ingredients.
-
-#### 7.1.8 Notification Patterns
-
-**Decision:** Notifications will be timely, contextual, and actionable, with a focus on positive reinforcement.
--   **Placement:** Toast notifications for transient feedback. Banners for persistent, important information (e.g., "Expiring Soon" banner).
--   **Duration:** Toast notifications auto-dismiss after 3-5 seconds. Banners require manual dismissal or are contextually removed.
--   **Priority Levels:** Color-coded (green for success, amber for warning, red for error).
--   **In-App Notifications:** Badges on navigation icons (e.g., "Pantry (3 expiring)").
-
-**Rationale:** Keeps users informed without being intrusive, and reinforces positive behaviors.
-**Example:** "✓ Added to shopping list" toast, "⚠️ 3 items expiring soon" banner.
-
-#### 7.1.9 Search Patterns
-
-**Decision:** Search will be fast, fuzzy, and context-aware, providing immediate and relevant results.
--   **Trigger:** Prominent search bar/icon. Autocomplete as user types.
--   **Results Display:** Real-time filtering of lists or display of search results in a dedicated overlay.
--   **Fuzzy Search:** Implement fuzzy matching for ingredient names to handle variations (e.g., "tomato" matches "cherry tomatoes").
--   **Filters:** Contextual filters available via an icon (e.g., "Dinner", "Quickest to make").
-
-**Rationale:** Reduces data entry friction and helps users find what they need quickly.
-**Example:** Autocomplete suggestions when adding pantry items, real-time recipe filtering.
-
-#### 7.1.10 Date/Time Patterns
-
-**Decision:** Date and time displays will be human-readable and intuitive.
--   **Format:** Human-readable relative dates where appropriate (e.g., "Tomorrow", "In 2 days", "2 hours ago"). Absolute dates for precision (e.g., "Nov 18, 2025").
--   **Timezone Handling:** Display dates in the user's local timezone.
--   **Pickers:** Use native date pickers for mobile, and a custom, accessible date picker for desktop.
-
-**Rationale:** Enhances readability and reduces cognitive load.
-**Example:** "Expires: Nov 18 (7 days)" for pantry items.
-
-#### 7.1.11 Gestures & Interactions
-
-**Decision:** Common mobile gestures will be supported to enhance efficiency and delight.
--   **Swipe:** Swipe actions for quick tasks (e.g., swipe on shopping list item to check off, swipe on recipe card to favorite).
--   **Long-press:** For quick previews or secondary actions (e.g., long-press on pantry item to edit).
--   **Haptic Feedback:** Subtle haptic feedback for key interactions (e.g., "recipe unlocked", confirming a critical action).
-
-**Rationale:** Optimizes for mobile-first experience and adds a layer of delight.
-**Example:** Swiping a shopping list item to mark it as found.
+Main App (Authenticated)
+├── Pantry (Home)
+│ ├── Add Item Dialog
+│ ├── Edit Item Dialog
+│ ├── Barcode Scanner
+│ └── Confirm Delete Dialog
+├── Recipes
+│ ├── Text Search
+│ ├── Ingredient Search (Pantry)
+│ └── AI Search (Gemini)
+├── Grocery List
+│ └── LocalStorage-based
+├── Profile
+│ └── Quick Actions
+└── Alerts (Exposure overview)
+```
 
 ---
 
-## 8. Responsive Design & Accessibility
+## Page Views and Functionality
 
-### 8.1 Responsive Strategy
+### 1. Landing Page
 
-A mobile-first approach will be implemented, ensuring a seamless experience that gracefully adapts from small mobile screens to large desktops.
+#### Hero Section
+**Layout:** Two-column grid (1:1 ratio)
 
-**Mobile (Primary Platform - <640px):**
--   **Navigation:** A persistent bottom tab navigation for primary sections (Recipes, Pantry, Shopping List, Profile) to ensure thumb-reachable access.
--   **Layout:** A single-column, vertical scroll layout with full-width cards. A Floating Action Button (FAB) will be used for the primary "Add Food" action.
--   **Priority:** Speed, one-handed usability, and offline functionality are paramount.
+**Left column:**
+```
+[Badge: AI-Powered Food Waste Solution]
 
-**Tablet (Medium Screens - 640-1024px):**
--   **Navigation:** A side rail navigation (persistent on the left) will be used in landscape mode. In portrait mode, it may revert to bottom tab navigation.
--   **Layout:** 2-column grids will be used for recipe cards. Split views will be employed for detail pages to show a list and content simultaneously.
--   **Priority:** Flexible adaptation to portrait and landscape orientations, making efficient use of the extra space.
+Stop wasting food.
+Start saving money.
 
-**Desktop (Large Screens - >1024px):**
--   **Navigation:** A persistent, expanded left sidebar with text labels for clear, always-visible navigation.
--   **Layout:** Multi-column layouts will be used extensively: 3-column grids for recipe cards, 2-column grids for pantry categories, and 3-column split views for recipe details (Nav | Content | Ingredients).
--   **Priority:** Information density and efficiency, with power-user features like keyboard shortcuts, rich hover interactions, and bulk actions.
+Track your pantry, get AI recipe suggestions,
+and reduce food waste.
 
-**Breakpoints:**
--   **Base:** Mobile-first styles.
--   `@media (min-width: 640px)`: Small tablets / large phones.
--   `@media (min-width: 768px)`: Tablets, side navigation appears.
--   `@media (min-width: 1024px)`: Desktops, 3-column layouts enabled.
--   `@media (min-width: 1440px)`: Large desktops, content width is capped.
+[Sign in] [Get Started →]
+```
 
-### 8.2 Accessibility Strategy
+**Right column:**
+```
+┌─────────────────────────────────────┐
+│ 🥗 Your Pantry │
+│ │
+│ [🍅 Tomatoes 250g Fresh] │
+│ [🥛 Milk 1L 2 days ⚠️] │
+│ [🍗 Chicken 500g Fresh] │
+│ │
+│ [✨ Find Recipes with AI] │
+└─────────────────────────────────────┘
+[✨ AI Powered badge]
+```
 
-The application will adhere to **WCAG 2.1 Level AA** compliance to ensure it is usable by the widest possible audience.
+**CSS:**
+```css
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 6px 12px;
+background: #f3f4f6;
+border-radius: 9999px;
+font-size: 12px;
+font-weight: 500;
+}
 
-**Key Requirements:**
--   **Color & Contrast:** Text contrast will meet a 4.5:1 ratio (3:1 for large text). Status indicators will never rely on color alone and will be paired with icons and text (e.g., "🟢 Ready to Cook").
--   **Keyboard Navigation:** All interactive elements will be reachable and operable via keyboard, with a logical tab order and a highly visible focus indicator (2px outline). A "Skip to main content" link will be provided.
--   **Screen Readers:** The application will use semantic HTML5 (`<main>`, `<nav>`, `<article>`) and appropriate ARIA roles (`role="status"`, `aria-live="polite"`) to ensure a coherent experience for screen reader users. All images will have descriptive alt text, and all icon-only buttons will have `aria-label` attributes.
--   **Touch & Motor:** All touch targets will meet a minimum size of 44x44px. Gestures like swiping will always have a button equivalent.
--   **Forms & Input:** All form inputs will have visible labels and provide real-time, inline validation with clear error messages.
--   **Testing:** The strategy includes a mix of automated testing (Lighthouse, axe DevTools), manual keyboard and screen reader testing, and user testing with individuals who rely on assistive technologies.
+.hero-title {
+font-size: 60px;
+line-height: 1.1;
+font-weight: 600;
+letter-spacing: -0.025em;
+color: #111827;
+}
+
+.hero-title span {
+color: #16a34a; /* Green accent */
+}
+
+.hero-card {
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 24px;
+padding: 24px;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+transition: box-shadow 300ms;
+}
+
+.hero-card:hover {
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+```
+
+#### Feature Sections
+**Alternating layout:**
+
+```
+Feature 1 (AI Search):
+[Text] [Image]
+
+Feature 2 (Alerts):
+[Image] [Text]
+```
+
+**Components:**
+- Badge with icon (purple for AI, yellow for alerts)
+- Large heading (text-3xl/4xl)
+- Descriptive text (text-lg)
+- High-quality image from Unsplash
+- Gradient background on images
+
+#### Footer Modals
+**Trigger:** Clickable links in footer
+
+**Modal content:**
+- Icon header (12x12px rounded-xl background)
+- Title (text-2xl)
+- Description
+- Info box with checklist
+- X button to close
+
+**Modal design:**
+```css
+.modal-backdrop {
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.5);
+z-index: 50;
+}
+
+.modal-content {
+position: relative;
+background: white;
+border-radius: 16px;
+max-width: 672px;
+padding: 24px;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-info-box {
+background: #f0fdf4; /* green-50 */
+border: 1px solid #bbf7d0; /* green-200 */
+border-radius: 12px;
+padding: 16px;
+}
+
+.checkmark-item {
+display: flex;
+align-items: start;
+gap: 8px;
+}
+
+.checkmark-item svg {
+width: 16px;
+height: 16px;
+margin-top: 2px;
+flex-shrink: 0;
+}
+```
 
 ---
 
-## 9. Implementation Guidance
+### 2. Pantry (Food Item Overview)
 
-### 9.1 Completion Summary
+#### Layout
+```
+┌────────────────────────────────────────────────────────┐
+│ Header (Sticky) │
+├────────────────────────────────────────────────────────┤
+│ │
+│ My Pantry │
+│ Track your ingredients and reduce food waste │
+│ │
+│ [✓ Offline-First: React Query enabled] │
+│ │
+│ 12 items in pantry [📷 Scan] [+ Add Item] │
+│ │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
+│ │ 🍅 │ │ 🥛 │ │ 🍗 │ │
+│ │ Tomatoes│ │ Milk │ │ Chicken │ │
+│ │ 250g │ │ 1L │ │ 500g │ │
+│ │ [Fresh] │ │ [2 days]│ │ [Fresh] │ │
+│ │ [✏️] [🗑️]│ │ [✏️] [🗑️]│ │ [✏️] [🗑️]│ │
+│ └─────────┘ └─────────┘ └─────────┘ │
+│ │
+└────────────────────────────────────────────────────────┘
+```
 
-{{completion_summary}}
+#### Pantry Item Card
+**Components:**
+- Image or emoji (category-based)
+- Name (font-semibold)
+- Quantity + unit (text-sm)
+- Status badge (color-coded)
+- Edit/Delete buttons
+
+**Status badges:**
+```css
+/* Fresh (3+ days) */
+.badge-fresh {
+padding: 4px 8px;
+background: #dcfce7; /* green-100 */
+color: #16a34a; /* green-600 */
+border-radius: 9999px;
+font-size: 12px;
+font-weight: 500;
+}
+
+/* Warning (2-3 days) */
+.badge-warning {
+background: #fef3c7; /* yellow-100 */
+color: #ca8a04; /* yellow-600 */
+}
+
+/* Critical (0-1 day) */
+.badge-critical {
+background: #fed7aa; /* orange-100 */
+color: #ea580c; /* orange-600 */
+}
+
+/* Expired */
+.badge-expired {
+background: #fee2e2; /* red-100 */
+color: #dc2626; /* red-600 */
+}
+```
+
+#### Loading State
+**Skeleton placeholders:**
+```css
+.skeleton {
+animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+background: #e5e7eb;
+border-radius: 8px;
+}
+
+ @keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.5; }
+}
+```
+
+#### Empty State
+```
+┌──────────────────┐
+│ │
+│ 🥗 │
+│ │
+└──────────────────┘
+
+Your pantry is empty
+
+Add your first ingredient to
+start tracking expiration dates!
+
+[📷 Scan Barcode] [+ Add Item]
+```
+
+#### Dialogs
+
+**Add Item Dialog:**
+```
+┌─────────────────────────────────────┐
+│ Add Item to Pantry [X] │
+├─────────────────────────────────────┤
+│ │
+│ Name │
+│ [_________________________] │
+│ │
+│ Category │
+│ [▼ Select category ] │
+│ │
+│ Quantity Unit │
+│ [______] [▼ g ] │
+│ │
+│ Best Before Date │
+│ [📅 dd/mm/yyyy ] │
+│ │
+│ [Cancel] [Add Item] │
+└─────────────────────────────────────┘
+```
+
+**Barcode Scanner:**
+- Fullscreen overlay
+- Camera feed
+- Crosshair/scanning guide
+- "Close" button
+- Success/error toast upon scanning
 
 ---
 
-## Appendix
+### 3. Recipes (Recipe Search)
 
-### Related Documents
+#### Search Mode Toggle
+```
+┌─────────────────────────────────────────────────────┐
+│ Recipe Browser │
+│ Discover recipes with AI, search by name, or use │
+│ your pantry │
+│ │
+│ [🗣️ Search by Name] [🛍️ Use My Pantry (12)] [✨ AI Search] │
+├─────────────────────────────────────────────────────┤
+│ │
+│ [Search input or AI prompt] │
+│ │
+└─────────────────────────────────────────────────────┘
+```
 
-- Product Requirements: `{{prd_file}}`
-- Product Brief: `{{brief_file}}`
-- Brainstorming: `{{brainstorm_file}}`
+**Mode 1: Text Search**
+```
+Input:
+┌────────────────────────────────────────────┐
+│ Search for recipes (e.g., pasta, chicken) │
+└────────────────────────────────────────────┘
+```
 
-### Core Interactive Deliverables
+**Mode 2: Ingredient Search**
+```
+Info box:
+┌────────────────────────────────────────────┐
+│ ✓ Finding recipes with: │
+│ Tomatoes, Milk, Chicken, ... │
+└────────────────────────────────────────────┘
+```
 
-This UX Design Specification was created through visual collaboration:
+**Mode 3: AI Search**
+```
+Input:
+┌────────────────────────────────────────────────────┐
+│ Ask AI anything... (e.g., 'healthy vegetarian') │
+└──────────────────────────────────[✨ Search]──────┘
 
-- **Color Theme Visualizer**: {{color_themes_html}}
-  - Interactive HTML showing all color theme options explored
-  - Live UI component examples in each theme
-  - Side-by-side comparison and semantic color usage
+💡 AI Tips: Ask for recipes based on dietary
+preferences, cuisine styles, cooking time, or
+specific ingredients. The AI respects your user
+preferences automatically!
+```
 
-- **Design Direction Mockups**: {{design_directions_html}}
-  - Interactive HTML with 6-8 complete design approaches
-  - Full-screen mockups of key screens
-  - Design philosophy and rationale for each direction
+#### Recipe Card
+```
+┌─────────────────────────┐
+│ │
+│ [Recipe image] │
+│ │
+├─────────────────────────┤
+│ Pasta Carbonara │
+│ │
+│ 🕐 30 min 👥 4 servings│
+│ │
+│ [Italian] [Pasta] [Easy]│
+│ │
+│ [View Recipe →] │
+└─────────────────────────┘
+```
 
-### Optional Enhancement Deliverables
+**Hover effect:**
+```css
+.recipe-card {
+transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-_This section will be populated if additional UX artifacts are generated through follow-up workflows._
+.recipe-card:hover {
+transform: scale(1.02);
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
 
-<!-- Additional deliverables added here by other workflows -->
+.recipe-card img {
+transition: transform 300ms;
+}
 
-### Next Steps & Follow-Up Workflows
+.recipe-card:hover img {
+transform: scale(1.05);
+}
+```
 
-This UX Design Specification can serve as input to:
+#### AI Search Gradient Button
+```css
+.ai-search-button {
+background: linear-gradient(to right, #9333ea, #db2777);
+color: white;
+padding: 10px 16px;
+border-radius: 12px;
+font-weight: 600;
+display: flex;
+align-items: center;
+gap: 8px;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+transition: box-shadow 200ms;
+}
 
-- **Wireframe Generation Workflow** - Create detailed wireframes from user flows
-- **Figma Design Workflow** - Generate Figma files via MCP integration
-- **Interactive Prototype Workflow** - Build clickable HTML prototypes
-- **Component Showcase Workflow** - Create interactive component library
-- **AI Frontend Prompt Workflow** - Generate prompts for v0, Lovable, Bolt, etc.
-- **Solution Architecture Workflow** - Define technical architecture with UX context
-
-### Version History
-
-| Date     | Version | Changes                         | Author        |
-| -------- | ------- | ------------------------------- | ------------- |
-| {{date}} | 1.0     | Initial UX Design Specification | {{user_name}} |
+.ai-search-button:hover {
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+```
 
 ---
 
-_This UX Design Specification was created through collaborative design facilitation, not template generation. All decisions were made with user input and are documented with rationale._
+### 4. Grocery (Shopping List)
+
+#### Layout
+```
+┌────────────────────────────────────────────┐
+│ 🛒 Smart Grocery List │
+│ Add items, check them off as you shop │
+│ │
+│ ✓ Smart Shopping: Add items, check them │
+│ off, and track your needs! │
+│ │
+│ Add Item │
+│ [e.g., Milk, Eggs, Bread...] [Add] │
+│ │
+│ ┌─────────────────────────────────────┐ │
+│ │ 12 Total │ 8 To Buy │ 4 In Cart │ │
+│ └─────────────────────────────────────┘ │
+│ │
+│ To Buy │
+│ [ ] Tomatoes [Remove] │
+│ [ ] Milk [Remove] │
+│ │
+│ In Cart │
+│ [✓] Eggs [Remove] │
+│ [✓] Bread [Remove] │
+│ │
+│ [Clear Checked Items (4)] │
+└────────────────────────────────────────────┘
+```
+
+#### Item States
+**Unchecked (To Buy):**
+```css
+.grocery-item-unchecked {
+background: white;
+border: 1px solid #e5e7eb;
+padding: 12px;
+border-radius: 12px;
+}
+
+.checkbox-unchecked {
+width: 24px;
+height: 24px;
+border: 2px solid #d1d5db;
+border-radius: 6px;
+}
+
+.checkbox-unchecked:hover {
+border-color: #3b82f6; /* blue-500 */
+}
+```
+
+**Checked (In Cart):**
+```css
+.grocery-item-checked {
+background: #dcfce7; /* green-50 */
+border: 1px solid #bbf7d0; /* green-200 */
+padding: 12px;
+border-radius: 12px;
+}
+
+.checkbox-checked {
+width: 24px;
+height: 24px;
+background: #16a34a; /* green-500 */
+border: 2px solid #16a34a;
+border-radius: 6px;
+color: white;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.item-name-checked {
+text-decoration: line-through;
+color: #6b7280; /* gray-500 */
+}
+```
+
+---
+
+### 5. Profile
+
+#### Layout
+```
+┌────────────────────────────────────────┐
+│ Profile │
+│ Manage your account and preferences │
+│ │
+│ ┌────────────────────────────────────┐ │
+│ │ 👤 Name │ │
+│ │ John Doe │ │
+│ │ │ │
+│ │ ✉️ Email │ │
+│ │ john @example.com │ │
+│ │ │ │
+│ │ Quick Actions │ │
+│ │ ┌─────────┐ ┌──────────┐ │ │
+│ │ │📦 Pantry│ │👨‍🍳 Recipes│ │ │
+│ │ └─────────┘ └──────────┘ │ │
+│ │ ┌─────────┐ ┌──────────┐ │ │
+│ │ │🛒Grocery│ │🔔 Prefs │ │ │
+│ │ └─────────┘ └──────────┘ │ │
+│ │ │ │
+│ │ [🚪 Sign out] │ │
+│ └────────────────────────────────────┘ │
+└────────────────────────────────────────┘
+```
+
+---
+
+### 6. Alerts (Expiration Alerts)
+
+#### Dashboard Layout
+```
+┌────────────────────────────────────────────────┐
+│ 🔔 Expiration Alerts │
+│ │
+│ 📲 Enable browser notifications [Enable] │
+│ │
+│ ┌─────┐ ┌──────┐ ┌──────┐ ┌─────┐ │
+│ │ 5 │ │ 3 │ │ 7 │ │ 12 │ │
+│ │Expir│ │Critic│ │Warni │ │Safe │ │
+│ └─────┘ └──────┘ └──────┘ └─────┘ │
+│ │
+│ ⚠️ Expired Items │
+│ ┌──────────────────────────────────────────┐ │
+│ │ 🍅 Tomatoes Expired 2 days ago 250g │ │
+│ └──────────────────────────────────────────┘ │
+│ │
+│ 🚨 Critical (Use Today!) │
+│ ┌──────────────────────────────────────────┐ │
+│ │ 🥛 Milk Expires today 1L [Find Recipes]│ │
+│ └──────────────────────────────────────────┘ │
+│ │
+│ ⚠️ Use Soon (2-3 days) │
+│ ... │
+│ │
+│ ✅ Safe Items (3+ days) │
+│ ... │
+└────────────────────────────────────────────────┘
+```
+
+#### Color-coded Sections
+```css
+/* Expired - Red */
+.alert-expired {
+border-left: 4px solid #dc2626; /* red-600 */
+background: white;
+padding: 24px;
+border-radius: 8px;
+}
+
+.alert-expired-item {
+background: #fee2e2; /* red-50 */
+padding: 16px;
+border-radius: 8px;
+}
+
+/* Critical - Orange */
+.alert-critical {
+border-left: 4px solid #ea580c; /* orange-600 */
+}
+
+.alert-critical-item {
+background: #fed7aa; /* orange-50 */
+}
+
+/* Warning - Yellow */
+.alert-warning {
+border-left: 4px solid #ca8a04; /* yellow-600 */
+}
+
+.alert-warning-item {
+background: #fef3c7; /* yellow-50 */
+}
+
+/* Safe - Green */
+.alert-safe {
+border-left: 4px solid #16a34a; /* green-600 */
+}
+
+.alert-safe-item {
+background: #dcfce7; /* green-50 */
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+}
+```
+
+---
+
+## Components
+
+### Buttons
+
+#### Primary Button (Green)
+```css
+.btn-primary {
+padding: 12px 24px;
+background: linear-gradient(to right, #16a34a, #059669);
+color: white;
+font-weight: 600;
+border-radius: 12px;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+transition: all 200ms;
+}
+
+.btn-primary:hover {
+background: linear-gradient(to right, #15803d, #047857);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+```
+
+#### Secondary Button (White/Gray)
+```css
+.btn-secondary {
+padding: 10px 20px;
+background: white;
+border: 1px solid #d1d5db;
+color: #111827;
+font-weight: 500;
+border-radius: 12px;
+transition: background-color 150ms;
+}
+
+.btn-secondary:hover {
+background: #f9fafb;
+}
+```
+
+#### AI Button (Gradient Purple-Pink)
+```css
+.btn-ai {
+padding: 12px 20px;
+background: linear-gradient(to right, #9333ea, #db2777);
+color: white;
+font-weight: 600;
+border-radius: 12px;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.btn-ai:hover {
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+transform: scale(1.02);
+}
+```
+
+#### Destructive Button (Red)
+```css
+.btn-destructive {
+padding: 12px 24px;
+background: #dc2626;
+color: white;
+font-weight: 600;
+border-radius: 12px;
+}
+
+.btn-destructive:hover {
+background: #b91c1c;
+}
+```
+
+### Cards
+
+#### Standard Card
+```css
+.card {
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 16px;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+padding: 24px;
+transition: box-shadow 200ms;
+}
+
+.card:hover {
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+```
+
+#### Pantry Item Card
+```css
+.pantry-card {
+background: white;
+border: 2px solid #e5e7eb;
+border-radius: 12px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 12px;
+transition: all 200ms;
+}
+
+.pantry-card:hover {
+border-color: #16a34a;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pantry-card-image {
+width: 100%;
+height: 120px;
+border-radius: 8px;
+object-fit: cover;
+}
+```
+
+#### Recipe Card
+```css
+.recipe-card {
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 16px;
+overflow: hidden;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+cursor: pointer;
+}
+
+.recipe-card:hover {
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+transform: scale(1.02);
+}
+
+.recipe-card-image {
+width: 100%;
+height: 224px;
+object-fit: cover;
+transition: transform 300ms;
+}
+
+.recipe-card:hover .recipe-card-image {
+transform: scale(1.05);
+}
+
+.recipe-card-body {
+padding: 24px;
+}
+```
+
+### Inputs
+
+#### Text Input
+```css
+.input {
+width: 100%;
+padding: 12px 16px;
+border: 1px solid #d1d5db;
+border-radius: 12px;
+font-size: 14px;
+color: #111827;
+transition: all 150ms;
+}
+
+.input::placeholder {
+color: #9ca3af;
+}
+
+.input:focus {
+outline: none;
+border-color: #111827;
+ring: 2px;
+ring-color: #111827;
+}
+```
+
+#### Select Dropdown
+```css
+.select {
+width: 100%;
+padding: 12px 16px;
+border: 1px solid #d1d5db;
+border-radius: 12px;
+background: white;
+font-size: 14px;
+color: #111827;
+cursor: pointer;
+}
+
+.select:focus {
+outline: none;
+border-color: #111827;
+ring: 2px;
+ring-color: #111827;
+}
+```
+
+### Badges
+
+#### Status Badge (Pantry)
+```css
+.badge {
+padding: 4px 8px;
+border-radius: 9999px;
+font-size: 12px;
+font-weight: 500;
+text-align: center;
+}
+
+.badge-green {
+background: #dcfce7;
+color: #16a34a;
+}
+
+.badge-yellow {
+background: #fef3c7;
+color: #ca8a04;
+}
+
+.badge-orange {
+background: #fed7aa;
+color: #ea580c;
+}
+
+.badge-red {
+background: #fee2e2;
+color: #dc2626;
+}
+```
+
+#### Tag Badge (Recipes)
+```css
+.tag {
+padding: 6px 12px;
+background: #f3f4f6;
+color: #374151;
+font-size: 12px;
+border-radius: 9999px;
+}
+```
+
+### Dialogs/Modals
+
+#### Modal Container
+```css
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.5);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 50;
+padding: 16px;
+}
+
+.modal {
+background: white;
+border-radius: 16px;
+max-width: 600px;
+width: 100%;
+max-height: 90vh;
+overflow-y: auto;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+position: relative;
+}
+
+.modal-header {
+display: flex;
+justify-content: space-between;
+align-items: start;
+padding: 24px 24px 16px;
+border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-body {
+padding: 24px;
+}
+
+.modal-footer {
+padding: 16px 24px;
+border-top: 1px solid #e5e7eb;
+display: flex;
+justify-content: flex-end;
+gap: 12px;
+}
+```
+
+### Toast Notifications
+
+```css
+.toast {
+position: fixed;
+bottom: 24px;
+right: 24px;
+padding: 16px 24px;
+border-radius: 12px;
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+max-width: 400px;
+z-index: 100;
+animation: slideIn 300ms ease-out;
+}
+
+.toast-success {
+background: #dcfce7;
+border: 1px solid #16a34a;
+color: #15803d;
+}
+
+.toast-error {
+background: #fee2e2;
+border: 1px solid #dc2626;
+color: #b91c1c;
+}
+
+ @keyframes slideIn {
+from {
+transform: translateX(100%);
+opacity: 0;
+}
+to {
+transform: translateX(0);
+opacity: 1;
+}
+}
+```
+
+### Info Banners
+
+```css
+.banner {
+padding: 16px;
+border-radius: 12px;
+border: 1px solid;
+font-size: 14px;
+display: flex;
+align-items: start;
+gap: 12px;
+}
+
+.banner-green {
+background: #dcfce7;
+border-color: #bbf7d0;
+color: #15803d;
+}
+
+.banner-blue {
+background: #dbeafe;
+border-color: #93c5fd;
+color: #1e40af;
+}
+
+.banner-purple {
+background: #f3e8ff;
+border-color: #d8b4fe;
+color: #7e22ce;
+}
+
+.banner-yellow {
+background: #fef3c7;
+border-color: #fde047;
+color: #854d0e;
+}
+```
+
+---
+
+## Interaction Patterns
+
+### Hover States
+
+```css
+/* General hover effect for interactive elements */
+.interactive {
+transition: all 200ms ease-out;
+}
+
+.interactive:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Link hover */
+.link {
+color: #3b82f6;
+text-decoration: none;
+transition: color 150ms;
+}
+
+.link:hover {
+color: #2563eb;
+text-decoration: underline;
+}
+```
+
+### Loading States
+
+```css
+/* Spinner */
+.spinner {
+width: 20px;
+height: 20px;
+border: 2px solid #e5e7eb;
+border-top-color: #111827;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+}
+
+ @keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+/* Skeleton */
+.skeleton {
+background: linear-gradient(
+90deg,
+#e5e7eb 0%,
+#f3f4f6 50%,
+#e5e7eb 100%
+);
+background-size: 200% 100%;
+animation: pulse 2s ease-in-out infinite;
+}
+
+ @keyframes pulse {
+0% { background-position: 200% 0; }
+100% { background-position: -200% 0; }
+}
+```
+
+### Focus States
+
+```css
+/* Keyboard focus ring */
+.focusable:focus {
+outline: none;
+ring: 2px;
+ring-color: #111827;
+ring-offset: 2px;
+}
+
+/* Focus-visible (only on keyboard) */
+.focusable:focus-visible {
+outline: 2px solid #111827;
+outline-offset: 2px;
+}
+```
+
+### Empty States
+
+```css
+.empty-state {
+padding: 48px;
+text-align: center;
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 16px;
+}
+
+.empty-state-icon {
+width: 80px;
+height: 80px;
+margin: 0 auto 24px;
+background: #f3f4f6;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.empty-state-title {
+font-size: 24px;
+font-weight: 600;
+color: #111827;
+margin-bottom: 8px;
+}
+
+.empty-state-description {
+color: #6b7280;
+margin-bottom: 32px;
+}
+```
+
+### Error States
+
+```css
+.error-state {
+padding: 32px;
+text-align: center;
+background: #fee2e2;
+border: 1px solid #fecaca;
+border-radius: 12px;
+}
+
+.error-message {
+color: #991b1b;
+font-weight: 500;
+margin-bottom: 16px;
+}
+```
+
+---
+
+## Responsiveness
+
+### Breakpoints
+
+```css
+/* Mobile First Approach */
+/* sm */ @media (min-width: 640px) { }
+/* md */ @media (min-width: 768px) { }
+/* lg */ @media (min-width: 1024px) { }
+/* xl */ @media (min-width: 1280px) { }
+/* 2xl */ @media (min-width: 1440px) { }
+```
+
+### Grid Layouts
+
+#### Pantry/Recipe Grid
+```css
+.item-grid {
+display: grid;
+grid-template-columns: 1fr; /* Mobile */
+gap: 24px;
+}
+
+ @media (min-width: 768px) {
+.item-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+}
+
+ @media (min-width: 1024px) {
+.item-grid {
+grid-template-columns: repeat(3, 1fr);
+}
+}
+```
+
+#### Hero Section
+```css
+.hero {
+display: grid;
+grid-template-columns: 1fr;
+gap: 64px;
+}
+
+ @media (min-width: 1024px) {
+.hero {
+grid-template-columns: repeat(2, 1fr);
+align-items: center;
+}
+}
+```
+
+### Mobile Navigation
+
+```css
+/* On mobile: Hamburger menu or simplified nav */
+ @media (max-width: 768px) {
+.nav-links {
+display: none; /* Hide full nav */
+}
+
+.mobile-menu-button {
+display: block;
+}
+}
+```
+
+### Touch Targets
+
+```css
+/* Minimum 44x44px for touch-friendly */
+.btn-mobile {
+min-height: 44px;
+min-width: 44px;
+padding: 12px 24px;
+}
+```
+
+---
+
+## Accessibility
+
+### ARIA Labels
+
+```html
+<!-- Buttons -->
+<button aria-label="Add item to pantry">
+<PlusIcon />
+</button>
+
+<!-- Navigation -->
+<nav aria-label="Main navigation">
+<a href="/pantry" aria-current="page">Pantry</a>
+</nav>
+
+<!-- Dialogs -->
+<div role="dialog" aria-labelledby="modal-title" aria-modal="true">
+<h2 id="modal-title">Add Item</h2>
+</div>
+
+<!-- Loading states -->
+<div role="status" aria-live="polite">
+Loading recipes...
+</div>
+```
+
+### Keyboard Navigation
+
+```css
+/* Skip to content link */
+.skip-link {
+position: absolute;
+top: -40px;
+left: 0;
+background: #111827;
+color: white;
+padding: 8px 16px;
+z-index: 100;
+}
+
+.skip-link:focus {
+top: 0;
+}
+```
+
+### Color Contrast
+
+**WCAG AA compliance:**
+- Text (16px+): Minimum 4.5:1 contrast ratio
+- Large text (24px+): Minimum 3:1 contrast ratio
+
+**Examples:**
+```css
+/* ✅ Good contrast */
+.text-primary {
+color: #111827; /* gray-900 */
+background: #ffffff;
+/* Contrast ratio: 16.8:1 */
+}
+
+/* ✅ Good contrast for status */
+.badge-warning {
+color: #ca8a04; /* yellow-600 */
+background: #fef3c7; /* yellow-100 */
+/* Contrast ratio: 5.2:1 */
+}
+```
+
+### Screen Reader Support
+
+```html
+<!-- Image alt texts -->
+<img src="tomato.jpg" alt="Fresh red tomatoes, 250 grams, expires in 3 days" />
+
+<!-- Form labels -->
+<label for="item-name">
+Item Name
+<span aria-label="required">*</span>
+</label>
+<input id="item-name" type="text" required />
+
+<!-- Status messages -->
+<div role="status" aria-live="polite">
+Item added successfully
+</div>
+```
+
+### Testing Strategy
+
+To ensure compliance with WCAG AA standards, the following testing strategy will be implemented:
+
+1.  **Automated Testing:** Tools like Axe DevTools will be integrated into the development workflow to catch common accessibility issues automatically.
+2.  **Manual Keyboard-Only Navigation:** The entire application will be tested to ensure all interactive elements are reachable and usable with only a keyboard.
+3.  **Screen Reader Testing:** The application will be tested with major screen readers (e.g., NVDA, VoiceOver) to ensure a coherent and understandable experience for visually impaired users.
+4.  **User Acceptance Testing (UAT):** If possible, users with disabilities will be included in the UAT phase to provide feedback on real-world usability.
+
+---
+
+## Technical UX
+
+### React Query (Offline-First)
+
+**Stale-While-Revalidate pattern:**
+```typescript
+const { data, isLoading, error } = useQuery({
+queryKey: ['pantry-items'],
+queryFn: fetchPantryItems,
+staleTime: 5 * 60 * 1000, // 5 minutes
+cacheTime: 10 * 60 * 1000, // 10 minutes
+})
+```
+
+**Optimistic Updates:**
+```typescript
+const mutation = useMutation({
+mutationFn: deleteItem,
+onMutate: async (itemId) => {
+// Cancel outgoing refetches
+await queryClient.cancelQueries(['pantry-items'])
+
+// Snapshot previous value
+const previous = queryClient.getQueryData(['pantry-items'])
+
+// Optimistically remove from UI
+queryClient.setQueryData(['pantry-items'], (old) =>
+old.filter(item => item.id !== itemId)
+)
+
+return { previous }
+},
+onError: (err, itemId, context) => {
+// Rollback on error
+queryClient.setQueryData(['pantry-items'], context.previous)
+},
+})
+```
+
+### Image Loading
+
+**Progressive enhancement:**
+```html
+<img
+src="low-quality.jpg"
+srcset="medium.jpg 768w, high.jpg 1200w"
+sizes="(max-width: 768px) 100vw, 50vw"
+loading="lazy"
+alt="Recipe image"
+/>
+```
+
+**Fallback strategy:**
+```javascript
+<img
+src={recipe.image}
+onError={(e) => {
+// Try Unsplash fallback
+if (!e.target.dataset.fallbackTried) {
+e.target.dataset.fallbackTried = 'true'
+e.target.src = getFallbackImage(recipe.title)
+} else {
+// Show icon instead
+e.target.style.display = 'none'
+showFallbackIcon()
+}
+}}
+/>
+```
+
+### Local Storage (Grocery List)
+
+```typescript
+// Save on change
+useEffect(() => {
+localStorage.setItem('grocery-list', JSON.stringify(items))
+}, [items])
+
+// Load on mount
+useEffect(() => {
+const saved = localStorage.getItem('grocery-list')
+if (saved) {
+try {
+setItems(JSON.parse(saved))
+} catch (e) {
+console.error('Failed to load', e)
+}
+}
+}, [])
+```
+
+### Form Validation
+
+**Inline validation:**
+```typescript
+const [errors, setErrors] = useState({})
+
+const validateName = (name) => {
+if (!name.trim()) {
+setErrors(prev => ({ ...prev, name: 'Name is required' }))
+return false
+}
+setErrors(prev => ({ ...prev, name: null }))
+return true
+}
+
+<input
+value={name}
+onChange={(e) => {
+setName(e.target.value)
+validateName(e.target.value)
+}}
+className={errors.name ? 'border-red-500' : ''}
+/>
+{errors.name && (
+<p className="text-red-600 text-sm mt-1">{errors.name}</p>
+)}
+```
+
+### AI Integration UX
+
+**Loading states for AI:**
+```jsx
+{aiLoading && (
+<div className="flex items-center gap-2 text-purple-600">
+<Spinner />
+<span>AI is thinking...</span>
+</div>
+)}
+```
+
+**Streaming responses (future):**
+```typescript
+// For AI responses that stream
+const [aiResponse, setAiResponse] = useState('')
+
+fetch('/api/ai/stream', {
+method: 'POST',
+body: JSON.stringify({ query }),
+})
+.then(response => {
+const reader = response.body.getReader()
+const decoder = new TextDecoder()
+
+return reader.read().then(function process({ done, value }) {
+if (done) return
+
+const chunk = decoder.decode(value)
+setAiResponse(prev => prev + chunk)
+
+return reader.read().then(process)
+})
+})
+```
+
+### Performance Monitoring
+
+```javascript
+// Measure Time to Interactive
+if ('PerformanceObserver' in window) {
+const observer = new PerformanceObserver((list) => {
+for (const entry of list.getEntries()) {
+console.log('TTI:', entry.processingStart)
+}
+})
+observer.observe({ entryTypes: ['navigation'] })
+}
+```
+
+---
+
+## Best Practices
+
+### 1. Consistent Spacing
+- Use Tailwind spacing scale: 4px increments
+- Section spacing: 32-48px
+- Card spacing: 24px
+- Element spacing: 12-16px
+
+### 2. Feedback Loops
+- **Immediate**: Button states (hover, active)
+- **Fast**: Toast notifications (300ms delay)
+- **Contextual**: Inline validation
+- **Persistent**: Loading skeletons
+
+### 3. Progressive Disclosure
+- Show only necessary info first
+- Modals for detailed info
+- Expandable sections for more content
+
+### 4. Error Prevention
+- Confirm dialogs for destructive actions
+- Inline validation on forms
+- Disabled states when actions are not possible
+
+### 5. Mobile-First
+- Design for mobile first
+- Progressive enhancement for larger screens
+- Touch-friendly targets (44px minimum)
+
+### 6. Performance Budget
+- Images: Max 200kb per image
+- Initial load: < 3 seconds
+- Time to Interactive: < 5 seconds
+- First Contentful Paint: < 1.5 seconds
+
+---
+
+## Emoji and Icons
+
+### Category Emojis (Pantry)
+```javascript
+const categoryEmojis = {
+dairy: '🥛',
+produce: '🥗',
+meat: '🍗',
+grains: '🌾',
+other: '📦',
+}
+```
+
+### Feature Icons (Lucide React)
+```javascript
+import {
+Salad, // Logo
+Sparkles, // AI
+Camera, // Barcode scanner
+ShoppingCart, // Grocery
+ChefHat, // Recipes
+Bell, // Alerts
+Plus, // Add
+Edit, // Edit
+Trash, // Delete
+LogOut, // Sign out
+} from 'lucide-react'
+```
+
+---
+
+## End
+
+This document covers all major aspects of the UX design for the ibe160 app. The design system is modular, consistent, and focuses on usability with modern visual elements.
+
+**Key Features:**
+- ✅ Airbnb-inspired design
+- ✅ AI-powered functionality
+- ✅ Offline-first architecture
+- ✅ Color-coded status system
+- ✅ Responsive and accessible
+- ✅ Modern interaction patterns
+
+**Contact:**
+For questions or improvements, see the project's repository or documentation.
+
+---
+
+*Made with ❤️ to reduce food waste*
