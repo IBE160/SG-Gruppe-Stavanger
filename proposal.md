@@ -104,21 +104,28 @@ model Notification {
 - Redirected to landing page logged in 
 
 ### Authentication
-- If **Create New Account** is clicked: Redirects to registration page 
-- User registers with email and password 
-- Receives verification email an clicks verification link 
-- Redirected back to platform and automatically logged in 
+- If **Create New Account** is clicked: Redirects to registration page.
+- User registers with email and password.
+- **Edge Case (Email Exists):** If the email is already registered, the user is shown a message: "This email is already in use. Would you like to log in or reset your password?" with links to the **Login** and **Forgotten Password** pages.
+- **Happy Path:** User receives a verification email and clicks the verification link.
+- **Edge Case (Slow Email):** A "Resend Link" button is available on the "Check your email" page if the user doesn't receive the email promptly.
+- **Edge Case (Expired Link):** If the verification link has expired, the user is taken to a recovery page where their email is pre-filled, and they can request a new link.
+- **Success:** User is redirected back to the platform and automatically logged in.
 
 ### First-Time Setup (Happens Immediately after new user has successfully registered and verified)
-- User is automatically redirected from the "Verification Successful" or "login" page
-- Text is shown to user: "Welcome, [Display Name]!" 
-- Text is shown to user: "Let's personalize your experience. A few questions will help us find the perfect recipes just for you." 
-- User clicks: Get Started 
-- User goes through Dietary Restrictions (Allergies if you have any or if vegan e.g., can pick don't have any) 
-- The user can pick favourite cuisines (Optional, but great for personalization) 
-- User can register what kitchen equipment they have (Optional, powerful feature for app) (check list will be shown where the user can check box of equipment they have like: "Air Fryer", "Blender", e.g.) 
-- Setup over text shown: "You are all set! We have saved your preferences, and you can change them anytime in your profile settings. Let's get cooking!", User clicks on: "Start Exploring" (automatically redirected after 2 seconds if not clicked) 
-- Redirected user to start page 
+- User is automatically redirected from the "Verification Successful" or "login" page.
+- Text is shown to user: "Welcome, [Display Name]!"
+- Text is shown to user: "Let's personalize your experience. A few questions will help us find the perfect recipes just for you."
+- User is presented with two buttons: **Get Started** and **Skip for Now**.
+- **If "Get Started" is clicked:**
+  - User goes through Dietary Restrictions (Allergies if you have any or if vegan e.g., can pick don't have any).
+  - The user can pick favourite cuisines (Optional, but great for personalization).
+  - User can register what kitchen equipment they have (Optional, powerful feature for app) (check list will be shown where the user can check box of equipment they have like: "Air Fryer", "Blender", e.g.).
+  - Setup over text shown: "You are all set! We have saved your preferences, and you can change them anytime in your profile settings. Let's get cooking!", User clicks on: "Start Exploring" (automatically redirected after 2 seconds if not clicked).
+- **If "Skip for Now" is clicked:**
+  - The user is taken directly to the main dashboard.
+  - A dismissible banner is displayed at the top: "Complete your profile to get personalized recipe suggestions." This banner links back to the setup process.
+- **Completion:** User is redirected to the main dashboard/start page.
 
 ### Account Management
 - user wants to change password and click on profile and see these options: 
