@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Design Directions Showcase</title>
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --background: #ffffff;
+            --foreground: #111827;
+            --card: #ffffff;
+            --card-foreground: #111827;
+            --border: #e5e7eb;
+            --input: #e5e7eb;
+            --ring: #4ade80; /* From Fresh & Focused theme */
+            --radius: 0.5rem;
+
+            /* Fresh & Focused Theme Colors */
+            --primary: #22c55e;
+            --primary-foreground: #ffffff;
+            --secondary: #f0fdf4;
+            --secondary-foreground: #166534;
+            --muted: #f3f4f6;
+            --muted-foreground: #6b7280;
+            --status-ready: #22c55e;
+            --status-almost: #f59e0b;
+            --status-need-more: #e5e7eb;
+        }
+
+        .dark {
+            --background: #0c0a09;
+            --foreground: #fafafa;
+            --card: #1c1917;
+            --card-foreground: #fafafa;
+            --border: #27272a;
+            --input: #27272a;
+            --ring: #4ade80;
+
+            --primary: #4ade80;
+            --primary-foreground: #052e16;
+            --secondary: #166534;
+            --secondary-foreground: #dcfce7;
+            --muted: #1f2937;
+            --muted-foreground: #9ca3af;
+            --status-ready: #4ade80;
+            --status-almost: #fcd34d;
+            --status-need-more: #374151;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+            padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+        h2 { font-size: 2rem; margin-top: 3rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
+        h4 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+
+        .mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .design-direction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+        }
+
+        .direction-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--card);
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        .mockup-container {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            background-color: #f8fafc; /* Light background for mockups */
+            min-height: 400px; /* Ensure visibility */
+            display: flex;
+            flex-direction: column;
+        }
+        .dark .mockup-container {
+            background-color: #1e293b;
+        }
+
+        .mockup-header {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .mockup-header .logo {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .mockup-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        .mockup-nav a {
+            color: var(--primary-foreground);
+            text-decoration: none;
+            opacity: 0.8;
+        }
+        .mockup-nav a.active {
+            opacity: 1;
+            border-bottom: 2px solid var(--primary-foreground);
+        }
+
+        .mockup-content {
+            padding: 1rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .mockup-card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+        }
+        .mockup-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .mockup-card-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+        .mockup-card-image {
+            width: 100%;
+            height: 120px;
+            background-color: var(--muted);
+            border-radius: calc(var(--radius) - 4px);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+        }
+        .mockup-card-meta {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.5rem;
+        }
+        .mockup-card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .mockup-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: calc(var(--radius) - 2px);
+            padding: 0.4rem 0.8rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .mockup-btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+        .mockup-btn-secondary { background-color: var(--secondary); color: var(--secondary-foreground); border-color: var(--border); }
+
+        .mockup-section-header {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .mockup-section-header .icon {
+            font-size: 1.2rem;
+        }
+        .mockup-section-content {
+            display: none;
+        }
+        .mockup-section-content.expanded {
+            display: block;
+        }
+
+        .mockup-pantry-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .mockup-pantry-item:last-child {
+            border-bottom: none;
+        }
+        .mockup-pantry-item-name {
+            font-weight: 500;
+        }
+        .mockup-pantry-item-meta {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+        }
+
+        .mockup-detail-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .mockup-detail-meta {
+            font-size: 0.9rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+        .mockup-detail-image {
+            width: 100%;
+            height: 180px;
+            background-color: var(--muted);
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted-foreground);
+        }
+        .mockup-detail-ingredients, .mockup-detail-instructions {
+            margin-bottom: 1.5rem;
+        }
+        .mockup-detail-ingredients ul {
+            list-style: none;
+            padding: 0;
+        }
+        .mockup-detail-ingredients li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+        .mockup-detail-ingredients .check {
+            color: var(--status-ready);
+        }
+        .mockup-detail-ingredients .cross {
+            color: var(--status-almost);
+        }
+        .mockup-detail-instructions ol {
+            padding-left: 1.25rem;
+        }
+        .mockup-detail-instructions li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .mockup-fab {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        /* Responsive Toggle */
+        .responsive-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .responsive-toggle button {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+            cursor: pointer;
+        }
+        .responsive-toggle button.active {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+        }
+
+        .mockup-wrapper {
+            width: 100%;
+            max-width: 400px; /* Default to mobile size */
+            margin: 0 auto;
+            border: 8px solid #333;
+            border-radius: 24px;
+            box-shadow: 0 0 0 1px #555, 0 0 0 8px #eee;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .mockup-wrapper.tablet {
+            max-width: 768px;
+            border-radius: 16px;
+            border-width: 6px;
+        }
+        .mockup-wrapper.desktop {
+            max-width: 1200px;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .mockup-wrapper.desktop .mockup-container {
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .mockup-wrapper.desktop .mockup-header {
+            border-top-left-radius: var(--radius);
+            border-top-right-radius: var(--radius);
+        }
+        .mockup-wrapper.desktop .mockup-fab {
+            display: none; /* FAB typically mobile-only */
+        }
+        .mockup-wrapper.desktop .mockup-nav {
+            position: static;
+            background: none;
+            padding: 0;
+        }
+        .mockup-wrapper.desktop .mockup-header {
+            padding: 0.75rem 1.5rem;
+        }
+        .mockup-wrapper.desktop .mockup-content {
+            padding: 1.5rem;
+        }
+        .mockup-wrapper.desktop .mockup-card {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(33% - 1rem); /* 3 cards per row */
+            margin-right: 1rem;
+        }
+        .mockup-wrapper.desktop .mockup-card:nth-child(3n) {
+            margin-right: 0;
+        }
+        .mockup-wrapper.desktop .mockup-card-image {
+            height: 150px;
+        }
+        .mockup-wrapper.desktop .mockup-section-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .mockup-wrapper.desktop .mockup-section-content.expanded {
+            display: grid;
+        }
+        .mockup-wrapper.desktop .mockup-section-header {
+            cursor: default;
+        }
+        .mockup-wrapper.desktop .mockup-section-header .icon {
+            display: none;
+        }
+        .mockup-wrapper.desktop .mockup-detail-view {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        .mockup-wrapper.desktop .mockup-detail-ingredients {
+            border-left: 1px solid var(--border);
+            padding-left: 2rem;
+        }
+        .mockup-wrapper.desktop .mockup-detail-image {
+            height: 250px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <div class="container">
+        <h1>UX Design Directions Showcase</h1>
+        <p>Explore different visual and interaction approaches for key screens. This showcase helps visualize how the chosen "Fresh & Focused" theme and core principles translate into distinct user experiences.</p>
+
+        <div class="responsive-toggle">
+            <button class="active" onclick="setResponsiveMode('mobile', this)">Mobile</button>
+            <button onclick="setResponsiveMode('tablet', this)">Tablet</button>
+            <button onclick="setResponsiveMode('desktop', this)">Desktop</button>
+        </div>
+
+        <div class="design-direction-grid">
+
+            <!-- Direction 1: Clean & Card-Focused (Smart Recipe Match) -->
+            <div class="direction-card">
+                <h3>1. Clean & Card-Focused (Smart Recipe Match)</h3>
+                <p>A balanced approach with clear card boundaries, prominent recipe images, and collapsible sections for match status. Focuses on scannability and intuitive interaction.</p>
+                <div class="mockup-wrapper mobile" data-screen="recipe-match">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#" class="active">Recipes</a>
+                                <a href="#">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <h4 style="margin-top:0;">What's Cooking, BIP?</h4>
+                            <p style="font-size:0.9rem; color:var(--muted-foreground);">Showing 8 recipes based on your pantry.</p>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">🟢</span> Ready to Cook (2) <span style="margin-left:auto;">▼</span>
+                            </div>
+                            <div class="mockup-section-content expanded">
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Chicken Stir-Fry</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-ready);">✓</div>
+                                    </div>
+                                    <p class="mockup-card-meta">30 min · 2 servings</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-primary">Cook This</button>
+                                    </div>
+                                </div>
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Egg Fried Rice</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-ready);">✓</div>
+                                    </div>
+                                    <p class="mockup-card-meta">20 min · 2 servings</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-primary">Cook This</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">🟡</span> Almost There (3) <span style="margin-left:auto;">▶</span>
+                            </div>
+                            <div class="mockup-section-content">
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Pad Thai</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-almost);">!</div>
+                                    </div>
+                                    <p class="mockup-card-meta">Missing: fish sauce, lime (2)</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-secondary">Add to List</button>
+                                        <button class="mockup-btn mockup-btn-secondary">View Recipe</button>
+                                    </div>
+                                </div>
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Chicken Curry</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-almost);">!</div>
+                                    </div>
+                                    <p class="mockup-card-meta">Missing: coconut milk (1)</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-secondary">Add to List</button>
+                                        <button class="mockup-btn mockup-btn-secondary">View Recipe</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">⚪</span> Need More (3) <span style="margin-left:auto;">▶</span>
+                            </div>
+                            <div class="mockup-section-content">
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Beef Wellington</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-need-more); color: var(--muted-foreground);">?</div>
+                                    </div>
+                                    <p class="mockup-card-meta">Missing: puff pastry, beef tenderloin (4)</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-secondary">View Recipe</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-fab">+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 2: Compact & List-Driven (Smart Recipe Match) -->
+            <div class="direction-card">
+                <h3>2. Compact & List-Driven (Smart Recipe Match)</h3>
+                <p>A more minimalist approach, prioritizing information density with a list view. Less emphasis on large images, more on quick scanning of text and status.</p>
+                <div class="mockup-wrapper mobile" data-screen="recipe-match-list">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#" class="active">Recipes</a>
+                                <a href="#">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <h4 style="margin-top:0;">Your Recipe Matches</h4>
+                            <p style="font-size:0.9rem; color:var(--muted-foreground);">Showing 8 recipes based on your pantry.</p>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">🟢</span> Ready (2) <span style="margin-left:auto;">▼</span>
+                            </div>
+                            <div class="mockup-section-content expanded">
+                                <div class="mockup-pantry-item">
+                                    <div>
+                                        <div class="mockup-pantry-item-name">Chicken Stir-Fry</div>
+                                        <div class="mockup-pantry-item-meta">30 min · 2 servings</div>
+                                    </div>
+                                    <button class="mockup-btn mockup-btn-primary">Cook</button>
+                                </div>
+                                <div class="mockup-pantry-item">
+                                    <div>
+                                        <div class="mockup-pantry-item-name">Egg Fried Rice</div>
+                                        <div class="mockup-pantry-item-meta">20 min · 2 servings</div>
+                                    </div>
+                                    <button class="mockup-btn mockup-btn-primary">Cook</button>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">🟡</span> Almost There (3) <span style="margin-left:auto;">▶</span>
+                            </div>
+                            <div class="mockup-section-content">
+                                <div class="mockup-pantry-item">
+                                    <div>
+                                        <div class="mockup-pantry-item-name">Pad Thai</div>
+                                        <div class="mockup-pantry-item-meta">Need: fish sauce, lime (2)</div>
+                                    </div>
+                                    <button class="mockup-btn mockup-btn-secondary">Add to List</button>
+                                </div>
+                                <div class="mockup-pantry-item">
+                                    <div>
+                                        <div class="mockup-pantry-item-name">Chicken Curry</div>
+                                        <div class="mockup-pantry-item-meta">Need: coconut milk (1)</div>
+                                    </div>
+                                    <button class="mockup-btn mockup-btn-secondary">Add to List</button>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">⚪</span> Need More (3) <span style="margin-left:auto;">▶</span>
+                            </div>
+                            <div class="mockup-section-content">
+                                <div class="mockup-pantry-item">
+                                    <div>
+                                        <div class="mockup-pantry-item-name">Beef Wellington</div>
+                                        <div class="mockup-pantry-item-meta">Need: puff pastry, beef tenderloin (4)</div>
+                                    </div>
+                                    <button class="mockup-btn mockup-btn-secondary">View</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-fab">+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 3: Pantry Management (Clean & Card-Focused) -->
+            <div class="direction-card">
+                <h3>3. Pantry Management (Clean & Card-Focused)</h3>
+                <p>Applying the "Clean & Card-Focused" aesthetic to the Pantry screen. Clear item cards, easy-to-read expiration dates, and prominent actions.</p>
+                <div class="mockup-wrapper mobile" data-screen="pantry">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#">Recipes</a>
+                                <a href="#" class="active">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <h4 style="margin-top:0;">My Pantry</h4>
+                            <p style="font-size:0.9rem; color:var(--muted-foreground);">Last synced: 2 min ago</p>
+
+                            <div class="mockup-card">
+                                <div class="mockup-card-header">
+                                    <span>Chicken Breast</span>
+                                    <span style="color: var(--status-ready);">Fresh</span>
+                                </div>
+                                <p class="mockup-card-meta">Quantity: 500g · Expires: Nov 20</p>
+                                <div class="mockup-card-actions">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                            <div class="mockup-card">
+                                <div class="mockup-card-header">
+                                    <span>Eggs</span>
+                                    <span style="color: var(--status-ready);">Fresh</span>
+                                </div>
+                                <p class="mockup-card-meta">Quantity: 6 · Expires: Nov 25</p>
+                                <div class="mockup-card-actions">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                            <div class="mockup-card">
+                                <div class="mockup-card-header">
+                                    <span>Bell Peppers</span>
+                                    <span style="color: var(--status-almost);">Expiring Soon</span>
+                                </div>
+                                <p class="mockup-card-meta">Quantity: 2 · Expires: Nov 13</p>
+                                <div class="mockup-card-actions">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-fab">+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 4: Recipe Detail View (Clean & Card-Focused) -->
+            <div class="direction-card">
+                <h3>4. Recipe Detail View (Clean & Card-Focused)</h3>
+                <p>A clean, focused view for individual recipes, emphasizing readability of instructions and clear indication of ingredient availability.</p>
+                <div class="mockup-wrapper mobile" data-screen="recipe-detail">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#" class="active">Recipes</a>
+                                <a href="#">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mockup-detail-header">Chicken Stir-Fry</div>
+                            <div class="mockup-detail-meta">30 min · 2 servings · Easy</div>
+                            <div class="mockup-detail-image">Recipe Photo</div>
+
+                            <h4>Ingredients</h4>
+                            <div class="mockup-detail-ingredients">
+                                <ul>
+                                    <li><span class="check">✓</span> Chicken Breast (500g)</li>
+                                    <li><span class="check">✓</span> Bell Peppers (2)</li>
+                                    <li><span class="check">✓</span> Soy Sauce (3 tbsp)</li>
+                                    <li><span class="check">✓</span> Rice (1 cup)</li>
+                                    <li><span class="cross">✗</span> Fish Sauce (1 tbsp)</li>
+                                    <li><span class="cross">✗</span> Lime (1)</li>
+                                </ul>
+                            </div>
+
+                            <h4>Instructions</h4>
+                            <div class="mockup-detail-instructions">
+                                <ol>
+                                    <li>Heat oil in a large skillet or wok over medium-high heat.</li>
+                                    <li>Add chicken and cook until browned. Remove from skillet.</li>
+                                    <li>Add bell peppers and cook until tender-crisp.</li>
+                                    <li>Return chicken to skillet. Stir in soy sauce and fish sauce.</li>
+                                    <li>Serve immediately over rice, garnished with lime wedges.</li>
+                                </ol>
+                            </div>
+                            <div class="mockup-card-actions" style="margin-top: 1.5rem;">
+                                <button class="mockup-btn mockup-btn-primary">Cook This</button>
+                                <button class="mockup-btn mockup-btn-secondary">Add Missing to List</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 5: Visual & Immersive (Smart Recipe Match) -->
+            <div class="direction-card">
+                <h3>5. Visual & Immersive (Smart Recipe Match)</h3>
+                <p>Emphasizes large, appealing recipe imagery with a more dynamic layout. Aims for a magazine-like feel to inspire and delight, while still clearly communicating match status.</p>
+                <div class="mockup-wrapper mobile" data-screen="recipe-match-visual">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#" class="active">Recipes</a>
+                                <a href="#">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <h4 style="margin-top:0;">Your Culinary Canvas</h4>
+                            <p style="font-size:0.9rem; color:var(--muted-foreground);">Discover what you can create today.</p>
+
+                            <div class="mockup-card" style="background-color: var(--secondary); padding: 1.5rem;">
+                                <div class="mockup-card-image" style="height: 180px; background-color: #dcfce7;">Featured Recipe Photo</div>
+                                <div class="mockup-card-header">
+                                    <span>Spicy Chicken Noodles</span>
+                                    <div class="mockup-card-status" style="background-color: var(--status-ready);">✓</div>
+                                </div>
+                                <p class="mockup-card-meta">35 min · 4 servings · You have everything!</p>
+                                <div class="mockup-card-actions">
+                                    <button class="mockup-btn mockup-btn-primary">Cook Now</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Save</button>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">🟡</span> Close Calls (2) <span style="margin-left:auto;">▼</span>
+                            </div>
+                            <div class="mockup-section-content expanded">
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Shrimp Scampi</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-almost);">!</div>
+                                    </div>
+                                    <p class="mockup-card-meta">Missing: shrimp (1)</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-secondary">Add to List</button>
+                                        <button class="mockup-btn mockup-btn-secondary">View</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mockup-section-header" onclick="toggleSection(this)">
+                                <span class="icon">⚪</span> Dream Meals (3) <span style="margin-left:auto;">▶</span>
+                            </div>
+                            <div class="mockup-section-content">
+                                <div class="mockup-card">
+                                    <div class="mockup-card-image">Recipe Image</div>
+                                    <div class="mockup-card-header">
+                                        <span>Beef Bourguignon</span>
+                                        <div class="mockup-card-status" style="background-color: var(--status-need-more); color: var(--muted-foreground);">?</div>
+                                    </div>
+                                    <p class="mockup-card-meta">Missing: red wine, beef stew meat (5)</p>
+                                    <div class="mockup-card-actions">
+                                        <button class="mockup-btn mockup-btn-secondary">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-fab">+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 6: Pantry Management (Compact & List-Driven) -->
+            <div class="direction-card">
+                <h3>6. Pantry Management (Compact & List-Driven)</h3>
+                <p>A high-density list view for pantry items, allowing users to quickly scan many items. Actions are accessible but less visually dominant.</p>
+                <div class="mockup-wrapper mobile" data-screen="pantry-list">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <span class="logo">ibe160</span>
+                            <div class="mockup-nav">
+                                <a href="#">Recipes</a>
+                                <a href="#" class="active">Pantry</a>
+                                <a href="#">Grocery</a>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <h4 style="margin-top:0;">My Pantry Inventory</h4>
+                            <p style="font-size:0.9rem; color:var(--muted-foreground);">Last synced: 2 min ago</p>
+
+                            <div class="mockup-pantry-item">
+                                <div>
+                                    <div class="mockup-pantry-item-name">Chicken Breast</div>
+                                    <div class="mockup-pantry-item-meta">500g · Expires: Nov 20</div>
+                                </div>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                            <div class="mockup-pantry-item">
+                                <div>
+                                    <div class="mockup-pantry-item-name">Eggs</div>
+                                    <div class="mockup-pantry-item-meta">6 · Expires: Nov 25</div>
+                                </div>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                            <div class="mockup-pantry-item">
+                                <div>
+                                    <div class="mockup-pantry-item-name">Bell Peppers</div>
+                                    <div class="mockup-pantry-item-meta" style="color: var(--status-almost);">2 · Expires: Nov 13 (Soon!)</div>
+                                </div>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                            <div class="mockup-pantry-item">
+                                <div>
+                                    <div class="mockup-pantry-item-name">Soy Sauce</div>
+                                    <div class="mockup-pantry-item-meta">1 bottle · Expires: Jan 2026</div>
+                                </div>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="mockup-btn mockup-btn-secondary">Edit</button>
+                                    <button class="mockup-btn mockup-btn-secondary">Use</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-fab">+</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
+
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.icon + span'); // Selects the span after the icon
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                if (icon) icon.textContent = '▶';
+            } else {
+                content.classList.add('expanded');
+                if (icon) icon.textContent = '▼';
+            }
+        }
+
+        function setResponsiveMode(mode, button) {
+            const wrappers = document.querySelectorAll('.mockup-wrapper');
+            wrappers.forEach(wrapper => {
+                wrapper.classList.remove('mobile', 'tablet', 'desktop');
+                wrapper.classList.add(mode);
+            });
+
+            const buttons = document.querySelectorAll('.responsive-toggle button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        // Initial expansion for desktop view
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth > 1024) { // Assuming desktop starts > 1024px
+                document.querySelectorAll('.mockup-section-content').forEach(content => {
+                    content.classList.add('expanded');
+                });
+                document.querySelectorAll('.mockup-section-header .icon + span').forEach(icon => {
+                    icon.textContent = ''; // Hide expand/collapse icon on desktop
+                });
+            }
+        });
+    </script>
+</body>
+</html>

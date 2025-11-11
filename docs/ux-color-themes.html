@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Color Theme Visualizer</title>
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --background: #ffffff;
+            --foreground: #111827;
+            --card: #ffffff;
+            --card-foreground: #111827;
+            --popover: #ffffff;
+            --popover-foreground: #111827;
+            --primary: #2563eb;
+            --primary-foreground: #fafafa;
+            --secondary: #f3f4f6;
+            --secondary-foreground: #111827;
+            --muted: #f3f4f6;
+            --muted-foreground: #6b7280;
+            --accent: #f3f4f6;
+            --accent-foreground: #111827;
+            --destructive: #ef4444;
+            --destructive-foreground: #fafafa;
+            --border: #e5e7eb;
+            --input: #e5e7eb;
+            --ring: #93c5fd;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: #0c0a09;
+            --foreground: #fafafa;
+            --card: #0c0a09;
+            --card-foreground: #fafafa;
+            --popover: #0c0a09;
+            --popover-foreground: #fafafa;
+            --primary: #3b82f6;
+            --primary-foreground: #fafafa;
+            --secondary: #1f2937;
+            --secondary-foreground: #fafafa;
+            --muted: #1f2937;
+            --muted-foreground: #9ca3af;
+            --accent: #1f2937;
+            --accent-foreground: #fafafa;
+            --destructive: #f87171;
+            --destructive-foreground: #fafafa;
+            --border: #27272a;
+            --input: #27272a;
+            --ring: #5b21b6;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+            padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+        
+        h1 { font-size: 2.25rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { font-size: 1.875rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .theme-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            background-color: var(--card);
+        }
+
+        .swatch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+        }
+
+        .swatch {
+            border-radius: calc(var(--radius) - 4px);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--swatch-text-color, #fff);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .component-gallery > * + * {
+            margin-top: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: calc(var(--radius) - 2px);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        .btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+        .btn-secondary { background-color: var(--secondary); color: var(--secondary-foreground); border-color: var(--border); }
+        .btn-destructive { background-color: var(--destructive); color: var(--destructive-foreground); }
+
+        .alert {
+            padding: 1rem;
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid;
+        }
+
+        .input {
+            display: block;
+            width: calc(100% - 2rem);
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--input);
+            border-radius: calc(var(--radius) - 2px);
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .input:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: var(--ring);
+            box-shadow: 0 0 0 2px var(--ring);
+        }
+
+        .recipe-card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+        }
+        .recipe-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+        .recipe-card-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .recipe-card-body {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin: 0.75rem 0;
+        }
+        .recipe-card-footer {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        /* Theme-specific variables will be injected here */
+        .theme-fresh-focused {
+            --primary: #22c55e; --primary-foreground: #ffffff;
+            --secondary: #f0fdf4; --secondary-foreground: #166534;
+            --ring: #4ade80;
+            --status-ready: #22c55e;
+            --status-almost: #f59e0b;
+            --status-need-more: #e5e7eb;
+        }
+        .dark .theme-fresh-focused {
+            --primary: #4ade80; --primary-foreground: #052e16;
+            --secondary: #166534; --secondary-foreground: #dcfce7;
+            --ring: #4ade80;
+            --status-ready: #4ade80;
+            --status-almost: #fcd34d;
+            --status-need-more: #374151;
+        }
+
+        .theme-warm-capable {
+            --primary: #f97316; --primary-foreground: #ffffff;
+            --secondary: #fff7ed; --secondary-foreground: #9a3412;
+            --ring: #fb923c;
+            --status-ready: #16a34a;
+            --status-almost: #f97316;
+            --status-need-more: #e5e7eb;
+        }
+        .dark .theme-warm-capable {
+            --primary: #fb923c; --primary-foreground: #431407;
+            --secondary: #7c2d12; --secondary-foreground: #ffedd5;
+            --ring: #fb923c;
+            --status-ready: #22c55e;
+            --status-almost: #fb923c;
+            --status-need-more: #374151;
+        }
+
+        .theme-clear-confident {
+            --primary: #3b82f6; --primary-foreground: #ffffff;
+            --secondary: #eff6ff; --secondary-foreground: #1e40af;
+            --ring: #60a5fa;
+            --status-ready: #16a34a;
+            --status-almost: #f59e0b;
+            --status-need-more: #e5e7eb;
+        }
+        .dark .theme-clear-confident {
+            --primary: #60a5fa; --primary-foreground: #1e3a8a;
+            --secondary: #1e40af; --secondary-foreground: #dbeafe;
+            --ring: #60a5fa;
+            --status-ready: #22c55e;
+            --status-almost: #fcd34d;
+            --status-need-more: #374151;
+        }
+
+    </style>
+</head>
+<body>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <div class="container">
+        <h1>UX Color Theme Visualizer</h1>
+        <p>Explore the proposed color themes for the application. Each theme is designed to support the "Resourceful + Relief" emotional target while ensuring accessibility and clarity. The recipe match status colors (🟢🟡⚪) are integrated into each palette.</p>
+
+        <div class="theme-grid">
+            <!-- Theme 1: Fresh & Focused -->
+            <div class="theme-card theme-fresh-focused">
+                <h2>1. Fresh & Focused</h2>
+                <p>Leans into the "freshness" of ingredients with a calming, natural green. Feels organized, healthy, and at home in a kitchen environment.</p>
+                
+                <h3>Palette</h3>
+                <div class="swatch-grid">
+                    <div class="swatch" style="background-color: var(--primary); color: var(--primary-foreground);">Primary</div>
+                    <div class="swatch" style="background-color: var(--secondary); color: var(--secondary-foreground);">Secondary</div>
+                    <div class="swatch" style="background-color: var(--destructive); color: var(--destructive-foreground);">Destructive</div>
+                </div>
+
+                <h3>Components</h3>
+                <div class="component-gallery">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary">Primary Action</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                    </div>
+                    <input class="input" placeholder="Example form input...">
+                    <div class="alert" style="border-color: var(--primary); background-color: var(--secondary); color: var(--secondary-foreground);">This is an informational alert.</div>
+                </div>
+
+                <h3>Recipe Match Status</h3>
+                <div class="component-gallery">
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Chicken Stir-Fry</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-ready);">✓</div>
+                        </div>
+                        <p class="recipe-card-body">You have all the ingredients!</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-primary">Cook This</button>
+                        </div>
+                    </div>
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Pad Thai</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-almost);">!</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: fish sauce, lime (2)</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-secondary">Add to List</button>
+                            <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                     <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Beef Wellington</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-need-more); color: #6b7280;">?</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: puff pastry, beef tenderloin, mushrooms, prosciutto (4)</p>
+                        <div class="recipe-card-footer">
+                             <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 2: Warm & Capable -->
+            <div class="theme-card theme-warm-capable">
+                <h2>2. Warm & Capable</h2>
+                <p>Focuses on the feeling of relief and encouragement. A warm, inviting amber feels like a helpful kitchen companion, not a sterile tool.</p>
+                
+                <h3>Palette</h3>
+                <div class="swatch-grid">
+                    <div class="swatch" style="background-color: var(--primary); color: var(--primary-foreground);">Primary</div>
+                    <div class="swatch" style="background-color: var(--secondary); color: var(--secondary-foreground);">Secondary</div>
+                    <div class="swatch" style="background-color: var(--destructive); color: var(--destructive-foreground);">Destructive</div>
+                </div>
+
+                <h3>Components</h3>
+                <div class="component-gallery">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary">Primary Action</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                    </div>
+                    <input class="input" placeholder="Example form input...">
+                    <div class="alert" style="border-color: var(--primary); background-color: var(--secondary); color: var(--secondary-foreground);">This is an informational alert.</div>
+                </div>
+
+                <h3>Recipe Match Status</h3>
+                <div class="component-gallery">
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Chicken Stir-Fry</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-ready);">✓</div>
+                        </div>
+                        <p class="recipe-card-body">You have all the ingredients!</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-primary">Cook This</button>
+                        </div>
+                    </div>
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Pad Thai</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-almost);">!</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: fish sauce, lime (2)</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-secondary">Add to List</button>
+                            <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                     <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Beef Wellington</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-need-more); color: #6b7280;">?</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: puff pastry, beef tenderloin, mushrooms, prosciutto (4)</p>
+                        <div class="recipe-card-footer">
+                             <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 3: Clear & Confident -->
+            <div class="theme-card theme-clear-confident">
+                <h2>3. Clear & Confident</h2>
+                <p>Inspired by tools like YNAB, this theme uses a calm, dependable blue to inspire trust and clarity. It feels like a reliable, capable tool.</p>
+                
+                <h3>Palette</h3>
+                <div class="swatch-grid">
+                    <div class="swatch" style="background-color: var(--primary); color: var(--primary-foreground);">Primary</div>
+                    <div class="swatch" style="background-color: var(--secondary); color: var(--secondary-foreground);">Secondary</div>
+                    <div class="swatch" style="background-color: var(--destructive); color: var(--destructive-foreground);">Destructive</div>
+                </div>
+
+                <h3>Components</h3>
+                <div class="component-gallery">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary">Primary Action</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                    </div>
+                    <input class="input" placeholder="Example form input...">
+                    <div class="alert" style="border-color: var(--primary); background-color: var(--secondary); color: var(--secondary-foreground);">This is an informational alert.</div>
+                </div>
+
+                <h3>Recipe Match Status</h3>
+                <div class="component-gallery">
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Chicken Stir-Fry</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-ready);">✓</div>
+                        </div>
+                        <p class="recipe-card-body">You have all the ingredients!</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-primary">Cook This</button>
+                        </div>
+                    </div>
+                    <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Pad Thai</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-almost);">!</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: fish sauce, lime (2)</p>
+                        <div class="recipe-card-footer">
+                            <button class="btn btn-secondary">Add to List</button>
+                            <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                     <div class="recipe-card">
+                        <div class="recipe-card-header">
+                            <span>Beef Wellington</span>
+                            <div class="recipe-card-status" style="background-color: var(--status-need-more); color: #6b7280;">?</div>
+                        </div>
+                        <p class="recipe-card-body">Missing: puff pastry, beef tenderloin, mushrooms, prosciutto (4)</p>
+                        <div class="recipe-card-footer">
+                             <button class="btn btn-secondary">View Recipe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
+    </script>
+</body>
+</html>
