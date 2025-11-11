@@ -28,4 +28,5 @@ selected_track: ""
 field_type: ""
 workflow_path: ""
 
-workflow_status: ""
+workflow_status:
+  research: "C:\\ibe160\\SmartMat\\SG-Gruppe-Stavanger\\docs\\research-technical-2025-11-11.md"
