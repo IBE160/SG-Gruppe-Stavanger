@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } from "@zxing/library"
 import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
@@ -9,7 +10,8 @@ interface BarcodeScannerProps {
 }
 
 export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
-  const scannerRef = useRef<any>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const readerRef = useRef<BrowserMultiFormatReader | null>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
   const [manualMode, setManualMode] = useState(false)
@@ -23,64 +25,47 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   }
 
   useEffect(() => {
-    if (manualMode) return
-    if (typeof window === 'undefined') return
+    if (manualMode || !videoRef.current) return
 
-    let mounted = true
+    // ZXing with aggressive hints for webcam
+    const hints = new Map()
+    hints.set(DecodeHintType.TRY_HARDER, true)
+    hints.set(DecodeHintType.ASSUME_GS1, true)
+    hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+      BarcodeFormat.EAN_13,
+      BarcodeFormat.EAN_8,
+      BarcodeFormat.UPC_A,
+      BarcodeFormat.UPC_E,
+      BarcodeFormat.CODE_128,
+    ])
 
-    const startScanner = async () => {
+    const reader = new BrowserMultiFormatReader(hints, 300)
+    readerRef.current = reader
+
+    const start = async () => {
       try {
-        // Dynamic import for client-side only
-        const html5QrcodeModule = await import("html5-qrcode")
-        const Html5Qrcode = html5QrcodeModule.Html5Qrcode
-
-        if (!mounted) return
-
-        const html5QrCode = new Html5Qrcode("barcode-scanner")
-        scannerRef.current = html5QrCode
-
-        // Get available cameras
-        const cameras = await Html5Qrcode.getCameras()
-        if (!mounted) return
-
-        if (cameras && cameras.length > 0) {
-          console.log("Found cameras:", cameras.length)
-
-          // Use first available camera
-          const cameraId = cameras[0].id
-
-          await html5QrCode.start(
-            cameraId,
-            {
-              fps: 10,
-              qrbox: { width: 250, height: 150 },
-            },
-            (decodedText) => {
-              console.log("Barcode detected:", decodedText)
-              html5QrCode.stop()
-              onScan(decodedText)
+        await reader.decodeFromVideoDevice(
+          null, // Use default camera
+          videoRef.current!,
+          (result) => {
+            if (result) {
+              console.log("Barcode:", result.getText())
+              reader.reset()
+              onScan(result.getText())
               setScanning(false)
-            },
-            (errorMessage) => {
-              // Silently ignore scanning errors
             }
-          )
-        } else {
-          setError("No camera found on this device.")
-        }
-      } catch (err: any) {
-        console.error("Scanner error:", err)
-        setError(`Failed to access camera: ${err.message || 'Please allow camera permissions.'}`)
+          }
+        )
+      } catch (err) {
+        console.error(err)
+        setError("Camera error. Please allow permissions.")
       }
     }
 
-    startScanner()
+    setTimeout(start, 100)
 
     return () => {
-      mounted = false
-      if (scannerRef.current) {
-        scannerRef.current.stop().catch(console.error)
-      }
+      reader.reset()
     }
   }, [manualMode, onScan])
 
@@ -166,8 +151,11 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           ) : (
             <>
               <div className="relative bg-gray-900 rounded-xl overflow-hidden mb-6">
-                {/* html5-qrcode scanner container */}
-                <div id="barcode-scanner" className="w-full" />
+                <video
+                  ref={videoRef}
+                  className="w-full h-96 object-cover"
+                  playsInline
+                />
 
                 {/* Grønn scanning linje overlay */}
                 <div className="absolute inset-0 border-4 border-green-500/30 pointer-events-none">
@@ -191,12 +179,6 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                       0% { transform: translateY(0); }
                       50% { transform: translateY(192px); }
                       100% { transform: translateY(0); }
-                    }
-                    #barcode-scanner video {
-                      width: 100% !important;
-                      height: 400px !important;
-                      object-fit: cover;
-                      border-radius: 0.75rem;
                     }
                   `
                 }} />
