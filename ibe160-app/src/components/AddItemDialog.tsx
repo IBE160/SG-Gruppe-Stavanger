@@ -15,6 +15,7 @@ interface AddItemDialogProps {
     brand?: string
     category?: string
     quantity?: string
+    image?: string
   } | null
 }
 
@@ -109,13 +110,24 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
 
           {scannedProduct && (
             <div className="mb-6 bg-green-50 border border-green-200 rounded-xl p-4">
-              <p className="text-sm text-green-700">
-                <strong>Product found:</strong> {scannedProduct.name}
-                {scannedProduct.brand && <span> by {scannedProduct.brand}</span>}
-              </p>
-              <p className="text-xs text-green-600 mt-1">
-                Form pre-filled - adjust quantity and expiry date as needed
-              </p>
+              <div className="flex gap-4">
+                {scannedProduct.image && (
+                  <img
+                    src={scannedProduct.image}
+                    alt={scannedProduct.name}
+                    className="w-20 h-20 object-cover rounded-lg"
+                  />
+                )}
+                <div className="flex-1">
+                  <p className="text-sm text-green-700">
+                    <strong>Product found:</strong> {scannedProduct.name}
+                    {scannedProduct.brand && <span> by {scannedProduct.brand}</span>}
+                  </p>
+                  <p className="text-xs text-green-600 mt-1">
+                    Form pre-filled - adjust quantity and expiry date as needed
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
