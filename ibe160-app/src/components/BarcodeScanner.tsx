@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Quagga from "@ericblade/quagga2"
+import { Html5Qrcode } from "html5-qrcode"
 import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
@@ -10,7 +10,7 @@ interface BarcodeScannerProps {
 }
 
 export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
-  const scannerRef = useRef<HTMLDivElement>(null)
+  const scannerRef = useRef<Html5Qrcode | null>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
   const [manualMode, setManualMode] = useState(false)
@@ -24,62 +24,41 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   }
 
   useEffect(() => {
-    if (manualMode || !scannerRef.current) return
+    if (manualMode) return
 
-    // QuaggaJS configuration - optimized for webcam barcode scanning
-    Quagga.init({
-      inputStream: {
-        type: "LiveStream",
-        target: scannerRef.current,
-        constraints: {
-          width: { min: 640, ideal: 1280 },
-          height: { min: 480, ideal: 720 },
-          facingMode: "environment",
-        },
-      },
-      decoder: {
-        readers: [
-          "ean_reader",      // EAN-13 and EAN-8
-          "ean_8_reader",
-          "upc_reader",      // UPC-A and UPC-E
-          "upc_e_reader",
-          "code_128_reader", // CODE-128
-        ],
-        multiple: false,
-      },
-      locator: {
-        patchSize: "medium",
-        halfSample: true,
-      },
-      numOfWorkers: 2,
-      frequency: 10,
-      locate: true,
-    }, (err) => {
-      if (err) {
-        console.error("Quagga initialization error:", err)
+    const startScanner = async () => {
+      try {
+        const html5QrCode = new Html5Qrcode("barcode-scanner")
+        scannerRef.current = html5QrCode
+
+        await html5QrCode.start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 150 },
+          },
+          (decodedText) => {
+            console.log("Barcode detected:", decodedText)
+            html5QrCode.stop()
+            onScan(decodedText)
+            setScanning(false)
+          },
+          (errorMessage) => {
+            // Silently ignore scanning errors
+          }
+        )
+      } catch (err) {
+        console.error("Scanner error:", err)
         setError("Failed to access camera. Please allow camera permissions.")
-        return
-      }
-      console.log("Quagga initialized successfully")
-      Quagga.start()
-    })
-
-    // Handle barcode detection
-    const onDetected = (result: any) => {
-      if (result && result.codeResult && result.codeResult.code) {
-        const barcode = result.codeResult.code
-        console.log("Barcode detected:", barcode)
-        Quagga.stop()
-        onScan(barcode)
-        setScanning(false)
       }
     }
 
-    Quagga.onDetected(onDetected)
+    startScanner()
 
     return () => {
-      Quagga.stop()
-      Quagga.offDetected(onDetected)
+      if (scannerRef.current) {
+        scannerRef.current.stop().catch(console.error)
+      }
     }
   }, [manualMode, onScan])
 
@@ -165,18 +144,13 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           ) : (
             <>
               <div className="relative bg-gray-900 rounded-xl overflow-hidden mb-6">
-                {/* Quagga scanner container */}
-                <div
-                  ref={scannerRef}
-                  className="w-full h-96"
-                  style={{
-                    position: 'relative',
-                  }}
-                />
+                {/* html5-qrcode scanner container */}
+                <div id="barcode-scanner" className="w-full" />
+
+                {/* Grønn scanning linje overlay */}
                 <div className="absolute inset-0 border-4 border-green-500/30 pointer-events-none">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-64 h-48 border-2 border-white/80 rounded-lg relative overflow-hidden">
-                      {/* Grønn scanning linje som går opp og ned */}
                       <div
                         className="absolute left-0 right-0 h-1 bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
                         style={{
@@ -188,28 +162,19 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                     </div>
                   </div>
                 </div>
+
                 <style dangerouslySetInnerHTML={{
                   __html: `
                     @keyframes scanLine {
-                      0% {
-                        transform: translateY(0);
-                      }
-                      50% {
-                        transform: translateY(192px);
-                      }
-                      100% {
-                        transform: translateY(0);
-                      }
+                      0% { transform: translateY(0); }
+                      50% { transform: translateY(192px); }
+                      100% { transform: translateY(0); }
                     }
-                    #interactive.viewport {
+                    #barcode-scanner video {
                       width: 100% !important;
-                      height: 100% !important;
-                    }
-                    #interactive.viewport canvas,
-                    #interactive.viewport video {
-                      width: 100% !important;
-                      height: 100% !important;
+                      height: 400px !important;
                       object-fit: cover;
+                      border-radius: 0.75rem;
                     }
                   `
                 }} />
