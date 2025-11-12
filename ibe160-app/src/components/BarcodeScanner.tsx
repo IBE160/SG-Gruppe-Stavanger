@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library"
+import { BrowserMultiFormatReader, NotFoundException, DecodeHintType, BarcodeFormat } from "@zxing/library"
 import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
@@ -27,9 +27,21 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   useEffect(() => {
     if (manualMode) return // Skip camera if in manual mode
 
-    // Configure reader with hints for better performance
+    // Configure reader with hints for better barcode scanning
     const hints = new Map()
-    const codeReader = new BrowserMultiFormatReader(hints, 500) // 500ms timeBetweenScansMillis
+    // Try harder to find barcodes - better for PC webcams
+    hints.set(DecodeHintType.TRY_HARDER, true)
+    // Specify barcode formats to scan (common product barcodes)
+    hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+      BarcodeFormat.EAN_13,    // Most common for products
+      BarcodeFormat.EAN_8,     // Small products
+      BarcodeFormat.UPC_A,     // US/Canada products
+      BarcodeFormat.UPC_E,     // Small US products
+      BarcodeFormat.CODE_128,  // General purpose
+      BarcodeFormat.CODE_39,   // General purpose
+    ])
+
+    const codeReader = new BrowserMultiFormatReader(hints, 300) // 300ms for faster scanning
     readerRef.current = codeReader
 
     const startScanning = async () => {
@@ -47,54 +59,28 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           return
         }
 
-        // Use high-resolution constraints for better barcode scanning
+        // Simple high-resolution setup for better barcode scanning
         const constraints: MediaStreamConstraints = {
           video: {
-            facingMode: "environment", // Prefer back camera on mobile
-            width: { ideal: 1920, min: 640 },
-            height: { ideal: 1080, min: 480 },
-            aspectRatio: { ideal: 16/9 }
+            width: { ideal: 1280, min: 640 },
+            height: { ideal: 720, min: 480 }
           }
         }
 
-        try {
-          await codeReader.decodeFromConstraints(
-            constraints,
-            videoRef.current,
-            (result, error) => {
-              if (result) {
-                const barcode = result.getText()
-                console.log("Barcode detected:", barcode)
-                onScan(barcode)
-                setScanning(false)
-                codeReader.reset()
-              }
-              if (error && !(error instanceof NotFoundException)) {
-                console.error("Scan error:", error)
-              }
+        await codeReader.decodeFromConstraints(
+          constraints,
+          videoRef.current,
+          (result, error) => {
+            if (result) {
+              const barcode = result.getText()
+              console.log("Barcode detected:", barcode)
+              onScan(barcode)
+              setScanning(false)
+              codeReader.reset()
             }
-          )
-        } catch (constraintError) {
-          // Fallback to default camera if constraints fail
-          console.warn("High-res constraints failed, trying default camera:", constraintError)
-          const selectedDeviceId = videoInputDevices[0].deviceId
-          await codeReader.decodeFromVideoDevice(
-            selectedDeviceId,
-            videoRef.current,
-            (result, error) => {
-              if (result) {
-                const barcode = result.getText()
-                console.log("Barcode detected:", barcode)
-                onScan(barcode)
-                setScanning(false)
-                codeReader.reset()
-              }
-              if (error && !(error instanceof NotFoundException)) {
-                console.error("Scan error:", error)
-              }
-            }
-          )
-        }
+            // Silently ignore NotFoundException - it's normal during scanning
+          }
+        )
       } catch (err) {
         console.error("Camera error:", err)
         setError("Failed to access camera. Please allow camera permissions.")
