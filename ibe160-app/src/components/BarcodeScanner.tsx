@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { BrowserMultiFormatReader, NotFoundException, DecodeHintType, BarcodeFormat } from "@zxing/library"
+import Quagga from "@ericblade/quagga2"
 import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
@@ -10,12 +10,11 @@ interface BarcodeScannerProps {
 }
 
 export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const scannerRef = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
   const [manualMode, setManualMode] = useState(false)
   const [manualBarcode, setManualBarcode] = useState("")
-  const readerRef = useRef<BrowserMultiFormatReader | null>(null)
 
   const handleManualSubmit = () => {
     if (manualBarcode.trim()) {
@@ -25,78 +24,64 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   }
 
   useEffect(() => {
-    if (manualMode) return // Skip camera if in manual mode
+    if (manualMode || !scannerRef.current) return
 
-    // Configure reader with hints for better barcode scanning
-    const hints = new Map()
-    hints.set(DecodeHintType.TRY_HARDER, true)        // Try harder - critical for webcams
-    hints.set(DecodeHintType.ASSUME_GS1, true)        // Assume GS1 standard for products
-    hints.set(DecodeHintType.POSSIBLE_FORMATS, [
-      BarcodeFormat.EAN_13,    // Most common for products
-      BarcodeFormat.EAN_8,     // Small products
-      BarcodeFormat.UPC_A,     // US/Canada products
-      BarcodeFormat.UPC_E,     // Small US products
-      BarcodeFormat.CODE_128,  // General purpose
-    ])
-
-    const codeReader = new BrowserMultiFormatReader(hints, 500) // 500ms between scans
-    readerRef.current = codeReader
-
-    const startScanning = async () => {
-      try {
-        // Wait for video element to be ready
-        if (!videoRef.current) {
-          console.error("Video element not ready")
-          setError("Failed to initialize camera")
-          return
-        }
-
-        const videoInputDevices = await codeReader.listVideoInputDevices()
-        if (videoInputDevices.length === 0) {
-          setError("No camera found")
-          return
-        }
-
-        // Simple high-resolution setup for better barcode scanning
-        const constraints: MediaStreamConstraints = {
-          video: {
-            width: { ideal: 1280, min: 640 },
-            height: { ideal: 720, min: 480 }
-          }
-        }
-
-        await codeReader.decodeFromConstraints(
-          constraints,
-          videoRef.current,
-          (result, error) => {
-            if (result) {
-              const barcode = result.getText()
-              console.log("Barcode detected:", barcode)
-              onScan(barcode)
-              setScanning(false)
-              codeReader.reset()
-            }
-            // Silently ignore NotFoundException - it's normal during scanning
-          }
-        )
-      } catch (err) {
-        console.error("Camera error:", err)
+    // QuaggaJS configuration - optimized for webcam barcode scanning
+    Quagga.init({
+      inputStream: {
+        type: "LiveStream",
+        target: scannerRef.current,
+        constraints: {
+          width: { min: 640, ideal: 1280 },
+          height: { min: 480, ideal: 720 },
+          facingMode: "environment",
+        },
+      },
+      decoder: {
+        readers: [
+          "ean_reader",      // EAN-13 and EAN-8
+          "ean_8_reader",
+          "upc_reader",      // UPC-A and UPC-E
+          "upc_e_reader",
+          "code_128_reader", // CODE-128
+        ],
+        multiple: false,
+      },
+      locator: {
+        patchSize: "medium",
+        halfSample: true,
+      },
+      numOfWorkers: 2,
+      frequency: 10,
+      locate: true,
+    }, (err) => {
+      if (err) {
+        console.error("Quagga initialization error:", err)
         setError("Failed to access camera. Please allow camera permissions.")
+        return
+      }
+      console.log("Quagga initialized successfully")
+      Quagga.start()
+    })
+
+    // Handle barcode detection
+    const onDetected = (result: any) => {
+      if (result && result.codeResult && result.codeResult.code) {
+        const barcode = result.codeResult.code
+        console.log("Barcode detected:", barcode)
+        Quagga.stop()
+        onScan(barcode)
+        setScanning(false)
       }
     }
 
-    // Small delay to ensure video element is mounted
-    const timer = setTimeout(() => {
-      startScanning()
-    }, 100)
+    Quagga.onDetected(onDetected)
 
     return () => {
-      clearTimeout(timer)
-      if (readerRef.current) {
-        readerRef.current.reset()
-      }
+      Quagga.stop()
+      Quagga.offDetected(onDetected)
     }
-  }, [onScan, manualMode])
+  }, [manualMode, onScan])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4">
@@ -180,19 +165,24 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           ) : (
             <>
               <div className="relative bg-gray-900 rounded-xl overflow-hidden mb-6">
-                <video
-                  ref={videoRef}
-                  className="w-full h-96 object-cover"
-                  style={{ transform: "scaleX(-1)" }}
+                {/* Quagga scanner container */}
+                <div
+                  ref={scannerRef}
+                  className="w-full h-96"
+                  style={{
+                    position: 'relative',
+                  }}
                 />
                 <div className="absolute inset-0 border-4 border-green-500/30 pointer-events-none">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-64 h-48 border-2 border-white/80 rounded-lg relative overflow-hidden">
                       {/* Grønn scanning linje som går opp og ned */}
-                      <div className="absolute left-0 right-0 h-1 bg-green-500 animate-pulse shadow-[0_0_20px_rgba(34,197,94,0.8)]"
+                      <div
+                        className="absolute left-0 right-0 h-1 bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
                         style={{
-                          top: '50%',
-                          animation: 'scanLine 2s ease-in-out infinite'
+                          top: '0',
+                          animation: 'scanLine 3s ease-in-out infinite',
+                          willChange: 'transform'
                         }}
                       />
                     </div>
@@ -202,17 +192,24 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                   __html: `
                     @keyframes scanLine {
                       0% {
-                        top: 0%;
                         transform: translateY(0);
                       }
                       50% {
-                        top: 100%;
-                        transform: translateY(-100%);
+                        transform: translateY(192px);
                       }
                       100% {
-                        top: 0%;
                         transform: translateY(0);
                       }
+                    }
+                    #interactive.viewport {
+                      width: 100% !important;
+                      height: 100% !important;
+                    }
+                    #interactive.viewport canvas,
+                    #interactive.viewport video {
+                      width: 100% !important;
+                      height: 100% !important;
+                      object-fit: cover;
                     }
                   `
                 }} />
