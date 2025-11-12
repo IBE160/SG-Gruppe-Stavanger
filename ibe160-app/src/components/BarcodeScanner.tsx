@@ -11,11 +11,14 @@ interface BarcodeScannerProps {
 
 export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const readerRef = useRef<BrowserMultiFormatReader | null>(null)
+  const streamRef = useRef<MediaStream | null>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
   const [manualMode, setManualMode] = useState(false)
   const [manualBarcode, setManualBarcode] = useState("")
+  const [processing, setProcessing] = useState(false)
 
   const handleManualSubmit = () => {
     if (manualBarcode.trim()) {
@@ -24,50 +27,97 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
     }
   }
 
+  const captureAndDecode = async () => {
+    if (!videoRef.current || !canvasRef.current) return
+
+    setProcessing(true)
+    setError("")
+
+    try {
+      const video = videoRef.current
+      const canvas = canvasRef.current
+
+      // Set canvas size to video size
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+
+      // Draw current video frame to canvas
+      const ctx = canvas.getContext('2d')
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height)
+
+      // Create reader with aggressive hints
+      const hints = new Map()
+      hints.set(DecodeHintType.TRY_HARDER, true)
+      hints.set(DecodeHintType.ASSUME_GS1, true)
+      hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+        BarcodeFormat.EAN_13,
+        BarcodeFormat.EAN_8,
+        BarcodeFormat.UPC_A,
+        BarcodeFormat.UPC_E,
+        BarcodeFormat.CODE_128,
+      ])
+
+      const reader = new BrowserMultiFormatReader(hints)
+
+      // Convert canvas to image and decode
+      const imageUrl = canvas.toDataURL('image/png')
+      const img = new Image()
+      img.src = imageUrl
+
+      await new Promise((resolve) => {
+        img.onload = resolve
+      })
+
+      const result = await reader.decodeFromImageElement(img)
+
+      if (result) {
+        console.log("Barcode found:", result.getText())
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop())
+        }
+        onScan(result.getText())
+        setScanning(false)
+      }
+    } catch (err) {
+      console.error("Decode error:", err)
+      setError("Kunne ikke lese strekkode. Prøv igjen med bedre belysning.")
+    } finally {
+      setProcessing(false)
+    }
+  }
+
   useEffect(() => {
     if (manualMode || !videoRef.current) return
 
-    // ZXing with aggressive hints for webcam
-    const hints = new Map()
-    hints.set(DecodeHintType.TRY_HARDER, true)
-    hints.set(DecodeHintType.ASSUME_GS1, true)
-    hints.set(DecodeHintType.POSSIBLE_FORMATS, [
-      BarcodeFormat.EAN_13,
-      BarcodeFormat.EAN_8,
-      BarcodeFormat.UPC_A,
-      BarcodeFormat.UPC_E,
-      BarcodeFormat.CODE_128,
-    ])
-
-    const reader = new BrowserMultiFormatReader(hints, 300)
-    readerRef.current = reader
-
     const start = async () => {
       try {
-        await reader.decodeFromVideoDevice(
-          null, // Use default camera
-          videoRef.current!,
-          (result) => {
-            if (result) {
-              console.log("Barcode:", result.getText())
-              reader.reset()
-              onScan(result.getText())
-              setScanning(false)
-            }
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'environment',
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
           }
-        )
+        })
+
+        streamRef.current = stream
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+          videoRef.current.play()
+        }
       } catch (err) {
         console.error(err)
-        setError("Camera error. Please allow permissions.")
+        setError("Kunne ikke starte kamera. Tillat kamera-tilgang.")
       }
     }
 
-    setTimeout(start, 100)
+    start()
 
     return () => {
-      reader.reset()
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop())
+      }
     }
-  }, [manualMode, onScan])
+  }, [manualMode])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4">
@@ -155,7 +205,11 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                   ref={videoRef}
                   className="w-full h-96 object-cover"
                   playsInline
+                  autoPlay
                 />
+
+                {/* Hidden canvas for capture */}
+                <canvas ref={canvasRef} style={{ display: 'none' }} />
 
                 {/* Grønn scanning linje overlay */}
                 <div className="absolute inset-0 border-4 border-green-500/30 pointer-events-none">
@@ -184,41 +238,46 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                 }} />
               </div>
 
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <p className="text-sm text-green-700 flex items-center gap-2">
-                  {scanning ? (
-                    <>
-                      <Camera className="w-5 h-5 flex-shrink-0" />
-                      <span>
-                        <strong>Position the barcode within the frame.</strong> The scanner will
-                        automatically detect it.
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                      <span>
-                        <strong>Barcode detected!</strong> Processing...
-                      </span>
-                    </>
-                  )}
+              {error && (
+                <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                  {error}
+                </div>
+              )}
+
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                <p className="text-sm text-blue-700 flex items-center gap-2">
+                  <Camera className="w-5 h-5 flex-shrink-0" />
+                  <span>
+                    <strong>Hold strekkoden i rammen og klikk "Ta Bilde"</strong> for best resultat
+                  </span>
                 </p>
               </div>
 
-              <div className="mt-6 flex gap-3">
+              <div className="flex flex-col gap-3">
                 <button
-                  onClick={() => setManualMode(true)}
-                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  onClick={captureAndDecode}
+                  disabled={processing}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold text-lg rounded-xl hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                 >
-                  <Keyboard className="w-5 h-5" />
-                  Enter Manually
+                  <Camera className="w-6 h-6" />
+                  {processing ? "Søker..." : "📸 Ta Bilde og Skann"}
                 </button>
-                <button
-                  onClick={onClose}
-                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setManualMode(true)}
+                    className="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Keyboard className="w-5 h-5" />
+                    Manuell Input
+                  </button>
+                  <button
+                    onClick={onClose}
+                    className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Avbryt
+                  </button>
+                </div>
               </div>
             </>
           )}
