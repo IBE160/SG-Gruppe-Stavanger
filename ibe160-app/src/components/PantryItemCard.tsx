@@ -9,6 +9,7 @@ interface FoodItem {
   quantity: number
   unit: string
   bestBeforeDate: string
+  image?: string | null
   createdAt: string
 }
 
@@ -214,6 +215,14 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     return null
   }
 
+  // Get the best image: prioritize database image, then Unsplash, then null
+  const getImage = () => {
+    if (item.image) {
+      return item.image
+    }
+    return getUnsplashImage(item.name)
+  }
+
   return (
     <div
       className={`bg-white rounded-2xl border overflow-hidden transition-all hover:shadow-lg ${
@@ -222,9 +231,9 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     >
       {/* Food Image */}
       <div className={`relative h-48 bg-gradient-to-br ${getCategoryGradient(item.category)}`}>
-        {getUnsplashImage(item.name) ? (
+        {getImage() ? (
           <img
-            src={getUnsplashImage(item.name)!}
+            src={getImage()!}
             alt={item.name}
             className="w-full h-full object-cover"
             loading="lazy"

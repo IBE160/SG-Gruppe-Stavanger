@@ -48,6 +48,7 @@ export async function PUT(
         quantity: validation.data.quantity,
         unit: validation.data.unit,
         bestBeforeDate: new Date(validation.data.bestBeforeDate),
+        image: validation.data.image,
       }
     })
 

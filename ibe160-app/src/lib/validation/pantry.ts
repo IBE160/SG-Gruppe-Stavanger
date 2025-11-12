@@ -20,6 +20,7 @@ export const foodItemSchema = z.object({
     },
     { message: "Expiration date cannot be in the past" }
   ),
+  image: z.string().optional(),
 })
 
 export type FoodItemInput = z.infer<typeof foodItemSchema>

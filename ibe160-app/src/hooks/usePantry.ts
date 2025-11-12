@@ -7,6 +7,7 @@ export interface FoodItem {
   quantity: number
   unit: string
   bestBeforeDate: string
+  image?: string | null
   createdAt: string
 }
 
@@ -16,6 +17,7 @@ interface AddItemData {
   quantity: number
   unit: string
   bestBeforeDate: string
+  image?: string
 }
 
 // Fetch pantry items

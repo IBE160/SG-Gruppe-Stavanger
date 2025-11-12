@@ -63,6 +63,7 @@ export async function POST(request: Request) {
         quantity: validation.data.quantity,
         unit: validation.data.unit,
         bestBeforeDate: new Date(validation.data.bestBeforeDate),
+        image: validation.data.image,
         userId: session.user.id,
       }
     })

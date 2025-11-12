@@ -35,6 +35,7 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
         quantity: item.quantity,
         unit: item.unit as any,
         bestBeforeDate: item.bestBeforeDate.split("T")[0], // Convert ISO to YYYY-MM-DD
+        image: item.image || undefined,
       })
     }
   }, [item, reset])

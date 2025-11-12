@@ -40,6 +40,7 @@ model FoodItem {
   bestBeforeDate  DateTime
   quantity        Float
   unit            String
+  image           String?
   userId          String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

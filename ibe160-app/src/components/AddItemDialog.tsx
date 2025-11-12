@@ -55,6 +55,9 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
         const mappedCategory = categoryMap[scannedProduct.category.toLowerCase()] || "other"
         setValue("category", mappedCategory as any)
       }
+      if (scannedProduct.image) {
+        setValue("image", scannedProduct.image)
+      }
       // Set default quantity and unit
       setValue("quantity", 1)
       setValue("unit", "pieces")
