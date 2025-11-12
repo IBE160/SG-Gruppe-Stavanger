@@ -33,22 +33,33 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
         const html5QrCode = new Html5Qrcode("barcode-scanner")
         scannerRef.current = html5QrCode
 
-        await html5QrCode.start(
-          { facingMode: "environment" },
-          {
-            fps: 10,
-            qrbox: { width: 250, height: 150 },
-          },
-          (decodedText) => {
-            console.log("Barcode detected:", decodedText)
-            html5QrCode.stop()
-            onScan(decodedText)
-            setScanning(false)
-          },
-          (errorMessage) => {
-            // Silently ignore scanning errors
-          }
-        )
+        // Get available cameras
+        const cameras = await Html5Qrcode.getCameras()
+        if (cameras && cameras.length > 0) {
+          console.log("Found cameras:", cameras.length)
+
+          // Use first available camera
+          const cameraId = cameras[0].id
+
+          await html5QrCode.start(
+            cameraId,
+            {
+              fps: 10,
+              qrbox: { width: 250, height: 150 },
+            },
+            (decodedText) => {
+              console.log("Barcode detected:", decodedText)
+              html5QrCode.stop()
+              onScan(decodedText)
+              setScanning(false)
+            },
+            (errorMessage) => {
+              // Silently ignore scanning errors
+            }
+          )
+        } else {
+          setError("No camera found on this device.")
+        }
       } catch (err) {
         console.error("Scanner error:", err)
         setError("Failed to access camera. Please allow camera permissions.")
