@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Html5Qrcode } from "html5-qrcode"
 import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
@@ -10,7 +9,7 @@ interface BarcodeScannerProps {
 }
 
 export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
-  const scannerRef = useRef<Html5Qrcode | null>(null)
+  const scannerRef = useRef<any>(null)
   const [error, setError] = useState<string>("")
   const [scanning, setScanning] = useState(true)
   const [manualMode, setManualMode] = useState(false)
@@ -28,6 +27,9 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
     const startScanner = async () => {
       try {
+        // Dynamic import for client-side only
+        const { Html5Qrcode } = await import("html5-qrcode")
+
         const html5QrCode = new Html5Qrcode("barcode-scanner")
         scannerRef.current = html5QrCode
 
