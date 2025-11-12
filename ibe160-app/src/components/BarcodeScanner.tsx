@@ -24,17 +24,25 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
   useEffect(() => {
     if (manualMode) return
+    if (typeof window === 'undefined') return
+
+    let mounted = true
 
     const startScanner = async () => {
       try {
         // Dynamic import for client-side only
-        const { Html5Qrcode } = await import("html5-qrcode")
+        const html5QrcodeModule = await import("html5-qrcode")
+        const Html5Qrcode = html5QrcodeModule.Html5Qrcode
+
+        if (!mounted) return
 
         const html5QrCode = new Html5Qrcode("barcode-scanner")
         scannerRef.current = html5QrCode
 
         // Get available cameras
         const cameras = await Html5Qrcode.getCameras()
+        if (!mounted) return
+
         if (cameras && cameras.length > 0) {
           console.log("Found cameras:", cameras.length)
 
@@ -60,15 +68,16 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
         } else {
           setError("No camera found on this device.")
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Scanner error:", err)
-        setError("Failed to access camera. Please allow camera permissions.")
+        setError(`Failed to access camera: ${err.message || 'Please allow camera permissions.'}`)
       }
     }
 
     startScanner()
 
     return () => {
+      mounted = false
       if (scannerRef.current) {
         scannerRef.current.stop().catch(console.error)
       }
