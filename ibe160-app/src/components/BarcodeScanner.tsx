@@ -36,14 +36,42 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
     try {
       const video = videoRef.current
       const canvas = canvasRef.current
-
-      // Set canvas size to video size
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-
-      // Draw current video frame to canvas
       const ctx = canvas.getContext('2d')
-      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height)
+      if (!ctx) return
+
+      // Get video dimensions
+      const vw = video.videoWidth
+      const vh = video.videoHeight
+
+      // Calculate crop area (center of video, matching scan frame)
+      const scanWidth = Math.min(vw * 0.8, 640)  // 80% of width or max 640px
+      const scanHeight = scanWidth * 0.75  // 4:3 ratio
+      const startX = (vw - scanWidth) / 2
+      const startY = (vh - scanHeight) / 2
+
+      // Set canvas to cropped size
+      canvas.width = scanWidth
+      canvas.height = scanHeight
+
+      // Draw cropped and enhanced region
+      ctx.drawImage(
+        video,
+        startX, startY, scanWidth, scanHeight,  // source crop
+        0, 0, scanWidth, scanHeight             // destination
+      )
+
+      // Increase contrast
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const data = imageData.data
+      const contrast = 40  // Contrast adjustment
+      const factor = (259 * (contrast + 255)) / (255 * (259 - contrast))
+
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = factor * (data[i] - 128) + 128       // R
+        data[i + 1] = factor * (data[i + 1] - 128) + 128 // G
+        data[i + 2] = factor * (data[i + 2] - 128) + 128 // B
+      }
+      ctx.putImageData(imageData, 0, 0)
 
       // Create reader with aggressive hints
       const hints = new Map()
@@ -59,29 +87,37 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
       const reader = new BrowserMultiFormatReader(hints)
 
-      // Convert canvas to image and decode
-      const imageUrl = canvas.toDataURL('image/png')
-      const img = new Image()
-      img.src = imageUrl
+      // Try to decode 3 times with slight delays
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const imageUrl = canvas.toDataURL('image/png')
+          const img = new Image()
+          img.src = imageUrl
 
-      await new Promise((resolve) => {
-        img.onload = resolve
-      })
+          await new Promise((resolve) => {
+            img.onload = resolve
+          })
 
-      const result = await reader.decodeFromImageElement(img)
+          const result = await reader.decodeFromImageElement(img)
 
-      if (result) {
-        console.log("Barcode found:", result.getText())
-        if (streamRef.current) {
-          streamRef.current.getTracks().forEach(track => track.stop())
+          if (result) {
+            console.log("Barcode found:", result.getText())
+            if (streamRef.current) {
+              streamRef.current.getTracks().forEach(track => track.stop())
+            }
+            onScan(result.getText())
+            setScanning(false)
+            return
+          }
+        } catch (e) {
+          if (attempt === 2) throw e
+          await new Promise(resolve => setTimeout(resolve, 100))
         }
-        onScan(result.getText())
-        setScanning(false)
       }
     } catch (err) {
       console.error("Decode error:", err)
       setError("Kunne ikke lese. Prøv igjen!")
-      setTimeout(() => setError(""), 2000) // Clear error after 2s
+      setTimeout(() => setError(""), 2000)
     } finally {
       setProcessing(false)
     }
