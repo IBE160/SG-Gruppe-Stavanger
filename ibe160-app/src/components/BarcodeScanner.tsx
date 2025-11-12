@@ -27,7 +27,9 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
   useEffect(() => {
     if (manualMode) return // Skip camera if in manual mode
 
-    const codeReader = new BrowserMultiFormatReader()
+    // Configure reader with hints for better performance
+    const hints = new Map()
+    const codeReader = new BrowserMultiFormatReader(hints, 500) // 500ms timeBetweenScansMillis
     readerRef.current = codeReader
 
     const startScanning = async () => {
@@ -45,24 +47,54 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           return
         }
 
-        const selectedDeviceId = videoInputDevices[0].deviceId
-
-        await codeReader.decodeFromVideoDevice(
-          selectedDeviceId,
-          videoRef.current,
-          (result, error) => {
-            if (result) {
-              const barcode = result.getText()
-              console.log("Barcode detected:", barcode)
-              onScan(barcode)
-              setScanning(false)
-              codeReader.reset()
-            }
-            if (error && !(error instanceof NotFoundException)) {
-              console.error("Scan error:", error)
-            }
+        // Use high-resolution constraints for better barcode scanning
+        const constraints: MediaStreamConstraints = {
+          video: {
+            facingMode: "environment", // Prefer back camera on mobile
+            width: { ideal: 1920, min: 640 },
+            height: { ideal: 1080, min: 480 },
+            aspectRatio: { ideal: 16/9 }
           }
-        )
+        }
+
+        try {
+          await codeReader.decodeFromConstraints(
+            constraints,
+            videoRef.current,
+            (result, error) => {
+              if (result) {
+                const barcode = result.getText()
+                console.log("Barcode detected:", barcode)
+                onScan(barcode)
+                setScanning(false)
+                codeReader.reset()
+              }
+              if (error && !(error instanceof NotFoundException)) {
+                console.error("Scan error:", error)
+              }
+            }
+          )
+        } catch (constraintError) {
+          // Fallback to default camera if constraints fail
+          console.warn("High-res constraints failed, trying default camera:", constraintError)
+          const selectedDeviceId = videoInputDevices[0].deviceId
+          await codeReader.decodeFromVideoDevice(
+            selectedDeviceId,
+            videoRef.current,
+            (result, error) => {
+              if (result) {
+                const barcode = result.getText()
+                console.log("Barcode detected:", barcode)
+                onScan(barcode)
+                setScanning(false)
+                codeReader.reset()
+              }
+              if (error && !(error instanceof NotFoundException)) {
+                console.error("Scan error:", error)
+              }
+            }
+          )
+        }
       } catch (err) {
         console.error("Camera error:", err)
         setError("Failed to access camera. Please allow camera permissions.")
