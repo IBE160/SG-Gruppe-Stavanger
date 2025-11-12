@@ -58,8 +58,10 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error("[API:register] Error:", error)
+    // Return detailed error for debugging
+    const errorMessage = error instanceof Error ? error.message : "Something went wrong"
     return NextResponse.json(
-      { error: { code: "INTERNAL_ERROR", message: "Something went wrong" } },
+      { error: { code: "INTERNAL_ERROR", message: errorMessage, details: String(error) } },
       { status: 500 }
     )
   }
