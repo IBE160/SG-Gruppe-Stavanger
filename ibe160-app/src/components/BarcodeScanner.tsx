@@ -201,9 +201,18 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                 <style dangerouslySetInnerHTML={{
                   __html: `
                     @keyframes scanLine {
-                      0% { top: 0%; }
-                      50% { top: 100%; }
-                      100% { top: 0%; }
+                      0% {
+                        top: 0%;
+                        transform: translateY(0);
+                      }
+                      50% {
+                        top: 100%;
+                        transform: translateY(-100%);
+                      }
+                      100% {
+                        top: 0%;
+                        transform: translateY(0);
+                      }
                     }
                   `
                 }} />
