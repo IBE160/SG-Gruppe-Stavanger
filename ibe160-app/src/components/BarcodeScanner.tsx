@@ -32,6 +32,13 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
     const startScanning = async () => {
       try {
+        // Wait for video element to be ready
+        if (!videoRef.current) {
+          console.error("Video element not ready")
+          setError("Failed to initialize camera")
+          return
+        }
+
         const videoInputDevices = await codeReader.listVideoInputDevices()
         if (videoInputDevices.length === 0) {
           setError("No camera found")
@@ -40,9 +47,9 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
         const selectedDeviceId = videoInputDevices[0].deviceId
 
-        codeReader.decodeFromVideoDevice(
+        await codeReader.decodeFromVideoDevice(
           selectedDeviceId,
-          videoRef.current!,
+          videoRef.current,
           (result, error) => {
             if (result) {
               const barcode = result.getText()
@@ -62,9 +69,13 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
       }
     }
 
-    startScanning()
+    // Small delay to ensure video element is mounted
+    const timer = setTimeout(() => {
+      startScanning()
+    }, 100)
 
     return () => {
+      clearTimeout(timer)
       if (readerRef.current) {
         readerRef.current.reset()
       }
