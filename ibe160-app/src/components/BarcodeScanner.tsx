@@ -29,19 +29,17 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
 
     // Configure reader with hints for better barcode scanning
     const hints = new Map()
-    // Try harder to find barcodes - better for PC webcams
-    hints.set(DecodeHintType.TRY_HARDER, true)
-    // Specify barcode formats to scan (common product barcodes)
+    hints.set(DecodeHintType.TRY_HARDER, true)        // Try harder - critical for webcams
+    hints.set(DecodeHintType.ASSUME_GS1, true)        // Assume GS1 standard for products
     hints.set(DecodeHintType.POSSIBLE_FORMATS, [
       BarcodeFormat.EAN_13,    // Most common for products
       BarcodeFormat.EAN_8,     // Small products
       BarcodeFormat.UPC_A,     // US/Canada products
       BarcodeFormat.UPC_E,     // Small US products
       BarcodeFormat.CODE_128,  // General purpose
-      BarcodeFormat.CODE_39,   // General purpose
     ])
 
-    const codeReader = new BrowserMultiFormatReader(hints, 300) // 300ms for faster scanning
+    const codeReader = new BrowserMultiFormatReader(hints, 500) // 500ms between scans
     readerRef.current = codeReader
 
     const startScanning = async () => {
@@ -189,9 +187,26 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
                 />
                 <div className="absolute inset-0 border-4 border-green-500/30 pointer-events-none">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-64 h-48 border-2 border-white/80 rounded-lg"></div>
+                    <div className="w-64 h-48 border-2 border-white/80 rounded-lg relative overflow-hidden">
+                      {/* Grønn scanning linje som går opp og ned */}
+                      <div className="absolute left-0 right-0 h-1 bg-green-500 animate-pulse shadow-[0_0_20px_rgba(34,197,94,0.8)]"
+                        style={{
+                          top: '50%',
+                          animation: 'scanLine 2s ease-in-out infinite'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
+                <style dangerouslySetInnerHTML={{
+                  __html: `
+                    @keyframes scanLine {
+                      0% { top: 0%; }
+                      50% { top: 100%; }
+                      100% { top: 0%; }
+                    }
+                  `
+                }} />
               </div>
 
               <div className="bg-green-50 border border-green-200 rounded-xl p-4">
