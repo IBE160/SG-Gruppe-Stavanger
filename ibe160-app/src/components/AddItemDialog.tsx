@@ -70,6 +70,8 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
 
   const onSubmit = async (data: FoodItemInput) => {
     setError("")
+    console.log("[AddItemDialog] Submitting data:", data)
+    console.log("[AddItemDialog] Image URL:", data.image)
 
     try {
       await addItemMutation.mutateAsync(data)

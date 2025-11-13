@@ -217,10 +217,14 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
   // Get the best image: prioritize database image, then Unsplash, then null
   const getImage = () => {
+    console.log(`[PantryItemCard] ${item.name} - Database image:`, item.image)
     if (item.image) {
+      console.log(`[PantryItemCard] ${item.name} - Using database image`)
       return item.image
     }
-    return getUnsplashImage(item.name)
+    const unsplashImage = getUnsplashImage(item.name)
+    console.log(`[PantryItemCard] ${item.name} - Unsplash image:`, unsplashImage)
+    return unsplashImage
   }
 
   return (
