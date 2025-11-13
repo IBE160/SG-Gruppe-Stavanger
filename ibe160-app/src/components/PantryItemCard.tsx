@@ -215,7 +215,25 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     return null
   }
 
-  // Get the best image: prioritize database image, then Unsplash, then null
+  // Get Spoonacular ingredient image as fallback
+  const getSpoonacularImage = (name: string) => {
+    // Spoonacular uses ingredient names in format: "ingredient-name.jpg"
+    // Clean the name: remove brand names, convert to lowercase, replace spaces with hyphens
+    const cleanName = name
+      .toLowerCase()
+      .replace(/\d+g|\d+ml|\d+kg|\d+l/g, '') // Remove quantities
+      .replace(/nestle|coca-cola|pepsi|kraft|unilever/gi, '') // Remove common brands
+      .trim()
+      .split(' ')[0] // Take first word (e.g., "lamb" from "lamb shank")
+      .replace(/s$/, '') // Remove plural (eggs -> egg)
+
+    if (cleanName.length < 2) return null
+
+    // Spoonacular CDN for ingredient images
+    return `https://spoonacular.com/cdn/ingredients_500x500/${cleanName}.jpg`
+  }
+
+  // Get the best image: prioritize database image, then Unsplash, then Spoonacular, then null
   const getImage = () => {
     console.log(`[PantryItemCard] ${item.name} - Database image:`, item.image)
     if (item.image) {
@@ -223,8 +241,13 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
       return item.image
     }
     const unsplashImage = getUnsplashImage(item.name)
-    console.log(`[PantryItemCard] ${item.name} - Unsplash image:`, unsplashImage)
-    return unsplashImage
+    if (unsplashImage) {
+      console.log(`[PantryItemCard] ${item.name} - Using Unsplash image`)
+      return unsplashImage
+    }
+    const spoonacularImage = getSpoonacularImage(item.name)
+    console.log(`[PantryItemCard] ${item.name} - Using Spoonacular image:`, spoonacularImage)
+    return spoonacularImage
   }
 
   return (
