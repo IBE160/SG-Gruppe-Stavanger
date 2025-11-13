@@ -229,8 +229,8 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
     if (cleanName.length < 2) return null
 
-    // Spoonacular CDN for ingredient images
-    return `https://spoonacular.com/cdn/ingredients_500x500/${cleanName}.jpg`
+    // Spoonacular ingredient images - using correct CDN domain
+    return `https://img.spoonacular.com/ingredients_500x500/${cleanName}.jpg`
   }
 
   // Get the best image: prioritize database image, then Unsplash, then Spoonacular, then null
