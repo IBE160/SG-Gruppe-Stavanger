@@ -120,7 +120,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover"
               style={{
                 backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKEg3CcgPBgNNjdL5kiCz1OdOhCUMHYcbb5zW1M0UvzwN9eAWcuLzAJ_rLbM2ZaW4jSsUVmbjRmcl8HbuVRRj5d1U2LaURLnua8K9RrEQiQAdvK_Cn9QhCni_gOSCuq_M9DJy1zt3V_gsbiKMY7nEIl1ffigF9m2s9s-UfOqG85OCSx2RYTTqAkxNeQxl2zX6XUnGUgaKGqq22gt8e7sRDQsK0BfBhsUdHtyFKf_6Eg454LNVceLxusc94R69JHL0uGB0nkT0IyShR')",
+                  "url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
           </div>
@@ -133,7 +133,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover md:order-last"
               style={{
                 backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKxMqH8skRmL2HuTH1JfBbbgUDsKfkTmhOS9Zo1cHWRa8B8VXDit7ojB07c2Om2FxElgXxXEDdNaP49lDeGugkv4gLGeytoJq4jCC13F6S4HaRfxRM563ZJpBxHXoImRps07lMqNv15xadEKYwGYm7C7rlLWsCliwqJCRHhLvcMSNNx6MimhYw7Y3qQECrUcgKcuXj7dJ7keIMlSGWIxyseuQq0N_0VzSfwzQciT3bwstUMLsG6RZI0OzaOnYxdtMF6Xud_Iw4FqPd')",
+                  "url('https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
             <div className="flex flex-col gap-4">
