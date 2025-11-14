@@ -120,7 +120,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1556910637-e570312e90c0?w=800&h=600&fit=crop&q=80')",
+                  "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
           </div>
@@ -133,7 +133,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover md:order-last"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&h=600&fit=crop&q=80')",
+                  "url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
             <div className="flex flex-col gap-4">
