@@ -90,7 +90,7 @@ export default function ContactPage() {
                   Before reaching out, check our FAQ section for quick answers to common questions.
                 </p>
                 <Link
-                  href="/profile"
+                  href="/faq"
                   className="text-green-600 hover:text-green-700 text-sm font-medium"
                 >
                   View FAQ →
