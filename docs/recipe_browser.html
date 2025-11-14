@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discover Recipes</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .ai-gradient-button {
+            background-image: linear-gradient(to right, #8A2BE2, #FF69B4);
+            transition: all 0.3s ease-in-out;
+        }
+        .ai-gradient-button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px -5px rgba(138, 43, 226, 0.4);
+        }
+        .recipe-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .recipe-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                colors: {
+                  "primary": "#2D5A3D",
+                  "secondary": "#A8D5BA",
+                  "text-main": "#333333",
+                  "text-subtle": "#877a64",
+                  "border-color": "#e5e2dc",
+                  "background-light": "#F7F7F7",
+                  "background-dark": "#211b11",
+                },
+                fontFamily: {
+                  "display": ["Space Grotesk", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+              },
+            },
+          }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Sticky Header: Top App Bar -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-text-main dark:text-white text-2xl">arrow_back</span>
+</div>
+<h1 class="text-text-main dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Discover Recipes</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-text-main dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Segmented Buttons -->
+<div class="flex px-4 py-3">
+<div class="flex h-10 flex-1 items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-primary dark:has-[:checked]:text-secondary text-text-subtle text-sm font-medium leading-normal">
+<span class="truncate">Search by Name</span>
+<input class="invisible w-0" name="search-mode" type="radio" value="Search by Name"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-primary dark:has-[:checked]:text-secondary text-text-subtle text-sm font-medium leading-normal">
+<span class="truncate">Use My Pantry</span>
+<input class="invisible w-0" name="search-mode" type="radio" value="Use My Pantry"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-primary dark:has-[:checked]:text-secondary text-text-subtle text-sm font-medium leading-normal">
+<span class="truncate">AI Search</span>
+<input checked="" class="invisible w-0" name="search-mode" type="radio" value="AI Search"/>
+</label>
+</div>
+</div>
+<!-- AI Search Input -->
+<div class="flex flex-col gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-text-main dark:text-white text-base font-medium leading-normal pb-2">AI Recipe Prompt</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-main dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-color bg-white dark:bg-gray-800 dark:border-gray-700 min-h-36 placeholder:text-text-subtle p-[15px] text-base font-normal leading-normal" placeholder="A quick, healthy lunch using leftover rice and eggs..."></textarea>
+</label>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] ai-gradient-button">
+<span class="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+<span class="truncate">AI Search</span>
+</button>
+</div>
+<!-- Recipe Grid -->
+<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
+<div class="flex flex-col gap-3 pb-3 recipe-card">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A close-up shot of classic spaghetti carbonara in a white bowl, garnished with parsley and black pepper." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVxi6wu6xk4uPCE_OEy-CwROBNnkyx8j-tKCF51GXtZZnq8n7wbpAcQEsVS1XNl1B3OXIhm6rED1suA26EDptdUIlM3mSPfaU3SgeSt_9lSWu16b_BBQOIYxswzGOTE0n2-Ox1LTCvVwMXiJSZvVYJMKr0s4nQIK-0NQ8PcdoKHJNiWzlMbgdC7OqFcu_EXEA0cu_goIpQB7svQWbiQGuGQJll48ewa1loLy_on-XR-ZWtP9hxk2a20MZWInHw2WyKVwgivTO2QtRp");'></div>
+<div class="flex flex-col gap-1.5">
+<p class="text-text-main dark:text-white text-base font-bold leading-normal">Classic Spaghetti Carbonara</p>
+<div class="flex items-center gap-3 text-text-subtle dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+<p class="text-sm font-normal leading-normal">20 min</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-normal leading-normal">2 Servings</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mt-1">
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Italian</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Pasta</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Easy</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 recipe-card">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A vibrant bowl of spicy Thai green curry with chicken, vegetables, and a side of white rice." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMT-oZYwICEcbRUFJHVjqgTqWrYv-CgFyfrNirseTkgEo8i9GDFPRZ_bDi_PJKAakb_9RS5U2kpuXQXupcHlTK38Nec4IPUAHk9ajYbtKBHkbB8me9yyXRk89X5iyHb-VXBtg1q3FXIwWnBaW-bdlSRk49J7dBfZ9sc9hP0Rdza0bMFDhU-iyBZu81FkeJqgPmyLWezNe21jYUwRWxjiC6dLG7J6B_2F2uIdqrb-p8KFWhw8-cB-D_aUZ_vX3HNnxqYTWj-gXGOkP1");'></div>
+<div class="flex flex-col gap-1.5">
+<p class="text-text-main dark:text-white text-base font-bold leading-normal">Spicy Thai Green Curry</p>
+<div class="flex items-center gap-3 text-text-subtle dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+<p class="text-sm font-normal leading-normal">30 min</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-normal leading-normal">4 Servings</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mt-1">
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Thai</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Curry</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Spicy</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 recipe-card">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A fresh and colorful Mediterranean quinoa salad with feta, olives, tomatoes, and cucumber." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdimWjQwvFquZ_8dNJsgxkNZqoJmgvi0_3FTqlQbKHGxtKbVP76vLU31lNbCpvu3lXYycp3LnCPChEocDfMtM-ZoH89GL6wb-pnVfCgqpE0dCe11AIJ9KOp8Z0O1QuF0mMcHLJUwvELs8njG7Gb9ydc7f6IAd61k7Pf7cpN25kf2qjbGVXF5-FEuBetFYL_0lBDErEGu1nnXO0Eo70_zaF13cmWBKCQ2WN8K_kuH1j5CkUcm-_l7fKZHCAkRHi4U_mbLzZnFlqCDjs");'></div>
+<div class="flex flex-col gap-1.5">
+<p class="text-text-main dark:text-white text-base font-bold leading-normal">Mediterranean Quinoa Salad</p>
+<div class="flex items-center gap-3 text-text-subtle dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+<p class="text-sm font-normal leading-normal">15 min</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-normal leading-normal">2 Servings</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mt-1">
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Healthy</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Salad</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Quick</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 recipe-card">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A warm, hearty bowl of lentil soup with carrots and celery, perfect for a cold day." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzR8TMdZsu4Yd56cCoZLntP65Yg_lseIUeg7GW6xIJp2GO7bIvtJm39PUzoKt3PljIGuew5_FALH7SDYv0ExJGjYlGiZlCgnsdlqa2Iuga9Z4w6GmCKErgs9qGHH3EfjgKSMZFI-KhX3CoIk1VW5e6aypFOH0Q-RxkSjwizVDGANG5_Ah8KhojP_MpTwOEdFvmI8-yU654yqqzcTA3ziwZ6NMR1b5pwkpLEyPuQeqBGIfU28ZsEfgNjtz9fBqdPhcInV4tro5vTZQS");'></div>
+<div class="flex flex-col gap-1.5">
+<p class="text-text-main dark:text-white text-base font-bold leading-normal">Hearty Lentil Soup</p>
+<div class="flex items-center gap-3 text-text-subtle dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+<p class="text-sm font-normal leading-normal">45 min</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-normal leading-normal">6 Servings</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mt-1">
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Vegan</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Soup</span>
+<span class="text-xs font-medium bg-secondary/50 text-primary dark:bg-secondary/20 dark:text-secondary py-1 px-2.5 rounded-full">Comfort</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
