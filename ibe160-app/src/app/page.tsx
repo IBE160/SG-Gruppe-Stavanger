@@ -67,60 +67,60 @@ export default function Home() {
             <div className="flex items-center justify-center">
               <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg relative">
                 <img
-                  src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=1200&h=800&fit=crop&q=80"
+                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&h=800&fit=crop&q=80"
                   alt="Fresh produce in pantry"
                   className="w-full h-full object-cover"
                 />
                 {/* Overlay with pantry items */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent flex flex-col justify-end p-6">
-                  <h2 className="text-2xl font-bold text-white mb-4">Your Pantry</h2>
+                <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent flex flex-col justify-end p-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Pantry</h2>
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
+                    <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                           <img
-                            src="https://images.unsplash.com/photo-1546470427-227caf249f49?w=80&h=80&fit=crop&q=80"
+                            src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80"
                             alt="Tomatoes"
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <span className="font-medium text-white">Tomatoes</span>
+                        <span className="font-semibold text-gray-900">Tomatoes</span>
                       </div>
-                      <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-green-500/20 border border-green-400/30">
-                        <span className="h-2 w-2 rounded-full bg-green-400"></span>
-                        <span className="text-xs font-medium text-green-100">Fresh</span>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50">
+                        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                        <span className="text-xs font-medium text-green-700">Fresh</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
+                    <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                           <img
-                            src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80"
+                            src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80"
                             alt="Milk"
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <span className="font-medium text-white">Milk</span>
+                        <span className="font-semibold text-gray-900">Milk</span>
                       </div>
-                      <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/30">
-                        <span className="h-2 w-2 rounded-full bg-yellow-400"></span>
-                        <span className="text-xs font-medium text-yellow-100">Expiring Soon</span>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50">
+                        <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                        <span className="text-xs font-medium text-yellow-700">Expiring Soon</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
+                    <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                           <img
-                            src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=80&h=80&fit=crop&q=80"
+                            src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80"
                             alt="Chicken"
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <span className="font-medium text-white">Chicken</span>
+                        <span className="font-semibold text-gray-900">Chicken</span>
                       </div>
-                      <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-red-500/20 border border-red-400/30">
-                        <span className="h-2 w-2 rounded-full bg-red-400"></span>
-                        <span className="text-xs font-medium text-red-100">Expired</span>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50">
+                        <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                        <span className="text-xs font-medium text-red-700">Expired</span>
                       </div>
                     </div>
                   </div>
