@@ -219,7 +219,7 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
               <div className="mt-6 flex gap-3">
                 <button
                   onClick={() => setManualMode(true)}
-                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                 >
                   <Keyboard className="w-5 h-5" />
                   Enter Manually
