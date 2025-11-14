@@ -120,7 +120,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?w=800&h=600&fit=crop&q=80')",
+                  "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
           </div>
