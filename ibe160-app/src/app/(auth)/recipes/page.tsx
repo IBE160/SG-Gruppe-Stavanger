@@ -360,7 +360,7 @@ export default function RecipesPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="flex flex-col gap-3 pb-3 animate-pulse">
-                <div className="w-full aspect-[3/4] bg-gray-200 rounded-xl"></div>
+                <div className="w-full aspect-square bg-gray-200 rounded-xl"></div>
                 <div className="h-5 bg-gray-200 rounded w-3/4"></div>
                 <div className="h-4 bg-gray-100 rounded w-1/2"></div>
               </div>
@@ -401,10 +401,11 @@ export default function RecipesPage() {
             {recipes.map((recipe: any) => (
               <div
                 key={recipe.id || recipe.title}
+                onClick={() => setSelectedRecipe(recipe)}
                 className="flex flex-col gap-3 pb-3 transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
               >
                 <div
-                  className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden"
+                  className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl overflow-hidden"
                   style={{
                     backgroundImage: recipe.image
                       ? `url("${recipe.image}")`
