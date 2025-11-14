@@ -174,13 +174,13 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-between">
             <p className="text-base text-[#6B7280]">© 2024 FoodWise AI. All rights reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="/terms">
                 Terms of Service
               </a>
-              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="/privacy">
                 Privacy Policy
               </a>
-              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="/contact">
                 Contact Us
               </a>
             </div>
