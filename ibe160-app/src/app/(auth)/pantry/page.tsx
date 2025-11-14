@@ -233,7 +233,7 @@ export default function PantryPage() {
                   onClick={() => setIsAddDialogOpen(true)}
                   className="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 bg-[#333333]/10 text-[#333333] text-base font-medium leading-normal"
                 >
-                  <span className="truncate">Add Manually</span>
+                  <span className="truncate">Add Item</span>
                 </button>
               </div>
             </div>
