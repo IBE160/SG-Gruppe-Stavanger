@@ -33,8 +33,8 @@ workflow_status:
   document-project: required
 
   # Phase 0: Discovery (Optional)
-  brainstorm-project: "docs/bmm-brainstorming-session-2025-11-14.md"
-  research: "docs/research-technical-2025-11-14.md"
+  brainstorm-project: "docs/bmm-brainstorming-session-2025-11-14.md", "brainstorming-session-status.yaml"
+  research: "docs/research-technical-2025-11-14.md", "research-technical-2025-11-11.md"
   product-brief: optional
 
   # Phase 1: Planning
