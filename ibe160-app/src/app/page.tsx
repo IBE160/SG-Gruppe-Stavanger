@@ -104,149 +104,85 @@ export default function Home() {
           </div>
         </section>
 
-      {/* Features - Full Width Airbnb Style */}
-      <div className="bg-gray-50 py-16 lg:py-24">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
-          {/* Feature 1: AI Recipe Search */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 lg:mb-24">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
-                <Sparkles className="w-3.5 h-3.5" />
-                AI Powered
-              </div>
-              <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 tracking-tight">
-                Recipe search that understands you
+        {/* Feature Section 1 */}
+        <section className="py-16 px-4 bg-white">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
+            <div className="flex flex-col gap-4">
+              <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                Discover Recipes with What You Have
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Just describe what you're craving. Our AI powered by Google Gemini creates personalized recipes based on your pantry and preferences.
+              <p className="text-base text-[#6B7280] sm:text-lg">
+                Our AI scans your pantry and suggests delicious recipes, ensuring no ingredient goes to
+                waste. Just tell us what you have, and we'll handle the inspiration.
               </p>
             </div>
-            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100 shadow-xl">
-              <img
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop"
-                alt="AI Recipe Search"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <div
+              className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover"
+              style={{
+                backgroundImage:
+                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKEg3CcgPBgNNjdL5kiCz1OdOhCUMHYcbb5zW1M0UvzwN9eAWcuLzAJ_rLbM2ZaW4jSsUVmbjRmcl8HbuVRRj5d1U2LaURLnua8K9RrEQiQAdvK_Cn9QhCni_gOSCuq_M9DJy1zt3V_gsbiKMY7nEIl1ffigF9m2s9s-UfOqG85OCSx2RYTTqAkxNeQxl2zX6XUnGUgaKGqq22gt8e7sRDQsK0BfBhsUdHtyFKf_6Eg454LNVceLxusc94R69JHL0uGB0nkT0IyShR')",
+              }}
+            ></div>
           </div>
+        </section>
 
-          {/* Feature 2: Expiration Alerts */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-yellow-100 to-orange-100 shadow-xl lg:order-first">
-              <img
-                src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=800&h=600&fit=crop"
-                alt="Food tracking"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-4 lg:order-last">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 text-yellow-700 rounded-full text-xs font-medium">
-                <Bell className="w-3.5 h-3.5" />
-                Smart Alerts
-              </div>
-              <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 tracking-tight">
-                Never waste food again
+        {/* Feature Section 2 */}
+        <section className="py-16 px-4">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
+            <div
+              className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover md:order-last"
+              style={{
+                backgroundImage:
+                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKxMqH8skRmL2HuTH1JfBbbgUDsKfkTmhOS9Zo1cHWRa8B8VXDit7ojB07c2Om2FxElgXxXEDdNaP49lDeGugkv4gLGeytoJq4jCC13F6S4HaRfxRM563ZJpBxHXoImRps07lMqNv15xadEKYwGYm7C7rlLWsCliwqJCRHhLvcMSNNx6MimhYw7Y3qQECrUcgKcuXj7dJ7keIMlSGWIxyseuQq0N_0VzSfwzQciT3bwstUMLsG6RZI0OzaOnYxdtMF6Xud_Iw4FqPd')",
+              }}
+            ></div>
+            <div className="flex flex-col gap-4">
+              <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                Never Miss an Expiration Date
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Get timely notifications before your ingredients expire. Track everything in your pantry and use food before it goes bad.
+              <p className="text-base text-[#6B7280] sm:text-lg">
+                Get timely notifications to prevent your food from spoiling. Our smart alerts help you use
+                ingredients at their peak freshness, saving you money and reducing waste.
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Footer - Airbnb Style */}
-      <footer className="border-t border-gray-200 bg-gray-50">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">Product</h4>
-              <ul className="space-y-2">
-                <li><Link href="/register" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Get Started</Link></li>
-                <li><Link href="/login" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sign In</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">Features</h4>
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => setOpenModal("ai-search")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    AI Recipe Search
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setOpenModal("pantry-tracking")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Pantry Tracking
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setOpenModal("expiration-alerts")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Expiration Alerts
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">About</h4>
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => setOpenModal("food-waste")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Food Waste Reduction
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setOpenModal("sustainability")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Sustainability
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">Technology</h4>
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => setOpenModal("gemini-ai")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Google Gemini AI
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setOpenModal("tech-stack")}
-                    className="text-sm text-gray-600 hover:text-green-600 transition-colors"
-                  >
-                    Next.js & TypeScript
-                  </button>
-                </li>
-              </ul>
-            </div>
+        {/* CTA Section */}
+        <section className="py-20 px-4">
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+            <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Ready to Transform Your Kitchen?
+            </h2>
+            <p className="text-base text-[#6B7280] sm:text-lg">
+              Join thousands of users who are saving money and the planet, one meal at a time. Get started
+              for free and see how easy it is to fight food waste.
+            </p>
+            <Link
+              href="/register"
+              className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#34D399] px-6 text-base font-bold text-white hover:bg-[#34D399]/90 transition-colors"
+            >
+              <span>Get Started for Free</span>
+            </Link>
           </div>
-          <div className="pt-8 border-t border-gray-200">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Salad className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-semibold text-gray-900">ibe160</span>
-              </div>
-              <p className="text-xs text-gray-500">
-                © 2025 ibe160. Reducing food waste, one ingredient at a time.
-              </p>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200/80 bg-[#F9FAFB] py-10 px-5 text-center">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-between">
+            <p className="text-base text-[#6B7280]">© 2024 FoodWise AI. All rights reserved.</p>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+                Terms of Service
+              </a>
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+                Privacy Policy
+              </a>
+              <a className="text-base text-[#6B7280] hover:text-[#34D399] transition-colors" href="#">
+                Contact Us
+              </a>
             </div>
           </div>
         </div>
