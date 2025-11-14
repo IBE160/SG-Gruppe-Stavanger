@@ -30,17 +30,30 @@ workflow_path: "brownfield-level-3.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
-  document-project: required
+  document-project: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
 
   # Phase 1: Analysis
-  brainstorm-project: optional
-  research: recommended
-  product-brief: recommended
+<<<<<<< HEAD
+  brainstorm-project: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  research: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  product-brief: C:\IBE160\SG-Gruppe-Stavanger\docs\product-brief-ibe160-2025-11-03.md
 
   # Phase 2: Planning
   prd: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
-  validate-prd: optional
-  create-design: conditional
+  create-epics-and-stories: C:\IBE160\SG-Gruppe-Stavanger\docs\epics.md
+  validate-prd: C:\IBE160\SG-Gruppe-Stavanger\docs\validation-report-2025-11-11T21-18-44.md
+  create-design: C:\IBE160\SG-Gruppe-Stavanger\docs\ux-design-specification.md
+=======
+  brainstorm-project: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  research: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  product-brief: C:\IBE160\SG-Gruppe-Stavanger\docs\product-brief-ibe160-2025-11-03.md
+
+  # Phase 2: Planning
+  prd: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
+  create-epics-and-stories: C:\IBE160\SG-Gruppe-Stavanger\docs\epics.md
+  validate-prd: C:\IBE160\SG-Gruppe-Stavanger\docs\validation-report-2025-11-11T21-18-44.md
+  create-design: C:\IBE160\SG-Gruppe-Stavanger\docs\ux-design-specification.md
+>>>>>>> 8d6af748a71d9a656cf8d12bf11f267a605fd87c
 
   # Phase 3: Solutioning
   architecture-review: required
@@ -50,4 +63,8 @@ workflow_status:
   solutioning-gate-check: required
 
   # Phase 4: Implementation
+<<<<<<< HEAD
   sprint-planning: required
+=======
+  sprint-planning: required
+>>>>>>> 8d6af748a71d9a656cf8d12bf11f267a605fd87c
