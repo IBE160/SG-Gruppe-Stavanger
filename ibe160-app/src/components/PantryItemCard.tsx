@@ -328,10 +328,32 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
           <span className="text-5xl">{getEmoji()}</span>
         )}
 
-        {/* Countdown Overlay - Always shown */}
-        <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm rounded-lg px-2 py-1 shadow-md">
-          <div className="flex items-center gap-1">
-            <Clock className="w-3 h-3 text-gray-600" />
+        {/* Edit and Delete Buttons - Shown on Hover - TOP RIGHT */}
+        {(onEdit || onDelete) && (
+          <div className="absolute top-2 right-2 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            {onEdit && (
+              <button
+                onClick={() => onEdit(item)}
+                className="flex size-7 items-center justify-center rounded-full bg-white/95 backdrop-blur-sm text-gray-700 hover:bg-white shadow-md"
+              >
+                <span className="material-symbols-outlined text-sm">edit</span>
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={() => onDelete(item)}
+                className="flex size-7 items-center justify-center rounded-full bg-white/95 backdrop-blur-sm text-gray-700 hover:bg-white shadow-md"
+              >
+                <span className="material-symbols-outlined text-sm">delete</span>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Countdown Overlay - BOTTOM LEFT - Always shown */}
+        <div className="absolute bottom-2 left-2 bg-white/95 backdrop-blur-sm rounded-lg px-2.5 py-1.5 shadow-md">
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-gray-600" />
             <span className="text-xs font-semibold text-gray-900">
               {daysUntilExpiry < 0
                 ? `${Math.abs(daysUntilExpiry)}d ago`
@@ -357,28 +379,6 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
       >
         {status.label}
       </div>
-
-      {/* Edit and Delete Buttons - Shown on Hover */}
-      {(onEdit || onDelete) && (
-        <div className="absolute top-3 right-3 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-          {onEdit && (
-            <button
-              onClick={() => onEdit(item)}
-              className="flex size-8 items-center justify-center rounded-full bg-black/5 text-[#333333]/70 hover:bg-black/10"
-            >
-              <span className="material-symbols-outlined text-base">edit</span>
-            </button>
-          )}
-          {onDelete && (
-            <button
-              onClick={() => onDelete(item)}
-              className="flex size-8 items-center justify-center rounded-full bg-black/5 text-[#333333]/70 hover:bg-black/10"
-            >
-              <span className="material-symbols-outlined text-base">delete</span>
-            </button>
-          )}
-        </div>
-      )}
     </div>
   )
 }
