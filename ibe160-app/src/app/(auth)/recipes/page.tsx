@@ -138,122 +138,116 @@ export default function RecipesPage() {
         : aiError
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header - Airbnb Style */}
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/pantry" className="flex items-center gap-2">
-              <Salad className="w-6 h-6 text-green-600" />
-              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+    <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-[#F7F7F7]">
+      {/* Sticky Header: Top App Bar */}
+      <header className="sticky top-0 z-10 bg-[#F7F7F7]/80 backdrop-blur-sm">
+        <div className="flex items-center p-4 pb-2 justify-between">
+          <div className="flex size-12 shrink-0 items-center justify-start">
+            <Link href="/pantry">
+              <span className="material-symbols-outlined text-[#333333] text-2xl">arrow_back</span>
             </Link>
-            <nav className="flex items-center gap-1">
-              <Link
-                href="/pantry"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Pantry
-              </Link>
-              <Link
-                href="/recipes"
-                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
-              >
-                Recipes
-              </Link>
-              <Link
-                href="/grocery"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Grocery
-              </Link>
-              <Link
-                href="/profile"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Profile
-              </Link>
-              <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign out
-              </button>
-            </nav>
+          </div>
+          <h1 className="text-[#333333] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+            Discover Recipes
+          </h1>
+          <div className="flex w-12 items-center justify-end">
+            <Link
+              href="/profile"
+              className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#333333] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+            >
+              <span className="material-symbols-outlined text-2xl">account_circle</span>
+            </Link>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Recipe Browser</h1>
-          <p className="text-gray-600">Discover recipes with AI, search by name, or use your pantry</p>
-        </div>
-
-        {/* Info Banner */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-6 mb-8">
-          <div className="flex items-start gap-3">
-            <ChefHat className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-gray-800">
-              <strong>Powered by Spoonacular & Google Gemini AI:</strong> Search recipes by name,
-              use your pantry ingredients, or ask AI for personalized suggestions!
-            </p>
+      <main className="flex-1">
+        {/* Segmented Buttons */}
+        <div className="flex px-4 py-3">
+          <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-gray-200 p-1">
+            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 ${searchMode === "text" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal`}>
+              <span className="truncate">Search by Name</span>
+              <input
+                className="invisible w-0"
+                name="search-mode"
+                type="radio"
+                value="Search by Name"
+                checked={searchMode === "text"}
+                onChange={() => setSearchMode("text")}
+              />
+            </label>
+            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 ${searchMode === "ingredients" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal`}>
+              <span className="truncate">Use My Pantry</span>
+              <input
+                className="invisible w-0"
+                name="search-mode"
+                type="radio"
+                value="Use My Pantry"
+                checked={searchMode === "ingredients"}
+                onChange={() => setSearchMode("ingredients")}
+              />
+            </label>
+            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 ${searchMode === "ai" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal`}>
+              <span className="truncate">AI Search</span>
+              <input
+                className="invisible w-0"
+                name="search-mode"
+                type="radio"
+                value="AI Search"
+                checked={searchMode === "ai"}
+                onChange={() => setSearchMode("ai")}
+              />
+            </label>
           </div>
         </div>
 
-        {/* Search Mode Toggle */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {/* AI Search Input */}
+        {searchMode === "ai" && (
+          <div className="flex flex-col gap-4 px-4 py-3">
+            <label className="flex flex-col min-w-40 flex-1">
+              <p className="text-[#333333] text-base font-medium leading-normal pb-2">
+                AI Recipe Prompt
+              </p>
+              <textarea
+                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#333333] focus:outline-0 focus:ring-2 focus:ring-[#2D5A3D]/50 border border-[#e5e2dc] bg-white min-h-36 placeholder:text-[#877a64] p-[15px] text-base font-normal leading-normal"
+                placeholder="A quick, healthy lunch using leftover rice and eggs..."
+                value={aiQuery}
+                onChange={(e) => setAiQuery(e.target.value)}
+              ></textarea>
+            </label>
             <button
-              onClick={() => setSearchMode("text")}
-              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
-                searchMode === "text"
-                  ? "bg-gray-900 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              onClick={handleAISearch}
+              disabled={aiQuery.trim().length === 0}
+              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                backgroundImage: "linear-gradient(to right, #8A2BE2, #FF69B4)",
+                transition: "all 0.3s ease-in-out",
+              }}
             >
-              <Search className="w-5 h-5" />
-              Search by Name
-            </button>
-            <button
-              onClick={() => setSearchMode("ingredients")}
-              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
-                searchMode === "ingredients"
-                  ? "bg-gray-900 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <ShoppingBag className="w-5 h-5" />
-              Use My Pantry ({pantryItems.length})
-            </button>
-            <button
-              onClick={() => setSearchMode("ai")}
-              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold transition-all ${
-                searchMode === "ai"
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <Sparkles className="w-5 h-5" />
-              AI Search
+              <span className="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+              <span className="truncate">AI Search</span>
             </button>
           </div>
+        )}
 
-          {/* Text Search */}
-          {searchMode === "text" && (
+        {/* Text Search */}
+        {searchMode === "text" && (
+          <div className="px-4 py-3">
             <input
               type="text"
               placeholder="Search for recipes (e.g., pasta, chicken, tacos)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-[#e5e2dc] rounded-xl text-[#333333] placeholder:text-[#877a64] focus:outline-none focus:ring-2 focus:ring-[#2D5A3D]/50 focus:border-transparent transition-all bg-white"
             />
-          )}
+          </div>
+        )}
 
-          {/* Ingredient Search Info */}
-          {searchMode === "ingredients" && (
-            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3">
-              <p className="text-sm text-green-700">
+        {/* Ingredient Search Info */}
+        {searchMode === "ingredients" && (
+          <div className="px-4 py-3">
+            <div className="bg-[#A8D5BA]/10 border border-[#A8D5BA] rounded-lg px-4 py-3">
+              <p className="text-sm text-[#2D5A3D]">
                 {pantryItems.length > 0 ? (
                   <>
                     Finding recipes with: <strong>{pantryItems.map((i) => i.name).join(", ")}</strong>
@@ -269,54 +263,17 @@ export default function RecipesPage() {
                 )}
               </p>
             </div>
-          )}
-
-          {/* AI Search */}
-          {searchMode === "ai" && (
-            <div className="space-y-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Ask AI anything... (e.g., 'healthy vegetarian dinner with chickpeas')"
-                  value={aiQuery}
-                  onChange={(e) => setAiQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleAISearch()}
-                  className="airbnb-input pr-28"
-                />
-                <button
-                  onClick={handleAISearch}
-                  disabled={aiQuery.trim().length === 0}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Search
-                </button>
-              </div>
-              <div className="bg-purple-50 border border-purple-200 rounded-lg px-4 py-3">
-                <div className="flex items-start gap-2">
-                  <Lightbulb className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-purple-800">
-                    <strong>AI Tips:</strong> Ask for recipes based on dietary preferences, cuisine
-                    styles, cooking time, or specific ingredients. The AI respects your user
-                    preferences automatically!
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Loading State */}
         {isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="airbnb-card overflow-hidden animate-pulse">
-                <div className="bg-gray-200 h-56"></div>
-                <div className="p-6 space-y-3">
-                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-100 rounded w-1/2"></div>
-                  <div className="h-10 bg-gray-100 rounded mt-4"></div>
-                </div>
+              <div key={i} className="flex flex-col gap-3 pb-3 animate-pulse">
+                <div className="w-full aspect-[3/4] bg-gray-200 rounded-xl"></div>
+                <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-100 rounded w-1/2"></div>
               </div>
             ))}
           </div>
@@ -351,98 +308,52 @@ export default function RecipesPage() {
 
         {/* Recipe Grid */}
         {!isLoading && !error && recipes.length > 0 && (
-          <>
-            <div className="mb-4">
-              <p className="text-sm text-gray-600">
-                Found {recipes.length} recipe{recipes.length !== 1 ? "s" : ""}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.map((recipe: any) => (
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
+            {recipes.map((recipe: any) => (
+              <div
+                key={recipe.id || recipe.title}
+                className="flex flex-col gap-3 pb-3 transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
+              >
                 <div
-                  key={recipe.id || recipe.title}
-                  className="airbnb-card overflow-hidden hover-lift group cursor-pointer"
-                >
-                  <div className="h-56 bg-gradient-to-br from-orange-100 to-pink-100 flex items-center justify-center overflow-hidden">
-                    {recipe.image ? (
-                      <img
-                        src={recipe.image}
-                        alt={recipe.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          const img = e.currentTarget
-                          // Check if we've already tried fallback
-                          if (img.dataset.fallbackTried === 'true') {
-                            // If fallback also failed, hide and show icon
-                            img.style.display = 'none'
-                            const parent = img.parentElement
-                            if (parent && !parent.querySelector('.fallback-icon')) {
-                              const icon = document.createElement('div')
-                              icon.className = 'fallback-icon'
-                              icon.innerHTML = '<svg class="w-20 h-20 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>'
-                              parent.appendChild(icon)
-                            }
-                          } else {
-                            // Try fallback Unsplash image
-                            img.dataset.fallbackTried = 'true'
-                            img.src = getFallbackImage(recipe.title)
-                          }
-                        }}
-                      />
-                    ) : (
-                      <UtensilsCrossed className="w-20 h-20 text-orange-400" />
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 leading-snug">
-                      {recipe.title}
-                    </h3>
-                    <div className="flex gap-4 text-sm text-gray-600 mb-4">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                  className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden"
+                  style={{
+                    backgroundImage: recipe.image
+                      ? `url("${recipe.image}")`
+                      : `url("${getFallbackImage(recipe.title)}")`,
+                  }}
+                ></div>
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-[#333333] text-base font-bold leading-normal line-clamp-2">
+                    {recipe.title}
+                  </p>
+                  <div className="flex items-center gap-3 text-[#877a64]">
+                    <div className="flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm">timer</span>
+                      <p className="text-sm font-normal leading-normal">
                         {recipe.readyInMinutes || recipe.cookingTime || "N/A"} min
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
-                        {recipe.servings} servings
-                      </span>
+                      </p>
                     </div>
-                    {recipe.tags && recipe.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {recipe.tags.slice(0, 3).map((tag: string) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    {recipe.sourceUrl ? (
-                      <a
-                        href={recipe.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="airbnb-button-primary text-center block"
-                      >
-                        View Recipe
-                      </a>
-                    ) : (
-                      <button
-                        onClick={() => setSelectedRecipe(recipe)}
-                        className="w-full px-4 py-2 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
-                      >
-                        View Details
-                      </button>
-                    )}
+                    <div className="flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm">restaurant</span>
+                      <p className="text-sm font-normal leading-normal">{recipe.servings} Servings</p>
+                    </div>
                   </div>
+                  {recipe.tags && recipe.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {recipe.tags.slice(0, 3).map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="text-xs font-medium bg-[#A8D5BA]/50 text-[#2D5A3D] py-1 px-2.5 rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          </>
+              </div>
+            ))}
+          </div>
         )}
 
         {/* Recipe Details Modal */}
