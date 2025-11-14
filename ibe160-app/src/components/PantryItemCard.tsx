@@ -1,7 +1,7 @@
 // PantryItemCard component for displaying food items with images
 
 import { useState } from "react"
-import { AlertTriangle } from "lucide-react"
+import { AlertTriangle, Clock } from "lucide-react"
 
 interface FoodItem {
   id: string
@@ -315,7 +315,7 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
   return (
     <div className="group relative flex flex-col gap-3 rounded-xl border border-[#EAEAEA] bg-white p-4 shadow-sm transition-shadow hover:shadow-lg">
       {/* Image */}
-      <div className="aspect-square w-full rounded-lg bg-[#F7F7F7] flex items-center justify-center overflow-hidden">
+      <div className="aspect-square w-full rounded-lg bg-[#F7F7F7] flex items-center justify-center overflow-hidden relative">
         {imageUrl && !imageError ? (
           <img
             src={imageUrl}
@@ -327,6 +327,20 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
         ) : (
           <span className="text-5xl">{getEmoji()}</span>
         )}
+
+        {/* Countdown Overlay - Always shown */}
+        <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm rounded-lg px-2 py-1 shadow-md">
+          <div className="flex items-center gap-1">
+            <Clock className="w-3 h-3 text-gray-600" />
+            <span className="text-xs font-semibold text-gray-900">
+              {daysUntilExpiry < 0
+                ? `${Math.abs(daysUntilExpiry)}d ago`
+                : daysUntilExpiry === 0
+                  ? "Today"
+                  : `${daysUntilExpiry}d`}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Name and Quantity */}
