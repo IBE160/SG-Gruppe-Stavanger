@@ -314,6 +314,7 @@ model Notification {
 - **ORM:** Prisma for schema management and migrations.  
 - **Authentication:** NextAuth.js (email/password).  
 - **Hosting:** Vercel (frontend + API), Supabase cloud (database).  
+- **Research about authentication** see research report: @docs/research-technical-2025-11-11.md
 
 ### Rationale
 This stack ensures tight integration, rapid development, scalability, and AI-friendly API extensions while aligning with project constraints and the teacher’s feedback.
@@ -323,6 +324,7 @@ This stack ensures tight integration, rapid development, scalability, and AI-fri
   - **Ingredient Substitution:** GPT-powered simple substitution recommendations (e.g., lime ↔ lemon).  
   - **AI Recipe Suggestions:** Use GPT or OpenAI embeddings for creative recipe variations.  
   - **Semantic Search:** Implement OpenAI’s `text-embedding-3-small` model to improve recipe search relevance.  
+  - **tech report on ai** Read @research-technical-2025-11-14.md
 
 AI is intentionally **not part of the MVP** to keep the core development focused and achievable within the 6-week timeline.
 
