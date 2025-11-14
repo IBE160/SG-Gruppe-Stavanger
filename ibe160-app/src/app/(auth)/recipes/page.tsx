@@ -138,30 +138,59 @@ export default function RecipesPage() {
         : aiError
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-[#F7F7F7]">
-      {/* Sticky Header: Top App Bar */}
-      <header className="sticky top-0 z-10 bg-[#F7F7F7]/80 backdrop-blur-sm">
-        <div className="flex items-center p-4 pb-2 justify-between">
-          <div className="flex size-12 shrink-0 items-center justify-start">
-            <Link href="/pantry">
-              <span className="material-symbols-outlined text-[#333333] text-2xl">arrow_back</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Navigation */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/pantry" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
             </Link>
-          </div>
-          <h1 className="text-[#333333] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
-            Discover Recipes
-          </h1>
-          <div className="flex w-12 items-center justify-end">
-            <Link
-              href="/profile"
-              className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#333333] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
-            >
-              <span className="material-symbols-outlined text-2xl">account_circle</span>
-            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Grocery
+              </Link>
+              <Link
+                href="/alerts"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Alerts
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="flex-1">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
         {/* Segmented Buttons */}
         <div className="flex px-4 py-3">
           <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-gray-200 p-1">

@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { Salad, LogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 import { usePantryItems } from "@/hooks/usePantry"
 
 export default function AlertsPage() {
@@ -59,30 +61,63 @@ export default function AlertsPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-[#F7F7F7]">
-      {/* Sticky Top App Bar */}
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-[#e0e0e0] bg-[#F7F7F7]/80 p-4 pb-2 backdrop-blur-sm">
-        <div className="flex size-12 shrink-0 items-center justify-start text-[#4CAF50]">
-          <span className="material-symbols-outlined text-3xl">compost</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Navigation */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/pantry" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Grocery
+              </Link>
+              <Link
+                href="/alerts"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Alerts
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
+          </div>
         </div>
-        <h2 className="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-[#333333]">
-          PantryPal
-        </h2>
-        <div className="flex w-12 items-center justify-end">
-          <Link
-            href="/profile"
-            className="flex h-12 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-transparent text-[#333333] min-w-0 p-0"
-          >
-            <span className="material-symbols-outlined">settings</span>
-          </Link>
-        </div>
-      </header>
+      </div>
 
-      <main className="flex-1">
-        {/* Headline Text */}
-        <h1 className="text-[#333333] tracking-light px-4 pt-6 pb-3 text-left text-[32px] font-bold leading-tight">
-          Expiration Alerts
-        </h1>
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        <div className="mb-8">
+          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Expiration Alerts</h1>
+          <p className="text-gray-600">Never miss an expiration date</p>
+        </div>
 
         {/* Action Panel / Notification Banner */}
         <div className="p-4">

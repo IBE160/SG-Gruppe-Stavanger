@@ -207,8 +207,8 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     const photoId = foodImageMap[normalizedName]
 
     if (photoId) {
-      // High quality with optimized settings for food photography
-      return `https://images.unsplash.com/${photoId}?w=600&h=400&fit=crop&q=90&auto=format`
+      // Optimized smaller size for card display
+      return `https://images.unsplash.com/${photoId}?w=300&h=300&fit=crop&q=80&auto=format`
     }
 
     // No fallback - just return null and use gradient background
@@ -229,8 +229,8 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
     if (cleanName.length < 2) return null
 
-    // Spoonacular ingredient images - using correct CDN domain
-    return `https://img.spoonacular.com/ingredients_500x500/${cleanName}.jpg`
+    // Spoonacular ingredient images - using smaller 250x250 version
+    return `https://img.spoonacular.com/ingredients_250x250/${cleanName}.jpg`
   }
 
   // Get the best image: prioritize database image, then Unsplash, then Spoonacular, then null

@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { Salad, LogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 
 interface GroceryItem {
   id: string
@@ -63,19 +65,59 @@ export default function GroceryPage() {
   const checkedItems = items.filter((item) => item.checked)
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-[#F7F7F7]">
-      {/* Sticky Top App Bar */}
-      <header className="sticky top-0 z-10 border-b border-[#e0e0e0] bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center justify-between p-4 pb-3">
-          <div className="flex size-12 shrink-0 items-center"></div>
-          <h1 className="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-[#484848]">
-            Smart Grocery List
-          </h1>
-          <div className="flex w-12 items-center justify-end"></div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Navigation */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/pantry" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Grocery
+              </Link>
+              <Link
+                href="/alerts"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Alerts
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
+          </div>
         </div>
-      </header>
+      </div>
 
-      <main className="flex-1">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
         {/* Action Panel */}
         <div className="p-4">
           <div className="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-[#e0e0e0] bg-[#F7F7F7] p-5 sm:flex-row sm:items-center">
@@ -222,13 +264,13 @@ export default function GroceryPage() {
             </p>
             <Link
               href="/pantry"
-              className="inline-block rounded-lg bg-[#228B22] px-6 py-3 font-bold text-white transition-colors hover:bg-[#228B22]/90"
+              className="inline-block rounded-lg bg-green-600 px-6 py-3 font-bold text-white rounded-xl transition-colors hover:bg-green-700"
             >
               Go to Pantry
             </Link>
           </div>
         )}
-      </main>
+      </div>
     </div>
   )
 }

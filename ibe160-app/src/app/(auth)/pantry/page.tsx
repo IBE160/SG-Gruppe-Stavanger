@@ -93,31 +93,63 @@ export default function PantryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F7F7]">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between border-b border-[#EAEAEA] bg-[#F7F7F7]/80 px-4 py-3 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#2BAF74] text-3xl">eco</span>
-          <span className="text-xl font-bold tracking-tight">EcoFeast</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Navigation */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/pantry" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Grocery
+              </Link>
+              <Link
+                href="/alerts"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Alerts
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </nav>
+          </div>
         </div>
-        <Link
-          href="/profile"
-          className="size-10 rounded-full bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-          }}
-        ></Link>
-      </header>
+      </div>
 
-      <main className="flex-1 p-4">
-        {/* Page Title & Subtitle */}
-        <h1 className="text-[#333333] tracking-light text-[32px] font-bold leading-tight text-left pb-1 pt-4">
-          My Pantry
-        </h1>
-        <p className="text-[#333333]/70 text-base font-normal leading-normal pb-4">
-          An overview of your ingredients and their freshness.
-        </p>
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        <div className="mb-8">
+          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">My Pantry</h1>
+          <p className="text-gray-600">Track your ingredients and reduce food waste</p>
+        </div>
 
         {/* Loading State: Skeleton Placeholders */}
         {isLoading && (
@@ -268,7 +300,7 @@ export default function PantryPage() {
             onClose={() => setToast(null)}
           />
         )}
-      </main>
+      </div>
     </div>
   )
 }
