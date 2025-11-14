@@ -117,10 +117,11 @@ export default function Home() {
               </p>
             </div>
             <div
-              className="flex h-96 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover shadow-lg"
+              className="flex h-[500px] w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-contain shadow-lg"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=800&fit=crop&q=80')",
+                  "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=800&q=80')",
+                backgroundColor: '#f3f4f6'
               }}
             ></div>
           </div>
@@ -130,10 +131,11 @@ export default function Home() {
         <section className="py-16 px-4">
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
             <div
-              className="flex h-96 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover shadow-lg md:order-last"
+              className="flex h-[500px] w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-contain shadow-lg md:order-last"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1643494847705-74808059bf07?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+                  "url('https://images.unsplash.com/photo-1643494847705-74808059bf07?q=80&w=1200&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+                backgroundColor: '#f3f4f6'
               }}
             ></div>
             <div className="flex flex-col gap-4">
