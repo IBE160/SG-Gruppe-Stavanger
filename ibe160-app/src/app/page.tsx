@@ -116,11 +116,11 @@ export default function Home() {
                 waste. Just tell us what you have, and we'll handle the inspiration.
               </p>
             </div>
-            <div className="flex h-[400px] w-full items-center justify-center rounded-xl overflow-hidden shadow-lg bg-gray-100">
+            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg">
               <img
                 src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=800&q=80"
                 alt="Kitchen with ingredients"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
@@ -129,11 +129,11 @@ export default function Home() {
         {/* Feature Section 2 */}
         <section className="py-16 px-4">
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="flex h-[400px] w-full items-center justify-center rounded-xl overflow-hidden shadow-lg bg-gray-100 md:order-last">
+            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg md:order-last">
               <img
                 src="https://images.unsplash.com/photo-1643494847705-74808059bf07?q=80&w=1200&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Refrigerator with food"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="flex flex-col gap-4">
