@@ -5,7 +5,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Camera, Plus, Salad, LogOut } from "lucide-react"
+import { Camera, Plus, Salad, LogOut, Settings } from "lucide-react"
 import { PantryItemCard } from "@/components/PantryItemCard"
 import { AddItemDialog } from "@/components/AddItemDialog"
 import { EditItemDialog } from "@/components/EditItemDialog"
@@ -93,84 +93,44 @@ export default function PantryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header - Airbnb Style */}
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/pantry" className="flex items-center gap-2">
-              <Salad className="w-6 h-6 text-green-600" />
-              <span className="text-lg font-semibold text-gray-900">ibe160</span>
-            </Link>
-            <nav className="flex items-center gap-1">
-              <Link
-                href="/pantry"
-                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
-              >
-                Pantry
-              </Link>
-              <Link
-                href="/recipes"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Recipes
-              </Link>
-              <Link
-                href="/grocery"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Grocery
-              </Link>
-              <Link
-                href="/profile"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                Profile
-              </Link>
-              <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign out
-              </button>
-            </nav>
-          </div>
+    <div className="min-h-screen bg-[#F7F7F7]">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-50 flex items-center justify-between border-b border-[#EAEAEA] bg-[#F7F7F7]/80 px-4 py-3 backdrop-blur-sm">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-[#2BAF74] text-3xl">eco</span>
+          <span className="text-xl font-bold tracking-tight">EcoFeast</span>
         </div>
-      </div>
+        <Link
+          href="/profile"
+          className="size-10 rounded-full bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          }}
+        ></Link>
+      </header>
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">My Pantry</h1>
-          <p className="text-gray-600">Track your ingredients and reduce food waste</p>
-        </div>
+      <main className="flex-1 p-4">
+        {/* Page Title & Subtitle */}
+        <h1 className="text-[#333333] tracking-light text-[32px] font-bold leading-tight text-left pb-1 pt-4">
+          My Pantry
+        </h1>
+        <p className="text-[#333333]/70 text-base font-normal leading-normal pb-4">
+          An overview of your ingredients and their freshness.
+        </p>
 
-        {/* Offline-First Indicator */}
-        <div className="mb-6 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
-          <p className="text-sm text-green-700">
-            ✓ <strong>Offline-First:</strong> React Query enabled - changes sync automatically!
-          </p>
-        </div>
-
-        {/* Loading State */}
+        {/* Loading State: Skeleton Placeholders */}
         {isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6">
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-lg shadow-md p-4 border-2 border-gray-200 animate-pulse"
+                className="flex animate-pulse flex-col gap-3 rounded-xl border border-[#EAEAEA] bg-white p-4"
               >
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 bg-gray-300 rounded"></div>
-                  <div className="flex-1">
-                    <div className="h-5 bg-gray-300 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                  </div>
-                </div>
-                <div className="mt-4 space-y-2">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                </div>
+                <div className="aspect-square w-full rounded-lg bg-gray-200"></div>
+                <div className="h-5 w-3/4 rounded bg-gray-200"></div>
+                <div className="h-4 w-1/2 rounded bg-gray-200"></div>
+                <div className="h-6 w-1/3 rounded-full bg-gray-200"></div>
               </div>
             ))}
           </div>
@@ -178,11 +138,13 @@ export default function PantryPage() {
 
         {/* Error State */}
         {error && !isLoading && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
-            <p className="text-red-700 mb-4 font-medium">Failed to load your pantry. Please try again.</p>
+          <div className="bg-[#E54D4D]/10 border border-[#E54D4D]/30 rounded-xl p-8 text-center mt-6">
+            <p className="text-[#E54D4D] mb-4 font-medium">
+              Failed to load your pantry. Please try again.
+            </p>
             <button
               onClick={() => refetch()}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors"
+              className="px-6 py-3 bg-[#E54D4D] text-white font-medium rounded-lg hover:bg-[#E54D4D]/90 transition-colors"
             >
               Retry
             </button>
@@ -191,29 +153,28 @@ export default function PantryPage() {
 
         {/* Empty State */}
         {!isLoading && !error && items.length === 0 && (
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-12 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                <Salad className="w-10 h-10 text-gray-400" />
+          <div className="mt-12 w-full">
+            <div className="mx-auto flex max-w-sm flex-col items-center justify-center rounded-xl bg-white border border-[#EAEAEA] p-8 text-center">
+              <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-[#2BAF74]/10">
+                <span className="material-symbols-outlined text-4xl text-[#2BAF74]">kitchen</span>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900 tracking-tight mb-2">Your pantry is empty</h2>
-              <p className="text-gray-600 mb-8">
-                Add your first ingredient to start tracking expiration dates!
+              <h2 className="text-xl font-bold text-[#333333]">Let's fill your pantry!</h2>
+              <p className="mt-1 mb-6 text-[#333333]/70">
+                Add your first item to start tracking and get smart recipe suggestions.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex w-full gap-2">
                 <button
                   onClick={() => setIsScannerOpen(true)}
-                  className="px-6 py-3 bg-white border border-gray-300 text-gray-900 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  className="flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg h-11 px-4 bg-[#333333]/10 text-[#333333] text-base font-medium leading-normal"
                 >
-                  <Camera className="w-5 h-5" />
-                  Scan Barcode
+                  <span className="material-symbols-outlined">barcode_scanner</span>
+                  <span className="truncate">Scan</span>
                 </button>
                 <button
                   onClick={() => setIsAddDialogOpen(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                  className="flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg h-11 px-4 bg-[#2BAF74] text-white text-base font-medium leading-normal shadow-sm"
                 >
-                  <Plus className="w-5 h-5" />
-                  Add Item
+                  <span className="truncate">Add Your First Item</span>
                 </button>
               </div>
             </div>
@@ -223,29 +184,30 @@ export default function PantryPage() {
         {/* Items Grid */}
         {!isLoading && !error && items.length > 0 && (
           <>
-            <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <p className="text-sm font-medium text-gray-600">
-                {items.length} item{items.length !== 1 ? "s" : ""} in pantry
+            {/* Action Bar */}
+            <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[#333333]/80 text-base font-normal leading-normal">
+                You have {items.length} item{items.length !== 1 ? "s" : ""} in your pantry
               </p>
-              <div className="flex gap-3">
+              <div className="flex w-full sm:w-auto items-stretch gap-2">
                 <button
                   onClick={() => setIsScannerOpen(true)}
-                  className="px-5 py-2.5 bg-white border border-gray-300 text-gray-900 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  className="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-11 px-4 bg-[#2BAF74] text-white text-base font-medium leading-normal shadow-sm"
                 >
-                  <Camera className="w-5 h-5" />
-                  Scan Barcode
+                  <span className="material-symbols-outlined">barcode_scanner</span>
+                  <span className="truncate">Scan</span>
                 </button>
                 <button
                   onClick={() => setIsAddDialogOpen(true)}
-                  className="px-5 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm hover:shadow-md flex items-center gap-2"
+                  className="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 bg-[#333333]/10 text-[#333333] text-base font-medium leading-normal"
                 >
-                  <Plus className="w-5 h-5" />
-                  Add Item
+                  <span className="truncate">Add Manually</span>
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Pantry Items Grid */}
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {items.map((item) => (
                 <PantryItemCard
                   key={item.id}
@@ -306,7 +268,7 @@ export default function PantryPage() {
             onClose={() => setToast(null)}
           />
         )}
-      </div>
+      </main>
     </div>
   )
 }

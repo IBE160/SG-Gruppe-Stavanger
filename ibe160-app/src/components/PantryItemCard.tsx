@@ -250,14 +250,41 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     return spoonacularImage
   }
 
+  // Get status badge
+  const getStatusBadge = () => {
+    if (daysUntilExpiry < 0) {
+      return {
+        label: "Expired",
+        bgColor: "bg-[#E54D4D]/10",
+        textColor: "text-[#E54D4D]",
+      }
+    } else if (daysUntilExpiry <= 1) {
+      return {
+        label: "Use Soon",
+        bgColor: "bg-[#E54D4D]/10",
+        textColor: "text-[#E54D4D]",
+      }
+    } else if (daysUntilExpiry <= 3) {
+      return {
+        label: "Nearing Expiry",
+        bgColor: "bg-[#FFB838]/10",
+        textColor: "text-[#FFB838]",
+      }
+    } else {
+      return {
+        label: "Fresh",
+        bgColor: "bg-[#2BAF74]/10",
+        textColor: "text-[#2BAF74]",
+      }
+    }
+  }
+
+  const status = getStatusBadge()
+
   return (
-    <div
-      className={`bg-white rounded-2xl border overflow-hidden transition-all hover:shadow-lg ${
-        isExpiringSoon ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-gray-300"
-      }`}
-    >
-      {/* Food Image */}
-      <div className={`relative h-48 bg-gradient-to-br ${getCategoryGradient(item.category)}`}>
+    <div className="group relative flex flex-col gap-3 rounded-xl border border-[#EAEAEA] bg-white p-4 shadow-sm transition-shadow hover:shadow-lg">
+      {/* Image */}
+      <div className="aspect-square w-full rounded-lg bg-[#F7F7F7] flex items-center justify-center overflow-hidden">
         {getImage() ? (
           <img
             src={getImage()!}
@@ -265,73 +292,50 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
             className="w-full h-full object-cover"
             loading="lazy"
             onError={(e) => {
-              // Fallback to gradient background if image fails to load
-              e.currentTarget.style.display = 'none'
+              e.currentTarget.style.display = "none"
             }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-6xl opacity-20">🍽️</span>
-          </div>
-        )}
-        {isExpiringSoon && (
-          <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1">
-            <AlertTriangle className="w-3.5 h-3.5" />
-            {daysUntilExpiry} day{daysUntilExpiry !== 1 ? "s" : ""}
-          </div>
+          <span className="text-5xl">🍽️</span>
         )}
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
-          <p className="text-sm text-gray-500 capitalize">{item.category}</p>
-        </div>
+      {/* Name and Quantity */}
+      <div className="flex flex-col">
+        <p className="font-bold text-[#333333]">{item.name}</p>
+        <p className="text-sm text-[#333333]/70">
+          {item.quantity} {item.unit}
+        </p>
+      </div>
 
-        <div className="space-y-2.5 mb-4">
-          <div className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
-            <span className="text-sm text-gray-600">Quantity</span>
-            <span className="text-sm font-medium text-gray-900">
-              {item.quantity} {item.unit}
-            </span>
-          </div>
+      {/* Status Badge */}
+      <div
+        className={`inline-flex w-fit items-center justify-center rounded-full ${status.bgColor} px-3 py-1 text-xs font-medium ${status.textColor}`}
+      >
+        {status.label}
+      </div>
 
-          <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-            isExpiringSoon ? "bg-red-100" : "bg-gray-50"
-          }`}>
-            <span className="text-sm text-gray-600">Expires</span>
-            <span
-              className={`text-sm font-medium ${
-                isExpiringSoon ? "text-red-700" : "text-gray-900"
-              }`}
+      {/* Edit and Delete Buttons - Shown on Hover */}
+      {(onEdit || onDelete) && (
+        <div className="absolute top-3 right-3 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          {onEdit && (
+            <button
+              onClick={() => onEdit(item)}
+              className="flex size-8 items-center justify-center rounded-full bg-black/5 text-[#333333]/70 hover:bg-black/10"
             >
-              {expiryDate}
-            </span>
-          </div>
+              <span className="material-symbols-outlined text-base">edit</span>
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={() => onDelete(item)}
+              className="flex size-8 items-center justify-center rounded-full bg-black/5 text-[#333333]/70 hover:bg-black/10"
+            >
+              <span className="material-symbols-outlined text-base">delete</span>
+            </button>
+          )}
         </div>
-
-        {(onEdit || onDelete) && (
-          <div className="flex gap-2 pt-3 border-t border-gray-100">
-            {onEdit && (
-              <button
-                onClick={() => onEdit(item)}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
-              >
-                Edit
-              </button>
-            )}
-            {onDelete && (
-              <button
-                onClick={() => onDelete(item)}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
-              >
-                Delete
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      )}
     </div>
   )
 }

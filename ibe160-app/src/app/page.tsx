@@ -21,125 +21,88 @@ export default function Home() {
   const [openModal, setOpenModal] = useState<ModalType>(null)
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation - Airbnb Style */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Salad className="w-6 h-6 text-green-600" />
-              <span className="text-lg font-semibold text-gray-900">ibe160</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
-                Sign in
-              </Link>
-              <Link href="/register" className="text-sm font-medium text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors">
-                Get Started
-              </Link>
-            </div>
+    <div className="relative w-full overflow-x-hidden bg-[#F9FAFB]" style={{ fontFamily: '"Space Grotesk", "sans-serif"' }}>
+      {/* Header */}
+      <header className="p-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#34D399] text-3xl">eco</span>
+            <span className="text-xl font-bold">FoodWise AI</span>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section - Airbnb Style */}
-      <div className="relative overflow-hidden bg-white">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-16 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Value Prop */}
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
-                <Sparkles className="w-3.5 h-3.5" />
-                AI-Powered Food Waste Solution
+      <main>
+        {/* Hero Section */}
+        <section className="py-10 px-4">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
+            <div className="flex flex-col items-start gap-6 text-left">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#34D399]/20 px-3 py-1 text-sm font-medium text-[#34D399]">
+                <span className="material-symbols-outlined text-base">auto_awesome</span>
+                <span>AI-Powered Food Waste Solution</span>
               </div>
-
-              <h1 className="text-5xl lg:text-6xl font-semibold text-gray-900 leading-[1.1] tracking-tight">
-                Stop wasting food.<br/>
-                <span className="text-green-600">Start saving money.</span>
+              <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                Stop wasting food. <br />
+                <span className="text-[#34D399]">Start saving</span> money.
               </h1>
-
-              <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
-                Track your pantry, get AI recipe suggestions, and reduce food waste.
+              <p className="text-base text-[#6B7280] sm:text-lg">
+                Our app helps you track food, get AI-powered recipe suggestions, and reduce waste.
+                Manage your pantry effectively and become a food hero.
               </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/register"
+                  className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#34D399] px-5 text-base font-bold text-white hover:bg-[#34D399]/90 transition-colors"
+                >
+                  <span>Get Started</span>
+                </Link>
+                <Link
+                  href="/login"
+                  className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-200/50 px-5 text-base font-bold text-[#1F2937] hover:bg-gray-200 transition-colors"
+                >
+                  <span>Sign In</span>
+                </Link>
+              </div>
             </div>
-
-            {/* Right: Visual Preview */}
-            <div className="relative">
-              <div className="bg-white rounded-3xl border border-gray-200 shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300">
-                <div className="space-y-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
-                      <Salad className="w-5 h-5 text-green-600" />
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
+                <h2 className="mb-4 text-xl font-bold">Your Pantry</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-red-500">egg_alt</span>
+                      <span className="font-medium">Tomatoes</span>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-sm">Your Pantry</h3>
-                      <p className="text-xs text-gray-500">Track your ingredients</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
-                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-red-100 to-orange-100 flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=100&h=100&fit=crop"
-                          alt="Tomatoes"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">Tomatoes</p>
-                        <p className="text-xs text-gray-500">250g</p>
-                      </div>
-                      <span className="text-xs text-green-600 font-medium px-2 py-1 bg-green-50 rounded-full">Fresh</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-yellow-200 hover:border-yellow-300 hover:shadow-sm transition-all">
-                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100&h=100&fit=crop"
-                          alt="Milk"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">Milk</p>
-                        <p className="text-xs text-gray-500">1L</p>
-                      </div>
-                      <span className="text-xs text-yellow-700 font-medium px-2 py-1 bg-yellow-50 rounded-full">2 days</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
-                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-gradient-to-br from-orange-100 to-amber-100 flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=100&h=100&fit=crop"
-                          alt="Chicken"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">Chicken</p>
-                        <p className="text-xs text-gray-500">500g</p>
-                      </div>
-                      <span className="text-xs text-green-600 font-medium px-2 py-1 bg-green-50 rounded-full">Fresh</span>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="h-2 w-2 rounded-full bg-green-400"></span>
+                      <span>Fresh</span>
                     </div>
                   </div>
-
-                  <Link
-                    href="/login"
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    Find Recipes with AI
-                  </Link>
+                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-blue-400">water_drop</span>
+                      <span className="font-medium">Milk</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="h-2 w-2 rounded-full bg-yellow-400"></span>
+                      <span>Expiring Soon</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-orange-400">restaurant</span>
+                      <span className="font-medium">Chicken</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                      <span>Expired</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              {/* Floating badge */}
-              <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-green-600 text-white rounded-full text-xs font-medium shadow-lg">
-                ✨ AI Powered
-              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
       {/* Features - Full Width Airbnb Style */}
       <div className="bg-gray-50 py-16 lg:py-24">

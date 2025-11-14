@@ -87,34 +87,27 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-8">
+      <div className="bg-[#f4f1e9] rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">Add Food Item</h2>
+            <h2 className="text-xl font-bold text-[#2d332a] tracking-tight">Add Item to Pantry</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-[#6b7280] hover:text-[#2d332a] transition-colors"
               disabled={addItemMutation.isPending}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <span className="material-symbols-outlined">close</span>
             </button>
           </div>
 
           {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+            <div className="mb-4 bg-[#b94a48]/10 border border-[#b94a48]/30 text-[#b94a48] px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           {scannedProduct && (
-            <div className="mb-6 bg-green-50 border border-green-200 rounded-xl p-4">
+            <div className="mb-4 bg-[#4f7a6a]/10 border border-[#4f7a6a]/30 rounded-lg p-4">
               <div className="flex gap-4">
                 {scannedProduct.image && (
                   <img
@@ -124,59 +117,59 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
                   />
                 )}
                 <div className="flex-1">
-                  <p className="text-sm text-green-700">
+                  <p className="text-sm text-[#2d332a]">
                     <strong>Product found:</strong> {scannedProduct.name}
                     {scannedProduct.brand && <span> by {scannedProduct.brand}</span>}
                   </p>
-                  <p className="text-xs text-green-600 mt-1">
-                    Form pre-filled - adjust quantity and expiry date as needed
+                  <p className="text-xs text-[#6b7280] mt-1">
+                    Form pre-filled - adjust details as needed
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-1.5">
+              <label htmlFor="name" className="block text-sm font-medium text-[#2d332a] mb-2">
                 Item Name
               </label>
               <input
                 {...register("name")}
                 type="text"
                 id="name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 border border-[#e5e2dc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4f7a6a] focus:border-transparent transition-all bg-white text-[#2d332a]"
                 placeholder="e.g., Milk, Tomatoes, Chicken"
               />
               {errors.name && (
-                <p className="mt-1.5 text-sm text-red-600">{errors.name.message}</p>
+                <p className="mt-1.5 text-sm text-[#b94a48]">{errors.name.message}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="category" className="block text-sm font-semibold text-gray-900 mb-1.5">
+              <label htmlFor="category" className="block text-sm font-medium text-[#2d332a] mb-2">
                 Category
               </label>
               <select
                 {...register("category")}
                 id="category"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all bg-white"
+                className="w-full px-4 py-2.5 border border-[#e5e2dc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4f7a6a] focus:border-transparent transition-all bg-white text-[#2d332a]"
               >
                 <option value="">Select a category</option>
                 <option value="dairy">Dairy</option>
-                <option value="produce">Produce</option>
-                <option value="meat">Meat</option>
-                <option value="grains">Grains</option>
+                <option value="produce">Produce (Fruit & Vegetables)</option>
+                <option value="meat">Meat & Fish</option>
+                <option value="grains">Pantry & Grains</option>
                 <option value="other">Other</option>
               </select>
               {errors.category && (
-                <p className="mt-1.5 text-sm text-red-600">{errors.category.message}</p>
+                <p className="mt-1.5 text-sm text-[#b94a48]">{errors.category.message}</p>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="quantity" className="block text-sm font-semibold text-gray-900 mb-1.5">
+                <label htmlFor="quantity" className="block text-sm font-medium text-[#2d332a] mb-2">
                   Quantity
                 </label>
                 <input
@@ -184,34 +177,32 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
                   type="number"
                   step="0.01"
                   id="quantity"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
-                  placeholder="e.g., 1, 500"
+                  className="w-full px-4 py-2.5 border border-[#e5e2dc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4f7a6a] focus:border-transparent transition-all bg-white text-[#2d332a]"
+                  placeholder="e.g., 1"
                 />
                 {errors.quantity && (
-                  <p className="mt-1.5 text-sm text-red-600">{errors.quantity.message}</p>
+                  <p className="mt-1.5 text-sm text-[#b94a48]">{errors.quantity.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="unit" className="block text-sm font-semibold text-gray-900 mb-1.5">
+                <label htmlFor="unit" className="block text-sm font-medium text-[#2d332a] mb-2">
                   Unit
                 </label>
                 <select
                   {...register("unit")}
                   id="unit"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all bg-white"
+                  className="w-full px-4 py-2.5 border border-[#e5e2dc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4f7a6a] focus:border-transparent transition-all bg-white text-[#2d332a]"
                 >
                   <option value="">Select unit</option>
-                  <option value="g">g (grams)</option>
-                  <option value="kg">kg (kilograms)</option>
-                  <option value="ml">ml (milliliters)</option>
-                  <option value="L">L (liters)</option>
-                  <option value="pieces">pieces</option>
-                  <option value="oz">oz (ounces)</option>
-                  <option value="lbs">lbs (pounds)</option>
+                  <option value="g">g</option>
+                  <option value="kg">kg</option>
+                  <option value="ml">ml</option>
+                  <option value="L">L</option>
+                  <option value="pieces">item</option>
                 </select>
                 {errors.unit && (
-                  <p className="mt-1.5 text-sm text-red-600">{errors.unit.message}</p>
+                  <p className="mt-1.5 text-sm text-[#b94a48]">{errors.unit.message}</p>
                 )}
               </div>
             </div>
@@ -219,35 +210,37 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
             <div>
               <label
                 htmlFor="bestBeforeDate"
-                className="block text-sm font-semibold text-gray-900 mb-1.5"
+                className="block text-sm font-medium text-[#2d332a] mb-2"
               >
-                Best Before Date
+                Best Before
               </label>
-              <input
-                {...register("bestBeforeDate")}
-                type="date"
-                id="bestBeforeDate"
-                min={new Date().toISOString().split("T")[0]}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
-              />
+              <div className="relative">
+                <input
+                  {...register("bestBeforeDate")}
+                  type="date"
+                  id="bestBeforeDate"
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full px-4 py-2.5 border border-[#e5e2dc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4f7a6a] focus:border-transparent transition-all bg-white text-[#2d332a]"
+                />
+              </div>
               {errors.bestBeforeDate && (
-                <p className="mt-1.5 text-sm text-red-600">{errors.bestBeforeDate.message}</p>
+                <p className="mt-1.5 text-sm text-[#b94a48]">{errors.bestBeforeDate.message}</p>
               )}
             </div>
 
-            <div className="flex gap-3 pt-6">
+            <div className="flex gap-3 pt-4">
               <button
                 type="button"
                 onClick={onClose}
                 disabled={addItemMutation.isPending}
-                className="flex-1 px-6 py-3 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 px-5 py-2.5 border border-[#e5e2dc] rounded-lg text-sm font-medium text-[#6b7280] hover:bg-white/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={addItemMutation.isPending}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md"
+                className="flex-1 px-5 py-2.5 bg-[#4f7a6a] text-white font-medium rounded-lg hover:bg-[#4f7a6a]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {addItemMutation.isPending ? "Adding..." : "Add Item"}
               </button>
