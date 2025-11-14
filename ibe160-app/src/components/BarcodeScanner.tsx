@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library"
-import { Camera, X, CheckCircle2, Keyboard } from "lucide-react"
+import { Camera, CheckCircle2, Keyboard } from "lucide-react"
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void
@@ -86,18 +86,9 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden">
         <div className="p-6 border-b border-gray-100">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <Camera className="w-6 h-6 text-gray-700" />
-              <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">Scan Barcode</h2>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-6 h-6" />
-            </button>
+          <div className="flex items-center gap-3">
+            <Camera className="w-6 h-6 text-gray-700" />
+            <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">Scan Barcode</h2>
           </div>
         </div>
 
