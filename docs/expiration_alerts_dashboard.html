@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PantryPal - Expiration Alerts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4CAF50",
+                        "background-light": "#F7F7F7",
+                        "background-dark": "#1a1a1a",
+                        "text-light": "#333333",
+                        "text-dark": "#e5e5e5",
+                        "status-expired": "#FF5A5F",
+                        "status-warning": "#FFC107",
+                        "status-safe": "#8BC34A",
+                        "border-light": "#e0e0e0",
+                        "border-dark": "#333333"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Sticky Top App Bar -->
+<header class="sticky top-0 z-10 flex items-center justify-between border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 p-4 pb-2 backdrop-blur-sm">
+<div class="flex size-12 shrink-0 items-center justify-start text-primary">
+<span class="material-symbols-outlined text-3xl">compost</span>
+</div>
+<h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-text-light dark:text-text-dark">PantryPal</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex h-12 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-transparent text-text-light dark:text-text-dark min-w-0 p-0">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="flex-1">
+<!-- Headline Text -->
+<h1 class="text-text-light dark:text-text-dark tracking-light px-4 pt-6 pb-3 text-left text-[32px] font-bold leading-tight">Expiration Alerts</h1>
+<!-- Action Panel / Notification Banner -->
+<div class="p-4 @container">
+<div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-black/20 p-5 @[480px]:flex-row @[480px]:items-center">
+<div class="flex flex-col gap-1">
+<p class="text-text-light dark:text-text-dark text-base font-bold leading-tight">Never Miss an Expiration Date</p>
+<p class="text-text-light/70 dark:text-text-dark/70 text-base font-normal leading-normal">Get timely reminders to use your food before it goes bad.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Enable</span>
+</button>
+</div>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-2 gap-4 p-4 md:grid-cols-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 border border-status-expired/50 dark:border-status-expired/70 bg-status-expired/10 dark:bg-status-expired/20">
+<p class="text-status-expired text-base font-medium leading-normal">Expired</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">2</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 border border-status-expired/50 dark:border-status-expired/70 bg-status-expired/10 dark:bg-status-expired/20">
+<p class="text-status-expired text-base font-medium leading-normal">Critical</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">3</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 border border-status-warning/50 dark:border-status-warning/70 bg-status-warning/10 dark:bg-status-warning/20">
+<p class="text-status-warning text-base font-medium leading-normal">Warning</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">5</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 border border-status-safe/50 dark:border-status-safe/70 bg-status-safe/10 dark:bg-status-safe/20">
+<p class="text-status-safe text-base font-medium leading-normal">Safe</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">18</p>
+</div>
+</div>
+<!-- Expired Items Section -->
+<div class="px-4">
+<h3 class="text-text-light dark:text-text-dark pt-4 pb-2 text-lg font-bold leading-tight tracking-[-0.015em]">Expired Items</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-4 rounded-lg border-l-4 border-status-expired bg-white dark:bg-black/20 p-4 shadow-sm">
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Milk</p>
+<p class="text-sm text-status-expired">Expired Yesterday</p>
+</div>
+<p class="text-sm text-text-light/70 dark:text-text-dark/70">1 item</p>
+</div>
+<div class="flex items-center gap-4 rounded-lg border-l-4 border-status-expired bg-white dark:bg-black/20 p-4 shadow-sm">
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Ground Beef</p>
+<p class="text-sm text-status-expired">Expired 2 days ago</p>
+</div>
+<p class="text-sm text-text-light/70 dark:text-text-dark/70">1 item</p>
+</div>
+</div>
+</div>
+<!-- Critical Items Section -->
+<div class="px-4 pt-6">
+<h3 class="text-text-light dark:text-text-dark pt-4 pb-2 text-lg font-bold leading-tight tracking-[-0.015em]">Critical (Use Today!)</h3>
+<div class="space-y-3">
+<div class="flex flex-col gap-3 rounded-lg border-l-4 border-status-expired bg-white dark:bg-black/20 p-4 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Chicken Breast</p>
+<p class="text-sm text-status-expired">Expires Today</p>
+</div>
+<p class="text-sm text-text-light/70 dark:text-text-dark/70">2 items</p>
+</div>
+<button class="flex w-fit items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary dark:bg-primary/30 dark:text-white">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+<span>AI Suggestion</span>
+</button>
+</div>
+<div class="flex items-center gap-4 rounded-lg border-l-4 border-status-expired bg-white dark:bg-black/20 p-4 shadow-sm">
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Spinach</p>
+<p class="text-sm text-status-expired">Expires Today</p>
+</div>
+<p class="text-sm text-text-light/70 dark:text-text-dark/70">1 item</p>
+</div>
+</div>
+</div>
+<!-- Use Soon Section -->
+<div class="px-4 pt-6">
+<h3 class="text-text-light dark:text-text-dark pt-4 pb-2 text-lg font-bold leading-tight tracking-[-0.015em]">Use Soon (2-3 days)</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-4 rounded-lg border-l-4 border-status-warning bg-white dark:bg-black/20 p-4 shadow-sm">
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Avocado</p>
+<p class="text-sm text-status-warning">Expires in 2 days</p>
+</div>
+<p class="text-sm text-text-light/70 dark:text-text-dark/70">3 items</p>
+</div>
+</div>
+</div>
+<!-- Safe Items Section -->
+<div class="px-4 pt-6 pb-24">
+<h3 class="text-text-light dark:text-text-dark pt-4 pb-2 text-lg font-bold leading-tight tracking-[-0.015em]">Safe Items (3+ days)</h3>
+<div class="flex flex-col items-center justify-center gap-2 rounded-lg border-l-4 border-status-safe bg-white dark:bg-black/20 p-8 shadow-sm">
+<span class="material-symbols-outlined text-4xl text-status-safe">check_circle</span>
+<p class="text-center font-bold text-text-light dark:text-text-dark">18 items are safe</p>
+<p class="text-center text-sm text-text-light/70 dark:text-text-dark/70">Nothing needs your immediate attention here.</p>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-6 right-6 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

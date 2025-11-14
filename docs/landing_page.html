@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FoodWise AI - Stop Wasting Food</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#34D399",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#1F2937",
+                        "text-primary-light": "#1F2937",
+                        "text-primary-dark": "#F9FAFB",
+                        "text-secondary-light": "#6B7280",
+                        "text-secondary-dark": "#9CA3AF",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark">
+<div class="relative w-full overflow-x-hidden" style='font-family: "Space Grotesk", "sans-serif";'>
+<header class="p-4 @container">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">eco</span>
+<span class="text-xl font-bold">FoodWise AI</span>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="py-10 px-4 @container">
+<div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 @[864px]:grid-cols-2 @[864px]:items-center">
+<div class="flex flex-col items-start gap-6 text-left">
+<div class="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+<span>AI-Powered Food Waste Solution</span>
+</div>
+<h1 class="text-4xl font-bold leading-tight tracking-tight @[480px]:text-5xl">Stop wasting food. <br/><span class="text-primary">Start saving</span> money.</h1>
+<p class="text-base text-text-secondary-light dark:text-text-secondary-dark @[480px]:text-lg">Our app helps you track food, get AI-powered recipe suggestions, and reduce waste. Manage your pantry effectively and become a food hero.</p>
+<div class="flex flex-wrap gap-4">
+<button class="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 text-base font-bold text-white">
+<span>Get Started</span>
+</button>
+<button class="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-200/50 px-5 text-base font-bold text-text-primary-light dark:bg-gray-700/50 dark:text-text-primary-dark">
+<span>Sign In</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-center">
+<div class="w-full max-w-md rounded-xl bg-white p-6 shadow-lg dark:bg-background-dark/50">
+<h2 class="mb-4 text-xl font-bold">Your Pantry</h2>
+<div class="space-y-4">
+<div class="flex items-center justify-between rounded-lg bg-background-light p-4 dark:bg-gray-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-red-500">egg_alt</span>
+<span class="font-medium">Tomatoes</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="h-2 w-2 rounded-full bg-green-400"></span>
+<span>Fresh</span>
+</div>
+</div>
+<div class="flex items-center justify-between rounded-lg bg-background-light p-4 dark:bg-gray-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-400">water_drop</span>
+<span class="font-medium">Milk</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+<span>Expiring Soon</span>
+</div>
+</div>
+<div class="flex items-center justify-between rounded-lg bg-background-light p-4 dark:bg-gray-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-orange-400">restaurant</span>
+<span class="font-medium">Chicken</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="h-2 w-2 rounded-full bg-red-500"></span>
+<span>Expired</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Section 1 -->
+<section class="py-16 px-4 @container bg-white dark:bg-black/20">
+<div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 @[864px]:grid-cols-2">
+<div class="flex flex-col gap-4">
+<h2 class="text-3xl font-bold leading-tight tracking-tight @[480px]:text-4xl">Discover Recipes with What You Have</h2>
+<p class="text-base text-text-secondary-light dark:text-text-secondary-dark @[480px]:text-lg">Our AI scans your pantry and suggests delicious recipes, ensuring no ingredient goes to waste. Just tell us what you have, and we'll handle the inspiration.</p>
+</div>
+<div class="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover" data-alt="Abstract gradient from green to teal representing AI search." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKEg3CcgPBgNNjdL5kiCz1OdOhCUMHYcbb5zW1M0UvzwN9eAWcuLzAJ_rLbM2ZaW4jSsUVmbjRmcl8HbuVRRj5d1U2LaURLnua8K9RrEQiQAdvK_Cn9QhCni_gOSCuq_M9DJy1zt3V_gsbiKMY7nEIl1ffigF9m2s9s-UfOqG85OCSx2RYTTqAkxNeQxl2zX6XUnGUgaKGqq22gt8e7sRDQsK0BfBhsUdHtyFKf_6Eg454LNVceLxusc94R69JHL0uGB0nkT0IyShR');">
+</div>
+</div>
+</section>
+<!-- Feature Section 2 -->
+<section class="py-16 px-4 @container">
+<div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 @[864px]:grid-cols-2">
+<div class="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover @[864px]:order-last" data-alt="A close-up of a digital calendar with a notification bell icon, symbolizing alerts." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKxMqH8skRmL2HuTH1JfBbbgUDsKfkTmhOS9Zo1cHWRa8B8VXDit7ojB07c2Om2FxElgXxXEDdNaP49lDeGugkv4gLGeytoJq4jCC13F6S4HaRfxRM563ZJpBxHXoImRps07lMqNv15xadEKYwGYm7C7rlLWsCliwqJCRHhLvcMSNNx6MimhYw7Y3qQECrUcgKcuXj7dJ7keIMlSGWIxyseuQq0N_0VzSfwzQciT3bwstUMLsG6RZI0OzaOnYxdtMF6Xud_Iw4FqPd');">
+</div>
+<div class="flex flex-col gap-4">
+<h2 class="text-3xl font-bold leading-tight tracking-tight @[480px]:text-4xl">Never Miss an Expiration Date</h2>
+<p class="text-base text-text-secondary-light dark:text-text-secondary-dark @[480px]:text-lg">Get timely notifications to prevent your food from spoiling. Our smart alerts help you use ingredients at their peak freshness, saving you money and reducing waste.</p>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 px-4 @container">
+<div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+<h2 class="text-3xl font-bold leading-tight tracking-tight @[480px]:text-4xl">Ready to Transform Your Kitchen?</h2>
+<p class="text-base text-text-secondary-light dark:text-text-secondary-dark @[480px]:text-lg">Join thousands of users who are saving money and the planet, one meal at a time. Get started for free and see how easy it is to fight food waste.</p>
+<button class="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold text-white">
+<span>Get Started for Free</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-gray-200/80 bg-background-light py-10 px-5 text-center dark:border-gray-700/80 dark:bg-background-dark @container">
+<div class="mx-auto max-w-7xl">
+<div class="flex flex-wrap items-center justify-center gap-6 @[480px]:justify-between">
+<p class="text-base text-text-secondary-light dark:text-text-secondary-dark">© 2024 FoodWise AI. All rights reserved.</p>
+<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+<a class="text-base text-text-secondary-light dark:text-text-secondary-dark hover:text-primary" href="#">Terms of Service</a>
+<a class="text-base text-text-secondary-light dark:text-text-secondary-dark hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-base text-text-secondary-light dark:text-text-secondary-dark hover:text-primary" href="#">Contact Us</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
