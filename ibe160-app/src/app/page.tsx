@@ -65,37 +65,64 @@ export default function Home() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-                <h2 className="mb-4 text-xl font-bold">Your Pantry</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+              <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg border border-gray-100">
+                <h2 className="mb-6 text-2xl font-bold text-gray-900">Your Pantry</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between rounded-xl bg-white border border-gray-200 p-3 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-red-500">egg_alt</span>
-                      <span className="font-medium">Tomatoes</span>
+                      <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                        <img
+                          src="https://images.unsplash.com/photo-1546470427-227caf249f49?w=100&h=100&fit=crop&q=80"
+                          alt="Tomatoes"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <span className="font-semibold text-gray-900 block">Tomatoes</span>
+                        <span className="text-xs text-gray-500">Produce</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="h-2 w-2 rounded-full bg-green-400"></span>
-                      <span>Fresh</span>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50">
+                      <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                      <span className="text-xs font-medium text-green-700">Fresh</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+                  <div className="flex items-center justify-between rounded-xl bg-white border border-gray-200 p-3 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-blue-400">water_drop</span>
-                      <span className="font-medium">Milk</span>
+                      <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                        <img
+                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100&h=100&fit=crop&q=80"
+                          alt="Milk"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <span className="font-semibold text-gray-900 block">Milk</span>
+                        <span className="text-xs text-gray-500">Dairy</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="h-2 w-2 rounded-full bg-yellow-400"></span>
-                      <span>Expiring Soon</span>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50">
+                      <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                      <span className="text-xs font-medium text-yellow-700">Expiring Soon</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between rounded-lg bg-[#F9FAFB] p-4">
+                  <div className="flex items-center justify-between rounded-xl bg-white border border-gray-200 p-3 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-orange-400">restaurant</span>
-                      <span className="font-medium">Chicken</span>
+                      <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                        <img
+                          src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=100&h=100&fit=crop&q=80"
+                          alt="Chicken"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <span className="font-semibold text-gray-900 block">Chicken</span>
+                        <span className="text-xs text-gray-500">Meat</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50">
                       <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                      <span>Expired</span>
+                      <span className="text-xs font-medium text-red-700">Expired</span>
                     </div>
                   </div>
                 </div>
