@@ -33,7 +33,7 @@ workflow_status:
   document-project: required
 
   # Phase 0: Discovery (Optional)
-  brainstorm-project: optional
+  brainstorm-project: "docs/bmm-brainstorming-session-2025-11-14.md"
   research: optional
   product-brief: optional
 
