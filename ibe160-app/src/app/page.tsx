@@ -67,7 +67,7 @@ export default function Home() {
             <div className="flex items-center justify-center">
               <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg relative">
                 <img
-                  src="https://images.unsplash.com/photo-1601599561213-832382fd07ba?w=1200&h=800&fit=crop&q=80"
+                  src="https://images.unsplash.com/photo-1628102491629-778571d893a3?w=1200&h=800&fit=crop&q=80"
                   alt="Grocery shopping bags with fresh food"
                   className="w-full h-full object-cover"
                 />
