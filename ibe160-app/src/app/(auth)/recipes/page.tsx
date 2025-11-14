@@ -191,6 +191,66 @@ export default function RecipesPage() {
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        {/* Hero Section */}
+        <div className="mb-12 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 md:p-12 border border-green-100">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Discover Recipes with What You Have
+              </h1>
+              <p className="text-lg text-gray-700 mb-6">
+                Our AI-powered recipe search helps you find delicious meals using ingredients
+                already in your pantry. No more food waste!
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <Sparkles className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">AI-Powered</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <UtensilsCrossed className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">10,000+ Recipes</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <Lightbulb className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">Smart Matching</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop&q=80"
+                alt="Delicious food preparation"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                <div className="text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-5 h-5" />
+                    <span className="text-sm font-medium">AI analyzing your pantry...</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Tomatoes ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Chicken ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Pasta ✓
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Search Mode Selection */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">How would you like to search?</h2>
+        </div>
+
         {/* Segmented Buttons */}
         <div className="flex px-4 py-3">
           <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-gray-200 p-1">

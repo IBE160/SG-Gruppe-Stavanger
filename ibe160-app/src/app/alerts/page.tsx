@@ -114,30 +114,64 @@ export default function AlertsPage() {
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Expiration Alerts</h1>
-          <p className="text-gray-600">Never miss an expiration date</p>
-        </div>
-
-        {/* Action Panel / Notification Banner */}
-        <div className="p-4">
-          <div className="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-[#e0e0e0] bg-white p-5 sm:flex-row sm:items-center">
-            <div className="flex flex-col gap-1">
-              <p className="text-[#333333] text-base font-bold leading-tight">
+        {/* Hero Section */}
+        <div className="mb-12 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-8 md:p-12 border border-orange-100">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Never Miss an Expiration Date
+              </h1>
+              <p className="text-lg text-gray-700 mb-6">
+                Get smart alerts about your food expiration dates. Save money, reduce waste, and always know what needs to be used first.
               </p>
-              <p className="text-[#333333]/70 text-base font-normal leading-normal">
-                Get timely reminders to use your food before it goes bad.
-              </p>
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-orange-200">
+                  <span className="text-2xl">⏰</span>
+                  <span className="text-sm font-medium text-gray-700">Smart Reminders</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-orange-200">
+                  <span className="text-2xl">📊</span>
+                  <span className="text-sm font-medium text-gray-700">Track Everything</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-orange-200">
+                  <span className="text-2xl">♻️</span>
+                  <span className="text-sm font-medium text-gray-700">Reduce Waste</span>
+                </div>
+              </div>
+              {!notificationsEnabled && "Notification" in window && (
+                <button
+                  onClick={requestNotifications}
+                  className="mt-6 px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
+                >
+                  Enable Notifications
+                </button>
+              )}
             </div>
-            {!notificationsEnabled && "Notification" in window && (
-              <button
-                onClick={requestNotifications}
-                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#4CAF50] text-white text-sm font-medium leading-normal hover:bg-[#4CAF50]/90 transition-colors"
-              >
-                <span className="truncate">Enable</span>
-              </button>
-            )}
+            <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+              <img
+                src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800&h=600&fit=crop&q=80"
+                alt="Fresh produce in refrigerator"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div className="text-white space-y-3 w-full">
+                  <div className="flex items-center justify-between bg-red-500/90 backdrop-blur-sm rounded-lg p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🍅</span>
+                      <span className="text-sm font-medium">Tomatoes expiring today!</span>
+                    </div>
+                    <span className="text-xs bg-white/20 px-2 py-1 rounded">Use now</span>
+                  </div>
+                  <div className="flex items-center justify-between bg-orange-500/90 backdrop-blur-sm rounded-lg p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🥛</span>
+                      <span className="text-sm font-medium">Milk expires in 1 day</span>
+                    </div>
+                    <span className="text-xs bg-white/20 px-2 py-1 rounded">Tomorrow</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 // PantryItemCard component for displaying food items with images
 
+import { useState } from "react"
 import { AlertTriangle } from "lucide-react"
 
 interface FoodItem {
@@ -280,23 +281,51 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
   }
 
   const status = getStatusBadge()
+  const imageUrl = getImage()
+  const [imageError, setImageError] = useState(false)
+
+  // Get emoji based on category or item name
+  const getEmoji = () => {
+    const name = item.name.toLowerCase()
+    const category = item.category.toLowerCase()
+
+    // Specific items
+    if (name.includes('egg') || name.includes('egge')) return '🥚'
+    if (name.includes('milk') || name.includes('melk')) return '🥛'
+    if (name.includes('chicken') || name.includes('kylling')) return '🍗'
+    if (name.includes('tomato') || name.includes('tomat')) return '🍅'
+    if (name.includes('cheese') || name.includes('ost')) return '🧀'
+    if (name.includes('bread') || name.includes('brød')) return '🍞'
+    if (name.includes('apple') || name.includes('eple')) return '🍎'
+    if (name.includes('banana') || name.includes('banan')) return '🍌'
+    if (name.includes('carrot') || name.includes('gulrot')) return '🥕'
+    if (name.includes('potato') || name.includes('potet')) return '🥔'
+    if (name.includes('fish') || name.includes('fisk') || name.includes('salmon') || name.includes('laks')) return '🐟'
+    if (name.includes('beef') || name.includes('meat') || name.includes('kjøtt')) return '🥩'
+
+    // Category fallbacks
+    if (category === 'dairy') return '🥛'
+    if (category === 'produce') return '🥗'
+    if (category === 'meat') return '🍗'
+    if (category === 'grains') return '🌾'
+
+    return '🍽️'
+  }
 
   return (
     <div className="group relative flex flex-col gap-3 rounded-xl border border-[#EAEAEA] bg-white p-4 shadow-sm transition-shadow hover:shadow-lg">
       {/* Image */}
       <div className="aspect-square w-full rounded-lg bg-[#F7F7F7] flex items-center justify-center overflow-hidden">
-        {getImage() ? (
+        {imageUrl && !imageError ? (
           <img
-            src={getImage()!}
+            src={imageUrl}
             alt={item.name}
             className="w-full h-full object-cover"
             loading="lazy"
-            onError={(e) => {
-              e.currentTarget.style.display = "none"
-            }}
+            onError={() => setImageError(true)}
           />
         ) : (
-          <span className="text-5xl">🍽️</span>
+          <span className="text-5xl">{getEmoji()}</span>
         )}
       </div>
 
