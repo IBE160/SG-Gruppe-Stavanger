@@ -133,7 +133,7 @@ export default function Home() {
               className="flex h-80 w-full items-center justify-center rounded-xl bg-center bg-no-repeat bg-cover md:order-last"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&h=600&fit=crop&q=80')",
+                  "url('https://images.unsplash.com/photo-ZUhM8LE_HGc?w=800&h=600&fit=crop&q=80')",
               }}
             ></div>
             <div className="flex flex-col gap-4">
