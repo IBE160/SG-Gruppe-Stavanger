@@ -129,12 +129,24 @@ export default function Home() {
         {/* Feature Section 2 */}
         <section className="py-16 px-4">
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg md:order-last">
+            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg md:order-last relative">
               <img
                 src="https://images.unsplash.com/photo-1643494847705-74808059bf07?q=80&w=1200&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Refrigerator with food"
                 className="w-full h-full object-cover"
               />
+              {/* Calendar/Clock overlay */}
+              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500 rounded-xl p-3">
+                    <Bell className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-sm font-semibold text-gray-900">Expiring Soon</div>
+                    <div className="text-xs text-gray-600">3 items today</div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
