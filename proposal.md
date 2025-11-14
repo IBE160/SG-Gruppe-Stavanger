@@ -88,6 +88,76 @@ model Notification {
 
 # User Flows – Smart Food & Recipe Platform
 
+## A. Authentication & Account Management Flows
+
+### Login page
+- User click on Forgotten Password (a link to help recover password and change it) 
+- Redirected to Forgotten password page 
+
+### Forgotten Password
+- If user clicked Forgotten Password: (can be done on the login page) 
+- User types in email and click Send Password Resett (email used on the account) 
+- Receives email with forgotten password link and clicks link 
+- Redirected to Change To New Password page 
+- User types in new password twice and click Change To New Password 
+- Redirected to Login Page and user logs in with email and new password 
+- Redirected to landing page logged in 
+
+### Authentication
+- If **Create New Account** is clicked: Redirects to registration page 
+- User registers with email and password 
+- Receives verification email an clicks verification link 
+- Redirected back to platform and automatically logged in 
+
+### First-Time Setup (Happens Immediately after new user has successfully registered and verified)
+- User is automatically redirected from the "Verification Successful" or "login" page
+- Text is shown to user: "Welcome, [Display Name]!" 
+- Text is shown to user: "Let's personalize your experience. A few questions will help us find the perfect recipes just for you." 
+- User clicks: Get Started 
+- User goes through Dietary Restrictions (Allergies if you have any or if vegan e.g., can pick don't have any) 
+- The user can pick favourite cuisines (Optional, but great for personalization) 
+- User can register what kitchen equipment they have (Optional, powerful feature for app) (check list will be shown where the user can check box of equipment they have like: "Air Fryer", "Blender", e.g.) 
+- Setup over text shown: "You are all set! We have saved your preferences, and you can change them anytime in your profile settings. Let's get cooking!", User clicks on: "Start Exploring" (automatically redirected after 2 seconds if not clicked) 
+- Redirected user to start page 
+
+### Account Management
+- user wants to change password and click on profile and see these options: 
+- "Edit profile" (to change profile picture and such) 
+- "Appearance" (to change the look and theme) 
+- "Change password" (to change your password, requires that you know your password and logged in) 
+- "Logout" (logs out of account) 
+
+### Edit Profile
+- If clicked these options will be shown:
+- "Change Picture" (Account picture)
+- "Display Name" (User name other will see)
+- "About Me" (Short text field for personal description (Optional))
+- "Location" (City, Country(Optional))
+- "Link Accounts" (option to connect or disconnect third-party login like Google, Facebook or Apple)
+- "Phone Number" (Used for verification, password resets or two-face authentication (2FA)) 
+- "Dietary Restrictions" (To change from vegan, vegetarian, gluten-free or allergies (after the first time)) 
+
+### Change Password
+- If user clicked Changed Password:
+- Type in **Current** password
+- Type in new password twice (Must be strong and not the same as old password)
+- User is redirected to a page that says: your password has been changed
+- Email is sent to user to notify them that password has been changed and if it was not them who did it they must contact us as fast as possible
+
+### Appearance
+- if user clicked on "Appearance"
+- Redirected to Appearance page and shown these options: 
+- "Dark Mode" (Make the web page dark themed) 
+- "Light Mode" (Make the web page Light themes) 
+
+### Logout
+- logs out
+- redirected to landing page as not logged in
+
+---
+
+## B. Core Application User Flows
+
 ## 1. User Comes Home from Grocery Shopping
 - Opens the website and lands on the **Landing Page**  
   *(Unregistered users can see “Today’s Recipes”, “Daily Inspiration”, or try a “Creative Mode” without saving results.  

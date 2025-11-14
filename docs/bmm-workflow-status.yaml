@@ -34,7 +34,7 @@ workflow_status:
 
   # Phase 0: Discovery (Optional)
   brainstorm-project: "docs/bmm-brainstorming-session-2025-11-14.md"
-  research: optional
+  research: "docs/research-technical-2025-11-14.md"
   product-brief: optional
 
   # Phase 1: Planning
