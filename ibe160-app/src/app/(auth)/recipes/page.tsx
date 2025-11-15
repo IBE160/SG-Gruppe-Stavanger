@@ -3,7 +3,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useRecipeSearch } from "@/hooks/useRecipes"
+import { useRecipeSearch, useRecipeDetails } from "@/hooks/useRecipes"
 import { usePantryItems } from "@/hooks/usePantry"
 import { searchByIngredients } from "@/lib/spoonacular"
 import { useQuery, useMutation } from "@tanstack/react-query"
@@ -14,10 +14,13 @@ export default function RecipesPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [aiQuery, setAiQuery] = useState("")
   const [searchMode, setSearchMode] = useState<"text" | "ingredients" | "ai">("text")
-  const [selectedRecipe, setSelectedRecipe] = useState<any>(null)
+  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null)
 
   // Fetch pantry items for ingredient-based search
   const { data: pantryItems = [] } = usePantryItems()
+
+  // Fetch full recipe details when a recipe is selected
+  const { data: selectedRecipe, isLoading: recipeDetailsLoading } = useRecipeDetails(selectedRecipeId)
 
   // Fallback image mapping for when Spoonacular images fail
   const getFallbackImage = (title: string): string => {
@@ -401,7 +404,7 @@ export default function RecipesPage() {
             {recipes.map((recipe: any) => (
               <div
                 key={recipe.id || recipe.title}
-                onClick={() => setSelectedRecipe(recipe)}
+                onClick={() => setSelectedRecipeId(recipe.id)}
                 className="flex flex-col gap-3 pb-3 transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
               >
                 <div
@@ -447,78 +450,95 @@ export default function RecipesPage() {
         )}
 
         {/* Recipe Details Modal */}
-        {selectedRecipe && (
+        {selectedRecipeId && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedRecipe(null)}
+            onClick={() => setSelectedRecipeId(null)}
           >
             <div
-              className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-2xl font-bold text-gray-900 pr-8">
-                    {selectedRecipe.title}
-                  </h2>
-                  <button
-                    onClick={() => setSelectedRecipe(null)}
-                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
-                  >
-                    ×
-                  </button>
+              {recipeDetailsLoading ? (
+                <div className="p-12 flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
                 </div>
-
-                <div className="flex gap-4 text-sm text-gray-600 mb-6">
-                  {selectedRecipe.cookingTime > 0 && (
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {selectedRecipe.cookingTime} min
-                    </span>
-                  )}
-                  {selectedRecipe.servings > 0 && (
-                    <span className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      {selectedRecipe.servings} servings
-                    </span>
-                  )}
-                </div>
-
-                {selectedRecipe.ingredients && selectedRecipe.ingredients.length > 0 && (
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Ingredients</h3>
-                    <ul className="list-disc list-inside space-y-1">
-                      {selectedRecipe.ingredients.map((ingredient: string, idx: number) => (
-                        <li key={idx} className="text-gray-700">
-                          {ingredient}
-                        </li>
-                      ))}
-                    </ul>
+              ) : selectedRecipe ? (
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900 pr-8">
+                      {selectedRecipe.title}
+                    </h2>
+                    <button
+                      onClick={() => setSelectedRecipeId(null)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-2xl">close</span>
+                    </button>
                   </div>
-                )}
 
-                {selectedRecipe.instructions && (
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Instructions</h3>
-                    <div className="text-gray-700 whitespace-pre-line">
-                      {selectedRecipe.instructions}
+                  {selectedRecipe.image && (
+                    <div className="mb-6 rounded-xl overflow-hidden">
+                      <img
+                        src={selectedRecipe.image}
+                        alt={selectedRecipe.title}
+                        className="w-full h-64 object-cover"
+                      />
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {selectedRecipe.tags && selectedRecipe.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {selectedRecipe.tags.map((tag: string) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                      >
-                        {tag}
+                  <div className="flex gap-4 text-sm text-gray-600 mb-6">
+                    {selectedRecipe.readyInMinutes && (
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {selectedRecipe.readyInMinutes} min
                       </span>
-                    ))}
+                    )}
+                    {selectedRecipe.servings && (
+                      <span className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        {selectedRecipe.servings} servings
+                      </span>
+                    )}
                   </div>
-                )}
-              </div>
+
+                  {selectedRecipe.extendedIngredients && selectedRecipe.extendedIngredients.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Ingredients</h3>
+                      <ul className="list-disc list-inside space-y-1">
+                        {selectedRecipe.extendedIngredients.map((ingredient: any, idx: number) => (
+                          <li key={idx} className="text-gray-700">
+                            {ingredient.original}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {selectedRecipe.instructions && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Instructions</h3>
+                      <div
+                        className="text-gray-700 prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: selectedRecipe.instructions }}
+                      />
+                    </div>
+                  )}
+
+                  {selectedRecipe.dishTypes && selectedRecipe.dishTypes.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedRecipe.dishTypes.map((type: string, idx: number) => (
+                        <span
+                          key={idx}
+                          className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full border border-green-200"
+                        >
+                          {type}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : null}
             </div>
           </div>
         )}
