@@ -28,15 +28,42 @@ export default function AlertsPage() {
   )
   const safe = itemsWithDays.filter((item) => item.daysUntilExpiry > 3)
 
-  const getCategoryEmoji = (category: string) => {
-    const emojis: { [key: string]: string } = {
-      dairy: "🥛",
-      produce: "🥗",
-      meat: "🍗",
-      grains: "🌾",
-      other: "📦",
+  const getItemImage = (name: string, category: string) => {
+    // Map common food items to Unsplash images
+    const imageMap: { [key: string]: string } = {
+      tomatoes: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      milk: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80",
+      chicken: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=80&h=80&fit=crop&q=80",
+      eggs: "https://images.unsplash.com/photo-1582722872445-44dc1f3e3b84?w=80&h=80&fit=crop&q=80",
+      bread: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=80&h=80&fit=crop&q=80",
+      cheese: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=80&h=80&fit=crop&q=80",
+      yogurt: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=80&h=80&fit=crop&q=80",
+      lettuce: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=80&h=80&fit=crop&q=80",
+      carrots: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
+      apples: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=80&h=80&fit=crop&q=80",
+      bananas: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=80&h=80&fit=crop&q=80",
+      oranges: "https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=80&h=80&fit=crop&q=80",
+      beef: "https://images.unsplash.com/photo-1588347818036-b6e0c41d4b3d?w=80&h=80&fit=crop&q=80",
+      pork: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      fish: "https://images.unsplash.com/photo-1498654077810-12c21d4d6dc3?w=80&h=80&fit=crop&q=80",
+      rice: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
+      pasta: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=80&h=80&fit=crop&q=80",
     }
-    return emojis[category] || "📦"
+
+    const itemKey = name.toLowerCase()
+    if (imageMap[itemKey]) {
+      return imageMap[itemKey]
+    }
+
+    // Fallback to category-based images
+    const categoryMap: { [key: string]: string } = {
+      dairy: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80",
+      produce: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=80&h=80&fit=crop&q=80",
+      meat: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      grains: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
+      other: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=80&h=80&fit=crop&q=80",
+    }
+    return categoryMap[category] || categoryMap.other
   }
 
   const requestNotifications = async () => {
@@ -206,10 +233,16 @@ export default function AlertsPage() {
               {expired.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-[#E54D4D]/20 bg-[#E54D4D]/5 p-4"
+                  className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-gray-200 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={getItemImage(item.name, item.category)}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div>
                       <p className="font-semibold text-[#333333]">{item.name}</p>
                       <p className="text-sm text-[#E54D4D] font-medium">
@@ -217,11 +250,17 @@ export default function AlertsPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-[#333333] font-medium">
-                      {item.quantity} {item.unit}
-                    </p>
-                    <p className="text-xs text-[#877a64]">{item.category}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm text-[#333333] font-medium">
+                        {item.quantity} {item.unit}
+                      </p>
+                      <p className="text-xs text-[#877a64]">{item.category}</p>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50">
+                      <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                      <span className="text-xs font-medium text-red-700">Expired</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -240,10 +279,16 @@ export default function AlertsPage() {
               {critical.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-[#FF9800]/20 bg-[#FF9800]/5 p-4"
+                  className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-gray-200 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={getItemImage(item.name, item.category)}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div>
                       <p className="font-semibold text-[#333333]">{item.name}</p>
                       <p className="text-sm text-[#FF9800] font-medium">
@@ -253,16 +298,22 @@ export default function AlertsPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-[#333333] font-medium">
-                      {item.quantity} {item.unit}
-                    </p>
-                    <Link
-                      href={`/recipes?ingredient=${item.name}`}
-                      className="text-xs text-[#2D5A3D] hover:underline font-medium"
-                    >
-                      Find Recipes →
-                    </Link>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm text-[#333333] font-medium">
+                        {item.quantity} {item.unit}
+                      </p>
+                      <Link
+                        href={`/recipes?ingredient=${item.name}`}
+                        className="text-xs text-[#2D5A3D] hover:underline font-medium"
+                      >
+                        Find Recipes →
+                      </Link>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50">
+                      <span className="h-2 w-2 rounded-full bg-orange-500"></span>
+                      <span className="text-xs font-medium text-orange-700">Use Today</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -281,10 +332,16 @@ export default function AlertsPage() {
               {warning.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-[#FFC107]/20 bg-[#FFC107]/5 p-4"
+                  className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-gray-200 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={getItemImage(item.name, item.category)}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div>
                       <p className="font-semibold text-[#333333]">{item.name}</p>
                       <p className="text-sm text-[#FFC107] font-medium">
@@ -292,11 +349,17 @@ export default function AlertsPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-[#333333] font-medium">
-                      {item.quantity} {item.unit}
-                    </p>
-                    <p className="text-xs text-[#877a64]">{item.category}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm text-[#333333] font-medium">
+                        {item.quantity} {item.unit}
+                      </p>
+                      <p className="text-xs text-[#877a64]">{item.category}</p>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50">
+                      <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                      <span className="text-xs font-medium text-yellow-700">Expiring Soon</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -315,14 +378,26 @@ export default function AlertsPage() {
               {safe.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 rounded-xl border border-[#2D5A3D]/20 bg-[#2D5A3D]/5 p-3"
+                  className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm"
                 >
-                  <span className="text-xl">{getCategoryEmoji(item.category)}</span>
-                  <div className="flex-1">
-                    <p className="font-medium text-[#333333]">{item.name}</p>
-                    <p className="text-xs text-[#2D5A3D] font-medium">
-                      {item.daysUntilExpiry} days left
-                    </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={getItemImage(item.name, item.category)}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-[#333333]">{item.name}</p>
+                      <p className="text-xs text-[#2D5A3D] font-medium">
+                        {item.daysUntilExpiry} days left
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50">
+                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span className="text-xs font-medium text-green-700">Fresh</span>
                   </div>
                 </div>
               ))}
