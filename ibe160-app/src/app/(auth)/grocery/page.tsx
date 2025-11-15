@@ -220,7 +220,7 @@ export default function GroceryPage() {
             </div>
 
             {/* Segmented Buttons */}
-            <div className="flex px-4 py-3">
+            <div className="flex py-3">
               <div className="flex h-10 flex-1 max-w-md items-center justify-center rounded-xl bg-gray-200 p-1">
                 <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "manual" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
                   <span className="truncate">Add Manually</span>
@@ -249,7 +249,7 @@ export default function GroceryPage() {
 
             {/* Manual Add */}
             {addMode === "manual" && (
-              <div className="px-4 py-3">
+              <div className="py-3">
                 <div className="flex gap-3">
                   <input
                     type="text"
@@ -272,7 +272,7 @@ export default function GroceryPage() {
 
             {/* AI Add */}
             {addMode === "ai" && (
-              <div className="flex flex-col gap-4 px-4 py-3">
+              <div className="flex flex-col gap-4 py-3">
                 <label className="flex flex-col min-w-40 flex-1">
                   <p className="text-[#333333] text-base font-medium leading-normal pb-2">
                     What do you want to cook?
@@ -309,7 +309,7 @@ export default function GroceryPage() {
             )}
 
             {/* Item Count */}
-            <div className="px-4 py-3">
+            <div className="py-3">
               <p className="text-[#877a64] text-base font-normal">
                 You have <span className="font-semibold text-[#333333]">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
               </p>
@@ -426,7 +426,7 @@ export default function GroceryPage() {
 
         {/* To Buy Section */}
         {uncheckedItems.length > 0 && (
-          <div className="px-4 py-3 mb-6">
+          <div className="py-3 mb-6">
             <h2 className="text-xl font-semibold text-[#333333] mb-3">To Buy</h2>
             <div className="flex flex-col gap-2">
               {uncheckedItems.map((item) => (
@@ -458,7 +458,7 @@ export default function GroceryPage() {
 
         {/* In Cart Section */}
         {checkedItems.length > 0 && (
-          <div className="px-4 py-3 mb-6">
+          <div className="py-3 mb-6">
             <h2 className="text-xl font-semibold text-[#333333] mb-3">In Cart</h2>
             <div className="flex flex-col gap-2">
               {checkedItems.map((item) => (
