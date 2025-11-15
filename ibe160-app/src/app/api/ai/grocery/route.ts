@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
-// import prisma from "@/lib/prisma"  // Disabled until DATABASE_URL is configured
+import prisma from "@/lib/prisma"
 import { generateWithGemini } from "@/lib/googleai"
 
 // POST /api/ai/grocery - AI grocery shopping suggestions
@@ -25,20 +25,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 })
     }
 
-    // Note: Pantry checking temporarily disabled - requires DATABASE_URL in .env.local
-    // For now, suggest all ingredients needed for the meal
-    // TODO: Re-enable pantry checking once database is configured
-    console.log("📦 Skipping pantry check (database not configured)")
+    // Fetch user's pantry items
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      include: { foodItems: true },
+    })
+
+    const pantryItems = user?.foodItems || []
+    const pantryItemNames = pantryItems.map((item) => item.name)
+    console.log("📦 User has", pantryItems.length, "pantry items:", pantryItemNames.join(", ") || "None")
 
     // Generate AI shopping suggestions
     const aiPrompt = `You are a smart grocery shopping assistant. The user wants to make: "${prompt}"
 
-Suggest the key ingredients they need to buy for this meal.
+Current Pantry Items:
+${pantryItemNames.length > 0 ? pantryItemNames.join(", ") : "Empty pantry"}
+
+Based on what they want to cook and what they already have, suggest ONLY the missing ingredients they need to buy.
 
 Return ONLY a JSON array of ingredient names (no markdown, no extra text):
 ["ingredient1", "ingredient2", "ingredient3"]
 
-Keep it simple and practical. Maximum 10 essential items.`
+Keep it simple and practical. Maximum 10 items.`
 
     console.log("🤖 Calling Gemini API...")
     const response = await generateWithGemini(aiPrompt)
