@@ -30,106 +30,172 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col font-display overflow-x-hidden bg-[#f7f7f7]">
-      {/* Top App Bar */}
-      <div className="sticky top-0 z-10 flex w-full items-center justify-center border-b border-[#e5e5e5] bg-[#f7f7f7]/80 p-4 pb-3 backdrop-blur-sm">
-        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] text-[#1f1f1f]">Profile</h2>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Navigation */}
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/pantry" className="flex items-center gap-2">
+              <Salad className="w-6 h-6 text-green-600" />
+              <span className="text-lg font-semibold text-gray-900">ibe160</span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                href="/pantry"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Pantry
+              </Link>
+              <Link
+                href="/recipes"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Recipes
+              </Link>
+              <Link
+                href="/grocery"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Grocery
+              </Link>
+              <Link
+                href="/alerts"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                Alerts
+              </Link>
+              <Link
+                href="/profile"
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
+              >
+                Profile
+              </Link>
+              <form
+                action={async () => {
+                  "use server"
+                  await signOut({ redirectTo: "/" })
+                }}
+                className="ml-2"
+              >
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign out
+                </button>
+              </form>
+            </nav>
+          </div>
+        </div>
       </div>
 
-      <main className="flex-1">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Profile</h1>
+          <p className="text-gray-600">Manage your account and preferences</p>
+        </div>
+
         {/* User Profile Card */}
-        <div className="p-4">
-          <div className="flex items-center gap-4 rounded-xl bg-white p-5 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#4F7942]/20">
-              <span className="text-2xl font-bold text-[#4F7942]">
+        <div className="mb-8">
+          <div className="flex items-center gap-4 rounded-xl bg-white border border-[#e5e2dc] p-6">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#2D5A3D]/10">
+              <span className="text-3xl font-bold text-[#2D5A3D]">
                 {getInitials(session.user.name, session.user.email)}
               </span>
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-base font-bold leading-tight text-[#1f1f1f]">
+              <p className="text-xl font-semibold text-[#333333]">
                 {session.user.name || "User"}
               </p>
-              <p className="text-sm font-normal leading-normal text-[#6b6b6b]">{session.user.email}</p>
+              <p className="text-base text-[#877a64]">{session.user.email}</p>
             </div>
           </div>
         </div>
 
-        {/* Section Header */}
-        <h3 className="px-4 pb-2 pt-4 text-lg font-bold leading-tight tracking-[-0.015em] text-[#1f1f1f]">
-          Quick Actions
-        </h3>
+        {/* Quick Actions Section */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        </div>
 
         {/* Quick Action Cards Grid */}
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Link
             href="/pantry"
-            className="flex flex-1 cursor-pointer flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white p-4 transition-all hover:border-[#4F7942]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
           >
-            <span className="material-symbols-outlined text-[#4F7942]" style={{ fontSize: "28px" }}>
+            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
               kitchen
             </span>
             <div className="flex flex-col gap-1">
-              <h2 className="text-base font-bold leading-tight text-[#1f1f1f]">Pantry</h2>
-              <p className="text-sm font-normal leading-normal text-[#6b6b6b]">Manage items</p>
+              <h3 className="text-lg font-semibold text-[#333333]">Pantry</h3>
+              <p className="text-sm text-[#877a64]">Manage your ingredients</p>
             </div>
           </Link>
 
           <Link
             href="/recipes"
-            className="flex flex-1 cursor-pointer flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white p-4 transition-all hover:border-[#4F7942]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
           >
-            <span className="material-symbols-outlined text-[#4F7942]" style={{ fontSize: "28px" }}>
+            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
               menu_book
             </span>
             <div className="flex flex-col gap-1">
-              <h2 className="text-base font-bold leading-tight text-[#1f1f1f]">Recipes</h2>
-              <p className="text-sm font-normal leading-normal text-[#6b6b6b]">Find meals</p>
+              <h3 className="text-lg font-semibold text-[#333333]">Recipes</h3>
+              <p className="text-sm text-[#877a64]">Discover new meals</p>
             </div>
           </Link>
 
           <Link
             href="/grocery"
-            className="flex flex-1 cursor-pointer flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white p-4 transition-all hover:border-[#4F7942]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
           >
-            <span className="material-symbols-outlined text-[#4F7942]" style={{ fontSize: "28px" }}>
+            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
               shopping_cart
             </span>
             <div className="flex flex-col gap-1">
-              <h2 className="text-base font-bold leading-tight text-[#1f1f1f]">Grocery</h2>
-              <p className="text-sm font-normal leading-normal text-[#6b6b6b]">Plan shopping</p>
+              <h3 className="text-lg font-semibold text-[#333333]">Grocery</h3>
+              <p className="text-sm text-[#877a64]">Plan your shopping</p>
             </div>
           </Link>
 
           <Link
-            href="/preferences"
-            className="flex flex-1 cursor-pointer flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white p-4 transition-all hover:border-[#4F7942]/50 hover:shadow-sm"
+            href="/alerts"
+            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
           >
-            <span className="material-symbols-outlined text-[#4F7942]" style={{ fontSize: "28px" }}>
-              tune
+            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
+              notifications
             </span>
             <div className="flex flex-col gap-1">
-              <h2 className="text-base font-bold leading-tight text-[#1f1f1f]">Prefs</h2>
-              <p className="text-sm font-normal leading-normal text-[#6b6b6b]">Set diet</p>
+              <h3 className="text-lg font-semibold text-[#333333]">Alerts</h3>
+              <p className="text-sm text-[#877a64]">Track expiration dates</p>
             </div>
           </Link>
         </div>
-      </main>
 
-      {/* Sign Out Button */}
-      <div className="mt-auto px-4 py-6">
-        <form
-          action={async () => {
-            "use server"
-            await signOut({ redirectTo: "/" })
-          }}
-        >
-          <button
-            type="submit"
-            className="flex h-12 min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-[#d98a71] px-5 text-base font-bold leading-normal tracking-[0.015em] text-white transition-opacity hover:opacity-90"
+        {/* Account Settings */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Account Settings</h2>
+        </div>
+
+        <div className="grid gap-4 mb-8">
+          <Link
+            href="/preferences"
+            className="flex items-center justify-between rounded-xl border border-[#e5e2dc] bg-white p-5 transition-all hover:border-[#2D5A3D]/50"
           >
-            <span className="truncate">Sign out</span>
-          </button>
-        </form>
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "24px" }}>
+                tune
+              </span>
+              <div>
+                <h3 className="text-base font-semibold text-[#333333]">Preferences</h3>
+                <p className="text-sm text-[#877a64]">Set dietary preferences and restrictions</p>
+              </div>
+            </div>
+            <span className="material-symbols-outlined text-[#877a64]">chevron_right</span>
+          </Link>
+        </div>
       </div>
     </div>
   )

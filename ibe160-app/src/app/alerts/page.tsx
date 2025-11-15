@@ -141,7 +141,7 @@ export default function AlertsPage() {
               {!notificationsEnabled && "Notification" in window && (
                 <button
                   onClick={requestNotifications}
-                  className="mt-6 px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
+                  className="mt-6 px-6 py-3 bg-[#2D5A3D] text-white font-semibold rounded-xl hover:bg-[#2D5A3D]/90 transition-colors"
                 >
                   Enable Notifications
                 </button>
@@ -176,29 +176,29 @@ export default function AlertsPage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-4">
-          <div className="flex flex-col gap-2 rounded-xl border border-[#e0e0e0] bg-white p-4 text-center">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 mb-6">
+          <div className="flex flex-col gap-2 rounded-xl border border-[#e5e2dc] bg-white p-5 text-center">
             <p className="text-3xl font-bold text-[#E54D4D]">{expired.length}</p>
-            <p className="text-sm text-[#333333]/70 font-medium">Expired</p>
+            <p className="text-sm text-[#877a64] font-medium">Expired</p>
           </div>
-          <div className="flex flex-col gap-2 rounded-xl border border-[#e0e0e0] bg-white p-4 text-center">
+          <div className="flex flex-col gap-2 rounded-xl border border-[#e5e2dc] bg-white p-5 text-center">
             <p className="text-3xl font-bold text-[#FF9800]">{critical.length}</p>
-            <p className="text-sm text-[#333333]/70 font-medium">Critical (0-1 days)</p>
+            <p className="text-sm text-[#877a64] font-medium">Critical (0-1 days)</p>
           </div>
-          <div className="flex flex-col gap-2 rounded-xl border border-[#e0e0e0] bg-white p-4 text-center">
+          <div className="flex flex-col gap-2 rounded-xl border border-[#e5e2dc] bg-white p-5 text-center">
             <p className="text-3xl font-bold text-[#FFC107]">{warning.length}</p>
-            <p className="text-sm text-[#333333]/70 font-medium">Warning (2-3 days)</p>
+            <p className="text-sm text-[#877a64] font-medium">Warning (2-3 days)</p>
           </div>
-          <div className="flex flex-col gap-2 rounded-xl border border-[#e0e0e0] bg-white p-4 text-center">
-            <p className="text-3xl font-bold text-[#4CAF50]">{safe.length}</p>
-            <p className="text-sm text-[#333333]/70 font-medium">Safe (3+ days)</p>
+          <div className="flex flex-col gap-2 rounded-xl border border-[#e5e2dc] bg-white p-5 text-center">
+            <p className="text-3xl font-bold text-[#2D5A3D]">{safe.length}</p>
+            <p className="text-sm text-[#877a64] font-medium">Safe (3+ days)</p>
           </div>
         </div>
 
         {/* Expired Items */}
         {expired.length > 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-5">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#E54D4D]">
+          <div className="mb-6 rounded-xl border border-[#e5e2dc] bg-white p-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#E54D4D]">
               <span className="material-symbols-outlined">warning</span>
               Expired Items
             </h2>
@@ -206,7 +206,7 @@ export default function AlertsPage() {
               {expired.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg border border-[#E54D4D]/20 bg-[#E54D4D]/5 p-4"
+                  className="flex items-center justify-between rounded-xl border border-[#E54D4D]/20 bg-[#E54D4D]/5 p-4"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
@@ -221,7 +221,7 @@ export default function AlertsPage() {
                     <p className="text-sm text-[#333333] font-medium">
                       {item.quantity} {item.unit}
                     </p>
-                    <p className="text-xs text-[#333333]/70">{item.category}</p>
+                    <p className="text-xs text-[#877a64]">{item.category}</p>
                   </div>
                 </div>
               ))}
@@ -231,8 +231,8 @@ export default function AlertsPage() {
 
         {/* Critical Items (0-1 days) */}
         {critical.length > 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-5">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#FF9800]">
+          <div className="mb-6 rounded-xl border border-[#e5e2dc] bg-white p-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#FF9800]">
               <span className="material-symbols-outlined">emergency</span>
               Critical (Use Today!)
             </h2>
@@ -240,7 +240,7 @@ export default function AlertsPage() {
               {critical.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg border border-[#FF9800]/20 bg-[#FF9800]/5 p-4"
+                  className="flex items-center justify-between rounded-xl border border-[#FF9800]/20 bg-[#FF9800]/5 p-4"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
@@ -259,7 +259,7 @@ export default function AlertsPage() {
                     </p>
                     <Link
                       href={`/recipes?ingredient=${item.name}`}
-                      className="text-xs text-[#4CAF50] hover:underline font-medium"
+                      className="text-xs text-[#2D5A3D] hover:underline font-medium"
                     >
                       Find Recipes →
                     </Link>
@@ -272,8 +272,8 @@ export default function AlertsPage() {
 
         {/* Warning Items (2-3 days) */}
         {warning.length > 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-5">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#FFC107]">
+          <div className="mb-6 rounded-xl border border-[#e5e2dc] bg-white p-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#FFC107]">
               <span className="material-symbols-outlined">schedule</span>
               Use Soon (2-3 days)
             </h2>
@@ -281,7 +281,7 @@ export default function AlertsPage() {
               {warning.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg border border-[#FFC107]/20 bg-[#FFC107]/5 p-4"
+                  className="flex items-center justify-between rounded-xl border border-[#FFC107]/20 bg-[#FFC107]/5 p-4"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{getCategoryEmoji(item.category)}</span>
@@ -296,7 +296,7 @@ export default function AlertsPage() {
                     <p className="text-sm text-[#333333] font-medium">
                       {item.quantity} {item.unit}
                     </p>
-                    <p className="text-xs text-[#333333]/70">{item.category}</p>
+                    <p className="text-xs text-[#877a64]">{item.category}</p>
                   </div>
                 </div>
               ))}
@@ -306,8 +306,8 @@ export default function AlertsPage() {
 
         {/* Safe Items */}
         {safe.length > 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-5">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#4CAF50]">
+          <div className="mb-6 rounded-xl border border-[#e5e2dc] bg-white p-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#2D5A3D]">
               <span className="material-symbols-outlined">check_circle</span>
               Safe Items (3+ days)
             </h2>
@@ -315,12 +315,12 @@ export default function AlertsPage() {
               {safe.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 rounded-lg border border-[#4CAF50]/20 bg-[#4CAF50]/5 p-3"
+                  className="flex items-center gap-3 rounded-xl border border-[#2D5A3D]/20 bg-[#2D5A3D]/5 p-3"
                 >
                   <span className="text-xl">{getCategoryEmoji(item.category)}</span>
                   <div className="flex-1">
                     <p className="font-medium text-[#333333]">{item.name}</p>
-                    <p className="text-xs text-[#4CAF50] font-medium">
+                    <p className="text-xs text-[#2D5A3D] font-medium">
                       {item.daysUntilExpiry} days left
                     </p>
                   </div>
@@ -332,17 +332,17 @@ export default function AlertsPage() {
 
         {/* Empty State */}
         {items.length === 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-12 text-center">
-            <span className="material-symbols-outlined mb-4 text-6xl text-[#4CAF50]/30">
+          <div className="mb-6 rounded-xl border border-[#e5e2dc] bg-white p-12 text-center">
+            <span className="material-symbols-outlined mb-4 text-6xl text-[#2D5A3D]/30">
               notifications
             </span>
             <h2 className="mb-2 text-2xl font-bold text-[#333333]">No Items in Pantry</h2>
-            <p className="mb-6 text-[#333333]/70">
+            <p className="mb-6 text-[#877a64]">
               Add items to your pantry to start tracking expiration dates!
             </p>
             <Link
               href="/pantry"
-              className="inline-block rounded-lg bg-[#4CAF50] px-6 py-3 font-bold text-white transition-colors hover:bg-[#4CAF50]/90"
+              className="inline-block rounded-xl bg-[#2D5A3D] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#2D5A3D]/90"
             >
               Go to Pantry
             </Link>
