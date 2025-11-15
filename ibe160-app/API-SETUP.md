@@ -126,15 +126,21 @@ Add environment variables in Vercel dashboard:
 
 ## 📝 Optional Services (Not Yet Configured)
 
-### Email Alerts (Resend)
+### Email Alerts & Contact Form (Resend)
 **Get API Key:** https://resend.com
-1. Sign up free
-2. Get API key
+1. Sign up free (3000 emails/month free tier)
+2. Get API key from dashboard
 3. Add to .env.local:
 ```env
 RESEND_API_KEY="re_xxxxx"
 EMAIL_FROM="noreply@yourdomain.com"
+SUPPORT_EMAIL="support@yourdomain.com"
 ```
+
+**Features Enabled:**
+- Contact form submissions (sends to SUPPORT_EMAIL)
+- Expiration alerts (automated daily emails)
+- Welcome emails (on user registration)
 
 ### Push Notifications
 **Generate VAPID Keys:**

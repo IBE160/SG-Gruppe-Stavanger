@@ -160,3 +160,66 @@ export async function sendWelcomeEmail(to: string, userName: string) {
     return { success: false, error }
   }
 }
+
+export async function sendContactEmail(contactData: {
+  name: string
+  email: string
+  subject: string
+  message: string
+}) {
+  const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || "support@ibe160.com"
+
+  try {
+    // Send to support team
+    const { data, error } = await resend.emails.send({
+      from: `ibe160 Contact Form <${FROM_EMAIL}>`,
+      to: SUPPORT_EMAIL,
+      replyTo: contactData.email,
+      subject: `Contact Form: ${contactData.subject}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 28px;">📬 New Contact Form Submission</h1>
+          </div>
+
+          <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h2 style="color: #667eea; margin-top: 0; font-size: 20px;">Contact Details</h2>
+              <p style="margin: 10px 0;"><strong>Name:</strong> ${contactData.name}</p>
+              <p style="margin: 10px 0;"><strong>Email:</strong> ${contactData.email}</p>
+              <p style="margin: 10px 0;"><strong>Subject:</strong> ${contactData.subject}</p>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #16a34a;">
+              <h2 style="color: #16a34a; margin-top: 0; font-size: 20px;">Message</h2>
+              <p style="white-space: pre-wrap; margin: 0;">${contactData.message}</p>
+            </div>
+
+            <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin-top: 20px;">
+              <p style="margin: 0; font-size: 14px; color: #0369a1;">
+                💡 <strong>Tip:</strong> You can reply directly to this email to respond to ${contactData.name}
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    })
+
+    if (error) {
+      console.error("Contact email error:", error)
+      return { success: false, error }
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error("Contact email error:", error)
+    return { success: false, error }
+  }
+}
