@@ -159,7 +159,7 @@ export default function GroceryPage() {
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
         {/* Hero Section */}
-        <div className="mb-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12 border border-blue-100">
+        <div className="mb-12 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 md:p-12 border border-green-100">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -169,16 +169,16 @@ export default function GroceryPage() {
                 Never forget an item again! Our AI-powered shopping list helps you plan your grocery trips efficiently and suggests items based on what you want to cook.
               </p>
               <div className="flex flex-wrap gap-3">
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
-                  <ShoppingCart className="w-5 h-5 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <ShoppingCart className="w-5 h-5 text-green-600" />
                   <span className="text-sm font-medium text-gray-700">Smart Lists</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
-                  <span className="material-symbols-outlined text-blue-600" style={{ fontSize: "20px" }}>auto_awesome</span>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <span className="material-symbols-outlined text-green-600" style={{ fontSize: "20px" }}>auto_awesome</span>
                   <span className="text-sm font-medium text-gray-700">AI Suggestions</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
-                  <span className="material-symbols-outlined text-blue-600" style={{ fontSize: "20px" }}>sync</span>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <span className="material-symbols-outlined text-green-600" style={{ fontSize: "20px" }}>sync</span>
                   <span className="text-sm font-medium text-gray-700">Auto-Sync</span>
                 </div>
               </div>
@@ -319,13 +319,13 @@ export default function GroceryPage() {
 
         {/* Empty State with Inputs */}
         {items.length === 0 && (
-          <div className="mt-12 w-full">
-            <div className="mx-auto flex max-w-2xl flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-8">
-              <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-[#2D5A3D]/10">
-                <ShoppingCart className="w-10 h-10 text-[#2D5A3D]" />
+          <div className="w-full">
+            <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-12">
+              <div className="mb-6 flex size-24 items-center justify-center rounded-full bg-[#2D5A3D]/10">
+                <ShoppingCart className="w-12 h-12 text-[#2D5A3D]" />
               </div>
-              <h2 className="text-xl font-bold text-[#333333]">Your list is empty</h2>
-              <p className="mt-1 mb-8 text-[#877a64]">
+              <h2 className="text-2xl font-bold text-[#333333]">Your list is empty</h2>
+              <p className="mt-2 mb-10 text-[#877a64] text-center max-w-md">
                 Add items manually or use AI to suggest ingredients based on what you want to cook.
               </p>
 
