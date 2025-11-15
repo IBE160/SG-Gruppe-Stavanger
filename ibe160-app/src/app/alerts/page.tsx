@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { Salad, LogOut, Bell, BarChart3, Recycle } from "lucide-react"
 import { signOut } from "next-auth/react"
@@ -8,7 +7,6 @@ import { usePantryItems } from "@/hooks/usePantry"
 
 export default function AlertsPage() {
   const { data: items = [], isLoading } = usePantryItems()
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false)
 
   // Calculate days until expiration and categorize
   const now = new Date()
@@ -71,19 +69,6 @@ export default function AlertsPage() {
       other: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=80&h=80&fit=crop&q=80",
     }
     return categoryMap[category] || categoryMap.other
-  }
-
-  const requestNotifications = async () => {
-    if ("Notification" in window) {
-      const permission = await Notification.requestPermission()
-      if (permission === "granted") {
-        setNotificationsEnabled(true)
-        new Notification("Notifications Enabled", {
-          body: "You'll receive alerts when food is about to expire!",
-          icon: "/favicon.ico",
-        })
-      }
-    }
   }
 
   if (isLoading) {
@@ -172,14 +157,6 @@ export default function AlertsPage() {
                   <span className="text-sm font-medium text-gray-700">Reduce Waste</span>
                 </div>
               </div>
-              {!notificationsEnabled && "Notification" in window && (
-                <button
-                  onClick={requestNotifications}
-                  className="mt-6 px-6 py-3 bg-[#2D5A3D] text-white font-semibold rounded-xl hover:bg-[#2D5A3D]/90 transition-colors"
-                >
-                  Enable Notifications
-                </button>
-              )}
             </div>
             <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
               <img
