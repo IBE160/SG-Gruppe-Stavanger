@@ -164,120 +164,214 @@ export default function GroceryPage() {
           <p className="text-gray-600">Plan your shopping and never forget an item</p>
         </div>
 
-        {/* Mode Selection */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">How would you like to add items?</h2>
-        </div>
-
-        {/* Segmented Buttons */}
-        <div className="flex px-4 py-3">
-          <div className="flex h-10 flex-1 max-w-md items-center justify-center rounded-xl bg-gray-200 p-1">
-            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "manual" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
-              <span className="truncate">Add Manually</span>
-              <input
-                className="invisible w-0"
-                name="add-mode"
-                type="radio"
-                value="manual"
-                checked={addMode === "manual"}
-                onChange={() => setAddMode("manual")}
-              />
-            </label>
-            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "ai" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
-              <span className="truncate">AI Suggest</span>
-              <input
-                className="invisible w-0"
-                name="add-mode"
-                type="radio"
-                value="ai"
-                checked={addMode === "ai"}
-                onChange={() => setAddMode("ai")}
-              />
-            </label>
-          </div>
-        </div>
-
-        {/* Manual Add */}
-        {addMode === "manual" && (
-          <div className="px-4 py-3">
-            <div className="flex gap-3">
-              <input
-                type="text"
-                placeholder="Add item (e.g., Organic milk)..."
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && addItem()}
-                className="flex-1 px-4 py-3 border border-[#e5e2dc] rounded-xl text-[#333333] placeholder:text-[#877a64] focus:outline-none focus:ring-2 focus:ring-[#2D5A3D]/50 focus:border-transparent transition-all bg-white"
-              />
-              <button
-                onClick={addItem}
-                disabled={!newItemName.trim()}
-                className="px-6 py-3 bg-[#2D5A3D] text-white font-medium rounded-xl hover:bg-[#2D5A3D]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                Add Item
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* AI Add */}
-        {addMode === "ai" && (
-          <div className="flex flex-col gap-4 px-4 py-3">
-            <label className="flex flex-col min-w-40 flex-1">
-              <p className="text-[#333333] text-base font-medium leading-normal pb-2">
-                What do you want to cook?
-              </p>
-              <textarea
-                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#333333] focus:outline-0 focus:ring-2 focus:ring-[#2D5A3D]/50 border border-[#e5e2dc] bg-white min-h-36 placeholder:text-[#877a64] p-[15px] text-base font-normal leading-normal"
-                placeholder="e.g., pasta carbonara for dinner..."
-                value={aiPrompt}
-                onChange={(e) => setAiPrompt(e.target.value)}
-              ></textarea>
-            </label>
-            <button
-              onClick={handleAISearch}
-              disabled={aiPrompt.trim().length === 0 || aiLoading}
-              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                backgroundImage: "linear-gradient(to right, #8A2BE2, #FF69B4)",
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              {aiLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span className="truncate">Thinking...</span>
-                </>
-              ) : (
-                <>
-                  <span className="material-symbols-outlined text-white text-2xl">auto_awesome</span>
-                  <span className="truncate">AI Suggest</span>
-                </>
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Item Count */}
+        {/* Mode Selection and Inputs - Only show when list has items */}
         {items.length > 0 && (
-          <div className="px-4 py-3">
-            <p className="text-[#877a64] text-base font-normal">
-              You have <span className="font-semibold text-[#333333]">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
-            </p>
-          </div>
+          <>
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">How would you like to add items?</h2>
+            </div>
+
+            {/* Segmented Buttons */}
+            <div className="flex px-4 py-3">
+              <div className="flex h-10 flex-1 max-w-md items-center justify-center rounded-xl bg-gray-200 p-1">
+                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "manual" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+                  <span className="truncate">Add Manually</span>
+                  <input
+                    className="invisible w-0"
+                    name="add-mode"
+                    type="radio"
+                    value="manual"
+                    checked={addMode === "manual"}
+                    onChange={() => setAddMode("manual")}
+                  />
+                </label>
+                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "ai" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+                  <span className="truncate">AI Suggest</span>
+                  <input
+                    className="invisible w-0"
+                    name="add-mode"
+                    type="radio"
+                    value="ai"
+                    checked={addMode === "ai"}
+                    onChange={() => setAddMode("ai")}
+                  />
+                </label>
+              </div>
+            </div>
+
+            {/* Manual Add */}
+            {addMode === "manual" && (
+              <div className="px-4 py-3">
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Add item (e.g., Organic milk)..."
+                    value={newItemName}
+                    onChange={(e) => setNewItemName(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && addItem()}
+                    className="flex-1 px-4 py-3 border border-[#e5e2dc] rounded-xl text-[#333333] placeholder:text-[#877a64] focus:outline-none focus:ring-2 focus:ring-[#2D5A3D]/50 focus:border-transparent transition-all bg-white"
+                  />
+                  <button
+                    onClick={addItem}
+                    disabled={!newItemName.trim()}
+                    className="px-6 py-3 bg-[#2D5A3D] text-white font-medium rounded-xl hover:bg-[#2D5A3D]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    Add Item
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* AI Add */}
+            {addMode === "ai" && (
+              <div className="flex flex-col gap-4 px-4 py-3">
+                <label className="flex flex-col min-w-40 flex-1">
+                  <p className="text-[#333333] text-base font-medium leading-normal pb-2">
+                    What do you want to cook?
+                  </p>
+                  <textarea
+                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#333333] focus:outline-0 focus:ring-2 focus:ring-[#2D5A3D]/50 border border-[#e5e2dc] bg-white min-h-36 placeholder:text-[#877a64] p-[15px] text-base font-normal leading-normal"
+                    placeholder="e.g., pasta carbonara for dinner..."
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                  ></textarea>
+                </label>
+                <button
+                  onClick={handleAISearch}
+                  disabled={aiPrompt.trim().length === 0 || aiLoading}
+                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{
+                    backgroundImage: "linear-gradient(to right, #8A2BE2, #FF69B4)",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                >
+                  {aiLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span className="truncate">Thinking...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+                      <span className="truncate">AI Suggest</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Item Count */}
+            <div className="px-4 py-3">
+              <p className="text-[#877a64] text-base font-normal">
+                You have <span className="font-semibold text-[#333333]">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
+              </p>
+            </div>
+          </>
         )}
 
-        {/* Empty State */}
+        {/* Empty State with Inputs */}
         {items.length === 0 && (
           <div className="mt-12 w-full">
-            <div className="mx-auto flex max-w-sm flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-8 text-center">
+            <div className="mx-auto flex max-w-2xl flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-8">
               <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-[#2D5A3D]/10">
                 <ShoppingCart className="w-10 h-10 text-[#2D5A3D]" />
               </div>
               <h2 className="text-xl font-bold text-[#333333]">Your list is empty</h2>
-              <p className="mt-1 mb-6 text-[#877a64]">
+              <p className="mt-1 mb-8 text-[#877a64]">
                 Add items manually or use AI to suggest ingredients based on what you want to cook.
               </p>
+
+              {/* Mode Selection in Empty State */}
+              <div className="w-full mb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3 text-center">How would you like to add items?</h3>
+                <div className="flex justify-center">
+                  <div className="flex h-10 w-full max-w-md items-center justify-center rounded-xl bg-gray-200 p-1">
+                    <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "manual" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+                      <span className="truncate">Add Manually</span>
+                      <input
+                        className="invisible w-0"
+                        name="add-mode-empty"
+                        type="radio"
+                        value="manual"
+                        checked={addMode === "manual"}
+                        onChange={() => setAddMode("manual")}
+                      />
+                    </label>
+                    <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "ai" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+                      <span className="truncate">AI Suggest</span>
+                      <input
+                        className="invisible w-0"
+                        name="add-mode-empty"
+                        type="radio"
+                        value="ai"
+                        checked={addMode === "ai"}
+                        onChange={() => setAddMode("ai")}
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Manual Add in Empty State */}
+              {addMode === "manual" && (
+                <div className="w-full">
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="Add item (e.g., Organic milk)..."
+                      value={newItemName}
+                      onChange={(e) => setNewItemName(e.target.value)}
+                      onKeyPress={(e) => e.key === "Enter" && addItem()}
+                      className="flex-1 px-4 py-3 border border-[#e5e2dc] rounded-xl text-[#333333] placeholder:text-[#877a64] focus:outline-none focus:ring-2 focus:ring-[#2D5A3D]/50 focus:border-transparent transition-all bg-white"
+                    />
+                    <button
+                      onClick={addItem}
+                      disabled={!newItemName.trim()}
+                      className="px-6 py-3 bg-[#2D5A3D] text-white font-medium rounded-xl hover:bg-[#2D5A3D]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    >
+                      Add Item
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* AI Add in Empty State */}
+              {addMode === "ai" && (
+                <div className="flex flex-col gap-4 w-full">
+                  <label className="flex flex-col min-w-40 flex-1">
+                    <p className="text-[#333333] text-base font-medium leading-normal pb-2">
+                      What do you want to cook?
+                    </p>
+                    <textarea
+                      className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#333333] focus:outline-0 focus:ring-2 focus:ring-[#2D5A3D]/50 border border-[#e5e2dc] bg-white min-h-36 placeholder:text-[#877a64] p-[15px] text-base font-normal leading-normal"
+                      placeholder="e.g., pasta carbonara for dinner..."
+                      value={aiPrompt}
+                      onChange={(e) => setAiPrompt(e.target.value)}
+                    ></textarea>
+                  </label>
+                  <button
+                    onClick={handleAISearch}
+                    disabled={aiPrompt.trim().length === 0 || aiLoading}
+                    className="flex min-w-[84px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      backgroundImage: "linear-gradient(to right, #8A2BE2, #FF69B4)",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    {aiLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span className="truncate">Thinking...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+                        <span className="truncate">AI Suggest</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
