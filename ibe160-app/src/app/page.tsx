@@ -161,15 +161,44 @@ export default function Home() {
                 alt="Refrigerator with food"
                 className="w-full h-full object-cover"
               />
-              {/* Calendar/Clock overlay */}
-              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="bg-red-500 rounded-xl p-3">
-                    <Bell className="w-6 h-6 text-white" />
+              {/* Expiring Items Alerts */}
+              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl w-64">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80"
+                          alt="Tomatoes"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">Tomatoes</p>
+                        <p className="text-xs text-orange-600 font-medium">Expiring today!</p>
+                      </div>
+                    </div>
+                    <div className="px-2 py-1 bg-orange-50 rounded-full">
+                      <span className="text-xs font-medium text-orange-700">Use now</span>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="text-sm font-semibold text-gray-900">Expiring Soon</div>
-                    <div className="text-xs text-gray-600">3 items today</div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80"
+                          alt="Milk"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">Milk</p>
+                        <p className="text-xs text-yellow-600 font-medium">Expires in 1 day</p>
+                      </div>
+                    </div>
+                    <div className="px-2 py-1 bg-yellow-50 rounded-full">
+                      <span className="text-xs font-medium text-yellow-700">Tomorrow</span>
+                    </div>
                   </div>
                 </div>
               </div>
