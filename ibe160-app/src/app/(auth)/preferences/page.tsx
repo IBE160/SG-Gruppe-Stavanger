@@ -200,20 +200,18 @@ export default function PreferencesPage() {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2 flex items-center gap-3">
-              <Settings className="w-10 h-10" />
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Preferences & Dietary Profile
             </h1>
-            <p className="text-gray-600">Personalize your experience with dietary preferences</p>
+            <p className="text-gray-600 text-lg">Personalize your experience with dietary preferences</p>
           </div>
 
           {/* Info Banner */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 mb-6">
-            <p className="text-sm text-blue-700">
+          <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-6">
+            <p className="text-sm text-green-700">
               ✓ <strong>Personalize Your Experience:</strong> Set your dietary restrictions,
               allergies, and preferences to get tailored recipe recommendations!
             </p>
@@ -284,8 +282,8 @@ export default function PreferencesPage() {
         {/* Cuisine Preferences */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Globe className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Globe className="w-6 h-6 text-green-600" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900">Favorite Cuisines</h2>
           </div>
@@ -301,7 +299,7 @@ export default function PreferencesPage() {
                 }
                 className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 text-sm font-medium transition-colors ${
                   preferences.cuisinePreferences.includes(option)
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
+                    ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
                 }`}
               >
@@ -315,8 +313,8 @@ export default function PreferencesPage() {
         {/* Disliked Ingredients */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <ThumbsDown className="w-6 h-6 text-orange-600" />
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <ThumbsDown className="w-6 h-6 text-green-600" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900">Disliked Ingredients</h2>
           </div>
@@ -327,11 +325,11 @@ export default function PreferencesPage() {
               onChange={(e) => setNewIngredient(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && addDislikedIngredient()}
               placeholder="e.g., Mushrooms, Olives, Cilantro..."
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
             />
             <button
               onClick={addDislikedIngredient}
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm"
+              className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
             >
               Add
             </button>
@@ -360,8 +358,8 @@ export default function PreferencesPage() {
         {/* Notifications */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Bell className="w-6 h-6 text-yellow-600" />
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Bell className="w-6 h-6 text-green-600" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900">Notification Settings</h2>
           </div>
@@ -396,11 +394,10 @@ export default function PreferencesPage() {
           <button
             onClick={savePreferences}
             disabled={saving}
-            className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? "Saving..." : "Save Preferences"}
           </button>
-        </div>
         </div>
       </div>
     </div>
