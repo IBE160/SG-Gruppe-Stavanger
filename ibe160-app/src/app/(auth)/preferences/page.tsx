@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Settings, Target, Salad, Ban, Globe, ThumbsDown, Bell, Check, LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
+import { subscribeToPushNotifications, unsubscribeFromPushNotifications } from "@/utils/push-notifications"
 
 interface UserPreferences {
   dietaryRestrictions: string[]
@@ -92,6 +93,55 @@ export default function PreferencesPage() {
       console.error("Failed to fetch preferences", error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handlePushNotificationToggle = async (enabled: boolean) => {
+    if (enabled) {
+      // Subscribe to push notifications
+      const subscription = await subscribeToPushNotifications()
+      if (subscription) {
+        // Send subscription to backend
+        try {
+          const res = await fetch("/api/push/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ subscription }),
+          })
+
+          if (res.ok) {
+            setPreferences({ ...preferences, pushNotifications: true })
+            alert("✅ Push notifications enabled!")
+          } else {
+            alert("❌ Failed to enable push notifications")
+          }
+        } catch (error) {
+          console.error("Failed to subscribe:", error)
+          alert("❌ Failed to enable push notifications")
+        }
+      } else {
+        alert("❌ Push notifications not supported or permission denied")
+      }
+    } else {
+      // Unsubscribe from push notifications
+      const success = await unsubscribeFromPushNotifications()
+      if (success) {
+        try {
+          const res = await fetch("/api/push/subscribe", {
+            method: "DELETE",
+          })
+
+          if (res.ok) {
+            setPreferences({ ...preferences, pushNotifications: false })
+            alert("✅ Push notifications disabled!")
+          } else {
+            alert("❌ Failed to disable push notifications")
+          }
+        } catch (error) {
+          console.error("Failed to unsubscribe:", error)
+          alert("❌ Failed to disable push notifications")
+        }
+      }
     }
   }
 
@@ -390,9 +440,7 @@ export default function PreferencesPage() {
               <input
                 type="checkbox"
                 checked={preferences.pushNotifications}
-                onChange={(e) =>
-                  setPreferences({ ...preferences, pushNotifications: e.target.checked })
-                }
+                onChange={(e) => handlePushNotificationToggle(e.target.checked)}
                 className="w-5 h-5 text-green-600 rounded"
               />
               <div>
