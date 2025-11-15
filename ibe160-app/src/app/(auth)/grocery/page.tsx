@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Salad, LogOut, ShoppingCart, Sparkles, Trash2, Plus } from "lucide-react"
+import { Salad, LogOut, ShoppingCart, Trash2 } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 interface GroceryItem {
@@ -17,6 +17,7 @@ export default function GroceryPage() {
   const [newItemName, setNewItemName] = useState("")
   const [aiPrompt, setAiPrompt] = useState("")
   const [aiLoading, setAiLoading] = useState(false)
+  const [addMode, setAddMode] = useState<"manual" | "ai">("manual")
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -68,25 +69,19 @@ export default function GroceryPage() {
 
     setAiLoading(true)
     try {
-      // Call AI API to get shopping suggestions
       const response = await fetch("/api/ai/grocery", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: aiPrompt }),
       })
 
-      console.log("Response status:", response.status)
-
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        console.error("API error:", errorData)
         throw new Error(`AI search failed: ${errorData.error || response.statusText}`)
       }
 
       const data = await response.json()
-      console.log("AI response data:", data)
 
-      // Add AI-suggested items to grocery list
       if (data.items && data.items.length > 0) {
         const newItems = data.items.map((itemName: string) => ({
           id: Date.now().toString() + Math.random(),
@@ -169,64 +164,55 @@ export default function GroceryPage() {
           <p className="text-gray-600">Plan your shopping and never forget an item</p>
         </div>
 
-        {/* AI Shopping Assistant */}
-        <div className="mb-6 bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-5 h-5 text-purple-600" />
-            <h2 className="text-lg font-semibold text-gray-900">AI Shopping Assistant</h2>
-          </div>
-          <p className="text-sm text-gray-600 mb-4">
-            Tell me what you want to cook, and I'll check your pantry and add missing items!
-          </p>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleAISearch()}
-              placeholder="e.g., pasta carbonara for dinner"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              disabled={aiLoading}
-            />
-            <button
-              onClick={handleAISearch}
-              disabled={!aiPrompt.trim() || aiLoading}
-              className="px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
-            >
-              {aiLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Thinking...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-5 h-5" />
-                  <span>Suggest</span>
-                </>
-              )}
-            </button>
+        {/* Mode Selection */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">How would you like to add items?</h2>
+        </div>
+
+        {/* Segmented Buttons */}
+        <div className="flex px-4 py-3">
+          <div className="flex h-10 flex-1 max-w-md items-center justify-center rounded-xl bg-gray-200 p-1">
+            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "manual" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+              <span className="truncate">Add Manually</span>
+              <input
+                className="invisible w-0"
+                name="add-mode"
+                type="radio"
+                value="manual"
+                checked={addMode === "manual"}
+                onChange={() => setAddMode("manual")}
+              />
+            </label>
+            <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 ${addMode === "ai" ? "bg-white shadow-sm text-[#2D5A3D]" : "text-[#877a64]"} text-sm font-medium leading-normal transition-all`}>
+              <span className="truncate">AI Suggest</span>
+              <input
+                className="invisible w-0"
+                name="add-mode"
+                type="radio"
+                value="ai"
+                checked={addMode === "ai"}
+                onChange={() => setAddMode("ai")}
+              />
+            </label>
           </div>
         </div>
 
-        {/* Action Bar with Item Count and Add Button */}
-        {items.length > 0 && (
-          <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-gray-600 text-base font-normal">
-              You have <span className="font-semibold text-gray-900">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
-            </p>
-            <div className="flex w-full sm:w-auto items-stretch gap-2">
+        {/* Manual Add */}
+        {addMode === "manual" && (
+          <div className="px-4 py-3">
+            <div className="flex gap-3">
               <input
                 type="text"
+                placeholder="Add item (e.g., Organic milk)..."
                 value={newItemName}
                 onChange={(e) => setNewItemName(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && addItem()}
-                placeholder="Add item..."
-                className="flex-1 min-w-[200px] px-4 h-11 border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                className="flex-1 px-4 py-3 border border-[#e5e2dc] rounded-xl text-[#333333] placeholder:text-[#877a64] focus:outline-none focus:ring-2 focus:ring-[#2D5A3D]/50 focus:border-transparent transition-all bg-white"
               />
               <button
                 onClick={addItem}
                 disabled={!newItemName.trim()}
-                className="px-6 h-11 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="px-6 py-3 bg-[#2D5A3D] text-white font-medium rounded-xl hover:bg-[#2D5A3D]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 Add Item
               </button>
@@ -234,60 +220,90 @@ export default function GroceryPage() {
           </div>
         )}
 
+        {/* AI Add */}
+        {addMode === "ai" && (
+          <div className="flex flex-col gap-4 px-4 py-3">
+            <label className="flex flex-col min-w-40 flex-1">
+              <p className="text-[#333333] text-base font-medium leading-normal pb-2">
+                What do you want to cook?
+              </p>
+              <textarea
+                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#333333] focus:outline-0 focus:ring-2 focus:ring-[#2D5A3D]/50 border border-[#e5e2dc] bg-white min-h-36 placeholder:text-[#877a64] p-[15px] text-base font-normal leading-normal"
+                placeholder="e.g., pasta carbonara for dinner..."
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+              ></textarea>
+            </label>
+            <button
+              onClick={handleAISearch}
+              disabled={aiPrompt.trim().length === 0 || aiLoading}
+              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                backgroundImage: "linear-gradient(to right, #8A2BE2, #FF69B4)",
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              {aiLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span className="truncate">Thinking...</span>
+                </>
+              ) : (
+                <>
+                  <span className="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+                  <span className="truncate">AI Suggest</span>
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Item Count */}
+        {items.length > 0 && (
+          <div className="px-4 py-3">
+            <p className="text-[#877a64] text-base font-normal">
+              You have <span className="font-semibold text-[#333333]">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
+            </p>
+          </div>
+        )}
+
         {/* Empty State */}
         {items.length === 0 && (
           <div className="mt-12 w-full">
-            <div className="mx-auto flex max-w-sm flex-col items-center justify-center rounded-xl bg-white border border-gray-200 p-8 text-center">
-              <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-green-600/10">
-                <ShoppingCart className="w-10 h-10 text-green-600" />
+            <div className="mx-auto flex max-w-sm flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-8 text-center">
+              <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-[#2D5A3D]/10">
+                <ShoppingCart className="w-10 h-10 text-[#2D5A3D]" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Let's build your list!</h2>
-              <p className="mt-1 mb-6 text-gray-600">
+              <h2 className="text-xl font-bold text-[#333333]">Your list is empty</h2>
+              <p className="mt-1 mb-6 text-[#877a64]">
                 Add items manually or use AI to suggest ingredients based on what you want to cook.
               </p>
-              <div className="flex w-full gap-2">
-                <input
-                  type="text"
-                  value={newItemName}
-                  onChange={(e) => setNewItemName(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && addItem()}
-                  placeholder="Add your first item..."
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-                <button
-                  onClick={addItem}
-                  disabled={!newItemName.trim()}
-                  className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                >
-                  Add
-                </button>
-              </div>
             </div>
           </div>
         )}
 
         {/* To Buy Section */}
         {uncheckedItems.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-3">To Buy</h2>
+          <div className="px-4 py-3 mb-6">
+            <h2 className="text-xl font-semibold text-[#333333] mb-3">To Buy</h2>
             <div className="flex flex-col gap-2">
               {uncheckedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl p-4 border border-gray-200 bg-white hover:border-gray-300 transition-colors"
+                  className="flex items-center justify-between rounded-xl p-4 border border-[#e5e2dc] bg-white hover:border-[#2D5A3D]/30 transition-colors"
                 >
                   <div className="flex items-center gap-3 flex-1">
                     <input
                       type="checkbox"
                       checked={item.checked}
                       onChange={() => toggleItem(item.id)}
-                      className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                      className="w-5 h-5 rounded border-gray-300 text-[#2D5A3D] focus:ring-[#2D5A3D] cursor-pointer"
                     />
-                    <span className="text-base text-gray-900 font-normal">{item.name}</span>
+                    <span className="text-base text-[#333333] font-normal">{item.name}</span>
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="p-2 text-[#877a64] hover:text-red-500 hover:bg-gray-50 rounded-lg transition-colors"
                     aria-label="Delete item"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -300,26 +316,26 @@ export default function GroceryPage() {
 
         {/* In Cart Section */}
         {checkedItems.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-3">In Cart</h2>
+          <div className="px-4 py-3 mb-6">
+            <h2 className="text-xl font-semibold text-[#333333] mb-3">In Cart</h2>
             <div className="flex flex-col gap-2">
               {checkedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl p-4 bg-green-50/50 border border-green-200/50"
+                  className="flex items-center justify-between rounded-xl p-4 bg-[#2D5A3D]/5 border border-[#2D5A3D]/20"
                 >
                   <div className="flex items-center gap-3 flex-1">
                     <input
                       type="checkbox"
                       checked={item.checked}
                       onChange={() => toggleItem(item.id)}
-                      className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                      className="w-5 h-5 rounded border-gray-300 text-[#2D5A3D] focus:ring-[#2D5A3D] cursor-pointer"
                     />
-                    <span className="text-base text-gray-500 line-through font-normal">{item.name}</span>
+                    <span className="text-base text-[#877a64] line-through font-normal">{item.name}</span>
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-white rounded-lg transition-colors"
+                    className="p-2 text-[#877a64] hover:text-red-500 hover:bg-white rounded-lg transition-colors"
                     aria-label="Delete item"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -327,10 +343,9 @@ export default function GroceryPage() {
                 </div>
               ))}
             </div>
-            {/* Clear Button */}
             <button
               onClick={clearChecked}
-              className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-red-600 font-medium rounded-lg border border-red-200 hover:bg-red-50 hover:border-red-300 transition-all"
+              className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-3 bg-white text-red-600 font-medium rounded-xl border border-red-200 hover:bg-red-50 hover:border-red-300 transition-all"
             >
               <Trash2 className="w-5 h-5" />
               <span>Clear Checked Items</span>
