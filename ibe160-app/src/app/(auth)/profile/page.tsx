@@ -4,7 +4,7 @@
 import Link from "next/link"
 import { auth, signOut } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell, Salad } from "lucide-react"
+import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell, Salad, Settings } from "lucide-react"
 
 export default async function ProfilePage() {
   const session = await auth()
@@ -90,26 +90,26 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
+      <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Profile</h1>
-          <p className="text-gray-600">Manage your account and preferences</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Profile</h1>
+          <p className="text-gray-600 text-lg">Manage your account and preferences</p>
         </div>
 
         {/* User Profile Card */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 rounded-xl bg-white border border-[#e5e2dc] p-6">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#2D5A3D]/10">
-              <span className="text-3xl font-bold text-[#2D5A3D]">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12 mb-8">
+          <div className="flex items-center gap-4">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-green-100">
+              <span className="text-3xl font-bold text-green-600">
                 {getInitials(session.user.name, session.user.email)}
               </span>
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-xl font-semibold text-[#333333]">
+              <p className="text-xl font-semibold text-gray-900">
                 {session.user.name || "User"}
               </p>
-              <p className="text-base text-[#877a64]">{session.user.email}</p>
+              <p className="text-base text-gray-600">{session.user.email}</p>
             </div>
           </div>
         </div>
@@ -123,78 +123,77 @@ export default async function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Link
             href="/pantry"
-            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-2xl shadow-sm border border-gray-200 bg-white p-6 transition-all hover:border-green-300 hover:shadow-md"
           >
-            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
-              kitchen
-            </span>
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <Package className="w-6 h-6 text-green-600" />
+            </div>
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold text-[#333333]">Pantry</h3>
-              <p className="text-sm text-[#877a64]">Manage your ingredients</p>
+              <h3 className="text-lg font-semibold text-gray-900">Pantry</h3>
+              <p className="text-sm text-gray-600">Manage your ingredients</p>
             </div>
           </Link>
 
           <Link
             href="/recipes"
-            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-2xl shadow-sm border border-gray-200 bg-white p-6 transition-all hover:border-green-300 hover:shadow-md"
           >
-            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
-              menu_book
-            </span>
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <ChefHat className="w-6 h-6 text-green-600" />
+            </div>
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold text-[#333333]">Recipes</h3>
-              <p className="text-sm text-[#877a64]">Discover new meals</p>
+              <h3 className="text-lg font-semibold text-gray-900">Recipes</h3>
+              <p className="text-sm text-gray-600">Discover new meals</p>
             </div>
           </Link>
 
           <Link
             href="/grocery"
-            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-2xl shadow-sm border border-gray-200 bg-white p-6 transition-all hover:border-green-300 hover:shadow-md"
           >
-            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
-              shopping_cart
-            </span>
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <ShoppingCart className="w-6 h-6 text-green-600" />
+            </div>
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold text-[#333333]">Grocery</h3>
-              <p className="text-sm text-[#877a64]">Plan your shopping</p>
+              <h3 className="text-lg font-semibold text-gray-900">Grocery</h3>
+              <p className="text-sm text-gray-600">Plan your shopping</p>
             </div>
           </Link>
 
           <Link
             href="/alerts"
-            className="flex flex-col gap-3 rounded-xl border border-[#e5e2dc] bg-white p-6 transition-all hover:border-[#2D5A3D]/50 hover:shadow-sm"
+            className="flex flex-col gap-3 rounded-2xl shadow-sm border border-gray-200 bg-white p-6 transition-all hover:border-green-300 hover:shadow-md"
           >
-            <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "32px" }}>
-              notifications
-            </span>
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <Bell className="w-6 h-6 text-green-600" />
+            </div>
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold text-[#333333]">Alerts</h3>
-              <p className="text-sm text-[#877a64]">Track expiration dates</p>
+              <h3 className="text-lg font-semibold text-gray-900">Alerts</h3>
+              <p className="text-sm text-gray-600">Track expiration dates</p>
             </div>
           </Link>
         </div>
 
         {/* Account Settings */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Account Settings</h2>
-        </div>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Account Settings</h2>
 
-        <div className="grid gap-4 mb-8">
-          <Link
-            href="/preferences"
-            className="flex items-center justify-between rounded-xl border border-[#e5e2dc] bg-white p-5 transition-all hover:border-[#2D5A3D]/50"
-          >
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-[#2D5A3D]" style={{ fontSize: "24px" }}>
-                tune
-              </span>
-              <div>
-                <h3 className="text-base font-semibold text-[#333333]">Preferences</h3>
-                <p className="text-sm text-[#877a64]">Set dietary preferences and restrictions</p>
+          <div className="space-y-4">
+            <Link
+              href="/preferences"
+              className="flex items-start gap-4 p-6 bg-green-50 border border-green-200 rounded-xl transition-all hover:border-green-300"
+            >
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Settings className="w-6 h-6 text-green-600" />
               </div>
-            </div>
-            <span className="material-symbols-outlined text-[#877a64]">chevron_right</span>
-          </Link>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-1">Preferences</h3>
+                <p className="text-gray-600 text-sm">
+                  Set dietary preferences, restrictions, and notification settings
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
