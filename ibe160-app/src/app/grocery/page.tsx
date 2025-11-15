@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Salad, LogOut } from "lucide-react"
+import { Salad, LogOut, ShoppingCart, Sparkles, CheckCircle, TrendingUp } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 interface GroceryItem {
@@ -118,20 +118,57 @@ export default function GroceryPage() {
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        {/* Action Panel */}
-        <div className="p-4">
-          <div className="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-[#e0e0e0] bg-[#F7F7F7] p-5 sm:flex-row sm:items-center">
-            <div className="flex flex-col gap-1">
-              <p className="text-base font-bold leading-tight text-[#484848]">
-                Let AI Plan Your Shopping Trip!
+        {/* Hero Section */}
+        <div className="mb-12 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 md:p-12 border border-green-100">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Smart Grocery Shopping Made Easy
+              </h1>
+              <p className="text-lg text-gray-700 mb-6">
+                Our AI-powered grocery list helps you shop smarter, save money, and never forget an item. Organize your shopping with ease!
               </p>
-              <p className="text-sm font-normal leading-normal text-[#484848]/80">
-                Get the smartest route and never forget an item again.
-              </p>
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <Sparkles className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">AI-Powered</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">Smart Organization</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-green-200">
+                  <TrendingUp className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">Save Money</span>
+                </div>
+              </div>
             </div>
-            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#228B22] text-white text-sm font-medium leading-normal hover:bg-[#228B22]/90 transition-colors">
-              <span className="truncate">Try Smart Shopping</span>
-            </button>
+            <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+              <img
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=600&fit=crop&q=80"
+                alt="Grocery shopping with fresh produce"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                <div className="text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <ShoppingCart className="w-5 h-5" />
+                    <span className="text-sm font-medium">Building your smart list...</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Milk ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Eggs ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Bread ✓
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
