@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { auth } from "@/lib/auth"
 
 // GET /api/barcode/[code] - Lookup product info by barcode
 export async function GET(
@@ -6,6 +7,15 @@ export async function GET(
   { params }: { params: Promise<{ code: string }> }
 ) {
   try {
+    // Verify authentication
+    const session = await auth()
+    if (!session || !session.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
     const { code } = await params
 
     // Use Open Food Facts API (free, no API key required)
