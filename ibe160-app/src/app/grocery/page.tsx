@@ -15,6 +15,8 @@ interface GroceryItem {
 export default function GroceryPage() {
   const [items, setItems] = useState<GroceryItem[]>([])
   const [newItemName, setNewItemName] = useState("")
+  const [aiPrompt, setAiPrompt] = useState("")
+  const [aiLoading, setAiLoading] = useState(false)
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -59,6 +61,42 @@ export default function GroceryPage() {
 
   const clearChecked = () => {
     setItems(items.filter((item) => !item.checked))
+  }
+
+  const handleAISearch = async () => {
+    if (!aiPrompt.trim()) return
+
+    setAiLoading(true)
+    try {
+      // Call AI API to get shopping suggestions
+      const response = await fetch("/api/ai/grocery", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: aiPrompt }),
+      })
+
+      if (!response.ok) throw new Error("AI search failed")
+
+      const data = await response.json()
+
+      // Add AI-suggested items to grocery list
+      if (data.items && data.items.length > 0) {
+        const newItems = data.items.map((itemName: string) => ({
+          id: Date.now().toString() + Math.random(),
+          name: itemName,
+          checked: false,
+          addedAt: new Date().toISOString(),
+        }))
+        setItems([...items, ...newItems])
+      }
+
+      setAiPrompt("")
+    } catch (error) {
+      console.error("AI search error:", error)
+      alert("Failed to get AI suggestions. Please try again.")
+    } finally {
+      setAiLoading(false)
+    }
   }
 
   const uncheckedItems = items.filter((item) => !item.checked)
@@ -168,6 +206,47 @@ export default function GroceryPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* AI Shopping Assistant */}
+        <div className="mb-8 px-4">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+            <div className="flex items-center gap-2 mb-3">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              <h2 className="text-lg font-semibold text-gray-900">AI Shopping Assistant</h2>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Tell me what you want to cook, and I'll check your pantry and add missing items to your list!
+            </p>
+            <div className="flex gap-3">
+              <input
+                type="text"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleAISearch()}
+                placeholder="e.g., pasta carbonara for dinner"
+                className="flex-1 px-4 py-3 border border-purple-200 rounded-xl text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white"
+                disabled={aiLoading}
+              />
+              <button
+                onClick={handleAISearch}
+                disabled={!aiPrompt.trim() || aiLoading}
+                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+              >
+                {aiLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Thinking...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" />
+                    <span>Suggest Items</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
