@@ -75,9 +75,16 @@ export default function GroceryPage() {
         body: JSON.stringify({ prompt: aiPrompt }),
       })
 
-      if (!response.ok) throw new Error("AI search failed")
+      console.log("Response status:", response.status)
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error("API error:", errorData)
+        throw new Error(`AI search failed: ${errorData.error || response.statusText}`)
+      }
 
       const data = await response.json()
+      console.log("AI response data:", data)
 
       // Add AI-suggested items to grocery list
       if (data.items && data.items.length > 0) {
@@ -93,7 +100,7 @@ export default function GroceryPage() {
       setAiPrompt("")
     } catch (error) {
       console.error("AI search error:", error)
-      alert("Failed to get AI suggestions. Please try again.")
+      alert(`Failed to get AI suggestions: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setAiLoading(false)
     }
