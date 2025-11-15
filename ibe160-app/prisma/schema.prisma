@@ -95,8 +95,6 @@ model UserPreference {
   cuisinePreferences    String?  // JSON array: italian, asian, mexican, etc
   dislikedIngredients   String?  // JSON array
   emailNotifications    Boolean  @default(true)
-  pushNotifications     Boolean  @default(false)
-  pushSubscription      String?  // JSON for web push subscription
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 

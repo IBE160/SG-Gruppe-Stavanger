@@ -49,8 +49,6 @@ export async function PUT(req: NextRequest) {
       cuisinePreferences,
       dislikedIngredients,
       emailNotifications,
-      pushNotifications,
-      pushSubscription,
     } = body
 
     const preferences = await prisma.userPreference.upsert({
@@ -61,8 +59,6 @@ export async function PUT(req: NextRequest) {
         cuisinePreferences,
         dislikedIngredients,
         emailNotifications,
-        pushNotifications,
-        pushSubscription,
       },
       create: {
         userId: user.id,
@@ -71,8 +67,6 @@ export async function PUT(req: NextRequest) {
         cuisinePreferences,
         dislikedIngredients,
         emailNotifications,
-        pushNotifications,
-        pushSubscription,
       },
     })
 

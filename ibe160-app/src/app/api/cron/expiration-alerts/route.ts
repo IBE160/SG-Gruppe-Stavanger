@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { sendExpirationAlert } from "@/lib/email"
-import { sendPushNotification } from "@/lib/push"
 
 // GET /api/cron/expiration-alerts - Send daily expiration alerts
 // This should be called by a cron job (e.g., Vercel Cron, GitHub Actions)
@@ -30,7 +29,6 @@ export async function GET(req: NextRequest) {
     })
 
     let emailsSent = 0
-    let pushNotificationsSent = 0
 
     for (const user of usersWithNotifications) {
       // Find expiring items (within 3 days)
@@ -57,32 +55,17 @@ export async function GET(req: NextRequest) {
 
           // Log email alert in database
           for (const item of expiringItems) {
+            const daysLeft = Math.ceil(
+              (new Date(item.bestBeforeDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+            )
             await prisma.emailAlert.create({
               data: {
                 userId: user.id,
                 foodItemId: item.id,
-                emailType: item.daysLeft < 0 ? "expired" : "expiring_soon",
+                emailType: daysLeft < 0 ? "expired" : "expiring_soon",
               },
             })
           }
-        }
-      }
-
-      // Send push notification
-      if (user.preferences?.pushNotifications && user.preferences.pushSubscription) {
-        try {
-          const subscription = JSON.parse(user.preferences.pushSubscription)
-          await sendPushNotification(subscription, {
-            title: "🔔 Food Expiration Alert",
-            body: `${expiringItems.length} items in your pantry need attention!`,
-            icon: "/icon-192x192.png",
-            data: {
-              url: "/alerts",
-            },
-          })
-          pushNotificationsSent++
-        } catch (error) {
-          console.error("Push notification error for user", user.id, error)
         }
       }
     }
@@ -91,7 +74,6 @@ export async function GET(req: NextRequest) {
       success: true,
       usersProcessed: usersWithNotifications.length,
       emailsSent,
-      pushNotificationsSent,
     })
   } catch (error) {
     console.error("Cron job error:", error)
