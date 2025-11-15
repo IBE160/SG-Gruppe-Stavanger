@@ -319,8 +319,7 @@ export default function GroceryPage() {
 
         {/* Empty State with Inputs */}
         {items.length === 0 && (
-          <div className="w-full">
-            <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-xl bg-white border border-[#e5e2dc] p-12">
+          <div className="mb-12 flex flex-col items-center justify-center rounded-2xl bg-white border border-gray-200 shadow-sm p-8 md:p-12">
               <div className="mb-6 flex size-24 items-center justify-center rounded-full bg-[#2D5A3D]/10">
                 <ShoppingCart className="w-12 h-12 text-[#2D5A3D]" />
               </div>
@@ -420,7 +419,6 @@ export default function GroceryPage() {
                   </button>
                 </div>
               )}
-            </div>
           </div>
         )}
 
