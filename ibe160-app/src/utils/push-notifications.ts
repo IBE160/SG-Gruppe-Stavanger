@@ -19,19 +19,24 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
 }
 
 export async function subscribeToPushNotifications(): Promise<PushSubscription | null> {
-  const registration = await registerServiceWorker()
-  if (!registration) {
-    console.error('No service worker registration')
-    return null
-  }
-
   try {
-    // Request notification permission
+    // Request notification permission first
     const permission = await Notification.requestPermission()
     if (permission !== 'granted') {
       console.log('Notification permission denied')
       return null
     }
+
+    // Register service worker
+    const registration = await registerServiceWorker()
+    if (!registration) {
+      console.error('No service worker registration')
+      return null
+    }
+
+    // Wait for service worker to be ready and active
+    const activeRegistration = await navigator.serviceWorker.ready
+    console.log('Service Worker is ready and active')
 
     // Get VAPID public key from environment
     const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
@@ -40,13 +45,13 @@ export async function subscribeToPushNotifications(): Promise<PushSubscription |
       return null
     }
 
-    // Subscribe to push notifications
-    const subscription = await registration.pushManager.subscribe({
+    // Subscribe to push notifications using the active registration
+    const subscription = await activeRegistration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
     })
 
-    console.log('Push subscription:', subscription)
+    console.log('Push subscription successful:', subscription)
     return subscription
   } catch (error) {
     console.error('Push subscription failed:', error)
