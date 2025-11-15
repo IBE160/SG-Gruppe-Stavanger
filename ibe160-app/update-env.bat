@@ -2,7 +2,7 @@
 echo Oppdaterer .env.local med korrekte Supabase connection strings...
 (
 echo DATABASE_URL="postgresql://postgres.bucxoglospkxknbqynhq:ThomasHildeFrida1234!@aws-1-eu-west-1.pooler.supabase.com:5432/postgres"
-echo DIRECT_URL="postgresql://postgres.bucxoglospkxknbqynhq:ThomasHildeFrida1234!@db.bucxoglospkxknbqynhq.supabase.co:5432/postgres"
+echo DIRECT_URL="postgresql://postgres.bucxoglospkxknbqynhq:ThomasHildeFrida1234!@aws-1-eu-west-1.pooler.supabase.com:5432/postgres"
 echo AUTH_SECRET="NkwzuIdgvzt+MBxI4Vl6EKcWFv8uEmfzCpJVn97u7Jo="
 echo AUTH_URL="http://localhost:3000"
 echo SPOONACULAR_API_KEY="b0b7eb9913b94806966ecd2f1f63422f"
