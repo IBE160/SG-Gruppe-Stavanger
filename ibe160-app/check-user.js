@@ -1,8 +1,13 @@
+// Load environment variables from .env.local
+require('dotenv').config({ path: '.env.local' })
+
 const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
 async function checkUser() {
+  console.log('DATABASE_URL:', process.env.DATABASE_URL?.substring(0, 50) + '...')
+
   const email = 'thomas.ekrem.jensen@gmail.com'
 
   const user = await prisma.user.findUnique({
