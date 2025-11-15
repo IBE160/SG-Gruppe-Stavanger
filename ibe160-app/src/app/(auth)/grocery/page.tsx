@@ -214,7 +214,7 @@ export default function GroceryPage() {
 
         {/* Mode Selection and Inputs - Only show when list has items */}
         {items.length > 0 && (
-          <>
+          <div className="mb-12 bg-white rounded-2xl p-8 md:p-12 border border-gray-200 shadow-sm">
             <div className="mb-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">How would you like to add items?</h2>
             </div>
@@ -314,7 +314,7 @@ export default function GroceryPage() {
                 You have <span className="font-semibold text-[#333333]">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
               </p>
             </div>
-          </>
+          </div>
         )}
 
         {/* Empty State with Inputs */}
