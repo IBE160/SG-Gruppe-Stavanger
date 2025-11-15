@@ -1,8 +1,8 @@
 require('dotenv').config({ path: '.env.local' })
 
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY
-const GEMINI_MODEL = "gemini-1.5-flash"
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
+const GEMINI_MODEL = "gemini-1.5-flash-latest"
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`
 
 console.log('API Key exists:', !!GOOGLE_AI_API_KEY)
 console.log('API Key length:', GOOGLE_AI_API_KEY?.length)
