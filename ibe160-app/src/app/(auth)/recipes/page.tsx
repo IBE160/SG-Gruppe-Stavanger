@@ -452,7 +452,7 @@ export default function RecipesPage() {
         {/* Recipe Details Modal */}
         {selectedRecipeId && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-gray-900/20 p-4"
             onClick={() => setSelectedRecipeId(null)}
           >
             <div
