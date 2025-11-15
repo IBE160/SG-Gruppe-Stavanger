@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Salad, LogOut, ShoppingCart, Sparkles, CheckCircle, TrendingUp } from "lucide-react"
+import { Salad, LogOut, ShoppingCart, Sparkles, CheckCircle, TrendingUp, Trash2, Plus } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 interface GroceryItem {
@@ -259,26 +259,28 @@ export default function GroceryPage() {
         </div>
 
         {/* Add Item */}
-        <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label className="flex flex-col min-w-40 flex-1">
-            <p className="text-base font-medium leading-normal pb-2 text-[#484848]">Add Item</p>
-            <div className="flex w-full flex-1 items-stretch rounded-xl">
+        <div className="mb-8 px-4">
+          <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm max-w-2xl">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Item</h2>
+            <div className="flex gap-3">
               <input
                 type="text"
                 value={newItemName}
                 onChange={(e) => setNewItemName(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && addItem()}
                 placeholder="e.g., Organic milk"
-                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#484848] focus:outline-0 focus:ring-2 focus:ring-[#228B22]/50 border border-[#e0e0e0] bg-white h-14 placeholder:text-[#484848]/60 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               />
               <button
                 onClick={addItem}
-                className="flex items-center justify-center px-4 rounded-r-xl border border-l-0 border-[#e0e0e0] bg-[#228B22] text-white transition-colors hover:bg-[#228B22]/90"
+                disabled={!newItemName.trim()}
+                className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
               >
-                <span className="material-symbols-outlined text-2xl">add</span>
+                <Plus className="w-5 h-5" />
+                <span>Add</span>
               </button>
             </div>
-          </label>
+          </div>
         </div>
 
         {/* Stats */}
@@ -305,27 +307,29 @@ export default function GroceryPage() {
 
         {/* To Buy Section */}
         {uncheckedItems.length > 0 && (
-          <div className="px-4">
-            <h2 className="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5 text-[#484848]">
-              To Buy
-            </h2>
-            <div className="flex flex-col gap-2">
+          <div className="px-4 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">To Buy</h2>
+            <div className="flex flex-col gap-3">
               {uncheckedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg p-3 border border-[#e0e0e0] bg-white"
+                  className="flex items-center justify-between rounded-xl p-4 border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1">
                     <input
                       type="checkbox"
                       checked={item.checked}
                       onChange={() => toggleItem(item.id)}
-                      className="form-checkbox h-6 w-6 rounded-md border-[#e0e0e0] text-[#228B22] focus:ring-[#228B22]/50"
+                      className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                     />
-                    <span className="text-base text-[#484848]">{item.name}</span>
+                    <span className="text-base text-gray-900 font-medium">{item.name}</span>
                   </div>
-                  <button onClick={() => deleteItem(item.id)} className="text-[#D9534F]">
-                    <span className="material-symbols-outlined">delete</span>
+                  <button
+                    onClick={() => deleteItem(item.id)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    aria-label="Delete item"
+                  >
+                    <Trash2 className="w-5 h-5" />
                   </button>
                 </div>
               ))}
@@ -335,27 +339,29 @@ export default function GroceryPage() {
 
         {/* In Cart Section */}
         {checkedItems.length > 0 && (
-          <div className="px-4 mt-6">
-            <h2 className="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5 text-[#484848]">
-              In Cart
-            </h2>
-            <div className="flex flex-col gap-2">
+          <div className="px-4 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">In Cart</h2>
+            <div className="flex flex-col gap-3">
               {checkedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg p-3 bg-[#228B22]/20 border border-[#228B22]/30"
+                  className="flex items-center justify-between rounded-xl p-4 bg-green-50 border border-green-200 shadow-sm"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1">
                     <input
                       type="checkbox"
                       checked={item.checked}
                       onChange={() => toggleItem(item.id)}
-                      className="form-checkbox h-6 w-6 rounded-md border-[#e0e0e0] text-[#228B22] focus:ring-[#228B22]/50"
+                      className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                     />
-                    <span className="text-base text-[#484848] line-through">{item.name}</span>
+                    <span className="text-base text-gray-600 line-through">{item.name}</span>
                   </div>
-                  <button onClick={() => deleteItem(item.id)} className="text-[#D9534F]">
-                    <span className="material-symbols-outlined">delete</span>
+                  <button
+                    onClick={() => deleteItem(item.id)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    aria-label="Delete item"
+                  >
+                    <Trash2 className="w-5 h-5" />
                   </button>
                 </div>
               ))}
@@ -365,31 +371,31 @@ export default function GroceryPage() {
 
         {/* Clear Button */}
         {checkedItems.length > 0 && (
-          <div className="p-4 mt-4 pb-8">
+          <div className="px-4 pb-8">
             <button
               onClick={clearChecked}
-              className="w-full flex min-w-[84px] max-w-[480px] mx-auto cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 bg-transparent text-[#D9534F] text-base font-medium leading-normal border-2 border-[#D9534F] hover:bg-[#D9534F]/10 transition-colors"
+              className="w-full max-w-md mx-auto flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 font-semibold rounded-xl border-2 border-red-200 hover:bg-red-100 hover:border-red-300 transition-all"
             >
-              <span className="truncate">Clear Checked Items</span>
+              <Trash2 className="w-5 h-5" />
+              <span>Clear Checked Items</span>
             </button>
           </div>
         )}
 
         {/* Empty State */}
         {items.length === 0 && (
-          <div className="mx-4 mb-6 rounded-xl border border-[#e0e0e0] bg-white p-12 text-center">
-            <span className="material-symbols-outlined mb-4 text-6xl text-[#228B22]/30">
-              shopping_cart
-            </span>
-            <h2 className="mb-2 text-2xl font-bold text-[#484848]">Your list is empty</h2>
-            <p className="mb-6 text-[#484848]/70">
-              Add items you need to buy to get started!
+          <div className="mx-4 mb-6 rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm">
+            <ShoppingCart className="w-20 h-20 mx-auto mb-4 text-gray-300" />
+            <h2 className="mb-2 text-2xl font-bold text-gray-900">Your list is empty</h2>
+            <p className="mb-6 text-gray-600">
+              Add items you need to buy or use AI to suggest ingredients!
             </p>
             <Link
               href="/pantry"
-              className="inline-block rounded-lg bg-green-600 px-6 py-3 font-bold text-white rounded-xl transition-colors hover:bg-green-700"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
             >
-              Go to Pantry
+              <Salad className="w-5 h-5" />
+              <span>Go to Pantry</span>
             </Link>
           </div>
         )}
