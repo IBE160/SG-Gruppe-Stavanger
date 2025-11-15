@@ -7,11 +7,17 @@ async function testConnection() {
   const connectionString = process.env.DATABASE_URL
   console.log('Connection string:', connectionString?.substring(0, 70) + '...\n')
 
-  // Extract password from connection string for debugging
-  const passwordMatch = connectionString?.match(/:([^@]+)@/)
-  const password = passwordMatch ? passwordMatch[1] : 'NOT FOUND'
-  console.log('Extracted password:', password)
-  console.log('Password length:', password.length)
+  // Parse connection string components
+  const urlMatch = connectionString?.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+  if (urlMatch) {
+    console.log('Username:', urlMatch[1])
+    console.log('Password:', urlMatch[2])
+    console.log('Host:', urlMatch[3])
+    console.log('Port:', urlMatch[4])
+    console.log('Database:', urlMatch[5])
+  } else {
+    console.log('❌ Could not parse connection string')
+  }
   console.log('')
 
   const client = new Client({
