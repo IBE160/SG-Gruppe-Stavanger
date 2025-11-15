@@ -158,10 +158,58 @@ export default function GroceryPage() {
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-12">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">Grocery List</h1>
-          <p className="text-gray-600">Plan your shopping and never forget an item</p>
+        {/* Hero Section */}
+        <div className="mb-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12 border border-blue-100">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Smart Grocery Shopping Made Easy
+              </h1>
+              <p className="text-lg text-gray-700 mb-6">
+                Never forget an item again! Our AI-powered shopping list helps you plan your grocery trips efficiently and suggests items based on what you want to cook.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
+                  <ShoppingCart className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm font-medium text-gray-700">Smart Lists</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
+                  <span className="material-symbols-outlined text-blue-600" style={{ fontSize: "20px" }}>auto_awesome</span>
+                  <span className="text-sm font-medium text-gray-700">AI Suggestions</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-blue-200">
+                  <span className="material-symbols-outlined text-blue-600" style={{ fontSize: "20px" }}>sync</span>
+                  <span className="text-sm font-medium text-gray-700">Auto-Sync</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+              <img
+                src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&h=600&fit=crop&q=80"
+                alt="Grocery shopping"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                <div className="text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="material-symbols-outlined text-white">auto_awesome</span>
+                    <span className="text-sm font-medium">AI building your list...</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Milk ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Eggs ✓
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
+                      Bread ✓
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Mode Selection and Inputs - Only show when list has items */}
