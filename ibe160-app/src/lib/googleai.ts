@@ -1,8 +1,8 @@
 // Google Gemini AI Integration
-// Using Gemini 2.0 Flash (experimental) for AI generation
+// Using Gemini 1.5 Flash for AI generation
 
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || ""
-const GEMINI_MODEL = "gemini-2.0-flash-exp"
+const GEMINI_MODEL = "gemini-1.5-flash"
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
 
 interface GeminiRequest {
@@ -42,7 +42,6 @@ export async function generateWithGemini(prompt: string): Promise<string> {
     }
 
     const url = `${GEMINI_API_URL}?key=${GOOGLE_AI_API_KEY}`
-    console.log("🤖 Calling Gemini API:", GEMINI_MODEL)
 
     const response = await fetch(url, {
       method: "POST",
@@ -54,18 +53,12 @@ export async function generateWithGemini(prompt: string): Promise<string> {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error("❌ Gemini API error:", {
-        status: response.status,
-        statusText: response.statusText,
-        body: errorText,
-        url: GEMINI_API_URL,
-      })
+      console.error("Gemini API error:", response.status, errorText)
       throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
     }
 
     const data: GeminiResponse = await response.json()
     const text = data.candidates[0]?.content?.parts[0]?.text || ""
-    console.log("✅ Gemini API success, generated", text.length, "characters")
     return text
   } catch (error) {
     console.error("Gemini API error:", error)
@@ -109,15 +102,14 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
     }
     return JSON.parse(jsonMatch[0])
   } catch (error) {
-    console.error("AI recipe search failed, falling back to Spoonacular:", error)
+    console.error("AI recipe search failed:", error)
 
-    // Fallback: Use Spoonacular API with the query
+    // Fallback: Use Spoonacular API
     try {
       const { searchRecipes } = await import('./spoonacular')
       const recipes = await searchRecipes(query, 5)
 
       if (recipes && recipes.length > 0) {
-        console.log("✅ Falling back to Spoonacular - found", recipes.length, "recipes")
         return recipes.map((recipe: any) => ({
           id: recipe.id,
           title: recipe.title,
@@ -128,11 +120,9 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
         }))
       }
     } catch (spoonacularError) {
-      console.error("Spoonacular fallback also failed:", spoonacularError)
+      console.error("Spoonacular fallback failed:", spoonacularError)
     }
 
-    // Final fallback: return demo recipes relevant to query
-    console.warn("⚠️ Both AI and Spoonacular failed - using demo recipes")
     return []
   }
 }
