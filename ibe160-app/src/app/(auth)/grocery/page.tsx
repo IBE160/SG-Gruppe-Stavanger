@@ -211,8 +211,8 @@ export default function GroceryPage() {
         {/* Action Bar with Item Count and Add Button */}
         {items.length > 0 && (
           <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-gray-600 text-base">
-              You have <span className="font-semibold text-gray-900">{items.length}</span> item{items.length !== 1 ? "s" : ""} ({uncheckedItems.length} to buy, {checkedItems.length} in cart)
+            <p className="text-gray-600 text-base font-normal">
+              You have <span className="font-semibold text-gray-900">{items.length}</span> item{items.length !== 1 ? "s" : ""} in your list
             </p>
             <div className="flex w-full sm:w-auto items-stretch gap-2">
               <input
@@ -221,15 +221,14 @@ export default function GroceryPage() {
                 onChange={(e) => setNewItemName(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && addItem()}
                 placeholder="Add item..."
-                className="flex-1 min-w-[200px] px-4 h-11 border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="flex-1 min-w-[200px] px-4 h-11 border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
               />
               <button
                 onClick={addItem}
                 disabled={!newItemName.trim()}
-                className="px-4 h-11 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+                className="px-6 h-11 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
-                <Plus className="w-5 h-5" />
-                <span>Add</span>
+                Add Item
               </button>
             </div>
           </div>
@@ -270,12 +269,12 @@ export default function GroceryPage() {
         {/* To Buy Section */}
         {uncheckedItems.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">To Buy</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">To Buy</h2>
             <div className="flex flex-col gap-2">
               {uncheckedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg p-4 border border-gray-200 bg-white hover:shadow-sm transition-shadow"
+                  className="flex items-center justify-between rounded-xl p-4 border border-gray-200 bg-white hover:border-gray-300 transition-colors"
                 >
                   <div className="flex items-center gap-3 flex-1">
                     <input
@@ -284,11 +283,11 @@ export default function GroceryPage() {
                       onChange={() => toggleItem(item.id)}
                       className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                     />
-                    <span className="text-base text-gray-900">{item.name}</span>
+                    <span className="text-base text-gray-900 font-normal">{item.name}</span>
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-gray-50 rounded-lg transition-colors"
                     aria-label="Delete item"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -302,12 +301,12 @@ export default function GroceryPage() {
         {/* In Cart Section */}
         {checkedItems.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">In Cart</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">In Cart</h2>
             <div className="flex flex-col gap-2">
               {checkedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-lg p-4 bg-green-50 border border-green-200"
+                  className="flex items-center justify-between rounded-xl p-4 bg-green-50/50 border border-green-200/50"
                 >
                   <div className="flex items-center gap-3 flex-1">
                     <input
@@ -316,11 +315,11 @@ export default function GroceryPage() {
                       onChange={() => toggleItem(item.id)}
                       className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                     />
-                    <span className="text-base text-gray-600 line-through">{item.name}</span>
+                    <span className="text-base text-gray-500 line-through font-normal">{item.name}</span>
                   </div>
                   <button
                     onClick={() => deleteItem(item.id)}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-white rounded-lg transition-colors"
                     aria-label="Delete item"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -331,7 +330,7 @@ export default function GroceryPage() {
             {/* Clear Button */}
             <button
               onClick={clearChecked}
-              className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-3 bg-white text-red-600 font-medium rounded-lg border-2 border-red-200 hover:bg-red-50 transition-all"
+              className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-red-600 font-medium rounded-lg border border-red-200 hover:bg-red-50 hover:border-red-300 transition-all"
             >
               <Trash2 className="w-5 h-5" />
               <span>Clear Checked Items</span>
