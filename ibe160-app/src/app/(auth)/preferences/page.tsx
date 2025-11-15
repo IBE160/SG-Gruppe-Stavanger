@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Settings, Target, Salad, Ban, Globe, ThumbsDown, Bell, Check, LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
-import { subscribeToPushNotifications, unsubscribeFromPushNotifications } from "@/utils/push-notifications"
 
 interface UserPreferences {
   dietaryRestrictions: string[]
@@ -13,7 +12,6 @@ interface UserPreferences {
   cuisinePreferences: string[]
   dislikedIngredients: string[]
   emailNotifications: boolean
-  pushNotifications: boolean
 }
 
 const DIETARY_OPTIONS = [
@@ -63,7 +61,6 @@ export default function PreferencesPage() {
     cuisinePreferences: [],
     dislikedIngredients: [],
     emailNotifications: true,
-    pushNotifications: false,
   })
   const [newIngredient, setNewIngredient] = useState("")
   const [loading, setLoading] = useState(true)
@@ -85,7 +82,6 @@ export default function PreferencesPage() {
             cuisinePreferences: JSON.parse(data.cuisinePreferences || "[]"),
             dislikedIngredients: JSON.parse(data.dislikedIngredients || "[]"),
             emailNotifications: data.emailNotifications ?? true,
-            pushNotifications: data.pushNotifications ?? false,
           })
         }
       }
@@ -93,55 +89,6 @@ export default function PreferencesPage() {
       console.error("Failed to fetch preferences", error)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handlePushNotificationToggle = async (enabled: boolean) => {
-    if (enabled) {
-      // Subscribe to push notifications
-      const subscription = await subscribeToPushNotifications()
-      if (subscription) {
-        // Send subscription to backend
-        try {
-          const res = await fetch("/api/push/subscribe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ subscription }),
-          })
-
-          if (res.ok) {
-            setPreferences({ ...preferences, pushNotifications: true })
-            alert("✅ Push notifications enabled!")
-          } else {
-            alert("❌ Failed to enable push notifications")
-          }
-        } catch (error) {
-          console.error("Failed to subscribe:", error)
-          alert("❌ Failed to enable push notifications")
-        }
-      } else {
-        alert("❌ Push notifications not supported or permission denied")
-      }
-    } else {
-      // Unsubscribe from push notifications
-      const success = await unsubscribeFromPushNotifications()
-      if (success) {
-        try {
-          const res = await fetch("/api/push/subscribe", {
-            method: "DELETE",
-          })
-
-          if (res.ok) {
-            setPreferences({ ...preferences, pushNotifications: false })
-            alert("✅ Push notifications disabled!")
-          } else {
-            alert("❌ Failed to disable push notifications")
-          }
-        } catch (error) {
-          console.error("Failed to unsubscribe:", error)
-          alert("❌ Failed to disable push notifications")
-        }
-      }
     }
   }
 
@@ -157,7 +104,6 @@ export default function PreferencesPage() {
           cuisinePreferences: JSON.stringify(preferences.cuisinePreferences),
           dislikedIngredients: JSON.stringify(preferences.dislikedIngredients),
           emailNotifications: preferences.emailNotifications,
-          pushNotifications: preferences.pushNotifications,
         }),
       })
 
@@ -432,21 +378,7 @@ export default function PreferencesPage() {
               <div>
                 <p className="font-medium text-gray-900">Email Notifications</p>
                 <p className="text-sm text-gray-600">
-                  Receive emails when food items are about to expire
-                </p>
-              </div>
-            </label>
-            <label className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                checked={preferences.pushNotifications}
-                onChange={(e) => handlePushNotificationToggle(e.target.checked)}
-                className="w-5 h-5 text-green-600 rounded"
-              />
-              <div>
-                <p className="font-medium text-gray-900">Push Notifications</p>
-                <p className="text-sm text-gray-600">
-                  Receive browser push notifications for expiring items
+                  Receive emails when food items are about to expire. Get notified 3 days before expiration.
                 </p>
               </div>
             </label>
