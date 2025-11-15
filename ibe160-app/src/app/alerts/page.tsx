@@ -29,25 +29,32 @@ export default function AlertsPage() {
   const safe = itemsWithDays.filter((item) => item.daysUntilExpiry > 3)
 
   const getItemImage = (name: string, category: string) => {
-    // Map common food items to Unsplash images
+    // Map common food items to Unsplash images (matching PantryItemCard)
     const imageMap: { [key: string]: string } = {
       tomatoes: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
-      milk: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80",
-      chicken: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=80&h=80&fit=crop&q=80",
-      eggs: "https://images.unsplash.com/photo-1582722872445-44dc1f3e3b84?w=80&h=80&fit=crop&q=80",
+      tomato: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      milk: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80",
+      chicken: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80",
+      eggs: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=80&h=80&fit=crop&q=80",
+      egg: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=80&h=80&fit=crop&q=80",
       bread: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=80&h=80&fit=crop&q=80",
       cheese: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=80&h=80&fit=crop&q=80",
       yogurt: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=80&h=80&fit=crop&q=80",
       lettuce: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=80&h=80&fit=crop&q=80",
       carrots: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
-      apples: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=80&h=80&fit=crop&q=80",
-      bananas: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=80&h=80&fit=crop&q=80",
-      oranges: "https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=80&h=80&fit=crop&q=80",
-      beef: "https://images.unsplash.com/photo-1588347818036-b6e0c41d4b3d?w=80&h=80&fit=crop&q=80",
-      pork: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
-      fish: "https://images.unsplash.com/photo-1498654077810-12c21d4d6dc3?w=80&h=80&fit=crop&q=80",
+      carrot: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
+      apples: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
+      apple: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
+      bananas: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
+      banana: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
+      oranges: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
+      orange: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
+      beef: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      pork: "https://images.unsplash.com/photo-1588347818036-5e643c2b2e0f?w=80&h=80&fit=crop&q=80",
+      fish: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
+      salmon: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
       rice: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
-      pasta: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=80&h=80&fit=crop&q=80",
+      pasta: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=80&h=80&fit=crop&q=80",
     }
 
     const itemKey = name.toLowerCase()
@@ -57,9 +64,9 @@ export default function AlertsPage() {
 
     // Fallback to category-based images
     const categoryMap: { [key: string]: string } = {
-      dairy: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80",
+      dairy: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80",
       produce: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=80&h=80&fit=crop&q=80",
-      meat: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      meat: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80",
       grains: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
       other: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=80&h=80&fit=crop&q=80",
     }

@@ -95,7 +95,7 @@ export default function Home() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                           <img
-                            src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80"
+                            src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80"
                             alt="Milk"
                             className="w-full h-full object-cover"
                           />
@@ -186,7 +186,7 @@ export default function Home() {
                     <div className="flex items-center gap-2">
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         <img
-                          src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&h=80&fit=crop&q=80"
+                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80"
                           alt="Milk"
                           className="w-full h-full object-cover"
                         />
