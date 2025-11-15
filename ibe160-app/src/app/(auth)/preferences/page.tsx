@@ -225,8 +225,10 @@ export default function PreferencesPage() {
 
         {/* Dietary Restrictions */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Salad className="w-6 h-6 text-green-600" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Salad className="w-6 h-6 text-green-600" />
+            </div>
             <h2 className="text-xl font-semibold text-gray-900">Dietary Restrictions</h2>
           </div>
           <div className="grid grid-cols-3 gap-3">
@@ -254,8 +256,10 @@ export default function PreferencesPage() {
 
         {/* Allergies */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Ban className="w-6 h-6 text-red-600" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Ban className="w-6 h-6 text-red-600" />
+            </div>
             <h2 className="text-xl font-semibold text-gray-900">Allergies & Intolerances</h2>
           </div>
           <div className="grid grid-cols-3 gap-3">
@@ -283,8 +287,10 @@ export default function PreferencesPage() {
 
         {/* Cuisine Preferences */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Globe className="w-6 h-6 text-blue-600" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Globe className="w-6 h-6 text-blue-600" />
+            </div>
             <h2 className="text-xl font-semibold text-gray-900">Favorite Cuisines</h2>
           </div>
           <div className="grid grid-cols-4 gap-3">
@@ -312,8 +318,10 @@ export default function PreferencesPage() {
 
         {/* Disliked Ingredients */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <ThumbsDown className="w-6 h-6 text-orange-600" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <ThumbsDown className="w-6 h-6 text-orange-600" />
+            </div>
             <h2 className="text-xl font-semibold text-gray-900">Disliked Ingredients</h2>
           </div>
           <div className="flex gap-3 mb-4">
@@ -355,8 +363,10 @@ export default function PreferencesPage() {
 
         {/* Notifications */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Bell className="w-6 h-6 text-yellow-600" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Bell className="w-6 h-6 text-yellow-600" />
+            </div>
             <h2 className="text-xl font-semibold text-gray-900">Notification Settings</h2>
           </div>
           <div className="space-y-4">
