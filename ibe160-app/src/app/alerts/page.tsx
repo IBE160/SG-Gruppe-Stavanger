@@ -187,21 +187,55 @@ export default function AlertsPage() {
                 alt="Fresh produce in refrigerator"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-                <div className="text-white space-y-3 w-full">
-                  <div className="flex items-center justify-between bg-red-500/90 backdrop-blur-sm rounded-lg p-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">🍅</span>
-                      <span className="text-sm font-medium">Tomatoes expiring today!</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent flex flex-col justify-end p-6">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80"
+                          alt="Tomatoes"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="font-semibold text-gray-900">Tomatoes</span>
                     </div>
-                    <span className="text-xs bg-white/20 px-2 py-1 rounded">Use now</span>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50">
+                      <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                      <span className="text-xs font-medium text-green-700">Fresh</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between bg-orange-500/90 backdrop-blur-sm rounded-lg p-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">🥛</span>
-                      <span className="text-sm font-medium">Milk expires in 1 day</span>
+                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80"
+                          alt="Milk"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="font-semibold text-gray-900">Milk</span>
                     </div>
-                    <span className="text-xs bg-white/20 px-2 py-1 rounded">Tomorrow</span>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50">
+                      <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                      <span className="text-xs font-medium text-yellow-700">Expiring Soon</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80"
+                          alt="Chicken"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="font-semibold text-gray-900">Chicken</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50">
+                      <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                      <span className="text-xs font-medium text-red-700">Expired</span>
+                    </div>
                   </div>
                 </div>
               </div>
