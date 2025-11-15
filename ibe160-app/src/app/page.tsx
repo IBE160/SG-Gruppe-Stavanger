@@ -155,65 +155,12 @@ export default function Home() {
         {/* Feature Section 2 */}
         <section className="py-16 px-4">
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg md:order-last relative">
+            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden shadow-lg md:order-last">
               <img
                 src="https://images.unsplash.com/photo-1643494847705-74808059bf07?q=80&w=1200&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Refrigerator with food"
                 className="w-full h-full object-cover"
               />
-              {/* Expiring Items Alerts */}
-              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl w-64">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80"
-                          alt="Tomatoes"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <span className="font-semibold text-gray-900">Tomatoes</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50">
-                      <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                      <span className="text-xs font-medium text-green-700">Fresh</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80"
-                          alt="Milk"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <span className="font-semibold text-gray-900">Milk</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50">
-                      <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-                      <span className="text-xs font-medium text-yellow-700">Expiring Soon</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg p-3 border border-gray-200 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                        <img
-                          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80"
-                          alt="Chicken"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <span className="font-semibold text-gray-900">Chicken</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50">
-                      <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                      <span className="text-xs font-medium text-red-700">Expired</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="flex flex-col gap-4">
               <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
