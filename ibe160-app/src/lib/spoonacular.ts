@@ -21,6 +21,7 @@ export interface RecipeDetails extends Recipe {
     unit: string
   }>
   summary: string
+  dishTypes?: string[]
 }
 
 // Search recipes
