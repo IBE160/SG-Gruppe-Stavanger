@@ -30,7 +30,7 @@ workflow_path: "method-greenfield.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
-  document-project: required
+  #document-project: required
 
   # Phase 0: Discovery (Optional)
   brainstorm-project: ["docs/bmm-brainstorming-session-2025-11-14.md", "brainstorming-session-status.yaml"]
