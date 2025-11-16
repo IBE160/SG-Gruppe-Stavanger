@@ -6,7 +6,15 @@ import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
 import prisma from "./prisma"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+if (!process.env.AUTH_SECRET) {
+  throw new Error("Missing AUTH_SECRET")
+}
+if (!process.env.DATABASE_URL) {
+  throw new Error("Missing DATABASE_URL")
+}
+
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET,
   trustHost: true,
   providers: [
     Credentials({
@@ -16,28 +24,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
+        if (!credentials?.email || !credentials?.password) return null
 
         const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email as string,
-          },
+          where: { email: credentials.email as string },
         })
-
-        if (!user) {
-          return null
-        }
+        if (!user) return null
 
         const isPasswordValid = await compare(
           credentials.password as string,
-          user.passwordHash
+          user.passwordHash,
         )
-
-        if (!isPasswordValid) {
-          return null
-        }
+        if (!isPasswordValid) return null
 
         return {
           id: user.id,
@@ -49,7 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days (FR012)
+    maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
     signIn: "/login",
