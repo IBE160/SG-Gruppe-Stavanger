@@ -1,8 +1,12 @@
 {
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "framework": "nextjs",
+  "installCommand": "npm install",
   "crons": [
     {
       "path": "/api/cron/expiration-alerts",
-      "schedule": "0 8 * * *"
+      "schedule": "0 9 * * *"
     }
   ]
 }
