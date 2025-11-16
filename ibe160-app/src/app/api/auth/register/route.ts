@@ -7,6 +7,9 @@ import { hash } from "bcryptjs"
 import { registerSchema } from "@/lib/validation/auth"
 import prisma from "@/lib/prisma"
 
+// Force Node.js runtime for Prisma compatibility on Vercel
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
