@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { auth } from "@/auth"
 
 // GET /api/barcode/[code] - Lookup product info by barcode
 export async function GET(

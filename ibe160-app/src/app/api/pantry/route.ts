@@ -3,7 +3,7 @@
 
 import { NextResponse } from "next/server"
 import { foodItemSchema } from "@/lib/validation/pantry"
-import { auth } from "@/lib/auth"
+import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
 
 export async function GET() {

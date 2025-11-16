@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { auth } from "@/auth"
 import { analyzeNutrition } from "@/lib/googleai"
 
 // POST /api/ai/nutrition - Analyze recipe nutrition

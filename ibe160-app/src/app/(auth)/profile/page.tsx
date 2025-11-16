@@ -2,7 +2,7 @@
 // Connected to real authentication
 
 import Link from "next/link"
-import { auth, signOut } from "@/lib/auth"
+import { auth, signOut } from "@/auth"
 import { redirect } from "next/navigation"
 import { User, Mail, LogOut, Package, ChefHat, ShoppingCart, Bell, Salad, Settings } from "lucide-react"
 
