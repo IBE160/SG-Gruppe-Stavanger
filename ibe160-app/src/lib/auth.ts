@@ -6,13 +6,6 @@ import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
 import prisma from "./prisma"
 
-if (!process.env.AUTH_SECRET) {
-  throw new Error("Missing AUTH_SECRET")
-}
-if (!process.env.DATABASE_URL) {
-  throw new Error("Missing DATABASE_URL")
-}
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
