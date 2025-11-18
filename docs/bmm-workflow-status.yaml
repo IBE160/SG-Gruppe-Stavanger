@@ -6,8 +6,8 @@
 # project: ibe160
 # project_type: software
 # project_level: 3
-# field_type: brownfield
-# workflow_path: brownfield-level-3.yaml
+# field_type: greenfield
+# workflow_path: method-greenfield-level-3.yaml
 
 # STATUS DEFINITIONS:
 # ==================
@@ -25,8 +25,8 @@ generated: "Tuesday, November 4, 2025"
 project: "ibe160"
 project_type: "software"
 project_level: "3"
-field_type: "brownfield"
-workflow_path: "brownfield-level-3.yaml"
+field_type: "greenfield"
+workflow_path: "method-greenfield-level-3.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
