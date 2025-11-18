@@ -12,7 +12,7 @@
 
 ## Fase 1
 
-- [ x] Planning
+- [ ] Planning
   - [x] /run-agent-task pm *prd
   - [x ] /run-agent-task pm *validate-prd
   - [ ] /run-agent-task ux-designer *create-ux-design {prompt / user-input-file}

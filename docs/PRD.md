@@ -101,7 +101,7 @@ To ensure our metrics reflect true user value and not just vanity numbers, we wi
 
 The MVP focuses on delivering the core value proposition: reducing food waste and inspiring cooking through intelligent inventory management.
 
-- **User Authentication:** Secure registration and login (NextAuth.js).
+- **User Authentication:** Secure registration and login (secure authentication system).
 - **Food Inventory Management:** Users can manually add, view, edit, and delete food items with quantities and expiration dates.
 - **Recipe Database Integration:** Browse, search, and view recipes from the Spoonacular API.
 - **Smart Recipe Suggestions:** Generate recipe suggestions based on the user's current inventory.
@@ -128,6 +128,17 @@ The long-term vision for the platform involves highly intelligent, proactive ass
 - **AI-Driven Recipe Regeneration:** The ability to regenerate recipes with specific constraints (e.g., "Make it cheaper / faster / healthier," or adapting to available kitchen equipment).
 - **Proactive Meal Planning:** AI-driven meal plans that adapt to inventory, preferences, and upcoming expiration dates.
 - **Tangible Impact Dashboard:** A user-facing dashboard that visually represents the user's positive impact, such as 'food saved from waste (in kg)' or 'money saved (in local currency)'.
+
+### Out of Scope
+
+To ensure a focused and achievable MVP, the following features are explicitly out of scope for the initial release:
+
+- **Barcode Scanning:** Automating inventory entry by scanning product barcodes.
+- **Receipt Parsing:** Automatically adding items to inventory by scanning or uploading a grocery receipt.
+- **Social Features:** User profiles, sharing recipes, or following other users.
+- **Meal Planning Calendar:** A dedicated interface for planning meals for the week.
+- **Multi-language Support:** The initial release will be in English only.
+
 
 ---
 
@@ -226,22 +237,26 @@ This section breaks down the product's functionality into specific requirements,
 ### 2. Inventory Management
 
 - **FR2.1 - Add Food Item:** A user can manually add a food item to their inventory.
+  - **Dependencies:** FR1.2 (User Login)
   - **Acceptance Criteria:**
     - The user must provide a name, quantity, unit, and expiration date for each item.
     - The item appears in the user's inventory list immediately after being added.
     - The process is optimized for speed to meet the 'Rapid Time-to-Value' success criterion.
 
 - **FR2.2 - View Inventory:** A user can view all items in their inventory.
+  - **Dependencies:** FR1.2 (User Login)
   - **Acceptance Criteria:**
     - The inventory list displays the name, quantity, unit, and expiration date for each item.
     - Items are sorted by expiration date, with the soonest-expiring items at the top.
 
 - **FR2.3 - Edit Food Item:** A user can edit the details of an existing food item.
+  - **Dependencies:** FR1.2 (User Login)
   - **Acceptance Criteria:**
     - User can update the name, quantity, unit, and expiration date.
     - Changes are reflected in the inventory list immediately.
 
 - **FR2.4 - Delete Food Item:** A user can delete an item from their inventory.
+  - **Dependencies:** FR1.2 (User Login)
   - **Acceptance Criteria:**
     - A confirmation prompt is displayed before deletion.
     - The item is permanently removed from the inventory list upon confirmation.
@@ -249,21 +264,25 @@ This section breaks down the product's functionality into specific requirements,
 ### 3. Recipe Discovery & Interaction
 
 - **FR3.1 - Get Recipe Suggestions:** The system suggests recipes based on the user's inventory.
+  - **Dependencies:** FR2.2 (View Inventory)
   - **Acceptance Criteria:**
     - The system generates at least 3 recipe suggestions if there are sufficient ingredients.
     - Suggestions are prioritized based on ingredients that are nearing their expiration date.
     - The suggestions are 'meaningful' (contain at least 3 ingredients).
 
 - **FR3.2 - Search Recipes:** A user can search for recipes from the Spoonacular API.
+  - **Dependencies:** FR1.2 (User Login)
   - **Acceptance Criteria:**
     - Search results are displayed clearly with images and titles.
     - Search performance meets the <1 second target defined in the Business Metrics.
 
 - **FR3.3 - View Recipe Details:** A user can view the full details of a recipe.
+  - **Dependencies:** FR3.2 (Search Recipes)
   - **Acceptance Criteria:**
     - The view includes ingredients, instructions, cooking time, and servings.
 
 - **FR3.4 - Mark Recipe as Cooked:** A user can indicate they have cooked a recipe.
+  - **Dependencies:** FR3.3 (View Recipe Details), FR2.2 (View Inventory)
   - **Acceptance Criteria:**
     - The system prompts the user to confirm which ingredients from their inventory were used.
     - Upon confirmation, the quantities of the used ingredients are automatically deducted from the user's inventory.
@@ -272,10 +291,19 @@ This section breaks down the product's functionality into specific requirements,
 ### 4. Notifications
 
 - **FR4.1 - Expiration Alerts:** The system notifies the user about items nearing expiration.
+  - **Dependencies:** FR2.2 (View Inventory)
   - **Acceptance Criteria:**
     - An in-app notification is generated for items expiring in the next 2-3 days.
     - The notification is 'actionable', directly linking the user to a list of recipes that use the expiring item.
     - The frequency and bundling of notifications are managed to avoid 'notification fatigue', as per the Metric Integrity principles.
+
+- **FR4.2 - Instant Idea Generation:** A user can get an immediate recipe suggestion without using their saved inventory.
+  - **Dependencies:** FR1.2 (User Login)
+  - **Acceptance Criteria:**
+    - A prominent 'Instant Idea' button is available on the main screen.
+    - A user can input 2-3 ingredients.
+    - The system provides an immediate AI-generated recipe suggestion based on the input.
+    - This action does not affect the user's persistent inventory.
 
 ---
 
@@ -301,6 +329,9 @@ This section breaks down the product's functionality into specific requirements,
 - **Database Performance:** The database schema and queries must be optimized for performance and scalability, utilizing indexing and efficient data retrieval strategies.
 - **API Rate Limits:** Implement rate limiting for external API calls (e.g., Spoonacular) to manage usage and prevent service interruptions.
 
+### System
+- **NFR-SYS-1 - System Foundation:** The system shall be built on a maintainable and scalable project foundation.
+
 ### Accessibility
 
 - **WCAG Compliance:** The application will aim for WCAG 2.1 AA compliance, ensuring it is usable by individuals with disabilities.
@@ -314,7 +345,58 @@ This section breaks down the product's functionality into specific requirements,
 - **Supabase:** Utilize Supabase for database management (PostgreSQL) and authentication services (NextAuth.js integration).
 - **Vercel:** Deploy the frontend and API routes to Vercel for continuous deployment and hosting.
 
+### API Endpoint Overview
 
+While a detailed specification will be part of the architecture design, the following provides a high-level overview of the core API endpoints:
+
+- **Authentication:**
+  - `POST /api/auth/register`: User registration.
+  - `POST /api/auth/login`: User login.
+  - `POST /api/auth/logout`: User logout.
+- **Inventory:**
+  - `GET /api/inventory`: Get all inventory items for the authenticated user.
+  - `POST /api/inventory`: Add a new item to the inventory.
+  - `PUT /api/inventory/{id}`: Update an existing inventory item.
+  - `DELETE /api/inventory/{id}`: Delete an inventory item.
+- **Recipes:**
+  - `GET /api/recipes/search`: Search for recipes from the Spoonacular API.
+  - `GET /api/recipes/suggestions`: Get smart recipe suggestions based on inventory.
+  - `POST /api/recipes/{id}/cook`: Mark a recipe as cooked and deduct ingredients.
+- **Notifications:**
+  - `GET /api/notifications`: Get all notifications for the authenticated user.
+
+
+
+---
+
+## Implementation Epics
+
+*   **Epic 1: Foundation & Core Setup:** Establishes the essential technical groundwork, including the project structure, database, user authentication, and the basic application shell. This is the bedrock upon which all other features will be built.
+*   **Epic 2: Inventory Management:** Delivers the core capability for users to manage their kitchen inventory. This includes adding, editing, and viewing food items, which is central to the app's purpose.
+*   **Epic 3: Recipe Discovery & Browsing:** Focuses on the user's ability to **proactively** search, browse, and view recipes from the external Spoonacular API. This epic is about general recipe exploration.
+*   **Epic 4: Personalized Suggestions & Alerts:** Implements the **reactive** "smart" features. This includes generating recipe suggestions based on the user's inventory, sending expiration alerts, and delivering the **"Instant Idea" button** for quick, on-the-fly recipe generation.
+
+### Dependency Mapping Analysis
+
+*   **Epic 1 (Foundation & Core Setup)** is the foundational block.
+    *   **Impact:** All other epics depend on its completion. Any delays here will cascade through the entire project.
+*   **Epic 2 (Inventory Management)** is the next critical path item.
+    *   **Dependency:** Relies on the database and UI shell from Epic 1.
+    *   **Impact:** Epic 4 (Intelligent Suggestions & Alerts) is blocked until this is complete.
+*   **Epic 3 (Recipe Discovery & Interaction)** can be partially developed in parallel.
+    *   **Dependency:** Relies on the UI shell from Epic 1. The basic search and display can be built without inventory.
+    *   **Impact:** Full integration with smart features depends on Epic 4.
+*   **Epic 4 (Intelligent Suggestions & Alerts)** is the final value-add epic.
+    *   **Dependencies:** Requires a complete inventory system (Epic 2) and the recipe display components (Epic 3).
+    *   **Impact:** This epic delivers the "magic" of the application.
+
+**Visualized Flow:**
+
+```
+[Epic 1: Foundation] -> [Epic 2: Inventory] -> [Epic 4: Suggestions]
+       |
+       +-> [Epic 3: Recipe Discovery] ---^
+```
 
 ---
 
@@ -339,7 +421,10 @@ This document outlines the requirements for a mobile-responsive web app designed
 
 ## References
 
-- Product Brief: proposal.md
+- Product Brief: `proposal.md`
+- Epics and Stories: `epics.md`
+- Technical Research (Authentication): `docs/fase-1-analys-silger/research-technical-2025-11-11.md`
+- Technical Research (AI): `docs/fase-1-analys-silger/research-technical-2025-11-14.md`
 
 ---
 

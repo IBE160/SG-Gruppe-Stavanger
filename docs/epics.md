@@ -47,8 +47,9 @@ This document breaks down the project requirements into actionable epics and use
 
 #### 1.1: Project Initialization & Setup
 *   **Scope:** MVP
-*   **Covers:** (Internal)
+*   **Covers:** NFR-SYS-1
 *   **User Story:** As a developer, I want a new Next.js project initialized with the standard folder structure, ESLint, Prettier, and other development dependencies so that I can start building the application on a solid foundation.
+*   **Dependencies:** None
 *   **BDD Criteria:**
     *   **Given** a new project is needed
     *   **When** the project is initialized
@@ -56,8 +57,9 @@ This document breaks down the project requirements into actionable epics and use
 
 #### 1.2: Database & ORM Setup
 *   **Scope:** MVP
-*   **Covers:** (Internal)
+*   **Covers:** NFR-SYS-1
 *   **User Story:** As a developer, I want the Supabase database connected to the application with Prisma as the ORM so that I can interact with the database in a type-safe way.
+*   **Dependencies:** 1.1
 *   **BDD Criteria:**
     *   **Given** the project is initialized
     *   **When** the database is set up
@@ -69,6 +71,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR1.1, FR1.2
 *   **User Story:** As a user, I want to be able to register and log in to the application so that I can access my personal inventory.
+*   **Dependencies:** 1.2
 *   **BDD Criteria:**
     *   **Given** a new user visits the application
     *   **When** they register with an email and password
@@ -80,6 +83,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR1.3
 *   **User Story:** As a user, I want a basic application shell with a navigation bar so that I can easily move between the main sections of the application.
+*   **Dependencies:** 1.3
 *   **BDD Criteria:**
     *   **Given** a logged-in user
     *   **When** they view the application
@@ -99,6 +103,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR2.1
 *   **User Story:** As a user, I want to manually add a food item to my inventory with its name, quantity, unit, and expiration date so that I can keep track of what I have.
+*   **Dependencies:** 1.4
 *   **BDD Criteria:**
     *   **Given** I am on the inventory management screen
     *   **When** I provide a food item's name, quantity, unit, and expiration date
@@ -111,6 +116,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR2.2
 *   **User Story:** As a user, I want to view all items in my inventory, sorted by expiration date, so that I can quickly see what needs to be used soon.
+*   **Dependencies:** 2.1
 *   **BDD Criteria:**
     *   **Given** I am on the inventory management screen
     *   **When** I view my inventory
@@ -122,6 +128,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR2.3
 *   **User Story:** As a user, I want to edit the details of an existing food item (name, quantity, unit, expiration date) so that I can correct mistakes or update information.
+*   **Dependencies:** 2.2
 *   **BDD Criteria:**
     *   **Given** I have an item in my inventory
     *   **When** I select to edit its details
@@ -132,6 +139,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR2.4
 *   **User Story:** As a user, I want to delete a food item from my inventory so that I can remove items I no longer have or need to track.
+*   **Dependencies:** 2.2
 *   **BDD Criteria:**
     *   **Given** I have an item in my inventory
     *   **When** I select to delete it
@@ -167,6 +175,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR3.2
 *   **User Story:** As a user, I want to search for recipes using keywords (e.g., "chicken pasta", "vegetarian chili") so that I can find recipes that match my interests.
+*   **Dependencies:** 1.4
 *   **BDD Criteria:**
     *   **Given** I am on the recipe discovery screen
     *   **When** I enter a keyword into the search bar and submit
@@ -177,6 +186,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR3.2
 *   **User Story:** As a user, I want to see a clear list of recipe search results with images and titles so that I can quickly identify recipes of interest.
+*   **Dependencies:** 3.1
 *   **BDD Criteria:**
     *   **Given** I have performed a recipe search
     *   **When** the results are displayed
@@ -187,6 +197,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR3.3
 *   **User Story:** As a user, I want to view the full details of a selected recipe, including ingredients, instructions, cooking time, and servings, so that I can decide if I want to cook it.
+*   **Dependencies:** 3.2
 *   **BDD Criteria:**
     *   **Given** I am viewing a recipe in the search results
     *   **When** I select a recipe
@@ -196,6 +207,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR3.4
 *   **User Story:** As a user, I want to mark a recipe as "cooked" and have the used ingredients automatically deducted from my inventory so that my inventory remains accurate.
+*   **Dependencies:** 3.3, 2.2
 *   **BDD Criteria:**
     *   **Given** I am viewing a recipe's details
     *   **When** I click "Mark as Cooked"
@@ -232,6 +244,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR3.1
 *   **User Story:** As a user, I want to receive personalized recipe suggestions based on the ingredients currently in my inventory, especially those nearing expiration, so that I can reduce food waste and get meal inspiration.
+*   **Dependencies:** 2.2, 3.2
 *   **BDD Criteria:**
     *   **Given** I have items in my inventory
     *   **When** I request recipe suggestions
@@ -242,6 +255,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** FR4.1
 *   **User Story:** As a user, I want to receive in-app notifications for food items nearing their expiration date (2-3 days prior) so that I can plan to use them before they spoil.
+*   **Dependencies:** 2.2
 *   **BDD Criteria:**
     *   **Given** I have food items in my inventory with expiration dates
     *   **When** an item is 2-3 days from expiring
@@ -252,6 +266,7 @@ This document breaks down the project requirements into actionable epics and use
 *   **Scope:** MVP
 *   **Covers:** (Part of MVP scope, but not an explicit FR)
 *   **User Story:** As a user, I want a prominent "Instant Idea" button that allows me to quickly get a recipe suggestion by typing in 2-3 ingredients, without affecting my persistent inventory, so that I can get immediate meal inspiration with zero friction.
+*   **Dependencies:** 1.4, 3.2
 *   **BDD Criteria:**
     *   **Given** I am on the main screen
     *   **When** I click the "Instant Idea" button and enter 2-3 ingredients
