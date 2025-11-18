@@ -90,6 +90,9 @@ This document breaks down the project requirements into actionable epics and use
     *   **Then** a navigation bar is present with links to the main sections.
     *   **And** the UI is responsive and accessible (WCAG 2.1 AA).
     *   **And** page load times achieve a Lighthouse score of over 90.
+    *   **When** the user logs out
+    *   **Then** their session is terminated.
+    *   **And** they are redirected to the public landing page.
 
 ---
 
