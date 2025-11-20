@@ -48,7 +48,7 @@ Current market solutions are fragmented; they typically focus on either meal pla
 
 ## Constraints
 
-*   **Timeline:** 6 weeks
+*   **Timeline:** 9 weeks
 *   **Budget:** <$100/month
 *   **API Limits:** Spoonacular API free tier (150 requests/day)
 *   **Team Size/Skills:** Student project team with skills in full-stack web development.
@@ -114,18 +114,27 @@ To evolve the platform into a comprehensive kitchen assistant that not only redu
 
 The following features are explicitly out of scope for the MVP and are planned for future phases:
 
-*   Barcode Scanning
-*   User Preferences & Dietary Profiles
-*   Recipe Tagging & Advanced Filters
-*   Creative Mode – Ingredient Substitution
-*   AI-Enhanced Search
-*   Smart Shopping Suggestions
-*   Nutritional Analysis
-*   Push notifications (Phase 3)
-*   Email alerts for expiring items (Phase 2)
-*   Multi-user household accounts
-*   User-generated content (ratings, reviews, sharing)
 *   Integration with grocery delivery services
-*   Community features and gamification
+*   Push notifications (browser API)
+*   Recipe import from external URLs
+
+---
+
+## Implemented Beyond MVP
+
+The following features were originally planned for future phases but have been implemented:
+
+### Phase 2 Features (Implemented)
+*   **Barcode Scanning** - Camera-based barcode scanning for quick item entry (`src/components/BarcodeScanner.tsx`)
+*   **User Preferences & Dietary Profiles** - Save dietary restrictions, allergies, cuisine preferences (`src/app/(auth)/preferences/`)
+*   **AI-Enhanced Search** - Semantic recipe search using AI (`src/app/api/ai/search/`)
+*   **Ingredient Substitution** - AI-powered substitution suggestions (`src/app/api/ai/substitute/`)
+*   **Nutritional Analysis** - Display nutrition facts for recipes (`src/app/api/ai/nutrition/`)
+*   **Email alerts** - Email notifications for expiring items (`src/app/api/cron/expiration-alerts/`)
+
+### Phase 3 Features (Implemented)
+*   **Multi-user household accounts** - Shared pantry access with invite codes (`Household` model)
+*   **User-generated content** - Recipe ratings and reviews (`RecipeReview` model)
+*   **Gamification** - Points, levels, and achievements system (`Achievement`, `UserAchievement` models)
 
 ---
