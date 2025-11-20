@@ -7,6 +7,8 @@ Planning and design documents for Smart Food & Recipe Platform.
 | File | Description |
 |------|-------------|
 | `ux-design-specification.md` | Design system, color palette, typography, components |
+| `ux-design.html` | Visual prototype of UI components |
+| `ux-color-themes.html` | Color theme definitions |
 | `ci-pipeline-config.yml` | GitHub Actions CI/CD pipeline configuration |
 
 ## UI Mockups
