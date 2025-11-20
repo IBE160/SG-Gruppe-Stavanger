@@ -6,6 +6,60 @@
 
 ---
 
+## Conversation / Prompts
+
+### Initial Request
+```
+BMAD Prosjektplan: Enkel Sjekkliste
+
+En oversikt over hvilke kommandoer som skaper hvilke filer i hver mappe.
+kan du opprette disse filen etter den nexs.js appen har vi har laget
+lage 3 mapper fase-0, fase-1, fase-2 og fase-3
+
+📂 Mappe: fase-0 (Discovery)
+- brainstorming-session-results-[DATO].md
+- user-flow-deviations-[DATO].md
+- research-technical-[DATO].md
+- product-brief-[PROSJEKT]-[DATO].md
+
+📂 Mappe: fase-1 (Planning & Design)
+- prd-[PROSJEKT]-[DATO].md
+- validation-report-[TID].md
+- ux-color-themes.html & ux-design.html
+- ux-design-specification.md
+- tech-stack-decision-[DATO].md
+- ci-pipeline-config.yml
+- test-strategy-[DATO].md
+
+📂 Mappe: fase-2 (Architecture)
+- system-architecture-[DATO].md
+- validation-report-arch-[TID].md
+
+📂 Mappe: fase-3 (Implementation)
+- sprint-backlog-[ID].md
+- epic-[ID]-spec.md
+- story-[ID]-ticket.md
+- story-[ID]-context.md
+- src/.../[kildekode].ts
+- test-story-[ID].spec.ts
+- sprint-retrospective-[DATO].md
+```
+
+### Follow-up Prompts
+1. "og så må det opprett alle filen også etter den appen vi har i rett mappe"
+2. "er alle på ENG og henger dette om isammen" → "Konvertere alt til engelsk"
+3. "og vi har nå opprettet 4mapper med filer inn hver mappe?" → Bekreftelse
+4. "men vi mye mer en epic-001 når vi lagt denne app" → Opprettet 8 epics basert på proposal
+5. "sjekker du nå at alt er på G og henger sammen" → Verifisering
+6. "kan du rydde opp i docs mappen min" → Flyttet filer til fase-mapper
+7. "sprint-status.yaml stories/ med disse høre vel ikke her?" → Flyttet til fase-3
+8. "tenker du ikke at dokument under fase0-3 innholde lite" → Slettet templates, beholdt faktisk dokumentasjon
+9. "stemmer denne med mappe ibe160-app" → La til code references
+10. "ta en sjekk om code base ser det bra ut" → Kode-gjennomgang
+11. "lage en master logging med alt vi har gjort" → Opprettet session log
+
+---
+
 ## Summary
 
 Created a complete BMAD (BMad Method) documentation structure for the Smart Food & Recipe Platform, organizing all project documentation into phase-based folders with references to the implemented ibe160-app codebase.
