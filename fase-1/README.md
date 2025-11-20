@@ -1,13 +1,19 @@
 # Phase 1: Planning & Design
 
-## Files and Commands
+Planning and design documents for Smart Food & Recipe Platform.
 
-| Command (Input) | File (Output) |
-|------------------|--------------|
-| `/pm *prd` | `prd-[PROJECT]-[DATE].md` |
-| `/pm *validate-prd` | `validation-report-[TIME].md` |
-| `/ux-designer *create-ux` | `ux-color-themes.html` & `ux-design.html` |
-| `/ux-designer *spec` | `ux-design-specification.md` |
-| `/tea *framework` | `tech-stack-decision-[DATE].md` |
-| `/tea *ci` | `ci-pipeline-config.yml` |
-| `/tea *test-design` | `test-strategy-[DATE].md` |
+## Documents
+
+| File | Description |
+|------|-------------|
+| `ux-design-specification.md` | Design system, color palette, typography, components |
+| `ux-design.html` | Visual prototype of UI components |
+| `ux-color-themes.html` | Color theme definitions |
+| `ci-pipeline-config.yml` | GitHub Actions CI/CD pipeline configuration |
+
+## Related Documents
+- PRD: `docs/PRD.md`
+- Proposal: `docs/proposal.md`
+
+## Purpose
+These documents define the user experience and development workflow for the implementation phase.

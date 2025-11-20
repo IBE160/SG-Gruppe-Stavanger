@@ -1,8 +1,19 @@
 # Phase 2: Architecture
 
-## Files and Commands
+Architecture and technical design documents for Smart Food & Recipe Platform.
 
-| Command (Input) | File (Output) |
-|------------------|--------------|
-| `/architect *architecture` | `system-architecture-[DATE].md` |
-| `/architect *validate` | `validation-report-arch-[TIME].md` |
+## Documents
+
+| File | Description |
+|------|-------------|
+| `architecture.md` | Complete system architecture, tech stack, Prisma schema, API design |
+| `solutioning-gate-check-report.md` | Validation that planning is complete and ready for implementation |
+
+## Tech Stack
+- **Frontend:** Next.js 14, Tailwind CSS, shadcn/ui
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Database:** Supabase (PostgreSQL)
+- **Auth:** Auth.js v5
+
+## Purpose
+These documents provide the technical blueprint for developers to implement the application.

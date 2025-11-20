@@ -1,13 +1,27 @@
 # Phase 3: Implementation
 
-## Files and Commands
+Implementation tracking and epic specifications for Smart Food & Recipe Platform.
 
-| Command (Input) | File (Output) |
-|------------------|--------------|
-| Sprint Start: `/sm *sprint-planning` | `sprint-backlog-[ID].md` |
-| Epic: `/sm epic-tech-content` | `epic-[ID]-spec.md` |
-| Story: `/sm *create-story` | `story-[ID]-ticket.md` |
-| Story: `/sm *story-context` | `story-[ID]-context.md` |
-| Coding: `/dev *implement-story` | `src/.../[sourcecode].ts` |
-| Test: `/tea *automate` | `test-story-[ID].spec.ts` |
-| Sprint End: `/sm *retrospective` | `sprint-retrospective-[DATE].md` |
+## Documents
+
+| File | Description |
+|------|-------------|
+| `bmm-epics.md` | Complete epic and story breakdown with acceptance criteria |
+| `sprint-status.yaml` | Sprint tracking and story status |
+
+## Epics Overview
+
+1. **Project Initialization and Foundation** - Setup, dependencies, database
+2. **User Authentication** - Registration, login, sessions
+3. **Food Inventory Management** - CRUD operations for pantry
+4. **Barcode Scanning** - Camera scanning for quick entry
+5. **Recipe Discovery** - Spoonacular API integration
+6. **Flexible Recipe Matching** - Match recipes to pantry
+7. **Smart Grocery List** - Auto-generate shopping lists
+8. **Expiration Management** - Alerts and recipe suggestions
+
+## Timeline
+9 weeks total - see `bmm-epics.md` for detailed story breakdown.
+
+## Purpose
+These documents guide the development team through the implementation sprint by sprint.

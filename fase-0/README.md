@@ -1,10 +1,15 @@
 # Phase 0: Discovery
 
-## Files and Commands
+Discovery phase documents for Smart Food & Recipe Platform.
 
-| Command (Input) | File (Output) |
-|------------------|--------------|
-| `/analyst *brainstorm "Root Cause..."` | `brainstorming-session-results-[DATE].md` |
-| `/analyst *brainstorm "User Flow..."` | `user-flow-deviations-[DATE].md` |
-| `/analyst *research "AI library..."` | `research-technical-[DATE].md` |
-| `/analyst *product-brief "Read..."` | `product-brief-[PROJECT]-[DATE].md` |
+## Documents
+
+| File | Description |
+|------|-------------|
+| `brainstorming-session-results-2025-10-28.md` | Initial brainstorming, pre-mortem analysis, insights |
+| `product-brief-ibe160-2025-11-03.md` | Product vision, target users, core features |
+| `research-findings.md` | Market research and competitive analysis |
+| `research-technical-2025-10-28.md` | AI/ML technology evaluation for future phases |
+
+## Purpose
+These documents capture the initial research, ideation, and product definition that inform the planning phase.

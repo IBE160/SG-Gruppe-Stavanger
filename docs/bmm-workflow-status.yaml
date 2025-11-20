@@ -41,14 +41,14 @@ workflow_status:
 
   # Phase 2: Planning (fase-1)
   prd: docs/PRD.md
-  validate-prd: fase-1/validation-report-2025-11-20T10-00.md
+  validate-prd: skipped
   create-design: fase-1/ux-design-specification.md
 
   # Phase 3: Solutioning (fase-2)
   architecture-review: skipped
   integration-planning: skipped
   create-architecture: fase-2/architecture.md
-  validate-architecture: fase-2/validation-report-arch-2025-11-20T10-00.md
+  validate-architecture: skipped
   solutioning-gate-check: fase-2/solutioning-gate-check-report.md
 
   # Phase 4: Implementation (fase-3)
