@@ -1,17 +1,17 @@
 # UX Design Specification
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/ux-designer *spec`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/ux-designer *spec`
 
 ## Design System
 
-### Fargepalett
+### Color Palette
 - Primary: #10B981 (Green)
 - Secondary: #3B82F6 (Blue)
 - Accent: #F59E0B (Amber)
 
-### Typografi
+### Typography
 - Headings: Inter, 600
 - Body: Inter, 400
 
@@ -19,12 +19,12 @@
 - Base unit: 4px
 - Scale: 4, 8, 12, 16, 24, 32, 48, 64
 
-## Komponenter
+## Components
 1. Navigation
 2. Recipe Card
 3. Search Input
 4. Meal Planner Grid
 5. Shopping List
 
-## Brukerflyter
-Se ux-design.html for visuelle prototyper
+## User Flows
+See ux-design.html for visual prototypes

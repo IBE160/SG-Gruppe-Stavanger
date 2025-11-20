@@ -1,30 +1,30 @@
 # Epic Technical Specification
 
 **Epic ID:** 001
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/sm epic-tech-content`
+**Project:** Smart Food & Recipe Platform
+**Command:** `/sm epic-tech-content`
 
 ## Epic: Recipe Discovery
 
-### Beskrivelse
-Brukere skal kunne søke og finne oppskrifter basert på ulike kriterier.
+### Description
+Users should be able to search and find recipes based on various criteria.
 
 ### User Stories
 1. STORY-001: Recipe search API
 2. STORY-002: Recipe card component
 3. STORY-003: Search results page
 
-### Tekniske krav
+### Technical Requirements
 - REST API endpoints
 - Full-text search
 - Pagination
 - Filtering
 
-### Avhengigheter
+### Dependencies
 - Database schema for recipes
 - Prisma models
 
 ### Acceptance Criteria
-- [ ] Søk returnerer relevante resultater
-- [ ] Responstid < 500ms
-- [ ] Støtter filtrering på kategori, tid, ingredienser
+- [ ] Search returns relevant results
+- [ ] Response time < 500ms
+- [ ] Supports filtering by category, time, ingredients

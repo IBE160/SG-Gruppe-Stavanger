@@ -1,20 +1,20 @@
 # Brainstorming Session Results
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/analyst *brainstorm "Root Cause..."`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/analyst *brainstorm "Root Cause..."`
 
-## Tema
+## Topic
 Root cause analysis for user engagement challenges
 
-## Deltakere
+## Participants
 - Product Team
 - Development Team
 
-## Ideer generert
-- [ ] Ide 1
-- [ ] Ide 2
-- [ ] Ide 3
+## Ideas Generated
+- [ ] Idea 1
+- [ ] Idea 2
+- [ ] Idea 3
 
-## Neste steg
+## Next Steps
 - TBD

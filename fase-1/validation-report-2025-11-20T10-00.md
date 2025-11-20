@@ -1,18 +1,18 @@
 # PRD Validation Report
 
-**Tid:** 2025-11-20T10:00
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/pm *validate-prd`
+**Time:** 2025-11-20T10:00
+**Project:** Smart Food & Recipe Platform
+**Command:** `/pm *validate-prd`
 
-## Valideringsstatus
-- [ ] Komplett
-- [ ] Konsistent
-- [ ] Gjennomførbar
+## Validation Status
+- [ ] Complete
+- [ ] Consistent
+- [ ] Feasible
 
-## Funn
-| Alvorlighet | Beskrivelse | Anbefaling |
+## Findings
+| Severity | Description | Recommendation |
 |-------------|-------------|------------|
 | | | |
 
-## Godkjenning
-- [ ] Godkjent for neste fase
+## Approval
+- [ ] Approved for next phase

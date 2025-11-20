@@ -1,30 +1,30 @@
 # Test Strategy
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/tea *test-design`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/tea *test-design`
 
-## Teststrategi
+## Testing Strategy
 
-### Testnivåer
+### Test Levels
 1. **Unit Tests** - Jest
 2. **Integration Tests** - Jest + Testing Library
 3. **E2E Tests** - Playwright
 
-### Dekningsmal
+### Coverage Goals
 - Unit: 80%
 - Integration: 70%
-- E2E: Kritiske brukerflyter
+- E2E: Critical user flows
 
-### Testområder
-| Område | Type | Prioritet |
-|--------|------|-----------|
-| Recipe Search | E2E | Høy |
-| Auth Flow | Integration | Høy |
+### Test Areas
+| Area | Type | Priority |
+|------|------|----------|
+| Recipe Search | E2E | High |
+| Auth Flow | Integration | High |
 | API Routes | Unit | Medium |
 | Components | Unit | Medium |
 
-### Verktøy
+### Tools
 - Jest
 - React Testing Library
 - Playwright

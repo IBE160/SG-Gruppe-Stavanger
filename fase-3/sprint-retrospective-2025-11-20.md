@@ -1,22 +1,22 @@
 # Sprint Retrospective
 
-**Dato:** 2025-11-20
+**Date:** 2025-11-20
 **Sprint ID:** 001
-**Kommando:** `/sm *retrospective`
+**Command:** `/sm *retrospective`
 
-## Hva gikk bra
--
--
--
-
-## Hva kan forbedres
+## What Went Well
 -
 -
 -
 
-## Action items
-| Action | Ansvarlig | Frist |
-|--------|-----------|-------|
+## What Can Be Improved
+-
+-
+-
+
+## Action Items
+| Action | Owner | Deadline |
+|--------|-------|----------|
 | | | |
 
 ## Metrics
@@ -24,5 +24,5 @@
 - Completed: X/X stories
 - Bugs: X
 
-## Neste sprint fokus
+## Next Sprint Focus
 -

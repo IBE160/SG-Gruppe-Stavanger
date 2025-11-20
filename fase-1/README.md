@@ -1,13 +1,13 @@
-# Fase 1: Planning & Design
+# Phase 1: Planning & Design
 
-## Filer og kommandoer
+## Files and Commands
 
-| Kommando (Input) | Fil (Output) |
+| Command (Input) | File (Output) |
 |------------------|--------------|
-| `/pm *prd` | `prd-[PROSJEKT]-[DATO].md` |
-| `/pm *validate-prd` | `validation-report-[TID].md` |
+| `/pm *prd` | `prd-[PROJECT]-[DATE].md` |
+| `/pm *validate-prd` | `validation-report-[TIME].md` |
 | `/ux-designer *create-ux` | `ux-color-themes.html` & `ux-design.html` |
 | `/ux-designer *spec` | `ux-design-specification.md` |
-| `/tea *framework` | `tech-stack-decision-[DATO].md` |
+| `/tea *framework` | `tech-stack-decision-[DATE].md` |
 | `/tea *ci` | `ci-pipeline-config.yml` |
-| `/tea *test-design` | `test-strategy-[DATO].md` |
+| `/tea *test-design` | `test-strategy-[DATE].md` |

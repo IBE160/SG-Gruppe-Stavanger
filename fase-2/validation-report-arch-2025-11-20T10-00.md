@@ -1,28 +1,28 @@
 # Architecture Validation Report
 
-**Tid:** 2025-11-20T10:00
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/architect *validate`
+**Time:** 2025-11-20T10:00
+**Project:** Smart Food & Recipe Platform
+**Command:** `/architect *validate`
 
-## Valideringskriterier
+## Validation Criteria
 
-### Skalerbarhet
-- [ ] Horisontalt skalerbar
-- [ ] Database sharding-klar
-- [ ] CDN-optimalisert
+### Scalability
+- [ ] Horizontally scalable
+- [ ] Database sharding ready
+- [ ] CDN optimized
 
-### Sikkerhet
-- [ ] OWASP Top 10 adressert
-- [ ] Data kryptering
-- [ ] Auth/authz implementert
+### Security
+- [ ] OWASP Top 10 addressed
+- [ ] Data encryption
+- [ ] Auth/authz implemented
 
-### Vedlikeholdbarhet
-- [ ] Modulær struktur
-- [ ] Dokumentert
-- [ ] Testbar
+### Maintainability
+- [ ] Modular structure
+- [ ] Documented
+- [ ] Testable
 
-## Anbefalinger
+## Recommendations
 - TBD
 
-## Godkjenning
-- [ ] Godkjent for implementering
+## Approval
+- [ ] Approved for implementation

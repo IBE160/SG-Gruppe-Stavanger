@@ -2,22 +2,22 @@
 
 **Story ID:** 001
 **Epic:** Recipe Discovery
-**Kommando:** `/sm *create-story`
+**Command:** `/sm *create-story`
 
 ## Story
-Som en bruker vil jeg søke etter oppskrifter slik at jeg kan finne måltider basert på mine preferanser.
+As a user, I want to search for recipes so that I can find meals based on my preferences.
 
 ## Acceptance Criteria
 - [ ] API endpoint GET /api/recipes/search
-- [ ] Query parameter for søketekst
-- [ ] Filter på kategori, tid, ingredienser
-- [ ] Paginering med limit/offset
-- [ ] Returnerer oppskrift-liste med metadata
+- [ ] Query parameter for search text
+- [ ] Filter by category, time, ingredients
+- [ ] Pagination with limit/offset
+- [ ] Returns recipe list with metadata
 
-## Tekniske notater
-- Bruk Prisma full-text search
-- Implementer caching
-- Valider input
+## Technical Notes
+- Use Prisma full-text search
+- Implement caching
+- Validate input
 
 ## Story Points
 5

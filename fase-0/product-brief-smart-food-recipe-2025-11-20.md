@@ -1,23 +1,23 @@
 # Product Brief
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/analyst *product-brief`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/analyst *product-brief`
 
-## Visjon
+## Vision
 En intelligent matplanleggingsplattform som hjelper brukere med oppskrifter, måltidsplanlegging og handlelister.
 
-## Målgruppe
-- Travle familier
-- Helsebevisste individer
-- Matlaging-entusiaster
+## Target Audience
+- Busy families
+- Health-conscious individuals
+- Cooking enthusiasts
 
-## Kjernefunksjoner
-1. Oppskriftssøk og filtrering
-2. AI-drevet måltidsplanlegging
-3. Automatisk handlelistegenerering
-4. Ernæringssporing
+## Core Features
+1. Recipe search and filtering
+2. AI-powered meal planning
+3. Automatic shopping list generation
+4. Nutrition tracking
 
-## Suksesskriterier
-- [ ] Kriterie 1
-- [ ] Kriterie 2
+## Success Criteria
+- [ ] Criteria 1
+- [ ] Criteria 2

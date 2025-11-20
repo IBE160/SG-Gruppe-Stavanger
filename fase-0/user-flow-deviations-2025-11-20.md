@@ -1,17 +1,17 @@
 # User Flow Deviations Analysis
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/analyst *brainstorm "User Flow..."`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/analyst *brainstorm "User Flow..."`
 
-## Analyserte brukerflyter
+## Analyzed User Flows
 1. Recipe search flow
 2. Meal planning flow
 3. Shopping list generation
 
-## Identifiserte avvik
-- [ ] Avvik 1
-- [ ] Avvik 2
+## Identified Deviations
+- [ ] Deviation 1
+- [ ] Deviation 2
 
-## Anbefalinger
+## Recommendations
 - TBD

@@ -1,10 +1,10 @@
 # Tech Stack Decision
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/tea *framework`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/tea *framework`
 
-## Valgt Stack
+## Selected Stack
 
 ### Frontend
 - **Framework:** Next.js 14 (App Router)
@@ -22,7 +22,7 @@
 - **Database:** Vercel Postgres / Supabase
 - **CDN:** Vercel Edge Network
 
-## Begrunnelse
-- Next.js for SSR/SSG og SEO
+## Rationale
+- Next.js for SSR/SSG and SEO
 - Prisma for type-safe database queries
-- Vercel for enkel deployment
+- Vercel for easy deployment

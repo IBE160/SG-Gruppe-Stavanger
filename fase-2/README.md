@@ -1,8 +1,8 @@
-# Fase 2: Architecture
+# Phase 2: Architecture
 
-## Filer og kommandoer
+## Files and Commands
 
-| Kommando (Input) | Fil (Output) |
+| Command (Input) | File (Output) |
 |------------------|--------------|
-| `/architect *architecture` | `system-architecture-[DATO].md` |
-| `/architect *validate` | `validation-report-arch-[TID].md` |
+| `/architect *architecture` | `system-architecture-[DATE].md` |
+| `/architect *validate` | `validation-report-arch-[TIME].md` |

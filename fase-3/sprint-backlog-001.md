@@ -1,14 +1,14 @@
 # Sprint Backlog
 
 **Sprint ID:** 001
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/sm *sprint-planning`
+**Project:** Smart Food & Recipe Platform
+**Command:** `/sm *sprint-planning`
 
-## Sprint Mål
-Implementere grunnleggende oppskriftssøk og visning
+## Sprint Goal
+Implement basic recipe search and display
 
-## Sprint Varighet
-2 uker (2025-11-20 til 2025-12-04)
+## Sprint Duration
+2 weeks (2025-11-20 to 2025-12-04)
 
 ## Backlog Items
 
@@ -18,9 +18,9 @@ Implementere grunnleggende oppskriftssøk og visning
 | STORY-002 | Recipe card component | 3 | TODO |
 | STORY-003 | Search results page | 5 | TODO |
 
-## Kapasitet
-- Tilgjengelige timer: 80
-- Planlagt: 65
+## Capacity
+- Available hours: 80
+- Planned: 65
 
 ## Daily Standup
-Hver dag kl. 09:00
+Every day at 09:00

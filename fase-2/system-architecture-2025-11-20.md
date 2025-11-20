@@ -1,10 +1,10 @@
 # System Architecture
 
-**Dato:** 2025-11-20
-**Prosjekt:** Smart Food & Recipe Platform
-**Kommando:** `/architect *architecture`
+**Date:** 2025-11-20
+**Project:** Smart Food & Recipe Platform
+**Command:** `/architect *architecture`
 
-## Arkitekturoversikt
+## Architecture Overview
 
 ```
 ┌─────────────────┐     ┌─────────────────┐
@@ -18,7 +18,7 @@
                         └─────────────────┘
 ```
 
-## Komponenter
+## Components
 
 ### Frontend
 - Next.js App Router
@@ -35,7 +35,7 @@
 - Prisma migrations
 - Connection pooling
 
-## Sikkerhet
+## Security
 - HTTPS everywhere
 - JWT tokens
 - Input validation
