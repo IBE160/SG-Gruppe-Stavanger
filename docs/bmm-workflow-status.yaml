@@ -3,6 +3,7 @@
 # Phase 4 (Implementation) is tracked separately in sprint-status.yaml
 
 # generated: Tuesday, November 4, 2025
+# updated: Wednesday, November 20, 2025
 # project: ibe160
 # project_type: software
 # project_level: 3
@@ -22,6 +23,7 @@
 #   - skipped: Optional/conditional workflow that was skipped
 
 generated: "Tuesday, November 4, 2025"
+updated: "Wednesday, November 20, 2025"
 project: "ibe160"
 project_type: "software"
 project_level: "3"
@@ -30,24 +32,25 @@ workflow_path: "brownfield-level-3.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
-  document-project: required
+  document-project: docs/proposal.md
 
-  # Phase 1: Analysis
-  brainstorm-project: optional
-  research: recommended
-  product-brief: recommended
+  # Phase 1: Analysis (fase-0)
+  brainstorm-project: fase-0/brainstorming-session-results-2025-10-28.md
+  research: fase-0/research-technical-2025-10-28.md
+  product-brief: fase-0/product-brief-ibe160-2025-11-03.md
 
-  # Phase 2: Planning
-  prd: C:\IBE160\SG-Gruppe-Stavanger\docs\PRD.md
-  validate-prd: optional
-  create-design: conditional
+  # Phase 2: Planning (fase-1)
+  prd: docs/PRD.md
+  validate-prd: fase-1/validation-report-2025-11-20T10-00.md
+  create-design: fase-1/ux-design-specification.md
 
-  # Phase 3: Solutioning
+  # Phase 3: Solutioning (fase-2)
   architecture-review: skipped
   integration-planning: skipped
-  create-architecture: /home/user/test/docs/architecture.md
-  validate-architecture: skipped
-  solutioning-gate-check: /home/user/test/docs/solutioning-gate-check-report.md
+  create-architecture: fase-2/architecture.md
+  validate-architecture: fase-2/validation-report-arch-2025-11-20T10-00.md
+  solutioning-gate-check: fase-2/solutioning-gate-check-report.md
 
-  # Phase 4: Implementation
-  sprint-planning: /home/user/test/docs/sprint-status.yaml
+  # Phase 4: Implementation (fase-3)
+  sprint-planning: docs/sprint-status.yaml
+  epics: fase-3/bmm-epics.md
