@@ -52,5 +52,5 @@ workflow_status:
   solutioning-gate-check: fase-2/solutioning-gate-check-report.md
 
   # Phase 4: Implementation (fase-3)
-  sprint-planning: docs/sprint-status.yaml
+  sprint-planning: fase-3/sprint-status.yaml
   epics: fase-3/bmm-epics.md
