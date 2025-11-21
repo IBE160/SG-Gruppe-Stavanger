@@ -6,8 +6,11 @@ Implementation tracking and epic specifications for Smart Food & Recipe Platform
 
 | File | Description |
 |------|-------------|
-| `bmm-epics.md` | Complete epic and story breakdown with acceptance criteria |
 | `sprint-status.yaml` | Sprint tracking and story status |
+| `tech-spec-epic-001.md` | Technical spec: Project Setup |
+| `tech-spec-epic-002.md` | Technical spec: User Authentication |
+| `tech-spec-epic-003.md` | Technical spec: Pantry Management |
+| `tech-spec-epic-004-008.md` | Technical specs: Barcode, Recipes, Matching, Grocery, Alerts |
 
 ## Implemented Features
 
