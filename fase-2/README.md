@@ -7,6 +7,8 @@ Architecture and technical design documents for Smart Food & Recipe Platform.
 | File | Description |
 |------|-------------|
 | `architecture.md` | Complete system architecture, tech stack, Prisma schema, API design |
+| `epics.md` | Epic and story breakdown with acceptance criteria |
+| `test-design.md` | Comprehensive test strategy and test cases |
 | `solutioning-gate-check-report.md` | Validation that planning is complete and ready for implementation |
 
 ## Tech Stack (Implemented)
