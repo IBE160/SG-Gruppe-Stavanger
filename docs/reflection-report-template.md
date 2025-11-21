@@ -180,9 +180,9 @@ Vi fulgte BMad Method (Business Model Agile Development) med følgende faser:
 | Fase | Navn | Dokumenter produsert | KI-verktøy brukt |
 |------|------|---------------------|------------------|
 | 0 | Discovery | `brainstorming-session-results-2025-10-28.md`, `research-technical-2025-10-28.md`, `product-brief-ibe160-2025-11-03.md` | Claude for ideation og research |
-| 1 | Planning & Design | `PRD.md`, 7 UI mockups (.html), `ux-design-specification.md`, `ci-pipeline-config.yml` | Claude for PRD-skriving, ChatGPT for UX-ideer |
-| 2 | Architecture | `architecture.md`, `solutioning-gate-check-report.md` | Claude for arkitekturbeslutninger |
-| 3 | Implementation | `bmm-epics.md`, `sprint-status.yaml`, all kildekode | Claude Code for all implementering |
+| 1 | Planning & Design | `PRD.md`, 7 UI mockups (.html), `ux-design-specification.md`, `validation-report.md`, `ux-design-directions.html` | Claude for PRD-skriving, ChatGPT for UX-ideer |
+| 2 | Architecture | `architecture.md`, `solutioning-gate-check-report.md`, `epics.md`, `test-design.md` | Claude for arkitekturbeslutninger |
+| 3 | Implementation | `sprint-artifacts/sprint-status.yaml`, `sprint-artifacts/tech-spec-*.md`, `sprint-artifacts/story-*.md`, `sprint-artifacts/story-*.context.xml` | Claude Code for all implementering |
 
 **Refleksjon over BMAD:**
 
@@ -940,7 +940,11 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
 
 - **Repository:** [GitHub URL]
 - **Deployed app:** [Vercel URL]
-- **Dokumentasjon:** Se fase-0 til fase-3 mapper
+- **Dokumentasjon:**
+  - `fase-0/` - Discovery: brainstorming, research, product-brief
+  - `fase-1/` - Planning: PRD, validation-report, UX-design, mockups
+  - `fase-2/` - Architecture: architecture, epics, test-design, gate-check
+  - `fase-3/sprint-artifacts/` - Implementation: sprint-status, tech-specs, stories, context XML
 
 ### B. Prompt-eksempler
 
