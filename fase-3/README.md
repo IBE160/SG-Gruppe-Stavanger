@@ -2,15 +2,38 @@
 
 Implementation tracking and epic specifications for Smart Food & Recipe Platform.
 
-## Documents
+## Sprint Artifacts
 
+All implementation documents are in `sprint-artifacts/`:
+
+### Sprint Status
 | File | Description |
 |------|-------------|
 | `sprint-status.yaml` | Sprint tracking and story status |
+
+### Technical Specs
+| File | Description |
+|------|-------------|
 | `tech-spec-epic-001.md` | Technical spec: Project Setup |
 | `tech-spec-epic-002.md` | Technical spec: User Authentication |
 | `tech-spec-epic-003.md` | Technical spec: Pantry Management |
 | `tech-spec-epic-004-008.md` | Technical specs: Barcode, Recipes, Matching, Grocery, Alerts |
+
+### Story Files
+| File | Description |
+|------|-------------|
+| `story-1.1.md` | Initialize Next.js Project |
+| `story-1.3.md` | Configure Database and Prisma |
+| `story-2.1.md` | Build Registration Page |
+| `story-3.1.md` | Create Pantry Item API |
+| `story-5.1.md` | Integrate Spoonacular API |
+
+### Story Context (XML)
+| File | Description |
+|------|-------------|
+| `story-1.1.context.xml` | Context for story 1.1 |
+| `story-2.1.context.xml` | Context for story 2.1 |
+| `story-3.1.context.xml` | Context for story 3.1 |
 
 ## Implemented Features
 
