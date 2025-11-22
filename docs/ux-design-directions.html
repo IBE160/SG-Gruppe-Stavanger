@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Design Directions - Farmhouse Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Farmhouse Kitchen Theme */
+            --fk-bg-primary: #F2E8CF; /* Light Beige */
+            --fk-accent-pattern: #93C5FD; /* Cornflower Blue */
+            --fk-cta-highlight: #E07A5F; /* Terracotta */
+            --fk-support: #B2AC88; /* Sage Green */
+            --fk-text: #3D405B; /* Charcoal */
+            --fk-white: #FEFCF3;
+            --fk-soft-red: #D81E5B; /* Muted red for destructive actions */
+
+            --font-chewy: 'Chewy', cursive;
+            --font-nunito: 'Nunito', sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        body {
+            font-family: var(--font-nunito);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--fk-bg-primary);
+            color: var(--fk-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-chewy);
+            color: var(--fk-text);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        .directions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: calc(var(--spacing-unit) * 4);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .direction-card {
+            background-color: var(--fk-white);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: calc(var(--spacing-unit) * 3);
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 2);
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .direction-card.chosen {
+            border-color: var(--fk-cta-highlight);
+            box-shadow: 0 8px 16px rgba(224, 122, 95, 0.3);
+        }
+
+        .direction-card h3 {
+            margin-top: 0;
+            color: var(--fk-text);
+            font-size: 2em;
+            text-align: center;
+            border-bottom: 2px solid var(--fk-accent-pattern);
+            padding-bottom: var(--spacing-unit);
+        }
+
+        .section-title {
+            font-family: var(--font-chewy);
+            color: var(--fk-support);
+            font-size: 1.2em;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .concept-visual {
+            background-color: var(--fk-bg-primary);
+            border: 1px dashed var(--fk-accent-pattern);
+            border-radius: 8px;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2);
+            position: relative;
+            overflow: hidden;
+        }
+        .concept-visual::before {
+            content: 'Conceptual Visual';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 0.8em;
+            color: rgba(61, 64, 91, 0.5);
+        }
+
+        /* Specific styles for Direction A visual */
+        .concept-visual.direction-a {
+            background-image: linear-gradient(to bottom, #d2b48c 0%, #b28c5a 100%); /* Wood texture feel */
+            border-color: var(--fk-support);
+            padding: var(--spacing-unit);
+        }
+        .concept-visual.direction-a .shelf {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            padding: var(--spacing-unit);
+            margin: var(--spacing-unit) auto;
+            width: 80%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .concept-visual.direction-a .item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--fk-accent-pattern);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fk-white);
+            font-family: var(--font-chewy);
+            font-size: 1.2em;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .concept-visual.direction-a .counter-items {
+            display: flex;
+            gap: var(--spacing-unit);
+            position: absolute;
+            bottom: var(--spacing-unit);
+        }
+        .concept-visual.direction-a .counter-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--fk-cta-highlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fk-white);
+            font-family: var(--font-chewy);
+            font-size: 1.2em;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        /* Specific styles for Direction B visual */
+        .concept-visual.direction-b {
+            background-color: #fcf6ec; /* Lighter beige for table */
+            border-color: var(--fk-cta-highlight);
+        }
+        .concept-visual.direction-b .table-content {
+            background-color: var(--fk-white);
+            border-radius: 10px;
+            padding: calc(var(--spacing-unit) * 2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            width: 80%;
+            text-align: left;
+            position: relative;
+            border: 1px solid rgba(178, 172, 136, 0.5);
+        }
+        .concept-visual.direction-b .expiring-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-unit);
+            margin-bottom: var(--spacing-unit);
+            color: var(--fk-soft-red);
+        }
+        .concept-visual.direction-b .recipe-card-thumbnail {
+            background-color: #fdfdfd;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: var(--spacing-unit);
+            text-align: center;
+            font-size: 0.9em;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: var(--spacing-unit);
+        }
+        .concept-visual.direction-b .background-pantry {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: rgba(178, 172, 136, 0.3);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(61, 64, 91, 0.5);
+            font-size: 0.8em;
+        }
+        .concept-visual.direction-b .background-pantry:hover {
+            background-color: rgba(178, 172, 136, 0.5);
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: var(--spacing-unit);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+        .btn {
+            font-family: var(--font-nunito);
+            font-weight: 700;
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Bakelite feel */
+            letter-spacing: 0.5px;
+            color: var(--fk-white);
+        }
+        .btn-primary { background-color: var(--fk-cta-highlight); }
+        .btn-secondary { background-color: var(--fk-support); }
+        .btn-primary:hover { background-color: #c96d4b; }
+        .btn-secondary:hover { background-color: #9b9576; }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🖼️ UX Design Directions: Pantry View</h1>
+        <p>Exploring the core "Pantry View" experience with two distinct conceptual approaches, leveraging the "Farmhouse Kitchen" theme.</p>
+        <p>This visualization helps us understand how our design principles translate into interactive layouts.</p>
+    </header>
+
+    <div class="directions-container">
+        <!-- Direction A: The Open Shelves -->
+        <div class="direction-card chosen">
+            <h3>Direction A: "The Open Shelves" <br>(Chosen)</h3>
+            <p><strong>Concept:</strong> Direct view into a rustic pantry, emphasizing tactile inventory management. Mimics organizing a real physical pantry.</p>
+            <div class="concept-visual direction-a">
+                <div class="shelf" style="margin-top: 10px; background-color: rgba(255,255,255,0.8);">
+                    <div class="item-icon" style="background-color: #E07A5F;">🍎</div>
+                    <div class="item-icon" style="background-color: #B2AC88;">🥕</div>
+                    <div class="item-icon" style="background-color: #93C5FD;">🧀</div>
+                </div>
+                <div class="shelf">
+                    <div class="item-icon" style="background-color: #E07A5F;">🥚</div>
+                    <div class="item-icon" style="background-color: #B2AC88;">🍞</div>
+                </div>
+                <div class="shelf" style="background-color: rgba(255,255,255,0.8);">
+                    <div class="item-icon" style="background-color: #93C5FD;">🥛</div>
+                    <div class="item-icon" style="background-color: #E07A5F;">🥔</div>
+                    <div class="item-icon" style="background-color: #B2AC88;">🧅</div>
+                </div>
+                <div class="counter-items">
+                    <div class="counter-item" style="background-color: #B2AC88;">📜</div> <!-- Recipe Box -->
+                    <div class="counter-item" style="background-color: #93C5FD;">🛍️</div> <!-- Grocery Bag -->
+                </div>
+            </div>
+            <h4>Key Characteristics:</h4>
+            <ul>
+                <li><strong>View:</strong> Direct, immersive view of the pantry interior.</li>
+                <li><strong>Interaction:</strong> Drag & drop item icons onto/off shelves.</li>
+                <li><strong>Navigation:</strong> Kitchen objects (e.g., recipe box, grocery bag) as navigation points.</li>
+                <li><strong>Rationale:</strong> Highly intuitive, leverages real-world mental models for organizing.</li>
+            </ul>
+            <div class="button-group">
+                <button class="btn btn-primary">Open Pantry</button>
+                <button class="btn btn-secondary">View Recipes</button>
+            </div>
+        </div>
+
+        <!-- Direction B: The Kitchen Table View -->
+        <div class="direction-card">
+            <h3>Direction B: "The Kitchen Table View"</h3>
+            <p><strong>Concept:</strong> Contextual focus on immediate needs, with pantry visible in background. Mimics sitting at a kitchen table.</p>
+            <div class="concept-visual direction-b">
+                <div class="table-content">
+                    <h4 style="color: var(--fk-text); font-family: var(--font-chewy);">What needs your attention?</h4>
+                    <div class="expiring-item">
+                        <span style="color: var(--fk-soft-red);">⚠️</span> 3 Apples expiring today!
+                    </div>
+                    <div class="expiring-item">
+                        <span style="color: var(--fk-soft-red);">⚠️</span> Milk carton, expires tomorrow.
+                    </div>
+                    <div class="recipe-card-thumbnail">
+                        <h4>Suggested: Apple Crumble!</h4>
+                        <p>You have <strong>all</strong> ingredients!</p>
+                        <button class="btn btn-primary" style="font-size:0.8em; padding: 5px 10px; margin-top: 5px;">Cook Now!</button>
+                    </div>
+                </div>
+                <div class="background-pantry">
+                    Pantry (Click to view full)
+                </div>
+            </div>
+            <h4>Key Characteristics:</h4>
+            <ul>
+                <li><strong>View:</strong> Perspective from kitchen table, background pantry.</li>
+                <li><strong>Interaction:</strong> Focus on 2-3 critical actions/alerts on the table.</li>
+                <li><strong>Navigation:</strong> Contextual buttons for actions, background for exploration.</li>
+                <li><strong>Rationale:</strong> Reduces cognitive load, prioritizes urgent information.</li>
+            </ul>
+            <div class="button-group">
+                <button class="btn btn-primary">View Pantry</button>
+                <button class="btn btn-secondary">Shopping List</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

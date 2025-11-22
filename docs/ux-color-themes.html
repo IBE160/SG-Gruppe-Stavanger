@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Color Themes - Farmhouse Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ms-yellow: #FDEEAB; /* Morning Sunshine */
+            --ms-cream: #FEFCF3;
+            --ms-blue: #A7C7E7;
+            --ms-gray: #D3D3D3;
+
+            --hg-sage: #B2AC88; /* Heirloom Garden */
+            --hg-terracotta: #E07A5F;
+            --hg-beige: #F2E8CF;
+            --hg-charcoal: #3D405B;
+
+            --bp-cornflower: #93C5FD; /* Blue Plate Special */
+            --bp-vintage-white: #F8F4E3;
+            --bp-cherry-red: #D81E5B;
+            --bp-navy: #2B3A67;
+
+            /* Farmhouse Kitchen - Combined Theme */
+            --fk-bg-primary: #F2E8CF; /* Light Beige */
+            --fk-accent-pattern: #93C5FD; /* Cornflower Blue */
+            --fk-cta-highlight: #E07A5F; /* Terracotta */
+            --fk-support: #B2AC88; /* Sage Green */
+            --fk-text: #3D405B; /* Charcoal */
+            --fk-white: #FEFCF3;
+            --fk-soft-red: #D81E5B; /* Muted red for destructive actions */
+
+            --font-chewy: 'Chewy', cursive;
+            --font-nunito: 'Nunito', sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        body {
+            font-family: var(--font-nunito);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-chewy);
+            color: var(--fk-text);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 3);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .theme-card {
+            background-color: var(--fk-white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: calc(var(--spacing-unit) * 2);
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .theme-card h3 {
+            margin-top: 0;
+            margin-bottom: var(--spacing-unit);
+            color: var(--fk-text);
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-unit);
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            justify-content: center;
+        }
+
+        .color-swatch {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            word-break: break-all;
+            line-height: 1.2;
+            flex-direction: column;
+        }
+
+        .color-swatch span {
+            display: block;
+            margin-top: 3px;
+        }
+
+        .component-preview {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-unit);
+            padding: var(--spacing-unit);
+            border-top: 1px solid #eee;
+            margin-top: var(--spacing-unit);
+        }
+
+        .btn {
+            font-family: var(--font-nunito);
+            font-weight: 700;
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Bakelite feel */
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            font-family: var(--font-nunito);
+            padding: var(--spacing-unit);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fdfdfd;
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .input-field:focus {
+            border-color: var(--fk-accent-pattern, #888);
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(147, 197, 253, 0.3);
+            outline: none;
+        }
+
+        .card-sample {
+            background-color: var(--fk-white); /* Generic card background, adjust per theme if needed */
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 1.5);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+            font-size: 0.9em;
+        }
+        .card-sample h4 {
+            margin-top: 0;
+            margin-bottom: var(--spacing-unit);
+            font-family: var(--font-chewy);
+            font-size: 1.4em;
+        }
+
+        /* Morning Sunshine Theme Styles */
+        .theme-ms .palette .color-1 { background-color: var(--ms-yellow); color: var(--hg-charcoal); }
+        .theme-ms .palette .color-2 { background-color: var(--ms-cream); color: var(--hg-charcoal); }
+        .theme-ms .palette .color-3 { background-color: var(--ms-blue); }
+        .theme-ms .palette .color-4 { background-color: var(--ms-gray); }
+        .theme-ms .btn-primary { background-color: var(--ms-blue); color: var(--ms-cream); }
+        .theme-ms .btn-secondary { background-color: var(--ms-gray); color: var(--hg-charcoal); }
+        .theme-ms .card-sample { background-color: var(--ms-cream); }
+        .theme-ms .input-field:focus { border-color: var(--ms-blue); box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(167, 199, 231, 0.3); }
+
+
+        /* Heirloom Garden Theme Styles */
+        .theme-hg .palette .color-1 { background-color: var(--hg-sage); }
+        .theme-hg .palette .color-2 { background-color: var(--hg-terracotta); }
+        .theme-hg .palette .color-3 { background-color: var(--hg-beige); color: var(--hg-charcoal); }
+        .theme-hg .palette .color-4 { background-color: var(--hg-charcoal); }
+        .theme-hg .btn-primary { background-color: var(--hg-terracotta); color: var(--hg-beige); }
+        .theme-hg .btn-secondary { background-color: var(--hg-sage); color: var(--hg-beige); }
+        .theme-hg .card-sample { background-color: var(--hg-beige); }
+        .theme-hg .input-field:focus { border-color: var(--hg-terracotta); box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(224, 122, 95, 0.3); }
+
+
+        /* Blue Plate Special Theme Styles */
+        .theme-bp .palette .color-1 { background-color: var(--bp-cornflower); }
+        .theme-bp .palette .color-2 { background-color: var(--bp-vintage-white); color: var(--bp-navy); }
+        .theme-bp .palette .color-3 { background-color: var(--bp-cherry-red); }
+        .theme-bp .palette .color-4 { background-color: var(--bp-navy); }
+        .theme-bp .btn-primary { background-color: var(--bp-cherry-red); color: var(--bp-vintage-white); }
+        .theme-bp .btn-secondary { background-color: var(--bp-cornflower); color: var(--bp-vintage-white); }
+        .theme-bp .card-sample { background-color: var(--bp-vintage-white); }
+        .theme-bp .input-field:focus { border-color: var(--bp-cornflower); box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(147, 197, 253, 0.3); }
+
+
+        /* Farmhouse Kitchen (Combined) Theme Styles */
+        .theme-fk { background-color: var(--fk-bg-primary); }
+        .theme-fk h3 { color: var(--fk-text); }
+        .theme-fk .palette .color-1 { background-color: var(--fk-bg-primary); color: var(--fk-text); }
+        .theme-fk .palette .color-2 { background-color: var(--fk-accent-pattern); }
+        .theme-fk .palette .color-3 { background-color: var(--fk-cta-highlight); }
+        .theme-fk .palette .color-4 { background-color: var(--fk-support); }
+        .theme-fk .palette .color-5 { background-color: var(--fk-text); }
+        .theme-fk .palette .color-6 { background-color: var(--fk-soft-red); }
+
+        .theme-fk .btn-primary { background-color: var(--fk-cta-highlight); color: var(--fk-white); }
+        .theme-fk .btn-secondary { background-color: var(--fk-support); color: var(--fk-white); }
+        .theme-fk .btn-destructive { background-color: var(--fk-soft-red); color: var(--fk-white); }
+        .theme-fk .card-sample { background-color: var(--fk-white); }
+        .theme-fk .input-field:focus { border-color: var(--fk-accent-pattern); box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(147, 197, 253, 0.3); }
+        .theme-fk .component-preview { background-color: var(--fk-bg-primary); } /* Ensure contrast for component preview area */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎨 UX Color Themes & Visual Foundations</h1>
+        <p>Explore different aesthetic directions for the "Smart Food & Recipe Platform", culminating in our chosen "Farmhouse Kitchen" theme.</p>
+        <p>Each card shows a color palette and sample UI components. Remember the "naive" style with attention to detail!</p>
+    </header>
+
+    <div class="themes-grid">
+        <!-- Morning Sunshine Theme -->
+        <div class="theme-card theme-ms">
+            <h3>Morning Sunshine</h3>
+            <p>Bright, cheerful, and optimistic. Wobbly, hand-drawn lines; subtle wood grain; embroidered flowers on curtains.</p>
+            <div class="palette">
+                <div class="color-swatch color-1">#FDEEAB<span>Yellow</span></div>
+                <div class="color-swatch color-2">#FEFCF3<span>Cream</span></div>
+                <div class="color-swatch color-3">#A7C7E7<span>Blue</span></div>
+                <div class="color-swatch color-4">#D3D3D3<span>Gray</span></div>
+            </div>
+            <div class="component-preview">
+                <button class="btn btn-primary">Primary Action</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <input type="text" class="input-field" placeholder="Enter text...">
+                <div class="card-sample">
+                    <h4>Sample Card Title</h4>
+                    <p>A little snippet of content styled with Chewy and Nunito fonts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heirloom Garden Theme -->
+        <div class="theme-card theme-hg">
+            <h3>Heirloom Garden</h3>
+            <p>Calmer, organic and earthy. Folk-art botanical style; crackled glaze textures; leafy green vines.</p>
+            <div class="palette">
+                <div class="color-swatch color-1">#B2AC88<span>Sage</span></div>
+                <div class="color-swatch color-2">#E07A5F<span>Terracotta</span></div>
+                <div class="color-swatch color-3">#F2E8CF<span>Beige</span></div>
+                <div class="color-swatch color-4">#3D405B<span>Charcoal</span></div>
+            </div>
+            <div class="component-preview">
+                <button class="btn btn-primary">Primary Action</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <input type="text" class="input-field" placeholder="Enter text...">
+                <div class="card-sample">
+                    <h4>Sample Card Title</h4>
+                    <p>A little snippet of content styled with Chewy and Nunito fonts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blue Plate Special Theme -->
+        <div class="theme-card theme-bp">
+            <h3>Blue Plate Special</h3>
+            <p>Classic, nostalgic, and retro. 1950s children's book illustration; fabric-textured checkers; bakelite buttons.</p>
+            <div class="palette">
+                <div class="color-swatch color-1">#93C5FD<span>Cornflower</span></div>
+                <div class="color-swatch color-2">#F8F4E3<span>Vintage White</span></div>
+                <div class="color-swatch color-3">#D81E5B<span>Cherry Red</span></div>
+                <div class="color-swatch color-4">#2B3A67<span>Navy</span></div>
+            </div>
+            <div class="component-preview">
+                <button class="btn btn-primary">Primary Action</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <input type="text" class="input-field" placeholder="Enter text...">
+                <div class="card-sample">
+                    <h4>Sample Card Title</h4>
+                    <p>A little snippet of content styled with Chewy and Nunito fonts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farmhouse Kitchen (Combined) Theme -->
+        <div class="theme-card theme-fk">
+            <h3>The Farmhouse Kitchen (Chosen)</h3>
+            <p>Our unique blend: earthy, comforting, nostalgic. Folk-art botanicals, simple lines, tactile details like crackled glaze and bakelite.</p>
+            <div class="palette">
+                <div class="color-swatch color-1">#F2E8CF<span>Light Beige (BG)</span></div>
+                <div class="color-swatch color-2">#93C5FD<span>Cornflower Blue (Pattern)</span></div>
+                <div class="color-swatch color-3">#E07A5F<span>Terracotta (CTA)</span></div>
+                <div class="color-swatch color-4">#B2AC88<span>Sage Green (Support)</span></div>
+                <div class="color-swatch color-5">#3D405B<span>Charcoal (Text)</span></div>
+                <div class="color-swatch color-6">#D81E5B<span>Soft Red (Destructive)</span></div>
+            </div>
+            <div class="component-preview">
+                <button class="btn btn-primary">Open Your Pantry</button>
+                <button class="btn btn-secondary">Add to Shopping List</button>
+                <input type="text" class="input-field" placeholder="What's cooking?">
+                <div class="card-sample">
+                    <h4>Today's Recipe Suggestion</h4>
+                    <p>Creamy Tomato Soup with Homemade Croutons.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -40,7 +40,7 @@ workflow_status:
   # Phase 1: Planning
   prd: "docs/PRD.md"
   validate-prd: optional
-  create-design: conditional
+  create-design: "docs/ux-design-specification.md"
 
   # Phase 2: Solutioning
   create-architecture: required
