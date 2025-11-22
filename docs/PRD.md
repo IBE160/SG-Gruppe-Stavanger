@@ -111,22 +111,22 @@ The process of adding food items to the inventory must be particularly **smooth 
 
 The following are the core functional requirements for the Minimum Viable Product (MVP):
 
-*   **User Authentication:** Secure registration and login for users.
-*   **Food Inventory Management:**
-    *   Users can manually add food items with quantities and expiration dates.
-    *   Users can view, edit, and delete items from their pantry or fridge.
-*   **Recipe Discovery & Suggestions:**
-    *   Users can browse, search, and view recipes from the Spoonacular API.
-    *   The system suggests recipes based on the user’s current inventory.
-    *   The system provides recipe recommendations specifically for items nearing expiration.
-    *   Users can manually enter 2-3 ingredients to get recipe suggestions (Basic Creative Mode).
-*   **Inventory Update:**
-    *   Ingredients are automatically deducted from the inventory when a recipe is used.
-*   **Expiration Alerts:**
-    *   Users receive in-app notifications for food items nearing expiration (2–3 days before).
-*   **Shopping List Management:**
-    *   Users can add, view, and delete items from a shopping list.
-    *   Items can be added manually or from missing recipe ingredients.
+*   FR-001: User Authentication: Secure registration and login for users.
+*   FR-002: Food Inventory Management:
+    *   FR-002.1: Users can manually add food items with quantities and expiration dates.
+    *   FR-002.2: Users can view, edit, and delete items from their pantry or fridge.
+*   FR-003: Recipe Discovery & Suggestions:
+    *   FR-003.1: Users can browse, search, and view recipes from a recipe database.
+    *   FR-003.2: The system suggests recipes based on the user’s current inventory.
+    *   FR-003.3: The system provides recipe recommendations specifically for items nearing expiration.
+    *   FR-003.4: Users can manually enter 2-3 ingredients to get recipe suggestions (Basic Creative Mode).
+*   FR-004: Inventory Update:
+    *   FR-004.1: Ingredients are automatically deducted from the inventory when a recipe is used.
+*   FR-005: Expiration Alerts:
+    *   FR-005.1: Users receive in-app notifications for food items nearing expiration (2–3 days before).
+*   FR-006: Shopping List Management:
+    *   FR-006.1: Users can add, view, and delete items from a shopping list.
+    *   FR-006.2: Items can be added manually or from missing recipe ingredients.
 
 These functional requirements are further detailed through the following key user flows:
 

@@ -30,7 +30,7 @@ The project is broken down into the following epics:
 
 **As a** new user,
 **I want** to create an account using my email and a password,
-**So that** I can securely access the application and save my data.
+**So that** I can securely access the application and save my data. (FR-001)
 
 **Acceptance Criteria:**
 
@@ -276,10 +276,10 @@ The project is broken down into the following epics:
 
 **Given** I am viewing a recipe's details
 **When** I don't have all the ingredients in my inventory
-**Then** the missing ingredients are highlighted, and I see an option to add them to my shopping list.
+**Then** the missing ingredients are highlighted, and I see an option to add them to my shopping list (if shopping list functionality is available).
 
-**Prerequisites:** Story 2.1, Story 3.2, Story 7.1
-**Technical Notes:** Implement logic to compare recipe ingredients with inventory.
+**Prerequisites:** Story 2.1, Story 3.2
+**Technical Notes:** Implement logic to compare recipe ingredients with inventory. The "add to shopping list" action should gracefully handle the absence of Epic 7's full shopping list management if Epic 7 is not yet implemented.
 
 ---
 
