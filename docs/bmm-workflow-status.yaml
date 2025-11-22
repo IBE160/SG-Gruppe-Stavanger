@@ -30,7 +30,7 @@ workflow_path: "method-greenfield.yaml"
 
 workflow_status:
   # Prerequisite: Documentation
-  document-project: required
+  document-project: skipped
 
   # Phase 0: Discovery (Optional)
   brainstorm-project: optional
@@ -38,7 +38,7 @@ workflow_status:
   product-brief: optional
 
   # Phase 1: Planning
-  prd: required
+  prd: "docs/PRD.md"
   validate-prd: optional
   create-design: conditional
 
