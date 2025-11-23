@@ -3,7 +3,7 @@
 # Phase 4 (Implementation) is tracked separately in sprint-status.yaml
 
 # generated: Tuesday, November 4, 2025
-# updated: Wednesday, November 20, 2025
+# updated: Sunday, November 23, 2025
 # project: ibe160
 # project_type: software
 # project_level: 3
@@ -23,7 +23,7 @@
 #   - skipped: Optional/conditional workflow that was skipped
 
 generated: "Tuesday, November 4, 2025"
-updated: "Wednesday, November 20, 2025"
+updated: "Sunday, November 23, 2025"
 project: "ibe160"
 project_type: "software"
 project_level: "3"
@@ -52,5 +52,5 @@ workflow_status:
   solutioning-gate-check: fase-2/solutioning-gate-check-report.md
 
   # Phase 4: Implementation (fase-3)
-  sprint-planning: fase-3/sprint-status.yaml
-  epics: fase-3/bmm-epics.md
+  sprint-planning: fase-3/sprint-artifacts/sprint-status.yaml
+  epics: fase-2/epics.md

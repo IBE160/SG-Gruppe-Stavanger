@@ -65,18 +65,18 @@ development_status:
   epic-3-retrospective: optional
 
   # Epic 4: Offline-First Infrastructure
-  epic-4: backlog
-  4-1-setup-react-query-offline-configuration: backlog
-  4-2-implement-offline-detection-and-ui-indicators: backlog
-  4-3-implement-offline-mutation-queue: backlog
+  epic-4: done
+  4-1-setup-react-query-offline-configuration: done
+  4-2-implement-offline-detection-and-ui-indicators: done
+  4-3-implement-offline-mutation-queue: done
   epic-4-retrospective: optional
 
   # Epic 5: Recipe Search and Discovery
-  epic-5: backlog
-  5-1-setup-spoonacular-api-client: backlog
-  5-2-build-recipe-search-page: backlog
-  5-3-build-recipe-detail-page: backlog
-  5-4-implement-recipe-caching: backlog
+  epic-5: done
+  5-1-setup-spoonacular-api-client: done
+  5-2-build-recipe-search-page: done
+  5-3-build-recipe-detail-page: done
+  5-4-implement-recipe-caching: done
   epic-5-retrospective: optional
 
   # Epic 6: Flexible Recipe Matching
