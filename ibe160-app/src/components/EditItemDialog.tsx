@@ -46,14 +46,11 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
     setError("")
 
     try {
-      console.log("[EditDialog] Submitting data:", data)
-      console.log("[EditDialog] Item ID:", item.id)
       await updateItemMutation.mutateAsync({ ...data, id: item.id, createdAt: item.createdAt })
       reset()
       onSuccess()
       onClose()
     } catch (err) {
-      console.error("[EditDialog] Error updating item:", err)
       const errorMessage = err instanceof Error ? err.message : "Something went wrong"
       setError(errorMessage)
     }

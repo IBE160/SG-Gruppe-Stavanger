@@ -47,19 +47,16 @@ if (!global.__stubItems) {
       createdAt: new Date().toISOString(),
     },
   ]
-  console.log("[stubData] Initialized with default items")
 }
 
 // Helper functions to manage stub data
 export function getStubItems(): StubFoodItem[] {
-  console.log("[stubData] Getting items, count:", global.__stubItems?.length)
   return global.__stubItems || []
 }
 
 export function addStubItem(item: StubFoodItem): void {
   if (!global.__stubItems) global.__stubItems = []
   global.__stubItems.push(item)
-  console.log("[stubData] Added item:", item.id, item.name, "- Total items:", global.__stubItems.length)
 }
 
 export function updateStubItem(id: string, data: Partial<StubFoodItem>): StubFoodItem | null {
@@ -69,7 +66,6 @@ export function updateStubItem(id: string, data: Partial<StubFoodItem>): StubFoo
   }
 
   const index = global.__stubItems.findIndex((item) => item.id === id)
-  console.log("[stubData] Updating item:", id, "- Found at index:", index, "- Total items:", global.__stubItems.length)
 
   if (index === -1) {
     console.error("[stubData] Item not found:", id, "- Available IDs:", global.__stubItems.map(i => i.id))
@@ -77,7 +73,6 @@ export function updateStubItem(id: string, data: Partial<StubFoodItem>): StubFoo
   }
 
   global.__stubItems[index] = { ...global.__stubItems[index], ...data }
-  console.log("[stubData] Updated item:", global.__stubItems[index])
   return global.__stubItems[index]
 }
 
@@ -85,11 +80,9 @@ export function deleteStubItem(id: string): boolean {
   if (!global.__stubItems) return false
 
   const index = global.__stubItems.findIndex((item) => item.id === id)
-  console.log("[stubData] Deleting item:", id, "- Found at index:", index)
 
   if (index === -1) return false
 
   global.__stubItems.splice(index, 1)
-  console.log("[stubData] Deleted item - Remaining items:", global.__stubItems.length)
   return true
 }

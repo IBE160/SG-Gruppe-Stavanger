@@ -44,8 +44,6 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    console.log("[API:pantry POST] Received body:", body)
-    console.log("[API:pantry POST] Image in body:", body.image)
 
     // Validate input
     const validation = foodItemSchema.safeParse(body)
@@ -58,7 +56,6 @@ export async function POST(request: Request) {
     }
 
     // Create item in Supabase database
-    console.log("[API:pantry POST] Creating item with image:", validation.data.image)
     const item = await prisma.foodItem.create({
       data: {
         name: validation.data.name,
@@ -70,7 +67,6 @@ export async function POST(request: Request) {
         userId: session.user.id,
       }
     })
-    console.log("[API:pantry POST] Created item:", item)
 
     return NextResponse.json({ item }, { status: 201 })
   } catch (error) {

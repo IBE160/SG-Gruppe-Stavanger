@@ -23,8 +23,6 @@ export async function PUT(
     const { id } = await params
     const body = await request.json()
 
-    console.log("[PUT] Updating item:", id, "with data:", body)
-
     // Validate input
     const validation = foodItemSchema.safeParse(body)
     if (!validation.success) {
@@ -65,7 +63,6 @@ export async function PUT(
       where: { id }
     })
 
-    console.log("[PUT] Successfully updated item:", updatedItem)
     return NextResponse.json({ item: updatedItem })
   } catch (error) {
     console.error("Error updating pantry item:", error)

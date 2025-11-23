@@ -49,7 +49,6 @@ export async function searchRecipes(query: string, number = 12): Promise<Recipe[
     }
 
     const data = await response.json()
-    console.log("✅ Spoonacular API call successful")
     return data.results || []
   } catch (error) {
     console.error("Spoonacular API error:", error)
@@ -87,7 +86,6 @@ export async function searchByIngredients(
     }
 
     const data = await response.json()
-    console.log("✅ Spoonacular API call successful (by ingredients)")
     return data || []
   } catch (error) {
     console.error("Spoonacular API error:", error)

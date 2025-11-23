@@ -53,7 +53,6 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
           (result, error) => {
             if (result) {
               const barcode = result.getText()
-              console.log("Barcode detected:", barcode)
               onScan(barcode)
               setScanning(false)
               codeReader.reset()
