@@ -80,24 +80,24 @@ development_status:
   epic-5-retrospective: optional
 
   # Epic 6: Flexible Recipe Matching
-  epic-6: backlog
-  6-1-implement-ingredient-normalization: backlog
-  6-2-build-recipe-matching-api-endpoint: backlog
-  6-3-build-what-can-i-cook-page: backlog
+  epic-6: deferred
+  6-1-implement-ingredient-normalization: deferred
+  6-2-build-recipe-matching-api-endpoint: deferred
+  6-3-build-what-can-i-cook-page: deferred
   epic-6-retrospective: optional
 
   # Epic 7: Smart Grocery List Generation
-  epic-7: backlog
-  7-1-build-grocery-list-api-endpoint: backlog
-  7-2-build-grocery-list-ui-component: backlog
+  epic-7: deferred
+  7-1-build-grocery-list-api-endpoint: deferred
+  7-2-build-grocery-list-ui-component: deferred
   epic-7-retrospective: optional
 
   # Epic 8: Expiration Alerts and Notifications
-  epic-8: backlog
-  8-1-setup-vercel-cron-job-for-expiration-checking: backlog
-  8-2-implement-notification-data-model-and-api: backlog
-  8-3-build-notification-bell-ui-component: backlog
-  8-4-add-recipe-suggestions-for-expiring-items: backlog
+  epic-8: deferred
+  8-1-setup-vercel-cron-job-for-expiration-checking: deferred
+  8-2-implement-notification-data-model-and-api: deferred
+  8-3-build-notification-bell-ui-component: deferred
+  8-4-add-recipe-suggestions-for-expiring-items: deferred
   epic-8-retrospective: optional
 
   # Epic 9: Landing Page and Public Routes
@@ -107,19 +107,19 @@ development_status:
   epic-9-retrospective: optional
 
   # Epic 10: Testing and Quality Assurance
-  epic-10: backlog
-  10-1-setup-testing-infrastructure: backlog
-  10-2-write-unit-tests-for-critical-functions: backlog
-  10-3-write-integration-tests-for-api-routes: backlog
-  10-4-write-e2e-tests-for-critical-user-flows: backlog
+  epic-10: deferred
+  10-1-setup-testing-infrastructure: deferred
+  10-2-write-unit-tests-for-critical-functions: deferred
+  10-3-write-integration-tests-for-api-routes: deferred
+  10-4-write-e2e-tests-for-critical-user-flows: deferred
   epic-10-retrospective: optional
 
   # Epic 11: Deployment and Monitoring
-  epic-11: backlog
-  11-1-deploy-to-vercel-production: backlog
-  11-2-configure-production-environment-variables: backlog
-  11-3-run-production-database-migrations: backlog
-  11-4-setup-vercel-analytics-and-monitoring: backlog
+  epic-11: deferred
+  11-1-deploy-to-vercel-production: deferred
+  11-2-configure-production-environment-variables: deferred
+  11-3-run-production-database-migrations: deferred
+  11-4-setup-vercel-analytics-and-monitoring: deferred
   epic-11-retrospective: optional
 
   # Epic 12: Polish and User Experience
