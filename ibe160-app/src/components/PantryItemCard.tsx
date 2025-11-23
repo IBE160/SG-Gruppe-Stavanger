@@ -259,19 +259,14 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
   // Get the best image: prioritize database image, then Unsplash, then Spoonacular, then null
   const getImage = () => {
-    console.log(`[PantryItemCard] ${item.name} - Database image:`, item.image)
     if (item.image) {
-      console.log(`[PantryItemCard] ${item.name} - Using database image`)
       return item.image
     }
     const unsplashImage = getUnsplashImage(item.name)
     if (unsplashImage) {
-      console.log(`[PantryItemCard] ${item.name} - Using Unsplash image`)
       return unsplashImage
     }
-    const spoonacularImage = getSpoonacularImage(item.name)
-    console.log(`[PantryItemCard] ${item.name} - Using Spoonacular image:`, spoonacularImage)
-    return spoonacularImage
+    return getSpoonacularImage(item.name)
   }
 
   // Get status badge
