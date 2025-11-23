@@ -1,0 +1,341 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-1</epicId>
+    <storyId>1</storyId>
+    <title>Project Setup &amp; Core Infrastructure (Foundation)</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-23</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-project-setup-core-infrastructure-foundation.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Developer</asA>
+    <iWant>set up the project with the defined tech stack and basic infrastructure,</iWant>
+    <soThat>I can build the application efficiently and with a clear foundation.</soThat>
+    <tasks>
+- [ ] **Setup Next.js Project (AC: Next.js 14 project)**
+  - [ ] Initialize new Next.js 14 project with App Router
+  - [ ] Configure `tsconfig.json` and `next.config.js`
+  - [ ] Install essential Next.js dependencies
+  - [ ] **Testing:** Verify project structure and basic Next.js functionality
+- [ ] **Integrate Tailwind CSS (AC: Tailwind CSS configured)**
+  - [ ] Install Tailwind CSS and its peer dependencies
+  - [ ] Configure `tailwind.config.js` with project-specific settings
+  - [ ] Import Tailwind directives into `globals.css` (or equivalent)
+  - [ ] **Testing:** Verify Tailwind utility classes are applied correctly (e.g., test a simple styled div)
+- [ ] **Integrate shadcn/ui Components (AC: shadcn/ui components integrated)**
+  - [ ] Initialize shadcn/ui within the project
+  - [ ] Add `Button` and `Input` components as initial examples
+  - [ ] Configure `components.json` for custom theming (Farmhouse Kitchen aesthetic)
+  - [ ] **Testing:** Render and visually inspect shadcn components
+- [ ] **Setup Prisma & Supabase (AC: Prisma ORM initialized with Supabase PostgreSQL)**
+  - [ ] Install Prisma CLI and client libraries
+  - [ ] Configure `schema.prisma` with `postgresql` provider and `Supabase` connection string (from environment variables)
+  - [ ] Define initial `User` model in `schema.prisma` (as per `architecture.md` and `tech-spec-epic-epic-1.md`)
+  - [ ] Run `npx prisma db push` to synchronize schema with Supabase
+  - [ ] **Testing:** Verify database connection and `User` table creation in Supabase
+- [ ] **Configure NextAuth.js (AC: NextAuth.js installed and configured)**
+  - [ ] Install NextAuth.js library
+  - [ ] Create `[...nextauth].js` handler for email/password provider
+  - [ ] Configure `JWT` and `session` options
+  - [ ] Set up adapter for Prisma to integrate with Supabase `User` model
+  - [ ] Add authentication routes (e.g., `/api/auth/signin`, `/api/auth/callback`)
+  - [ ] **Testing:** Attempt a dummy registration/login flow to verify basic authentication
+- [ ] **Setup Vercel Deployment (AC: Vercel deployment configured)**
+  - [ ] Initialize Git repository (if not already)
+  - [ ] Link project to Vercel account via Vercel CLI or dashboard
+  - [ ] Configure `vercel.json` for deployment settings (if needed)
+  - [ ] Push to main branch to trigger initial deployment
+  - [ ] **Testing:** Verify successful deployment of the Next.js application to Vercel
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** a new project environment,
+*   **When** I initialize the project,
+*   **Then** a Next.js 14 project is created with App Router.
+*   **And** Tailwind CSS is configured for styling.
+*   **And** shadcn/ui components are integrated and ready for use.
+*   **And** Prisma ORM is initialized with a connection to a Supabase PostgreSQL database.
+*   **And** NextAuth.js is installed and configured for email/password authentication.
+*   **And** Vercel deployment is configured for continuous integration.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Executive Summary</section>
+        <snippet>This document outlines the product brief for the Smart Food &amp; Recipe Platform, a mobile-responsive web application designed to help users reduce food waste and discover meal inspiration.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Mobile-responsive web application Specific Requirements</section>
+        <snippet>The technical foundation will be a modern stack designed for robustness and a high-quality user experience: Frontend: Next.js 14, Tailwind CSS; Backend: Next.js API Routes, Supabase (PostgreSQL), Prisma ORM; Authentication: NextAuth.js.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Non-Functional Requirements</section>
+        <snippet>The app must feel fast and responsive (recipe search loading within 2 seconds, Lighthouse score &gt;90). User data must be secure (NextAuth.js). The application should be highly available (≥99% uptime) and accessible (WCAG 2.1 AA compliant).</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>High-Level Architecture</section>
+        <snippet>The system follows a typical client-server architecture with a clear separation of concerns, leveraging Next.js API Routes, Supabase (PostgreSQL) with Prisma, and NextAuth.js for authentication.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Technology Stack Overview</section>
+        <snippet>Details the chosen technologies: Next.js 14 (Frontend), Next.js API Routes (Backend), Supabase (PostgreSQL) + Prisma (Database/ORM), NextAuth.js (Authentication), Vercel (Hosting).</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Data Model</section>
+        <snippet>Defines core data entities (User, FoodItem, Recipe, etc.) using Prisma, ensuring type-safe and relational structure for the application's data.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Deployment &amp; Hosting Strategy</section>
+        <snippet>Outlines the CI/CD strategy using Vercel for the Next.js app and Supabase Cloud for the managed PostgreSQL database, with Prisma Migrations for schema changes.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Design System Foundation</section>
+        <snippet>Utilizes shadcn/ui with Radix UI Primitives, allowing for a custom "Farmhouse Kitchen" theme while ensuring accessibility and a strong structural foundation.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Visual Foundation</section>
+        <snippet>Defines the "Farmhouse Kitchen" theme's color palette (Light Beige, Cornflower Blue, Terracotta, Sage Green), typography (Chewy, Nunito), and an 8-pixel grid system for layout.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library</section>
+        <snippet>Outlines the strategy for using unstyled shadcn/ui primitives for foundational elements and building custom high-level components for specific "Farmhouse Kitchen" experiences.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Responsive Design &amp; Accessibility</section>
+        <snippet>Details the responsive strategy across devices (desktop, tablet, mobile) and the commitment to WCAG 2.1 Level AA accessibility standards, including keyboard navigation and screen reader support.</snippet>
+      </entry>
+      <entry>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Epic 1: Foundation &amp; User Onboarding</section>
+        <snippet>Goal: Establish the core project infrastructure and allow users to securely register and log in to the platform.</snippet>
+      </entry>
+      <entry>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 1.1: Project Setup &amp; Core Infrastructure (Foundation)</section>
+        <snippet>As a Developer, I want to set up the project with the defined tech stack and basic infrastructure, so that I can build the application efficiently and with a clear foundation.</snippet>
+      </entry>
+      <entry>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 1.1 Acceptance Criteria</section>
+        <snippet>Given a new project environment, When I initialize the project, Then a Next.js 14 project is created with App Router. And Tailwind CSS is configured for styling. And shadcn/ui components are integrated.</snippet>
+      </entry>
+      <entry>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 1.1 Technical Notes</section>
+        <snippet>Frontend: Next.js 14 (App Router, Server Components), Tailwind CSS, shadcn/ui. Backend: Next.js API Routes (initial setup). Database: Supabase (PostgreSQL), Prisma ORM. Authentication: NextAuth.js. Hosting: Vercel.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>package.json</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>Next.js project setup file, manages dependencies</reason>
+      </entry>
+      <entry>
+        <path>tsconfig.json</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>Next.js project setup file, TypeScript configuration</reason>
+      </entry>
+      <entry>
+        <path>next.config.js</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>Next.js project setup file, Next.js specific configuration</reason>
+      </entry>
+      <entry>
+        <path>tailwind.config.js</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>Tailwind CSS configuration</reason>
+      </entry>
+      <entry>
+        <path>app/globals.css</path>
+        <kind>stylesheet</kind>
+        <symbol>N/A</symbol>
+        <reason>Global CSS for Tailwind directives</reason>
+      </entry>
+      <entry>
+        <path>components.json</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>shadcn/ui component integration configuration</reason>
+      </entry>
+      <entry>
+        <path>prisma/schema.prisma</path>
+        <kind>schema</kind>
+        <symbol>N/A</symbol>
+        <reason>Prisma schema definition for database</reason>
+      </entry>
+      <entry>
+        <path>pages/api/auth/[...nextauth].js</path>
+        <kind>auth handler</kind>
+        <symbol>N/A</symbol>
+        <reason>NextAuth.js configuration and authentication routes</reason>
+      </entry>
+      <entry>
+        <path>vercel.json</path>
+        <kind>config</kind>
+        <symbol>N/A</symbol>
+        <reason>Vercel deployment configuration</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="Styling">
+        <package name="Tailwind CSS" />
+        <package name="shadcn/ui" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Deployment">
+        <package name="Vercel" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Client-server architecture with clear separation of concerns.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Serverless-first approach utilizing Next.js API Routes for backend logic.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Vercel for hosting Next.js application (frontend and API routes).</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Supabase (PostgreSQL) for database, managed via Prisma ORM.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>NextAuth.js for secure user authentication and session management.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Emphasis on scalability, performance, and a high-quality user experience.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Leveraging Next.js 14 features like App Router and Server Components for optimization.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>Tailwind CSS + shadcn/ui for highly customizable and accessible UI.</rule>
+      <source>Story 1.1 Dev Notes</source>
+    </entry>
+    <entry>
+      <rule>WCAG 2.1 Level AA accessibility standards must be met.</rule>
+      <source>UX Design Specification, 8.2 Accessibility Strategy</source>
+    </entry>
+    <entry>
+      <rule>All functionality accessible via keyboard.</rule>
+      <source>UX Design Specification, 8.2 Accessibility Strategy</source>
+    </entry>
+    <entry>
+      <rule>All visual elements must have descriptive `aria-label`s for screen reader support.</rule>
+      <source>UX Design Specification, 8.2 Accessibility Strategy</source>
+    </entry>
+    <entry>
+      <rule>Clear, visible focus state on all interactive elements.</rule>
+      <source>UX Design Specification, 8.2 Accessibility Strategy</source>
+    </entry>
+    <entry>
+      <rule>Non-essential animations to be disabled if "prefers reduced motion" is enabled.</rule>
+      <source>UX Design Specification, 8.2 Accessibility Strategy</source>
+    </entry>
+  </constraints>
+  <interfaces>
+    <entry>
+      <name>User Model (Prisma)</name>
+      <kind>Prisma Schema</kind>
+      <signature>
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String // Stores hashed passwords for security
+  createdAt     DateTime @default(now())
+  foodItems     FoodItem[]
+  preferences   UserPreference?
+  shoppingList  ShoppingList?
+}
+      </signature>
+      <path>schema.prisma</path>
+    </entry>
+  </interfaces>
+  <tests>
+    <standards>
+      Unit Tests will focus on individual functions, utility modules, Prisma data access layer interactions, and NextAuth.js configurations. Integration Tests will focus on Next.js API routes, database interactions, and the interplay between NextAuth.js and Prisma/Supabase. End-to-End (E2E) Tests will simulate complete user flows for registration and login through the UI. UI/UX Tests will involve manual and automated testing for visual aesthetic, responsiveness, and accessibility standards (WCAG 2.1 AA).
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Next.js 14 project</id>
+        <description>Verify project structure and basic Next.js functionality.</description>
+      </entry>
+      <entry>
+        <id>AC: Tailwind CSS configured</id>
+        <description>Verify Tailwind utility classes are applied correctly (e.g., test a simple styled div).</description>
+      </entry>
+      <entry>
+        <id>AC: shadcn/ui components integrated</id>
+        <description>Render and visually inspect shadcn components (e.g., Button, Input).</description>
+      </entry>
+      <entry>
+        <id>AC: Prisma ORM initialized with Supabase PostgreSQL</id>
+        <description>Verify database connection and `User` table creation in Supabase.</description>
+      </entry>
+      <entry>
+        <id>AC: NextAuth.js installed and configured</id>
+        <description>Attempt a dummy registration/login flow to verify basic authentication.</description>
+      </entry>
+      <entry>
+        <id>AC: Vercel deployment configured</id>
+        <description>Verify successful deployment of the Next.js application to Vercel.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>
