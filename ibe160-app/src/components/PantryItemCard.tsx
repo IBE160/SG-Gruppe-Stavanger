@@ -209,10 +209,10 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
     // Try exact match first
     let photoId = foodImageMap[normalizedName]
 
-    // Try partial match - check if any key is contained in name or name contains key
+    // Try partial match - check if name contains key (min 3 chars to avoid false matches)
     if (!photoId) {
       for (const [key, value] of Object.entries(foodImageMap)) {
-        if (normalizedName.includes(key) || key.includes(normalizedName)) {
+        if (key.length >= 3 && normalizedName.includes(key)) {
           photoId = value
           break
         }

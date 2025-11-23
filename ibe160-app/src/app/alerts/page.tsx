@@ -118,9 +118,9 @@ export default function AlertsPage() {
       return imageMap[normalizedName]
     }
 
-    // Try partial match - check if any key is contained in name or name contains key
+    // Try partial match - check if name contains key (min 3 chars to avoid false matches)
     for (const [key, value] of Object.entries(imageMap)) {
-      if (normalizedName.includes(key) || key.includes(normalizedName)) {
+      if (key.length >= 3 && normalizedName.includes(key)) {
         return value
       }
     }
