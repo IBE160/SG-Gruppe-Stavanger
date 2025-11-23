@@ -2,6 +2,7 @@
 "use client"
 
 import { useState } from "react"
+import DOMPurify from "dompurify"
 import Link from "next/link"
 import { useRecipeSearch, useRecipeDetails } from "@/hooks/useRecipes"
 import { usePantryItems } from "@/hooks/usePantry"
@@ -520,7 +521,7 @@ export default function RecipesPage() {
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Instructions</h3>
                       <div
                         className="text-gray-700 prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{ __html: selectedRecipe.instructions }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedRecipe.instructions) }}
                       />
                     </div>
                   )}
