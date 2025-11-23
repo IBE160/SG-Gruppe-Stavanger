@@ -39,6 +39,7 @@ Return ONLY a JSON array of ingredient names (no markdown, no extra text):
 Keep it simple and practical. Maximum 10 items.`
 
     const response = await generateWithGemini(aiPrompt)
+    console.log("AI response:", response)
 
     // Extract JSON from response
     const jsonMatch = response.match(/\[[\s\S]*\]/)
