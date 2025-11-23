@@ -26,7 +26,12 @@ export default function AlertsPage() {
   )
   const safe = itemsWithDays.filter((item) => item.daysUntilExpiry > 3)
 
-  const getItemImage = (name: string, category: string) => {
+  const getItemImage = (name: string, category: string, dbImage?: string | null) => {
+    // Use database image if available
+    if (dbImage) {
+      return dbImage
+    }
+
     // Map common food items to Unsplash images (matching PantryItemCard)
     const imageMap: { [key: string]: string } = {
       // Dairy
@@ -329,7 +334,7 @@ export default function AlertsPage() {
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                       <img
-                        src={getItemImage(item.name, item.category)}
+                        src={getItemImage(item.name, item.category, item.image)}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />
@@ -375,7 +380,7 @@ export default function AlertsPage() {
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                       <img
-                        src={getItemImage(item.name, item.category)}
+                        src={getItemImage(item.name, item.category, item.image)}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />
@@ -428,7 +433,7 @@ export default function AlertsPage() {
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                       <img
-                        src={getItemImage(item.name, item.category)}
+                        src={getItemImage(item.name, item.category, item.image)}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />
@@ -474,7 +479,7 @@ export default function AlertsPage() {
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                       <img
-                        src={getItemImage(item.name, item.category)}
+                        src={getItemImage(item.name, item.category, item.image)}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />
