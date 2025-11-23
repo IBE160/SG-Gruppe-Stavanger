@@ -54,7 +54,7 @@ export async function generateWithGemini(prompt: string): Promise<string> {
     if (!response.ok) {
       const errorText = await response.text()
       console.error("Gemini API error:", response.status, errorText)
-      throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
+      throw new Error(`Gemini API error: ${response.status} - ${errorText}`)
     }
 
     const data: GeminiResponse = await response.json()
