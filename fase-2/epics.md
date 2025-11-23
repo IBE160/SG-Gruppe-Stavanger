@@ -342,6 +342,31 @@
 
 ---
 
+### Story 3.6: Add Food Item via Barcode Scan
+
+**Description:** Allow users to add a new food item by scanning its barcode, fetching product data from an external API.
+
+**Acceptance Criteria:**
+- [ ] "Scan Barcode" button available in the "Add Item" flow.
+- [ ] Tapping the button opens the device camera with a scanning overlay.
+- [ ] On successful scan, the barcode is sent to `GET /api/barcode/[code]`.
+- [ ] The API returns product name and category from Open Food Facts API.
+- [ ] The "Add Item" form is pre-filled with the fetched data.
+- [ ] User can manually edit the pre-filled data before saving.
+- [ ] A loading state is shown while fetching barcode data.
+- [ ] Error messages are displayed for invalid barcodes or API failures.
+- [ ] Mobile responsive.
+
+**Technical Tasks:**
+- Create `BarcodeScanner.tsx` component using a library like `react-zxing`.
+- Create API route `GET /api/barcode/[code]` that calls Open Food Facts.
+- Integrate the scanner component into the "Add Item" dialog/page.
+- Implement logic to pre-fill the form with data from the barcode API response.
+- Add error handling for API failures or "not found" responses.
+- Add the `barcode` field to the FoodItem Zod validation schema.
+
+---
+
 ## Epic 4: Offline-First Infrastructure
 
 **Description:** Implement offline-first architecture to ensure app works in grocery stores with poor connectivity (NFR004).

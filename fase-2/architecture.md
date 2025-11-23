@@ -108,6 +108,7 @@ npx prisma init
 
 **External APIs:**
 - **Spoonacular API**: Recipe data (150 requests/day free tier)
+- **Open Food Facts API**: Barcode lookup (free, open data)
 - Fallback: Local seed dataset (20-30 recipes)
 
 ### Development Tools
@@ -152,6 +153,7 @@ ibe160-app/
 │   │   │   └── register/page.tsx
 │   │   ├── api/                   # API Routes
 │   │   │   ├── auth/[...nextauth]/route.ts  # Auth.js handler
+│   │   │   ├── barcode/[code]/route.ts  # Barcode lookup
 │   │   │   ├── pantry/            # Pantry CRUD endpoints
 │   │   │   │   ├── route.ts       # GET/POST pantry items
 │   │   │   │   └── [id]/route.ts  # PUT/DELETE item
@@ -179,6 +181,7 @@ ibe160-app/
 │   │   │   │   ├── pantry-item-card.tsx
 │   │   │   │   ├── add-item-form.tsx
 │   │   │   │   ├── edit-item-dialog.tsx
+│   │   │   │   ├── barcode-scanner.tsx
 │   │   │   │   └── expiring-items-alert.tsx
 │   │   │   ├── recipes/
 │   │   │   │   ├── recipe-card.tsx
@@ -241,6 +244,7 @@ ibe160-app/
 |------|------------------|-----------------|------------|---------------|
 | **User Authentication** | `app/(unauth)`, `lib/auth.ts` | User | `/api/auth/[...nextauth]` | Auth.js |
 | **Food Inventory Management** | `app/(auth)/pantry`, `components/features/pantry` | FoodItem | `/api/pantry/*` | - |
+| **Barcode Scanning** | `components/features/pantry/barcode-scanner.tsx` | FoodItem | `/api/barcode/*` | Open Food Facts |
 | **Recipe Discovery** | `app/(auth)/recipes`, `components/features/recipes` | Recipe (cached) | `/api/recipes/*` | Spoonacular |
 | **Flexible Recipe Matching** | `lib/recipe-matching.ts` | FoodItem, Recipe | `/api/recipes/match` | Spoonacular |
 | **Expiration Alerts** | `components/features/notifications` | Notification, FoodItem | `/api/notifications/*` | - |
@@ -284,6 +288,7 @@ model User {
 model FoodItem {
   id              String   @id @default(cuid())
   name            String
+  barcode         String?  @unique
   category        String
   bestBeforeDate  DateTime
   quantity        Float
@@ -411,6 +416,14 @@ All API routes follow this structure:
 
 ### API Endpoints
 
+#### Barcode Lookup
+
+**GET /api/barcode/[code]**
+- Description: Get product information from a barcode
+- Auth: Required
+- Path Params: `code` (the barcode number)
+- Response: `{ data: { name, category, image } }` from Open Food Facts
+
 #### Pantry Management
 
 **GET /api/pantry**
@@ -422,7 +435,7 @@ All API routes follow this structure:
 **POST /api/pantry**
 - Description: Add new food item
 - Auth: Required
-- Body: `{ name, category, bestBeforeDate, quantity, unit }`
+- Body: `{ name, category, bestBeforeDate, quantity, unit, barcode? }`
 - Response: `{ data: FoodItem }`
 
 **PUT /api/pantry/[id]**
