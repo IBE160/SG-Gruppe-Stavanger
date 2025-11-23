@@ -4,6 +4,7 @@
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || ""
 const GEMINI_MODEL = "gemini-2.0-flash"
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
+console.log("Using API key:", GOOGLE_AI_API_KEY?.substring(0, 10) + "...")
 
 interface GeminiRequest {
   contents: {
