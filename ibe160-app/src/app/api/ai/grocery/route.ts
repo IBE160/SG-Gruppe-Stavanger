@@ -41,8 +41,9 @@ Keep it simple and practical. Maximum 10 items.`
     const response = await generateWithGemini(aiPrompt)
 
     // Extract JSON from response
-    const jsonMatch = response.match(/\[[\s\S]*?\]/)
+    const jsonMatch = response.match(/\[[\s\S]*\]/)
     if (!jsonMatch) {
+      console.error("AI response did not contain JSON array:", response)
       throw new Error("No JSON found in AI response")
     }
 
