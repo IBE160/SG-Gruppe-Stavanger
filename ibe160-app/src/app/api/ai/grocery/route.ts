@@ -39,19 +39,16 @@ Return ONLY a JSON array of ingredient names (no markdown, no extra text):
 Keep it simple and practical. Maximum 10 items.`
 
     const response = await generateWithGemini(aiPrompt)
-    console.log("AI response:", response)
 
     // Extract JSON from response
     const jsonMatch = response.match(/\[[\s\S]*\]/)
     if (!jsonMatch) {
-      console.error("AI response did not contain JSON array:", response)
       throw new Error("No JSON found in AI response")
     }
 
     const items = JSON.parse(jsonMatch[0])
     return NextResponse.json({ items })
   } catch (error) {
-    console.error("AI grocery search error:", error)
     const errorMessage = error instanceof Error ? error.message : "Failed to generate AI suggestions"
     return NextResponse.json({
       error: "Failed to generate AI suggestions",

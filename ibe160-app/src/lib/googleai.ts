@@ -25,7 +25,6 @@ interface GeminiResponse {
 
 export async function generateWithGemini(prompt: string): Promise<string> {
   try {
-    console.log("Using API key:", GOOGLE_AI_API_KEY?.substring(0, 10) + "...")
     if (!GOOGLE_AI_API_KEY) {
       throw new Error("Google AI API key is missing")
     }
