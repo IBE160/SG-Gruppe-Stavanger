@@ -2,7 +2,7 @@
 // Using Gemini 1.5 Flash for AI generation
 
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || ""
-const GEMINI_MODEL = "gemini-1.5-flash"
+const GEMINI_MODEL = "gemini-pro"
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
 
 interface GeminiRequest {
