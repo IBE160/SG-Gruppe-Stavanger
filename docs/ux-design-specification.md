@@ -36,7 +36,7 @@ The application introduces several novel UX patterns designed to enhance user en
 *   **Contextual Modes:** The UI dynamically transforms based on the user's anticipated needs, presenting tailored experiences such as "Unloading Groceries" (quick-add interface), "What's for Dinner?" (recipe inspiration), and "Sunday Planning" (weekly overview).
 *   **Tactile Inventory Management:** Replacing traditional form-based data entry with direct manipulation. Users interact with charming, "naive" style icons of ingredients, dragging and dropping them into a visual "Open Shelves" pantry.
 *   **"Kitchen Diary" Profile Page:** The user profile is reimagined as a celebratory scrapbook or corkboard, showcasing "Food Memories," "Favorite Recipes," and "Achievements" (e.g., "No-Waste Week" badges), fostering emotional attachment rather than functional configuration.
-*   **"Cooking Mode" Recipe View:** For hands-on cooking, a simplified, full-screen recipe view allows users to tap a large "Next Step" button to advance through instructions, minimizing screen interaction and supporting real-world cooking environments.
+*   **Detailed Recipe View:** A comprehensive view displaying the full recipe, including all ingredients, detailed instructions, and nutritional information. This view serves as the primary entry point after selecting a recipe, allowing users to review the entire recipe at once. From here, users can optionally activate a "Cooking Mode" for a simplified, step-by-step experience.
 
 ---
 
@@ -109,8 +109,8 @@ Conceptual user journeys are designed to be seamless, intuitive, and engaging, g
 *   **Goal:** Provide personalized recipe inspiration and guide users through cooking with minimal friction.
 *   **Flow:**
     *   **Discovery:** From the Pantry View, clicking a "recipe box" opens a curated selection of recipes based on available ingredients or expiring items, presented as charming recipe cards.
-    *   **Viewing Recipe:** Clicking a recipe card shows a detailed view on a vintage-style card. Ingredients the user possesses are automatically checked. Missing ingredients are clickable to add to a shopping list.
-    *   **Cooking Mode:** A single tap expands the recipe to a simplified, full-screen "Cooking Mode" with large text and a "Next Step" button, allowing for hands-free progression through instructions.
+    *   **Viewing Recipe:** Clicking a recipe card shows a "Detailed Recipe View" displaying all ingredients (with available ingredients checked) and full instructions. Missing ingredients are clickable to add to a shopping list.
+    *   **Cooking Mode (Optional):** From the Detailed Recipe View, users can optionally activate a simplified, full-screen "Cooking Mode" with large text and a "Next Step" button for hands-free progression through instructions during cooking.
 
 **4. Personal Progress & Reflection (Profile Page - "Kitchen Diary"):**
 *   **Goal:** Offer users a rewarding space to view their achievements and personal culinary journey.
@@ -228,9 +228,9 @@ This specification provides a clear and actionable foundation for the next phase
 
 ### Related Documents
 
-- Product Requirements: `{{prd_file}}`
-- Product Brief: `{{brief_file}}`
-- Brainstorming: `{{brainstorm_file}}`
+- Product Requirements: `PRD.md`
+- Product Brief: `product-brief.md`
+- Brainstorming: `fase-1-analysis/brainstorming-session-results-onsdag 5. november 2025.md`
 
 ### Core Interactive Deliverables
 
