@@ -31,9 +31,9 @@ export function EditItemDialog({ isOpen, item, onClose, onSuccess }: EditItemDia
     if (item) {
       reset({
         name: item.name,
-        category: item.category as any,
+        category: item.category as "dairy" | "produce" | "meat" | "grains" | "other",
         quantity: item.quantity,
-        unit: item.unit as any,
+        unit: item.unit as "g" | "kg" | "ml" | "L" | "pieces" | "oz" | "lbs",
         bestBeforeDate: item.bestBeforeDate.split("T")[0], // Convert ISO to YYYY-MM-DD
         image: item.image || undefined,
       })

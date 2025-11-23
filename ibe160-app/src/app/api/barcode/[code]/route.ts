@@ -20,6 +20,11 @@ export async function GET(
 
     // Use Open Food Facts API (free, no API key required)
     const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
+
+    if (!response.ok) {
+      return NextResponse.json({ error: "Failed to fetch product data" }, { status: response.status })
+    }
+
     const data = await response.json()
 
     if (data.status === 0 || !data.product) {

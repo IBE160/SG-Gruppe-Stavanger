@@ -54,7 +54,7 @@ export function AddItemDialog({ isOpen, onClose, onSuccess, scannedProduct }: Ad
           "cereals": "grains",
         }
         const mappedCategory = categoryMap[scannedProduct.category.toLowerCase()] || "other"
-        setValue("category", mappedCategory as any)
+        setValue("category", mappedCategory as "dairy" | "produce" | "meat" | "grains" | "other")
       }
       if (scannedProduct.image) {
         setValue("image", scannedProduct.image)
