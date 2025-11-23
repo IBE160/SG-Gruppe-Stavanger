@@ -205,7 +205,30 @@ export function PantryItemCard({ item, onEdit, onDelete }: PantryItemCardProps) 
 
   const getUnsplashImage = (name: string) => {
     const normalizedName = name.toLowerCase().trim()
-    const photoId = foodImageMap[normalizedName]
+
+    // Try exact match first
+    let photoId = foodImageMap[normalizedName]
+
+    // Try partial match - check if any key is contained in name or name contains key
+    if (!photoId) {
+      for (const [key, value] of Object.entries(foodImageMap)) {
+        if (normalizedName.includes(key) || key.includes(normalizedName)) {
+          photoId = value
+          break
+        }
+      }
+    }
+
+    // Try matching individual words
+    if (!photoId) {
+      const words = normalizedName.split(' ')
+      for (const word of words) {
+        if (word.length >= 3 && foodImageMap[word]) {
+          photoId = foodImageMap[word]
+          break
+        }
+      }
+    }
 
     if (photoId) {
       // Optimized smaller size for card display
