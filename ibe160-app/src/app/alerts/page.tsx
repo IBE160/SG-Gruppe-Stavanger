@@ -29,35 +29,108 @@ export default function AlertsPage() {
   const getItemImage = (name: string, category: string) => {
     // Map common food items to Unsplash images (matching PantryItemCard)
     const imageMap: { [key: string]: string } = {
-      tomatoes: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
-      tomato: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      // Dairy
       milk: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80",
+      melk: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&h=80&fit=crop&q=80",
+      cheese: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=80&h=80&fit=crop&q=80",
+      ost: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=80&h=80&fit=crop&q=80",
+      yogurt: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=80&h=80&fit=crop&q=80",
+      yoghurt: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=80&h=80&fit=crop&q=80",
+      butter: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=80&h=80&fit=crop&q=80",
+      smør: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=80&h=80&fit=crop&q=80",
+      // Vegetables
+      tomato: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      tomatoes: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      tomat: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=80&h=80&fit=crop&q=80",
+      lettuce: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=80&h=80&fit=crop&q=80",
+      salat: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=80&h=80&fit=crop&q=80",
+      carrot: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
+      carrots: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
+      gulrot: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
+      onion: "https://images.unsplash.com/photo-1508747703725-719777637510?w=80&h=80&fit=crop&q=80",
+      løk: "https://images.unsplash.com/photo-1508747703725-719777637510?w=80&h=80&fit=crop&q=80",
+      potato: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=80&h=80&fit=crop&q=80",
+      potatoes: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=80&h=80&fit=crop&q=80",
+      potet: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=80&h=80&fit=crop&q=80",
+      broccoli: "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=80&h=80&fit=crop&q=80",
+      brokkoli: "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=80&h=80&fit=crop&q=80",
+      cucumber: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=80&h=80&fit=crop&q=80",
+      agurk: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=80&h=80&fit=crop&q=80",
+      paprika: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=80&h=80&fit=crop&q=80",
+      pepper: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=80&h=80&fit=crop&q=80",
+      spinach: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=80&h=80&fit=crop&q=80",
+      spinat: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=80&h=80&fit=crop&q=80",
+      mushroom: "https://images.unsplash.com/photo-1515664069124-6a81e6be4adb?w=80&h=80&fit=crop&q=80",
+      mushrooms: "https://images.unsplash.com/photo-1515664069124-6a81e6be4adb?w=80&h=80&fit=crop&q=80",
+      sopp: "https://images.unsplash.com/photo-1515664069124-6a81e6be4adb?w=80&h=80&fit=crop&q=80",
+      garlic: "https://images.unsplash.com/photo-1591679252260-1d5b30d5bab2?w=80&h=80&fit=crop&q=80",
+      hvitløk: "https://images.unsplash.com/photo-1591679252260-1d5b30d5bab2?w=80&h=80&fit=crop&q=80",
+      // Meat
       chicken: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80",
+      kylling: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=80&h=80&fit=crop&q=80",
+      beef: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      biff: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
+      pork: "https://images.unsplash.com/photo-1588347818036-5e643c2b2e0f?w=80&h=80&fit=crop&q=80",
+      svinekjøtt: "https://images.unsplash.com/photo-1588347818036-5e643c2b2e0f?w=80&h=80&fit=crop&q=80",
+      bacon: "https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=80&h=80&fit=crop&q=80",
+      salmon: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
+      laks: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
+      fish: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
+      fisk: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
+      // Fruits
+      apple: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
+      apples: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
+      eple: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
+      banana: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
+      bananas: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
+      banan: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
+      orange: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
+      oranges: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
+      appelsin: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
+      strawberry: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=80&h=80&fit=crop&q=80",
+      jordbær: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=80&h=80&fit=crop&q=80",
+      lemon: "https://images.unsplash.com/photo-1590502593747-42a996133562?w=80&h=80&fit=crop&q=80",
+      sitron: "https://images.unsplash.com/photo-1590502593747-42a996133562?w=80&h=80&fit=crop&q=80",
+      avocado: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=80&h=80&fit=crop&q=80",
+      avokado: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=80&h=80&fit=crop&q=80",
+      // Pantry
+      bread: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=80&h=80&fit=crop&q=80",
+      brød: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=80&h=80&fit=crop&q=80",
+      rice: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
+      ris: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
+      pasta: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=80&h=80&fit=crop&q=80",
       eggs: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=80&h=80&fit=crop&q=80",
       egg: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=80&h=80&fit=crop&q=80",
-      bread: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=80&h=80&fit=crop&q=80",
-      cheese: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=80&h=80&fit=crop&q=80",
-      yogurt: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=80&h=80&fit=crop&q=80",
-      lettuce: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=80&h=80&fit=crop&q=80",
-      carrots: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
-      carrot: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=80&h=80&fit=crop&q=80",
-      apples: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
-      apple: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=80&h=80&fit=crop&q=80",
-      bananas: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
-      banana: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&h=80&fit=crop&q=80",
-      oranges: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
-      orange: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=80&h=80&fit=crop&q=80",
-      beef: "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=80&h=80&fit=crop&q=80",
-      pork: "https://images.unsplash.com/photo-1588347818036-5e643c2b2e0f?w=80&h=80&fit=crop&q=80",
-      fish: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
-      salmon: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=80&h=80&fit=crop&q=80",
-      rice: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=80&h=80&fit=crop&q=80",
-      pasta: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=80&h=80&fit=crop&q=80",
+      flour: "https://images.unsplash.com/photo-1556910110-a5a63dfd393c?w=80&h=80&fit=crop&q=80",
+      mel: "https://images.unsplash.com/photo-1556910110-a5a63dfd393c?w=80&h=80&fit=crop&q=80",
+      sugar: "https://images.unsplash.com/photo-1587241321921-91aaab3e5b3e?w=80&h=80&fit=crop&q=80",
+      sukker: "https://images.unsplash.com/photo-1587241321921-91aaab3e5b3e?w=80&h=80&fit=crop&q=80",
+      oil: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=80&h=80&fit=crop&q=80",
+      olje: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=80&h=80&fit=crop&q=80",
+      coffee: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=80&h=80&fit=crop&q=80",
+      kaffe: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=80&h=80&fit=crop&q=80",
     }
 
-    const itemKey = name.toLowerCase()
-    if (imageMap[itemKey]) {
-      return imageMap[itemKey]
+    const normalizedName = name.toLowerCase().trim()
+
+    // Try exact match first
+    if (imageMap[normalizedName]) {
+      return imageMap[normalizedName]
+    }
+
+    // Try partial match - check if any key is contained in name or name contains key
+    for (const [key, value] of Object.entries(imageMap)) {
+      if (normalizedName.includes(key) || key.includes(normalizedName)) {
+        return value
+      }
+    }
+
+    // Try matching individual words
+    const words = normalizedName.split(' ')
+    for (const word of words) {
+      if (word.length >= 3 && imageMap[word]) {
+        return imageMap[word]
+      }
     }
 
     // Fallback to category-based images
