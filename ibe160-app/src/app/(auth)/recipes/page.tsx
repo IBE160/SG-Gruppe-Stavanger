@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react"
 import DOMPurify from "dompurify"
 import Link from "next/link"
+import Image from "next/image"
 import { useRecipeSearch, useRecipeDetails } from "@/hooks/useRecipes"
 import { usePantryItems } from "@/hooks/usePantry"
 import { searchByIngredients } from "@/lib/spoonacular"
@@ -504,11 +505,12 @@ export default function RecipesPage() {
                   </div>
 
                   {recipeToShow.image && (
-                    <div className="mb-6 rounded-xl overflow-hidden">
-                      <img
+                    <div className="mb-6 rounded-xl overflow-hidden relative w-full h-64">
+                      <Image
                         src={recipeToShow.image}
                         alt={recipeToShow.title}
-                        className="w-full h-64 object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                   )}
