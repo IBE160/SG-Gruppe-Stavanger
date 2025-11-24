@@ -96,10 +96,10 @@ export async function searchByIngredients(
 
 // Get recipe details
 export async function getRecipeDetails(id: number): Promise<RecipeDetails | null> {
-  if (!API_KEY) {
+  // Helper function to return demo data
+  const getStubDetail = () => {
     const stubRecipe = stubRecipes.find((r) => r.id === id)
     if (!stubRecipe) return null
-
     return {
       ...stubRecipe,
       instructions: "Sample instructions for demo mode. Full recipe details available with Spoonacular API.",
@@ -111,18 +111,26 @@ export async function getRecipeDetails(id: number): Promise<RecipeDetails | null
     }
   }
 
+  // 1. If no API key, return demo data immediately
+  if (!API_KEY) {
+    return getStubDetail()
+  }
+
   try {
     const url = `${BASE_URL}/recipes/${id}/information?apiKey=${API_KEY}`
     const response = await fetch(url)
 
+    // 2. If API fails (404 Not Found, 402 Quota Exceeded, etc), fall back to demo data
     if (!response.ok) {
-      throw new Error("Failed to fetch recipe details")
+      console.warn(`⚠️ Spoonacular API error ${response.status} for ID ${id} - checking demo data`)
+      return getStubDetail()
     }
 
     return await response.json()
   } catch (error) {
     console.error("Spoonacular API error:", error)
-    return null
+    // 3. If network fails completely, try demo data
+    return getStubDetail()
   }
 }
 
