@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Direction Mockups</title>
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --radius: 0.5rem;
+
+            /* Theme 1: Fresh & Organic */
+            --primary: #22c55e;
+            --primary-foreground: #f0fdf4;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --accent: #a3e635;
+            --background: #f8fafc;
+            --foreground: #020817;
+            --card: #ffffff;
+            --card-foreground: #020817;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #4ade80;
+            --destructive: #ef4444;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+
+        header {
+            background-color: var(--card);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            color: var(--card-foreground);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-description {
+            max-width: 700px;
+            margin: 0 auto 1rem auto;
+            color: var(--muted-foreground);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            background-color: var(--card);
+            color: var(--muted-foreground);
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .direction-content {
+            display: none;
+        }
+
+        .direction-content.active {
+            display: block;
+        }
+        
+        .mockup-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background-color: var(--background);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .mockup-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .mockup-header span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+        .mockup-header .red { background-color: #f87171; }
+        .mockup-header .yellow { background-color: #fbbF24; }
+        .mockup-header .green { background-color: #34d399; }
+
+        .mockup-body {
+            padding: 2rem;
+            min-height: 70vh;
+        }
+        
+        .direction-title {
+            margin-bottom: 2rem;
+        }
+        .direction-title h2 { font-size: 1.875rem; margin: 0; }
+        .direction-title p { font-size: 1rem; color: var(--muted-foreground); margin: 0.25rem 0 0 0; }
+
+        /* Generic component styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: opacity 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-lg { padding: 0.75rem 1.5rem; font-size: 1rem; }
+        .btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+        .btn-secondary { background-color: var(--secondary); color: var(--secondary-foreground); border: 1px solid var(--border); }
+        .card { background-color: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 1.5rem; }
+        .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+        .tag-green { background-color: #dcfce7; color: #166534; }
+        .tag-yellow { background-color: #fef9c3; color: #854d0e; }
+        .tag-red { background-color: #fee2e2; color: #991b1b; }
+        .icon-placeholder {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background-color: var(--muted);
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Direction 1: The Dashboard */
+        .dir1-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
+        .dir1-sidebar ul { list-style: none; padding: 0; margin: 0; }
+        .dir1-sidebar li a { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: var(--radius); text-decoration: none; color: var(--muted-foreground); font-weight: 500; }
+        .dir1-sidebar li a.active, .dir1-sidebar li a:hover { background-color: var(--secondary); color: var(--secondary-foreground); }
+        .dir1-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .dir1-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+
+        /* Direction 2: The Zen Garden */
+        .dir2-layout { max-width: 800px; margin: 0 auto; }
+        .dir2-header { text-align: center; margin-bottom: 2.5rem; }
+        .dir2-header h3 { font-size: 1.5rem; color: var(--muted-foreground); font-weight: 500; }
+        .dir2-header h3 strong { color: var(--card-foreground); }
+        .dir2-item-list li { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); list-style: none; }
+        .dir2-item-list ul { padding: 0; }
+        .dir2-actions { text-align: center; margin-top: 2rem; }
+        
+        /* Direction 3: The Card Explorer */
+        .dir3-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .dir3-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .dir3-card { text-align: center; }
+        .dir3-card .img-placeholder { width: 100%; height: 120px; background-color: var(--muted); border-radius: var(--radius); margin-bottom: 1rem; }
+        .dir3-card h4 { margin: 0 0 0.25rem 0; }
+        .dir3-card p { margin: 0; color: var(--muted-foreground); font-size: 0.875rem; }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Design Direction Mockups</h1>
+        <p class="header-description">
+            Here are three distinct design directions for the app's main screens, all using the "Fresh & Organic" theme. Each mockup shows a different approach to layout and interaction. Explore them and decide which one feels the most intuitive and inspiring.
+        </p>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showDirection(1)">1. The Dashboard</button>
+            <button class="tab-btn" onclick="showDirection(2)">2. The Zen Garden</button>
+            <button class="tab-btn" onclick="showDirection(3)">3. The Card Explorer</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Direction 1 Content -->
+        <div id="direction1" class="direction-content active">
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <span class="red"></span><span class="yellow"></span><span class="green"></span>
+                </div>
+                <div class="mockup-body dir1-layout">
+                    <aside class="dir1-sidebar">
+                        <h3 style="padding: 0 0.75rem; margin-bottom: 0.5rem; font-size: 1rem; color: var(--muted-foreground);">MENU</h3>
+                        <ul>
+                            <li><a href="#" class="active"><span class="icon-placeholder"></span> Inventory</a></li>
+                            <li><a href="#"><span class="icon-placeholder"></span> Recipes</a></li>
+                            <li><a href="#"><span class="icon-placeholder"></span> Meal Plan</a></li>
+                            <li><a href="#"><span class="icon-placeholder"></span> Settings</a></li>
+                        </ul>
+                    </aside>
+                    <section>
+                        <div class="dir1-header">
+                            <h2>Your Inventory</h2>
+                            <button class="btn btn-lg btn-primary">Add Item</button>
+                        </div>
+                        <div class="card" style="margin-bottom: 1.5rem;">
+                            <h4><span class="icon-placeholder" style="background-color: var(--accent); margin-right: 0.5rem;"></span> Instant Idea</h4>
+                            <p style="color: var(--muted-foreground); font-size: 0.875rem;">Got a few ingredients? Get a recipe in seconds.</p>
+                            <input type="text" placeholder="e.g., 'Chicken, tomatoes, onion'" style="width: 70%; padding: 0.5rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); margin-top: 1rem;">
+                            <button class="btn btn-secondary" style="margin-left: 0.5rem;">Go</button>
+                        </div>
+                        <div class="dir1-grid">
+                            <div class="card">
+                                <h4>Expiring Soon</h4>
+                                <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                                    <li style="display: flex; justify-content: space-between; padding: 0.5rem 0;"><span>Tomatoes (3)</span> <span class="tag tag-red">1 day left</span></li>
+                                    <li style="display: flex; justify-content: space-between; padding: 0.5rem 0;"><span>Milk (0.5L)</span> <span class="tag tag-yellow">3 days left</span></li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <h4>Recipe Suggestions</h4>
+                                <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                                    <li style="padding: 0.5rem 0;">Tomato & Basil Bruschetta</li>
+                                    <li style="padding: 0.5rem 0;">Simple Tomato Soup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 2 Content -->
+        <div id="direction2" class="direction-content">
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <span class="red"></span><span class="yellow"></span><span class="green"></span>
+                </div>
+                <div class="mockup-body dir2-layout">
+                    <div class="direction-title" style="text-align:center; margin-bottom: 2rem;">
+                        <h2>The Zen Garden</h2>
+                        <p>A calm, focused approach that guides you one step at a time.</p>
+                    </div>
+                    <div class="dir2-header">
+                        <h3>You have <strong>12 items</strong> in your kitchen.</h3>
+                        <h4 style="color: var(--muted-foreground); font-weight: 400;">2 are expiring soon.</h4>
+                    </div>
+                     <div class="card">
+                        <ul class="dir2-item-list">
+                             <li>
+                                <div>
+                                    <h4 style="margin:0;">Tomatoes</h4>
+                                    <p style="margin: 0.25rem 0 0 0; color: var(--muted-foreground); font-size: 0.875rem;">Quantity: 3</p>
+                                </div>
+                                <span class="tag tag-red">Expires in 1 day</span>
+                            </li>
+                             <li>
+                                <div>
+                                    <h4 style="margin:0;">Milk</h4>
+                                    <p style="margin: 0.25rem 0 0 0; color: var(--muted-foreground); font-size: 0.875rem;">Quantity: 0.5L</p>
+                                </div>
+                                <span class="tag tag-yellow">Expires in 3 days</span>
+                            </li>
+                             <li>
+                                <div>
+                                    <h4 style="margin:0;">Onions</h4>
+                                    <p style="margin: 0.25rem 0 0 0; color: var(--muted-foreground); font-size: 0.875rem;">Quantity: 5</p>
+                                </div>
+                                <span class="tag tag-green">Fresh</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dir2-actions">
+                         <button class="btn btn-lg btn-primary">What can I make?</button>
+                         <p style="margin-top: 1rem;"><a href="#" style="color: var(--primary); font-weight: 500;">or, add a new item</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 3 Content -->
+        <div id="direction3" class="direction-content">
+            <div class="mockup-container">
+                <div class="mockup-header">
+                     <span class="red"></span><span class="yellow"></span><span class="green"></span>
+                </div>
+                <div class="mockup-body dir3-layout">
+                    <div class="direction-title">
+                        <h2>The Card Explorer</h2>
+                        <p>A highly visual, "Pinterest-style" approach to your inventory.</p>
+                    </div>
+                    <div class="dir3-header">
+                        <h3 style="font-size: 1.25rem;">Your Ingredients</h3>
+                        <button class="btn btn-lg btn-primary">Suggest Recipes</button>
+                    </div>
+                    <div class="dir3-grid">
+                        <div class="card dir3-card">
+                            <div class="img-placeholder"></div>
+                            <h4>Tomatoes</h4>
+                            <p><span class="tag tag-red">Expires in 1 day</span></p>
+                        </div>
+                         <div class="card dir3-card">
+                            <div class="img-placeholder"></div>
+                            <h4>Milk</h4>
+                            <p><span class="tag tag-yellow">Expires in 3 days</span></p>
+                        </div>
+                         <div class="card dir3-card">
+                            <div class="img-placeholder"></div>
+                            <h4>Onions</h4>
+                            <p><span class="tag tag-green">Fresh</span></p>
+                        </div>
+                         <div class="card dir3-card" style="background-color: var(--secondary); display: flex; align-items: center; justify-content: center; flex-direction: column; cursor: pointer;">
+                             <span style="font-size: 2rem; color: var(--muted-foreground);">+</span>
+                            <h4 style="color: var(--secondary-foreground);">Add New Item</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showDirection(dirNum) {
+            // Hide all content
+            document.querySelectorAll('.direction-content').forEach(el => el.classList.remove('active'));
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show selected content
+            document.getElementById(`direction${dirNum}`).classList.add('active');
+            // Activate selected button
+            document.querySelector(`.tab-btn:nth-child(${dirNum})`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
