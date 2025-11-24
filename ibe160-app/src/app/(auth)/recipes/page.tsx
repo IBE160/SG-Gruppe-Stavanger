@@ -435,13 +435,17 @@ export default function RecipesPage() {
                 className="flex flex-col gap-3 pb-3 transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
               >
                 <div
-                  className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl overflow-hidden"
-                  style={{
-                    backgroundImage: recipe.image
-                      ? `url("${recipe.image}")`
-                      : `url("${getFallbackImage(recipe.title)}")`,
-                  }}
-                ></div>
+                  className="relative w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl overflow-hidden"
+                >
+                  {(recipe.image || getFallbackImage(recipe.title)) && (
+                    <Image
+                      src={recipe.image || getFallbackImage(recipe.title)}
+                      alt={recipe.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
                 <div className="flex flex-col gap-1.5">
                   <p className="text-[#333333] text-base font-bold leading-normal line-clamp-2">
                     {recipe.title}
