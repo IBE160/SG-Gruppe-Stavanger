@@ -208,6 +208,7 @@ const stubRecipes: Recipe[] = [
   },
   {
     id: 11,
+    
     title: "Banana Bread",
     image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=400&fit=crop&q=80",
     readyInMinutes: 75,

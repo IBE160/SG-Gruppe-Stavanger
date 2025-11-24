@@ -100,7 +100,20 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
     if (!jsonMatch) {
       throw new Error("No JSON found in response")
     }
-    return JSON.parse(jsonMatch[0])
+    const aiRecipes = JSON.parse(jsonMatch[0])
+
+    // Add unique IDs, transform ingredients, and add placeholder image
+    return aiRecipes.map((recipe: any) => ({
+      id: `ai-${crypto.randomUUID()}`, // Unique client-side ID for AI recipes
+      title: recipe.title,
+      // Transform ingredients array to match extendedIngredients structure
+      extendedIngredients: recipe.ingredients.map((ing: string) => ({ original: ing })),
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      instructions: recipe.instructions,
+      tags: recipe.tags,
+      image: "https://images.unsplash.com/photo-1543353071-873f17a7a08f?w=600&h=400&fit=crop&q=80", // Placeholder image for AI recipes
+    }))
   } catch (error) {
     console.error("AI recipe search failed:", error)
 
