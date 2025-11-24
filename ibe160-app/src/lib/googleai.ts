@@ -102,18 +102,42 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
     }
     const aiRecipes = JSON.parse(jsonMatch[0])
 
-    // Add unique IDs, transform ingredients, and add placeholder image
-    return aiRecipes.map((recipe: any) => ({
-      id: `ai-${crypto.randomUUID()}`, // Unique client-side ID for AI recipes
-      title: recipe.title,
-      // Transform ingredients array to match extendedIngredients structure
-      extendedIngredients: recipe.ingredients.map((ing: string) => ({ original: ing })),
-      cookingTime: recipe.cookingTime,
-      servings: recipe.servings,
-      instructions: recipe.instructions,
-      tags: recipe.tags,
-      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80", // Placeholder image for AI recipes
-    }))
+    const unsplashApiKey = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
+    const placeholderImage = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80";
+
+    const recipesWithImages = await Promise.all(
+      aiRecipes.map(async (recipe: any) => {
+        let imageUrl = placeholderImage;
+
+        if (unsplashApiKey) {
+          try {
+            const unsplashUrl = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipe.title)}&client_id=${unsplashApiKey}&per_page=1`;
+            const imageResponse = await fetch(unsplashUrl);
+            if (imageResponse.ok) {
+              const imageData = await imageResponse.json();
+              if (imageData.results && imageData.results.length > 0) {
+                imageUrl = imageData.results[0].urls.regular;
+              }
+            }
+          } catch (e) {
+            console.error("Unsplash fetch failed for recipe:", recipe.title, e);
+          }
+        }
+
+        return {
+          id: `ai-${crypto.randomUUID()}`,
+          title: recipe.title,
+          extendedIngredients: recipe.ingredients.map((ing: string) => ({ original: ing })),
+          cookingTime: recipe.cookingTime,
+          servings: recipe.servings,
+          instructions: recipe.instructions,
+          tags: recipe.tags,
+          image: imageUrl,
+        };
+      })
+    );
+
+    return recipesWithImages;
   } catch (error) {
     console.error("AI recipe search failed:", error)
 
