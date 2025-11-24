@@ -112,7 +112,7 @@ Return ONLY a JSON array of 5 recipes in this format (no markdown, no extra text
       servings: recipe.servings,
       instructions: recipe.instructions,
       tags: recipe.tags,
-      image: "https://images.unsplash.com/photo-1543353071-873f17a7a08f?w=600&h=400&fit=crop&q=80", // Placeholder image for AI recipes
+      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80", // Placeholder image for AI recipes
     }))
   } catch (error) {
     console.error("AI recipe search failed:", error)
