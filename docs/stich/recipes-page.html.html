@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recipe List Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#22c55e",
+              "background-light": "#F9F9F9",
+              "background-dark": "#121212",
+              "text-light": "#333333",
+              "text-dark": "#E0E0E0",
+              "subtext-light": "#666666",
+              "subtext-dark": "#A0A0A0",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1E1E1E",
+              "border-light": "#F0F0F0",
+              "border-dark": "#2C2C2C",
+            },
+            fontFamily: {
+              "display": ["Work Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+      .material-symbols-outlined.fill {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden" style="max-width: 420px; margin: auto;">
+<div class="flex flex-col gap-2 bg-surface-light dark:bg-surface-dark p-4 pb-2 sticky top-0 z-10 border-b border-border-light dark:border-border-dark">
+<div class="flex items-center h-12 justify-between">
+<p class="text-text-light dark:text-text-dark tracking-light text-[28px] font-bold leading-tight">Recipes</p>
+<div class="text-text-light dark:text-text-dark flex size-12 shrink-0 items-center justify-end">
+<span class="material-symbols-outlined text-3xl">
+                        tune
+                    </span>
+</div>
+</div>
+<div class="py-2">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-subtext-light dark:text-subtext-dark flex border-none bg-background-light dark:bg-background-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">
+                                search
+                            </span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-background-dark focus:border-none h-full placeholder:text-subtext-light dark:placeholder:text-subtext-dark px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search recipes or ingredients..." value=""/>
+</div>
+</label>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark">
+<div class="flex gap-3 px-4 pt-2 pb-4 overflow-x-auto whitespace-nowrap">
+<div class="flex h-9 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-primary/20 text-primary pl-3 pr-4 ring-1 ring-primary">
+<span class="material-symbols-outlined text-xl">
+                        eco
+                    </span>
+<p class="text-sm font-medium leading-normal">Use-Up Soon</p>
+</div>
+<div class="flex h-9 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark pl-3 pr-4">
+<span class="material-symbols-outlined text-xl">
+                        schedule
+                    </span>
+<p class="text-sm font-medium leading-normal">Quick Meals</p>
+</div>
+<div class="flex h-9 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark pl-3 pr-4">
+<span class="material-symbols-outlined text-xl">
+                        dinner_dining
+                    </span>
+<p class="text-sm font-medium leading-normal">Dinner</p>
+</div>
+<div class="flex h-9 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark pl-3 pr-4">
+<span class="material-symbols-outlined text-xl">
+                        grass
+                    </span>
+<p class="text-sm font-medium leading-normal">Vegetarian</p>
+</div>
+<div class="flex h-9 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark pl-3 pr-4">
+<span class="material-symbols-outlined text-xl">
+                        cake
+                    </span>
+<p class="text-sm font-medium leading-normal">Desserts</p>
+</div>
+</div>
+</div>
+<main class="flex-1 bg-background-light dark:bg-background-dark">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 p-4">
+<div class="flex flex-col gap-3 pb-3">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A vibrant dish of tomato basil pasta in a white bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjJV14aB5YCJum4iSrwK43q9zPeKvop2HoKx25KlGzHtJp6A4LMFEEfBCJSerGcF4U8v2E7CgUKHjeinzzU0OOBEQNFv7dquNY-S67Ksl7wJE8tdqzZBKBcZ46HZj5HsT9HgSM06FRoX1dQieUZ8s3LrFOyhnR5cyXRx6MNl9RLlxIx6W1x6h9lx-ad5rA-yfo-OloMtW0bsYIex822xdHIUoDW-wxKHGU2RCWeNdDjUePQIZ-sswso-ibBzcr2j5q2p0V3LmWMws");'></div>
+<div class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined">bookmark_border</span>
+</div>
+</div>
+<div>
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Tomato Basil Pasta</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">30 min</p>
+<div class="flex items-center gap-1.5 mt-1 text-primary">
+<span class="material-symbols-outlined text-base">eco</span>
+<p class="text-xs font-medium">Uses expiring tomatoes</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A savory stir-fry with chicken and broccoli in a wok" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAB7K3sErzTgNc0xt9Vwf4aDHQBqXor0oC_NUFyGSkL9obImBhI_P5t3FO767LO7zhKw8SKg2-hip74qLOFS16xlDk9dfa-BxshqEUoFXz9CkISis1CaDb9k_dOAztNbx_-8LK5dJiikB2-m9ei2dha_KYzbKLyPANB6b2Dy1ZDke9HntwlLYcL21hut16YAkldaRwUZSMWIbPUyNGYr0_eawQ0-ptd5oBh25zUX8RcM4hmNwmC8FNbq99Q_-8Xaen3-06k7A1aDcM");'></div>
+<div class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined">bookmark_border</span>
+</div>
+</div>
+<div>
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Chicken &amp; Broccoli Stir-Fry</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">25 min</p>
+<div class="flex items-center gap-1.5 mt-1 text-primary">
+<span class="material-symbols-outlined text-base">eco</span>
+<p class="text-xs font-medium">Uses expiring broccoli</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A healthy quinoa bowl with mixed vegetables" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAr8-sgVa6Rr2MqrGVC-36g0_Yh7-gALbw_IKykLY6bm9dBMEJ2Fgcvy9MdD7KZG46rkR76bQPeNkXY-v7jdXZKXEM9uK0V5viJI_wNEhzfPJtPrZcK3CdOCApKpWHgTuMSeYYg4YFy4-mWQsQuS-Sl9755yD5hZmph56T_hh1QcBGziT6hPA8-9LJaTf3SWQHJSYCQjSA5n6hky8Z1KnALz8JezYtKZKSYxU8HEgQumQLCgRoOl_zGP1KvBy4-s8OHDoKWKNRECfo");'></div>
+<div class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined">bookmark_border</span>
+</div>
+</div>
+<div>
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Quinoa Veggie Bowl</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">20 min</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3">
+<div class="relative w-full">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" data-alt="A comforting lentil shepherd's pie with a golden crust" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBK70ot7bFoOSOQxcx_qlJhv7x98yJ-207ZijqN2wx6FwvKq8HTp1iLMWOhOudcfXLbQ8OqYG9OpA94qEP3rIJblUncrqO16fsBSY_BdBwru6DzFtUBTpy3hF8hHzAuwYRoXvuq_1HqHkjfOY4Ag1KFqQt8hZGT_lduhjmeKg75OST04wXFzLuvJCb2p1Y1sodxj0zL0SpHHDmdu6rOYUJNUpq5X2JgynVt9RFdA2BK2StSpiSrN9sELV_pkyLfst9JAM3qUfLBLe0");'></div>
+<div class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined fill text-white">bookmark</span>
+</div>
+</div>
+<div>
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Lentil Shepherd's Pie</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">45 min</p>
+</div>
+</div>
+<div class="col-span-full p-4">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary/20 py-3 text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-medium">AI gives you recipes</span>
+</button>
+</div>
+</div>
+</main>
+<footer class="sticky bottom-0 z-10">
+<div class="flex gap-2 border-t border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark px-4 pb-3 pt-2">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-subtext-light dark:text-subtext-dark" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Dashboard</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-subtext-light dark:text-subtext-dark" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Inventory</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined fill">restaurant_menu</span>
+</div>
+<p class="text-xs font-bold leading-normal tracking-[0.015em]">Recipes</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-subtext-light dark:text-subtext-dark" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+</a>
+</div>
+</footer>
+</div>
+</body></html>
