@@ -3,7 +3,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>My Inventory</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <script>
@@ -38,6 +38,11 @@
         'opsz' 24
       }
     </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
@@ -102,6 +107,35 @@
 <p class="text-sm text-gray-600 dark:text-gray-300">Exp: in 14 days</p>
 </div>
 </div>
+<div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Shopping List</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+<div class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="ml-3 text-gray-700 dark:text-gray-300">Bell Peppers</label>
+</div>
+<button class="text-gray-400 hover:text-red-500">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+<div class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="ml-3 text-gray-700 dark:text-gray-300">Chicken Breast</label>
+</div>
+<button class="text-gray-400 hover:text-red-500">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<div class="flex items-center">
+<input class="flex-grow bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-600 focus:ring-0 focus:border-primary dark:text-white placeholder-gray-400" placeholder="Add new item..." type="text"/>
+<button class="ml-2 text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+</div>
 <button class="fixed bottom-24 right-8 w-16 h-16 bg-primary rounded-full text-white flex items-center justify-center shadow-lg">
 <span class="material-symbols-outlined text-4xl">add</span>
 </button>
@@ -127,5 +161,4 @@
 </div>
 </nav>
 </div>
-
 </body></html>
