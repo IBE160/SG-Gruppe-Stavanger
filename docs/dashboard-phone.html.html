@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<style>
+    .material-icons-outlined {
+      font-feature-settings: 'liga';
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#22c55e", // A fresh green
+            "background-light": "#f8fafc",
+            "background-dark": "#0c0a09",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "1rem", // 16px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="max-w-md mx-auto min-h-screen bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 flex flex-col" id="app">
+<div class="p-6 pb-28 flex-grow">
+<header class="flex justify-between items-center mb-6">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
+<div class="flex items-center space-x-4 text-slate-600 dark:text-slate-400">
+<span class="material-icons-outlined text-3xl">menu</span>
+<span class="material-icons-outlined text-3xl">account_circle</span>
+</div>
+</header>
+<main class="space-y-6">
+<section>
+<h2 class="text-xl font-semibold mb-3 text-slate-900 dark:text-white">Expiring Soon</h2>
+<div class="space-y-2">
+<div class="bg-white dark:bg-slate-800 p-3 rounded-lg flex justify-between items-center shadow-sm">
+<div class="flex items-center space-x-3">
+<img alt="Red apple" class="w-8 h-8 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA61Vsnp-SQgDgmFR043hDZkssUaAqvtgPsxqprb5-NA571LxLZe4HT-8eMx5xt5XXsiIXEBjR68yhI8Yk1ZS9blpe3uR6mjdZpxfHlt586oxsiLH45YyrdywUIB9p2iZhB0sK1wNRJSopX3ly3F7Q1qsr3ts7bauedaL0WNtNBWKwvrsQPo4AH0yqhwRmxbGpMtULAVNLf6H4qIcKDqG7rrAK952l5aw9V-Mtr__WoLP6_bScpOEApoqVBs2KWx3GMK0oFBDsotoA"/>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Apples</span>
+</div>
+<div class="bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+<span class="material-icons-outlined text-sm">warning_amber</span>
+<span>2 days</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-3 rounded-lg flex justify-between items-center shadow-sm">
+<div class="flex items-center space-x-3">
+<img alt="Sliced cucumber" class="w-8 h-8 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD1060wES3kjrSLf2uUM7YRFVlZBqfFw9HJ0tijOHYJqAS-7S_DxAYXFdPyRVZViAUSya8pJ_1fvM_0lE5fS7em4wxgok7pi8rtIu4649WFlOoHS_N0_QC_czKypcONzyJLFNqvP4-Ur-FoMDdViGFy5ZLn99ZtWTGbt9vL7ZFWqo6u1enhTvwH-mHlEwPDl2JwuhhQvS319Y49SPmT_J53odPr61v1fzf8hv4xq4QYm230XOEhnrAIETDr_Z2tg0KIDBQmnbdnDk"/>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Cucumber</span>
+</div>
+<div class="bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+<span>2 days</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-3 rounded-lg flex justify-between items-center shadow-sm">
+<div class="flex items-center space-x-3">
+<img alt="Tomatoes" class="w-8 h-8 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1k2rhZeGN19oRE39L4Ojat3vLKVgaSx1cjkjQ44LGblHlANPcbhpSMosk81xjjBQ_2gPdOPnhn3W-FRXBd5mN-71aM6JKnGcnfsAsjD1uA6F6i8HXS0NE-aDJE5I7NPIQrFL5UjB4qznKMUpPBFDehBmIxOUs7GFUV2fCUj7z8FB45Y-82SgZBUyQ3QKBKVo1oEG1Fs3Al1GE-JX7J6WKm0UV4nqbwYkOYG_Y8jxmdcpc_I6QEh_ZyUnGaj4EXC4Fh5tzHVozS0I"/>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Tomatoes</span>
+</div>
+<div class="bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+<span>2 days</span>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-xl font-semibold mb-3 text-slate-900 dark:text-white">Recipe Suggestions</h2>
+<div class="flex space-x-4 overflow-x-auto pb-2 -mx-6 px-6">
+<div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm flex-shrink-0 w-40">
+<img alt="Bowl of healthy food with intricate rolls" class="w-full h-24 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXXmqQ2T-6qTY-W7clhfuEMOXzTatZDEx_n_l3xnFueJ3Cg4ym5Z97_yAd3VikuNeZkNYi8RNiz_yV3twkCGNwPPz7ijrn4z_RhrIwnV1oKb5DoWUG5lOWaFPZyYxI41IgQcU2-RPGwdHa40xHzVbkrHxfM7XFOObDUxPg2QKBr0zgwUPFQkCeUs6UrGTudz10jpBjEbfqYGFSBgwvrEDkvqQFY5kI0Sn672ALdK4-DIGTmviwByahacoUFBZbua4Hai_Y_dHRnq8"/>
+<div class="p-2">
+<h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm truncate">Apppiny recipe</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Uses Apples</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm flex-shrink-0 w-40">
+<img alt="Bowl of food with boiled eggs and vegetables" class="w-full h-24 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU5md7fThxhEh7DwpxR9H9lxUxVP5PV6KmxAFr2y0k-xCEbpyelD-qNThaXszNZInS3kCC_hGpTbVF91TPmoE-ClSKd4C-IOCsONI7F99egBRWc6eBN7-KsFrCLEzFoGBmLey5e4wy04p0I-FyBYPJzquuB4FwUo1HtwU93iK5zvqbndegnVYVXZweuKIVd2U_wHsBHiSpa2mE4QeU4FAHMXDKGyi4ZlSPl1VWLAVGLZkPXcSFP_MjWUKjgPQ_D5873oHROqbAU0I"/>
+<div class="p-2">
+<h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm truncate">Apppiny recipe</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Uses Cucumber</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm flex-shrink-0 w-40">
+<img alt="Healthy bowl with quinoa, eggs, and mushrooms" class="w-full h-24 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCocj8s7tr6JCsOmIxudcsKmb-V-h3SSOAFMHpRTM2ObuyauBsKpLIuiv4zz89WJ2A5Klp-67VxSev5CxATUcujyaKl0BiDAX4icl05NGyxufsjZtqkvD-OXAa0ceQcll_KkUa7EMnaUdNVBDW2_Pjo-EsVTMSBKL67N99h4s4zJazmeKgmXjhIYzdudLRkZYYdseCApmUXuuS2ApsFr0joNgv7rCoHIOsnR-QNpUZfnr-1oCPfh6SKS48_b62VKc0ANR5wLs4c0Mk"/>
+<div class="p-2">
+<h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm truncate">Apppiny recipe</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Uses Tomatoes</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm flex-shrink-0 w-40">
+<img alt="Bowl of healthy food with intricate rolls" class="w-full h-24 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXXmqQ2T-6qTY-W7clhfuEMOXzTatZDEx_n_l3xnFueJ3Cg4ym5Z97_yAd3VikuNeZkNYi8RNiz_yV3twkCGNwPPz7ijrn4z_RhrIwnV1oKb5DoWUG5lOWaFPZyYxI41IgQcU2-RPGwdHa40xHzVbkrHxfM7XFOObDUxPg2QKBr0zgwUPFQkCeUs6UrGTudz10jpBjEbfqYGFSBgwvrEDkvqQFY5kI0Sn672ALdK4-DIGTmviwByahacoUFBZbua4Hai_Y_dHRnq8"/>
+<div class="p-2">
+<h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm truncate">Another recipe</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Uses Apples</p>
+</div>
+</div>
+</div>
+</section>
+<section class="mt-4">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<h2 class="text-xl font-semibold text-slate-900 dark:text-white">Your Impact</h2>
+<button class="text-slate-500 dark:text-slate-400 hover:text-primary">
+<span class="material-icons-outlined">more_horiz</span>
+</button>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">You're making a difference by reducing food waste. Here's how much you've saved this month.</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg text-center">
+<p class="text-xs text-green-700 dark:text-green-300 font-medium">Food Eaten</p>
+<p class="text-2xl font-bold text-green-600 dark:text-green-400">12kg</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">and not wasted</p>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg text-center">
+<p class="text-xs text-blue-700 dark:text-blue-300 font-medium">Money Saved</p>
+<p class="text-2xl font-bold text-blue-600 dark:text-blue-400">$45</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">from smart choices</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-slate-200 dark:border-slate-800">
+<div class="flex justify-around items-center h-20 px-2">
+<a class="flex flex-col items-center justify-center text-primary w-1/4" href="#">
+<div class="border-2 border-primary rounded-lg px-5 py-1">
+<span class="material-icons-outlined text-2xl">eco</span>
+<span class="text-xs font-semibold">Dashboard</span>
+</div>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors w-1/4" href="#">
+<span class="material-icons-outlined text-2xl">grid_view</span>
+<span class="text-xs">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors w-1/4" href="#">
+<span class="material-icons-outlined text-2xl">restaurant_menu</span>
+<span class="text-xs">Recipes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors w-1/4" href="#">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="text-xs">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>
