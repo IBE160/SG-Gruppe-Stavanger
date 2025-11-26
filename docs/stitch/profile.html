@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec13",
+              "background-light": "#f6f8f6",
+              "background-dark": "#102210",
+              "text-light": "#111811",
+              "text-dark": "#f0f4f0",
+              "secondary-text-light": "#618961",
+              "secondary-text-dark": "#a2c2a2",
+              "border-light": "#e3e8e3",
+              "border-dark": "#2a3c2a",
+              "card-light": "#ffffff",
+              "card-dark": "#182a18",
+              "icon-bg-light": "#e3e8e3",
+              "icon-bg-dark": "#2a3c2a"
+            },
+            fontFamily: {
+              "display": ["Work Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "0.75rem",
+              "xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<main class="flex-1 pb-24">
+<!-- Top App Bar -->
+<div class="flex items-center p-4 pb-2 justify-between bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center justify-start text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Profile</h2>
+<div class="flex size-12 shrink-0 items-center"></div>
+</div>
+<!-- Profile Header -->
+<div class="flex p-4 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 border-4 border-white dark:border-card-dark shadow-md" data-alt="User's avatar picture of Alex Green" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAZDoJIy_F-ozH7-n-c9aS2lFFy2Vj3nHqMUSF9gRufzIOb0ne0Zbf9PxVUSTfyaAJU6i5in4Heo9rUUL7Y18ENLCrEvd4nkD7CWehlsnXI8f6F3_eGidaA5yUEzmDzGoPaozUBXRfu5ntwsnf3jeIK_IMt6UocHJ3h0cjiEDUdmCs-6NpOr6ECudUA5poBc_4ABU2jrmEXbMhfi3sjC8qgK12vlVxbnOy_lTGuHTE17elZZBd2v30YHhWC-llZNRNYS33-sAtoVY");'></div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Alex Green</p>
+<p class="text-secondary-text-light dark:text-secondary-text-dark text-base font-normal leading-normal text-center">alex.green@example.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Impact Card -->
+<div class="p-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-primary/20 dark:bg-primary/30 @xl:flex-row @xl:items-start p-4">
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1">
+<p class="text-primary text-3xl font-bold leading-tight tracking-[-0.015em]">15 kg</p>
+<div class="flex items-end gap-3 justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-secondary-text-light dark:text-secondary-text-dark text-base font-normal leading-normal">Food Waste Reduced</p>
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">Your Impact</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- List Sections -->
+<div class="flex flex-col gap-4 px-4">
+<div class="flex flex-col bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<!-- Account Settings Header -->
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pt-4 pb-2">Account Settings</h3>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Personal Information</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Change Password</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<!-- Preferences Header -->
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pt-4 pb-2">Preferences</h3>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">restaurant_menu</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Dietary Restrictions</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Notification Settings</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<!-- App Settings Header -->
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pt-4 pb-2">App Settings</h3>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">privacy_tip</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Privacy Policy</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Terms of Service</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- List Item -->
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-icon-bg-light dark:bg-icon-bg-dark shrink-0 size-10">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Help &amp; Support</p>
+</div>
+<div class="shrink-0 text-secondary-text-light dark:text-secondary-text-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Logout Button -->
+<div class="px-4 pt-6">
+<button class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-card-light dark:bg-card-dark text-red-500 font-semibold">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</main>
+<!-- Fixed Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 h-20 border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark px-4">
+<div class="flex h-full items-center justify-around">
+<a class="flex flex-col items-center gap-1 text-secondary-text-light dark:text-secondary-text-dark" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-xs">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary-text-light dark:text-secondary-text-dark" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-xs">Inventory</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary-text-light dark:text-secondary-text-dark" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-xs">Recipes</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-xs font-bold">Profile</span>
+</a>
+</div>
+</div>
+</div>
+</body></html>
