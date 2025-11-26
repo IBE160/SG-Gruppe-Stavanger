@@ -1,6 +1,6 @@
 # Story 1.1: Project Setup & Core Infrastructure (Foundation)
 
-Status: ready-for-dev
+Status: Approved
 
 ## Story
 
