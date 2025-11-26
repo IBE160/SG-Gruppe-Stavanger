@@ -3,7 +3,7 @@
     <epicId>epic-1</epicId>
     <storyId>1</storyId>
     <title>Project Setup &amp; Core Infrastructure (Foundation)</title>
-    <status>drafted</status>
+    <status>Approved</status>
     <generatedAt>2025-11-23</generatedAt>
     <generator>BMAD Story Context Workflow</generator>
     <sourceStoryPath>docs/sprint-artifacts/1-1-project-setup-core-infrastructure-foundation.md</sourceStoryPath>
