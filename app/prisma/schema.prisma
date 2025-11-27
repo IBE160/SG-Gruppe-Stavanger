@@ -23,6 +23,8 @@ model FoodItem {
   name      String
   ownerId   String
   owner     User     @relation(fields: [ownerId], references: [id])
+
+  @@index([ownerId])
 }
 
 model UserPreference {

@@ -1,6 +1,6 @@
 # Story 1.1: Project Setup & Core Infrastructure (Foundation)
 
-Status: Approved
+Status: done
 
 ## Story
 
@@ -107,6 +107,10 @@ This foundational story will establish the initial project structure and convent
 gemini-1.5-pro-api
 
 ### Debug Log References
+
+### Completion Notes
+**Completed:** torsdag 27. november 2025
+**Definition of Done:** All acceptance criteria met, code reviewed, tests passing
 
 ### Completion Notes List
 
