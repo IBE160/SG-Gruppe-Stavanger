@@ -192,11 +192,7 @@ npm run dev
 # 4. Open browser
 http://localhost:3000
 
-# 5. Test features:
-# - Click "Try Demo" or "Get Started"
-# - Go to Recipes and search for "pasta"
-# - Should see real recipes from Spoonacular!
-```
+
 
 ---
 
