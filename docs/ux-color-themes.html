@@ -7,34 +7,71 @@
     <style>
         :root {
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            --background: #ffffff;
+            
+            /* Light Mode Palette */
+            --background: #f8fafc;
             --foreground: #020817;
             --card: #ffffff;
             --card-foreground: #020817;
             --popover: #ffffff;
             --popover-foreground: #020817;
-            --primary: #2563eb;
-            --primary-foreground: #fafafa;
+            --primary: #22c55e;
+            --primary-foreground: #f0fdf4;
             --secondary: #f1f5f9;
             --secondary-foreground: #0f172a;
             --muted: #f1f5f9;
             --muted-foreground: #64748b;
-            --accent: #f1f5f9;
+            --accent: #a3e635;
             --accent-foreground: #0f172a;
             --destructive: #ef4444;
             --destructive-foreground: #fafafa;
+            --warning: #fb923c; /* New */
+            --warning-foreground: #ffffff; /* New */
             --border: #e2e8f0;
             --input: #e2e8f0;
-            --ring: #94a3b8;
+            --ring: #4ade80;
+
+            --text-light: #333333; /* New */
+            --subtext-light: #666666; /* New */
+
             --radius: 0.5rem;
+        }
+
+        .dark {
+            /* Dark Mode Palette */
+            --background: #121212;
+            --foreground: #E0E0E0;
+            --card: #1E1E1E;
+            --card-foreground: #E0E0E0;
+            --popover: #1E1E1E;
+            --popover-foreground: #E0E0E0;
+            --primary: #22c55e;
+            --primary-foreground: #000000;
+            --secondary: #2C2C2C;
+            --secondary-foreground: #E0E0E0;
+            --muted: #2C2C2C;
+            --muted-foreground: #A0A0A0;
+            --accent: #a3e635;
+            --accent-foreground: #000000;
+            --destructive: #ef4444;
+            --destructive-foreground: #ffffff;
+            --warning: #fb923c;
+            --warning-foreground: #000000;
+            --border: #2C2C2C;
+            --input: #2C2C2C;
+            --ring: #4ade80;
+
+            --text-dark: #E0E0E0; /* New */
+            --subtext-dark: #A0A0A0; /* New */
         }
 
         body {
             font-family: var(--font-sans);
-            background-color: #f8fafc;
+            background-color: var(--background);
             color: var(--foreground);
             margin: 0;
             padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         h1, h2, h3 {
@@ -61,11 +98,28 @@
             margin-bottom: 1rem;
         }
 
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
         .header-description {
             text-align: center;
             max-width: 600px;
-            margin: 0 auto 3rem auto;
-            color: #64748b;
+            margin: 0 auto 1.5rem auto;
+            color: var(--muted-foreground);
+        }
+        
+        .theme-toggle-btn {
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: 500;
         }
 
         .themes-grid {
@@ -79,7 +133,7 @@
             border-radius: var(--radius);
             background-color: var(--card);
             padding: 1.5rem;
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.2s, background-color 0.3s;
         }
         
         .theme-card:hover {
@@ -102,7 +156,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
-        .swatch.light {
+        .swatch.light-text {
             color: #020817;
             text-shadow: none;
         }
@@ -115,7 +169,8 @@
         
         .swatch.primary { grid-column: 1 / 3; }
         .swatch.secondary { grid-column: 3 / 5; }
-        .swatch.accent { grid-column: 1 / 5; }
+        .swatch.accent { grid-column: 1 / 3; }
+        .swatch.warning { grid-column: 3 / 5; }
 
         .components-preview {
             background-color: var(--background);
@@ -154,6 +209,11 @@
             color: var(--destructive-foreground);
         }
         
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--warning-foreground);
+        }
+        
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -167,6 +227,7 @@
             padding: 1rem;
             font-size: 0.875rem;
             margin-top: 1rem;
+            box-sizing: border-box;
         }
         
         .alert-success {
@@ -180,6 +241,18 @@
             border-color: #fecaca;
             color: #b91c1c;
         }
+
+        .dark .alert-success {
+            background-color: #052e16;
+            border-color: #166534;
+            color: #bbf7d0;
+        }
+
+        .dark .alert-destructive {
+            background-color: #3f1212;
+            border-color: #7f1d1d;
+            color: #fecaca;
+        }
         
         .input {
             display: flex;
@@ -188,6 +261,7 @@
             border-radius: calc(var(--radius) - 2px);
             border: 1px solid var(--input);
             background-color: var(--background);
+            color: var(--foreground);
             padding: 0.5rem 1rem;
             font-size: 0.875rem;
         }
@@ -216,72 +290,23 @@
             color: var(--muted-foreground);
         }
         
-        /* Theme specific styles */
-        #theme1-card {
-            --primary: #22c55e;
-            --primary-foreground: #f0fdf4;
-            --secondary: #f1f5f9;
-            --accent: #a3e635;
-            --background: #f8fafc;
-            --foreground: #020817;
-            --card: #ffffff;
-            --card-foreground: #020817;
-            --muted-foreground: #64748b;
-            --border: #e2e8f0;
-            --input: #e2e8f0;
-            --ring: #4ade80;
+        /* Stop applying theme styles to cards to avoid conflicts */
+        #theme1-card, #theme2-card, #theme3-card, #theme4-card {
+           border-color: var(--border); /* Use the root border color */
         }
-        #theme2-card {
-            --primary: #f97316;
-            --primary-foreground: #ffffff;
-            --secondary: #fed7aa;
-            --accent: #fbbf24;
-            --background: #fffbeb;
-            --foreground: #422006;
-            --card: #ffffff;
-            --card-foreground: #422006;
-            --muted-foreground: #7c2d12;
-            --border: #fed7aa;
-            --input: #fed7aa;
-            --ring: #fb923c;
-        }
-        #theme3-card {
-            --primary: #3b82f6;
-            --primary-foreground: #eff6ff;
-            --secondary: #e0e7ff;
-            --accent: #60a5fa;
-            --background: #f5f8ff;
-            --foreground: #1e293b;
-            --card: #ffffff;
-            --card-foreground: #1e293b;
-            --muted-foreground: #475569;
-            --border: #dbeafe;
-            --input: #dbeafe;
-            --ring: #60a5fa;
-        }
-        #theme4-card {
-            --primary: #8b5cf6;
-            --primary-foreground: #f5f3ff;
-            --secondary: #e9d5ff;
-            --accent: #c084fc;
-            --background: #faf5ff;
-            --foreground: #2e1065;
-            --card: #ffffff;
-            --card-foreground: #2e1065;
-            --muted-foreground: #581c87;
-            --border: #e9d5ff;
-            --input: #e9d5ff;
-            --ring: #a78bfa;
-        }
+
 
     </style>
 </head>
 <body>
 
-    <h1>Color Theme Exploration</h1>
-    <p class="header-description">
-        Below are four distinct theme directions for the application. Each theme includes a color palette and live component examples to help visualize the look and feel. Review each one and decide which direction best fits the "Creative and Inspired" vision of the project.
-    </p>
+    <div class="header-container">
+        <h1>Color Theme Exploration</h1>
+        <p class="header-description">
+            Below is the chosen "Fresh & Organic" theme with both Light and Dark modes. The design system has been updated to reflect the new sketches, including an expanded color palette. Other themes are removed to finalize the design direction.
+        </p>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">Toggle Dark Mode</button>
+    </div>
 
     <div class="themes-grid">
         
@@ -293,8 +318,9 @@
             <h3>Palette</h3>
             <div class="palette">
                 <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#22c55e <span class="label">Primary</span></div>
-                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--secondary-foreground);">#f1f5f9 <span class="label">Secondary</span></div>
-                <div class="swatch accent light" style="background-color: var(--accent); color: var(--secondary-foreground);">#a3e635 <span class="label">Accent</span></div>
+                <div class="swatch secondary light-text" style="background-color: var(--secondary); color: var(--secondary-foreground);">#f1f5f9 <span class="label">Secondary</span></div>
+                <div class="swatch accent light-text" style="background-color: var(--accent); color: var(--accent-foreground);">#a3e635 <span class="label">Accent</span></div>
+                <div class="swatch warning" style="background-color: var(--warning); color: var(--warning-foreground);">#fb923c <span class="label">Warning</span></div>
             </div>
 
             <h3>Components</h3>
@@ -303,10 +329,11 @@
                     <button class="btn btn-primary">Save Item</button>
                     <button class="btn btn-secondary">Cancel</button>
                     <button class="btn btn-destructive">Delete</button>
-                    <button class="btn btn-primary" disabled>Save Item</button>
+                     <button class="btn btn-warning light-text">Expiring Soon</button>
                 </div>
                 <input class="input" placeholder="e.g., 'Tomatoes'">
                 <div class="alert alert-success">Success! Your pantry is updated.</div>
+                <div class="alert alert-destructive">Warning! Your milk has expired.</div>
                 <div class="card-preview">
                     <h4>Expiring Soon</h4>
                     <p>3 items are expiring in the next 2 days.</p>
@@ -314,92 +341,12 @@
             </div>
         </div>
 
-        <!-- Theme 2: Creative & Vibrant -->
-        <div class="theme-card" id="theme2-card">
-            <h2>2. Creative & Vibrant</h2>
-            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Energetic, Inspiring, Bold. This theme makes the app feel fun and full of possibilities.</p>
-            
-            <h3>Palette</h3>
-            <div class="palette">
-                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#f97316 <span class="label">Primary</span></div>
-                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#fed7aa <span class="label">Secondary</span></div>
-                <div class="swatch accent light" style="background-color: var(--accent); color: var(--foreground);">#fbbf24 <span class="label">Accent</span></div>
-            </div>
-
-            <h3>Components</h3>
-            <div class="components-preview" style="background-color: var(--background);">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <button class="btn btn-primary">Find a Recipe</button>
-                    <button class="btn btn-secondary">I'll pass</button>
-                    <button class="btn btn-destructive">Clear</button>
-                    <button class="btn btn-primary" disabled>Find a Recipe</button>
-                </div>
-                <input class="input" placeholder="e.g., 'Chicken, Rice'">
-                <div class="alert alert-success" style="background-color: #fffbeb; border-color: #fde68a; color: #b45309;">Voila! Here are 5 recipes for you.</div>
-                <div class="card-preview">
-                    <h4>Instant Idea</h4>
-                    <p>What ingredients do you have on hand?</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Theme 3: Modern & Efficient -->
-        <div class="theme-card" id="theme3-card">
-            <h2>3. Modern & Efficient</h2>
-            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Focused, Productive, Sleek. A clean, tech-forward feel that emphasizes intelligence.</p>
-            
-            <h3>Palette</h3>
-            <div class="palette">
-                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#3b82f6 <span class="label">Primary</span></div>
-                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#e0e7ff <span class="label">Secondary</span></div>
-                <div class="swatch accent light" style="background-color: var(--accent); color: var(--primary-foreground);">#60a5fa <span class="label">Accent</span></div>
-            </div>
-
-            <h3>Components</h3>
-            <div class="components-preview" style="background-color: var(--background)">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <button class="btn btn-primary">Add to Pantry</button>
-                    <button class="btn btn-secondary">Dismiss</button>
-                    <button class="btn btn-destructive">Remove</button>
-                    <button class="btn btn-primary" disabled>Add to Pantry</button>
-                </div>
-                <input class="input" placeholder="Search inventory...">
-                <div class="alert alert-destructive">Warning: 2 items have expired.</div>
-                <div class="card-preview">
-                    <h4>Inventory Status</h4>
-                    <p>You have 42 items in your pantry.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Theme 4: Warm & Welcoming -->
-        <div class="theme-card" id="theme4-card">
-            <h2>4. Warm & Welcoming</h2>
-            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Friendly, Approachable, Comforting. Evokes the feeling of a home kitchen and delicious food.</p>
-            
-            <h3>Palette</h3>
-            <div class="palette">
-                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#8b5cf6 <span class="label">Primary</span></div>
-                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#e9d5ff <span class="label">Secondary</span></div>
-                <div class="swatch accent light" style="background-color: var(--accent); color: var(--primary-foreground);">#c084fc <span class="label">Accent</span></div>
-            </div>
-
-            <h3>Components</h3>
-            <div class="components-preview" style="background-color: var(--background)">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <button class="btn btn-primary">I Cooked This!</button>
-                    <button class="btn btn-secondary">Maybe Later</button>
-                    <button class="btn btn-destructive">Nevermind</button>
-                    <button class="btn btn-primary" disabled>I Cooked This!</button>
-                </div>
-                <input class="input" placeholder="Filter recipes...">
-                <div class="alert alert-success" style="background-color: #f5f3ff; border-color: #ddd6fe; color: #5b21b6;">Nice! Your pantry has been updated.</div>
-                <div class="card-preview">
-                    <h4>Lasagna Recipe</h4>
-                    <p>Ready in 60 minutes. Serves 4.</p>
-                </div>
-            </div>
-        </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
 </body>
 </html>

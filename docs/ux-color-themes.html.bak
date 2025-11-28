@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Color Themes</title>
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --background: #ffffff;
+            --foreground: #020817;
+            --card: #ffffff;
+            --card-foreground: #020817;
+            --popover: #ffffff;
+            --popover-foreground: #020817;
+            --primary: #2563eb;
+            --primary-foreground: #fafafa;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            --accent: #f1f5f9;
+            --accent-foreground: #0f172a;
+            --destructive: #ef4444;
+            --destructive-foreground: #fafafa;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #94a3b8;
+            --radius: 0.5rem;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #f8fafc;
+            color: var(--foreground);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-description {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            color: #64748b;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .theme-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--card);
+            padding: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+        
+        .theme-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .swatch {
+            border-radius: calc(var(--radius) - 2px);
+            padding: 0.75rem;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .swatch.light {
+            color: #020817;
+            text-shadow: none;
+        }
+
+        .swatch .label {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .swatch.primary { grid-column: 1 / 3; }
+        .swatch.secondary { grid-column: 3 / 5; }
+        .swatch.accent { grid-column: 1 / 5; }
+
+        .components-preview {
+            background-color: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: opacity 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-destructive {
+            background-color: var(--destructive);
+            color: var(--destructive-foreground);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+        
+        .alert-success {
+            background-color: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #15803d;
+        }
+        
+        .alert-destructive {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+        
+        .input {
+            display: flex;
+            height: 2.5rem;
+            width: calc(100% - 2rem);
+            border-radius: calc(var(--radius) - 2px);
+            border: 1px solid var(--input);
+            background-color: var(--background);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .input:focus {
+            outline: 2px solid var(--ring);
+            outline-offset: 2px;
+        }
+
+        .card-preview {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .card-preview h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--card-foreground);
+        }
+        
+        .card-preview p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+        
+        /* Theme specific styles */
+        #theme1-card {
+            --primary: #22c55e;
+            --primary-foreground: #f0fdf4;
+            --secondary: #f1f5f9;
+            --accent: #a3e635;
+            --background: #f8fafc;
+            --foreground: #020817;
+            --card: #ffffff;
+            --card-foreground: #020817;
+            --muted-foreground: #64748b;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #4ade80;
+        }
+        #theme2-card {
+            --primary: #f97316;
+            --primary-foreground: #ffffff;
+            --secondary: #fed7aa;
+            --accent: #fbbf24;
+            --background: #fffbeb;
+            --foreground: #422006;
+            --card: #ffffff;
+            --card-foreground: #422006;
+            --muted-foreground: #7c2d12;
+            --border: #fed7aa;
+            --input: #fed7aa;
+            --ring: #fb923c;
+        }
+        #theme3-card {
+            --primary: #3b82f6;
+            --primary-foreground: #eff6ff;
+            --secondary: #e0e7ff;
+            --accent: #60a5fa;
+            --background: #f5f8ff;
+            --foreground: #1e293b;
+            --card: #ffffff;
+            --card-foreground: #1e293b;
+            --muted-foreground: #475569;
+            --border: #dbeafe;
+            --input: #dbeafe;
+            --ring: #60a5fa;
+        }
+        #theme4-card {
+            --primary: #8b5cf6;
+            --primary-foreground: #f5f3ff;
+            --secondary: #e9d5ff;
+            --accent: #c084fc;
+            --background: #faf5ff;
+            --foreground: #2e1065;
+            --card: #ffffff;
+            --card-foreground: #2e1065;
+            --muted-foreground: #581c87;
+            --border: #e9d5ff;
+            --input: #e9d5ff;
+            --ring: #a78bfa;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Color Theme Exploration</h1>
+    <p class="header-description">
+        Below are four distinct theme directions for the application. Each theme includes a color palette and live component examples to help visualize the look and feel. Review each one and decide which direction best fits the "Creative and Inspired" vision of the project.
+    </p>
+
+    <div class="themes-grid">
+        
+        <!-- Theme 1: Fresh & Organic -->
+        <div class="theme-card" id="theme1-card">
+            <h2>1. Fresh & Organic</h2>
+            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Calm, Natural, Trustworthy. Perfect for highlighting the connection to food and sustainability.</p>
+            
+            <h3>Palette</h3>
+            <div class="palette">
+                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#22c55e <span class="label">Primary</span></div>
+                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--secondary-foreground);">#f1f5f9 <span class="label">Secondary</span></div>
+                <div class="swatch accent light" style="background-color: var(--accent); color: var(--secondary-foreground);">#a3e635 <span class="label">Accent</span></div>
+            </div>
+
+            <h3>Components</h3>
+            <div class="components-preview">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn btn-primary">Save Item</button>
+                    <button class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-destructive">Delete</button>
+                    <button class="btn btn-primary" disabled>Save Item</button>
+                </div>
+                <input class="input" placeholder="e.g., 'Tomatoes'">
+                <div class="alert alert-success">Success! Your pantry is updated.</div>
+                <div class="card-preview">
+                    <h4>Expiring Soon</h4>
+                    <p>3 items are expiring in the next 2 days.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 2: Creative & Vibrant -->
+        <div class="theme-card" id="theme2-card">
+            <h2>2. Creative & Vibrant</h2>
+            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Energetic, Inspiring, Bold. This theme makes the app feel fun and full of possibilities.</p>
+            
+            <h3>Palette</h3>
+            <div class="palette">
+                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#f97316 <span class="label">Primary</span></div>
+                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#fed7aa <span class="label">Secondary</span></div>
+                <div class="swatch accent light" style="background-color: var(--accent); color: var(--foreground);">#fbbf24 <span class="label">Accent</span></div>
+            </div>
+
+            <h3>Components</h3>
+            <div class="components-preview" style="background-color: var(--background);">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn btn-primary">Find a Recipe</button>
+                    <button class="btn btn-secondary">I'll pass</button>
+                    <button class="btn btn-destructive">Clear</button>
+                    <button class="btn btn-primary" disabled>Find a Recipe</button>
+                </div>
+                <input class="input" placeholder="e.g., 'Chicken, Rice'">
+                <div class="alert alert-success" style="background-color: #fffbeb; border-color: #fde68a; color: #b45309;">Voila! Here are 5 recipes for you.</div>
+                <div class="card-preview">
+                    <h4>Instant Idea</h4>
+                    <p>What ingredients do you have on hand?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 3: Modern & Efficient -->
+        <div class="theme-card" id="theme3-card">
+            <h2>3. Modern & Efficient</h2>
+            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Focused, Productive, Sleek. A clean, tech-forward feel that emphasizes intelligence.</p>
+            
+            <h3>Palette</h3>
+            <div class="palette">
+                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#3b82f6 <span class="label">Primary</span></div>
+                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#e0e7ff <span class="label">Secondary</span></div>
+                <div class="swatch accent light" style="background-color: var(--accent); color: var(--primary-foreground);">#60a5fa <span class="label">Accent</span></div>
+            </div>
+
+            <h3>Components</h3>
+            <div class="components-preview" style="background-color: var(--background)">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn btn-primary">Add to Pantry</button>
+                    <button class="btn btn-secondary">Dismiss</button>
+                    <button class="btn btn-destructive">Remove</button>
+                    <button class="btn btn-primary" disabled>Add to Pantry</button>
+                </div>
+                <input class="input" placeholder="Search inventory...">
+                <div class="alert alert-destructive">Warning: 2 items have expired.</div>
+                <div class="card-preview">
+                    <h4>Inventory Status</h4>
+                    <p>You have 42 items in your pantry.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 4: Warm & Welcoming -->
+        <div class="theme-card" id="theme4-card">
+            <h2>4. Warm & Welcoming</h2>
+            <p style="color: var(--muted-foreground); margin-top: -1rem; margin-bottom: 1.5rem;">Friendly, Approachable, Comforting. Evokes the feeling of a home kitchen and delicious food.</p>
+            
+            <h3>Palette</h3>
+            <div class="palette">
+                <div class="swatch primary" style="background-color: var(--primary); color: var(--primary-foreground);">#8b5cf6 <span class="label">Primary</span></div>
+                <div class="swatch secondary light" style="background-color: var(--secondary); color: var(--foreground);">#e9d5ff <span class="label">Secondary</span></div>
+                <div class="swatch accent light" style="background-color: var(--accent); color: var(--primary-foreground);">#c084fc <span class="label">Accent</span></div>
+            </div>
+
+            <h3>Components</h3>
+            <div class="components-preview" style="background-color: var(--background)">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn btn-primary">I Cooked This!</button>
+                    <button class="btn btn-secondary">Maybe Later</button>
+                    <button class="btn btn-destructive">Nevermind</button>
+                    <button class="btn btn-primary" disabled>I Cooked This!</button>
+                </div>
+                <input class="input" placeholder="Filter recipes...">
+                <div class="alert alert-success" style="background-color: #f5f3ff; border-color: #ddd6fe; color: #5b21b6;">Nice! Your pantry has been updated.</div>
+                <div class="card-preview">
+                    <h4>Lasagna Recipe</h4>
+                    <p>Ready in 60 minutes. Serves 4.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
