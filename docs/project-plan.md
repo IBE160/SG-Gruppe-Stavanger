@@ -52,8 +52,15 @@
     - [x] File: sprint-artifacts/sprint-status.yaml
   - foreach epic in sprint planning:
     - [ ] /run-agent-task sm create-epic-tech-context {prompt / user-input-file}
+      - [x] File: sprint-artifacts/tech-spec-epic-1.md
+      - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
+      - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
+      - [x] File: validation-report-2025-11-28_20-00-00-.md (for epic 1)
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_3}}.md
+      - [ ] File: validation-report{{epic_4}}.md
     - foreach story in epic:
       - [ ] /run-agent-task sm *create-story {prompt / user-input-file}
         - [ ] File: sprint-artifacts/{{story_key}}.md
