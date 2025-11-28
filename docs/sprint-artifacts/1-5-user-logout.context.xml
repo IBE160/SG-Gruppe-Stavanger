@@ -1,0 +1,110 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.5</storyId>
+    <title>User Logout</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-28</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-5-user-logout.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a logged-in user</asA>
+    <iWant>to log out of my account</iWant>
+    <soThat>I can securely end my session</soThat>
+    <tasks>
+- [ ] Task 1 (AC: #1, #2, #3)
+    - [ ] Create a logout button in the application's header or user menu.
+- [ ] Task 2 (AC: #3)
+    - [ ] Implement the `signOut` function from NextAuth.js to handle the logout process.
+- [ ] Task 3 (AC: #3)
+    - [ ] Configure the `signOut` function to redirect the user to the landing page after logout.
+- [ ] Task 4 (AC: #1, #2, #3) - Testing
+    - [ ] Write a test to verify that a logged-in user can see the logout button.
+    - [ ] Write a test to verify that clicking the logout button calls the `signOut` function.
+    - [ ] Write a test to verify that after logging out, the user is redirected to the landing page.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** I am logged in
+2.  **When** I click the logout button
+3.  **Then** I am logged out and redirected to the landing page.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc>
+            <path>docs/epics.md</path>
+            <title>Epics</title>
+            <section>Story 1.5: User Logout</section>
+            <snippet>As a logged-in user, I want to log out of my account, so that I can securely end my session.</snippet>
+        </doc>
+        <doc>
+            <path>docs/architecture.md</path>
+            <title>Architecture</title>
+            <section>Authentication</section>
+            <snippet>Authentication: NextAuth.js with Supabase Auth | NextAuth.js 4.24.13 | User & Profile Management | Secure, flexible, and easy-to-implement authentication solution for Next.js, leveraging Supabase for backend user management.</snippet>
+        </doc>
+        <doc>
+            <path>docs/PRD.md</path>
+            <title>Product Requirements Document</title>
+            <section>FR1.3: User Logout</section>
+            <snippet>As a logged-in user, I must be able to log out of my account to securely end my session. This action should be easily accessible from the main application interface.</snippet>
+        </doc>
+    </docs>
+    <code>
+        <file>
+            <path>lib/auth.ts</path>
+            <kind>service</kind>
+            <symbol>NextAuth</symbol>
+            <reason>This file likely contains the NextAuth.js configuration, including providers and callbacks.</reason>
+        </file>
+        <file>
+            <path>app/api/auth/[...nextauth]/route.ts</path>
+            <kind>api-route</kind>
+            <symbol>NextAuth</symbol>
+            <reason>This is the dynamic API route that NextAuth.js uses to handle all authentication requests (including sign out).</reason>
+        </file>
+        <file>
+            <path>lib/supabaseClient.ts</path>
+            <kind>service</kind>
+            <symbol>supabase</symbol>
+            <reason>Contains the Supabase client initialization, which may be needed for server-side logout actions.</reason>
+        </file>
+    </code>
+    <dependencies>
+        <npm package="next" />
+        <npm package="react" />
+        <npm package="next-auth" />
+        <npm package="@supabase/supabase-js" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Must use NextAuth.js for session management.</constraint>
+    <constraint>Logout functionality should be accessible from a persistent part of the UI (e.g., header).</constraint>
+    <constraint>After logout, the user must be redirected to a public page (e.g., landing or login page).</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+        <name>signOut</name>
+        <kind>function</kind>
+        <signature>signOut(options?: SignOutParams): Promise&lt;undefined&gt;</signature>
+        <path>next-auth/react</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>Testing should follow the patterns established in the project. Since no testing-strategy.md was found, refer to existing tests for guidance. Each AC should have a corresponding test.</standards>
+    <locations>
+        - `tests/`
+        - `__tests__/`
+    </locations>
+    <ideas>
+        <idea ac_id="1, 2">Write a test to verify that a logged-in user can see the logout button.</idea>
+        <idea ac_id="3">Write a test to verify that clicking the logout button calls the `signOut` function.</idea>
+        <idea ac_id="3">Write a test to verify that after logging out, the user is redirected to the landing page.</idea>
+    </ideas>
+  </tests>
+</story-context>
