@@ -1,0 +1,132 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.1</storyId>
+    <title>Project Initialization</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-28</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>c:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts\1-1-project-initialization.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to initialize the project with the correct structure and dependencies</iWant>
+    <soThat>I can start building the application</soThat>
+    <tasks>
+- [ ] Task: Execute project initialization command
+    - [ ] Run `npx create-next-app@latest ibe160-app --typescript --tailwind --eslint --app` in the project root. (Source: architecture.md)
+    - [ ] Verify command completes successfully without errors.
+- [ ] Task: Validate generated project structure
+    - [ ] Confirm `app/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Confirm `components/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Confirm `lib/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Confirm `styles/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Confirm `public/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Confirm `tests/` directory exists. (Source: architecture.md#Project-Structure)
+    - [ ] Check for `next.config.mjs`, `package.json`, `tsconfig.json` files. (Source: architecture.md#Project-Structure)
+- [ ] Task: Initial dependency installation and verification
+    - [ ] Run `npm install` (or equivalent package manager command) in the new `ibe160-app` directory.
+    - [ ] Run `npm run dev` to confirm the development server starts without issues.
+    - [ ] Access the application in a web browser (e.g., `http://localhost:3000`) and confirm the default Next.js landing page is displayed.
+- [ ] Task: Basic code quality setup verification
+    - [ ] Confirm `.eslintrc.json` exists for ESLint configuration.
+    - [ ] Confirm `tailwind.config.ts` exists for Tailwind CSS configuration.
+    - [ ] Run `npm run lint` and `npm run build` to check for initial linting and build errors.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** the project is new, **When** the `npx create-next-app@latest ibe160-app --typescript --tailwind --eslint --app` command is executed, **Then** a new Next.js project is successfully created with TypeScript, Tailwind CSS, ESLint, and the App Router.
+2.  **Given** the Next.js project is created, **Then** its directory structure aligns with the "Project Structure" guidelines specified in `architecture.md` (e.g., `app/`, `components/`, `lib/`, `styles/`, `public/`, `prisma/`, `tests/` directories are present or can be created as needed).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Initialization</section>
+        <snippet>
+          First implementation story should execute:
+          `npx create-next-app@latest ibe160-app --typescript --tailwind --eslint --app`
+          This establishes the base architecture with these decisions: Next.js framework, TypeScript, Tailwind CSS, ESLint, App Router, and default Next.js build tooling.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure</section>
+        <snippet>
+          The project structure is defined with `app/`, `components/`, `lib/`, `styles/`, `public/`, `prisma/`, and `tests/` directories.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Web App Specific Requirements</section>
+        <snippet>
+          The application will be built using the Next.js App Router, leveraging Server-Side Rendering (SSR) and Server Components for optimal performance and a modern development experience.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epics</title>
+        <section>Story 1.1: Project Initialization</section>
+        <snippet>
+          As a developer, I want to initialize the project with the correct structure and dependencies, so that I can start building the application.
+        </snippet>
+      </doc>
+    </docs>
+    <code></code>
+    <dependencies>
+      <dependency ecosystem="npm">
+        <package>next</package>
+        <version>latest</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>react</package>
+        <version>latest</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>react-dom</package>
+        <version>latest</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>typescript</package>
+        <version>latest</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>tailwindcss</package>
+        <version>latest</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>eslint</package>
+        <version>latest</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>The project must be initialized with Next.js (App Router), TypeScript, Tailwind CSS, and ESLint.</constraint>
+    <constraint>The directory structure must align with `architecture.md`.</constraint>
+    <constraint>Adhere to the project structure defined in `architecture.md`.</constraint>
+    <constraint>Co-locate `route.ts`, `page.tsx`, and `layout.tsx` within feature-specific `app` sub-folders.</constraint>
+    <constraint>UI components in `components/ui`, `components/common`, and `components/specific`.</constraint>
+    <constraint>`lib/` for utilities, types, and API client logic.</constraint>
+    <constraint>Top-level `tests/` directory mirroring `app/`.</constraint>
+  </constraints>
+  <interfaces></interfaces>
+  <tests>
+    <standards>
+      The testing strategy involves Unit Tests (`Jest`, `React Testing Library`), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (`Playwright`, `Cypress`). Initial setup should confirm the basic test environment.
+    </standards>
+    <locations>
+      <location>tests/</location>
+    </locations>
+    <ideas>
+      <idea ac_id="1">Verify that the `npx create-next-app` command runs successfully and that the generated `package.json` contains the correct dependencies.</idea>
+      <idea ac_id="2">Write a test to check for the existence of the directories and files specified in the project structure.</idea>
+    </ideas>
+  </tests>
+</story-context>

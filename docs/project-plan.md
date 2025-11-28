@@ -57,12 +57,30 @@
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
+    - [ ] epic 1 story
       - [x] File: validation-report-2025-11-28_20-00-00-.md (for epic 1)
       - [ ] File: validation-report{{epic_2}}.md
       - [ ] File: validation-report{{epic_3}}.md
       - [ ] File: validation-report{{epic_4}}.md
+    - [ ] epic story 2
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+    - [ ] epic story 3
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+    - [ ] epic story 4
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
+      - [ ] File: validation-report{{epic_2}}.md
     - foreach story in epic:
       - [ ] /run-agent-task sm *create-story {prompt / user-input-file}
+        - [x] File: sprint-artifacts/1-1-project-initialization.md
+        - [ ] File: sprint-artifacts/1-2-database-setup.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
       - [ ] /run-agent-task sm *validate-create-story {prompt / user-input-file}
       - [ ] /run-agent-task sm *create-story-context {prompt / user-input-file}

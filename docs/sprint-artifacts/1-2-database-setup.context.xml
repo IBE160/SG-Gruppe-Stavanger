@@ -1,0 +1,116 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.2</storyId>
+    <title>Database Setup</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-28</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts\1-2-database-setup.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to set up the Supabase database</iWant>
+    <soThat>I can store and manage application data</soThat>
+    <tasks>
+- [ ] Task: Set up Supabase project
+  - [ ] Create a new Supabase project via the Supabase dashboard.
+  - [ ] Retrieve Supabase URL and `anon` key for environment configuration.
+- [ ] Task: Connect Next.js app to Supabase
+  - [ ] Configure environment variables in `.env.local` for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+  - [ ] Implement a Supabase client instance in `lib/supabaseClient.ts` (or similar location) as per `architecture.md`.
+  - [ ] Verify successful connection by performing a basic query (e.g., fetching a non-existent table).
+- [ ] Task: Define and apply user schema (`public.profiles`)
+  - [ ] Create a migration file (e.g., `supabase/migrations/YYYYMMDDHHMMSS_create_profiles_table.sql`) for the `public.profiles` table.
+  - [ ] The `public.profiles` table should include `id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE` and other relevant fields as outlined in `tech-spec-epic-1.md`.
+  - [ ] Apply the migration to the Supabase database using `supabase db push` or equivalent.
+  - [ ] Verify the `public.profiles` table exists and is correctly linked to `auth.users`.
+- [ ] Task: Basic Row Level Security (RLS) setup
+  - [ ] Enable RLS on the `public.profiles` table.
+  - [ ] Create a basic RLS policy to allow users to `SELECT` and `UPDATE` their own profile. (Source: architecture.md)
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** a Supabase project is created, **When** I connect the Next.js app to the Supabase project, **Then** the application can communicate with the database.
+2.  **Given** the Next.js app can communicate with the database, **Then** the database schema for users (specifically the `public.profiles` table linked to `auth.users`) is created.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>Data Models and Contracts</section>
+        <snippet>
+          This epic establishes the core `users` entity, which is managed by Supabase Authentication. A corresponding `profiles` table will be created for public user data that can be safely read by other users if needed in the future.
+          ...
+          CREATE TABLE public.profiles (
+            id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+            updated_at timestamptz,
+            username text UNIQUE,
+            full_name text,
+            avatar_url text,
+
+            CONSTRAINT username_length CHECK (char_length(username) >= 3)
+          );
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Data Persistence</section>
+        <snippet>
+          Decision: Supabase PostgreSQL. Rationale: Robust, open-source database with built-in features for authentication and real-time data, good integration with Next.js, simplifies tech stack.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Data Architecture</section>
+        <snippet>
+          Database: Supabase PostgreSQL. Access Control: Row Level Security (RLS) enabled on all sensitive tables, managed via Supabase policies. Scheduled Tasks: PG Cron for background jobs.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epics</title>
+        <section>Story 1.2: Database Setup</section>
+        <snippet>
+          As a developer, I want to set up the Supabase database, so that I can store and manage application data.
+          Given a Supabase project is created, When I connect the Next.js app to the Supabase project, Then the application can communicate with the database. And the database schema for users is created.
+        </snippet>
+      </doc>
+    </docs>
+    <code></code>
+    <dependencies>
+      <dependency ecosystem="npm">
+        <package>@supabase/supabase-js</package>
+        <version>latest</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Data Persistence must use Supabase PostgreSQL.</constraint>
+    <constraint>The Supabase client should be implemented in `lib/db.ts` or a similar central location.</constraint>
+    <constraint>All dates and times must be stored in UTC in the database.</constraint>
+    <constraint>Row Level Security (RLS) must be enabled and configured for user data tables like `public.profiles`.</constraint>
+    <constraint>Database schema changes must be managed via migration files in the `supabase/migrations/` directory.</constraint>
+  </constraints>
+  <interfaces></interfaces>
+  <tests>
+    <standards>
+      The testing strategy involves Unit Tests (`Jest`, `React Testing Library`), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (`Playwright`, `Cypress`). For this story, integration tests are key.
+    </standards>
+    <locations>
+      <location>tests/integration/</location>
+    </locations>
+    <ideas>
+      <idea ac_id="1">Write an integration test to confirm that the Supabase client can successfully connect to the database and perform a basic query.</idea>
+      <idea ac_id="2">Write an integration test to verify that the `public.profiles` table exists in the schema after migrations are applied.</idea>
+      <idea ac_id="2">Write an integration test for the RLS policy on `public.profiles` to ensure one user cannot select or update another user's profile data.</idea>
+    </ideas>
+  </tests>
+</story-context>

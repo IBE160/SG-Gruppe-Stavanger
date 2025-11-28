@@ -1,0 +1,297 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>User Registration</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2025-11-28</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-3-user-registration.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>new user,</asA>
+    <iWant>to create an account with an email and password,</iWant>
+    <soThat>I can access the application.</soThat>
+    <tasks>
+      - Task: Create Registration UI
+        - Create a registration page at `app/(auth)/register/page.tsx`.
+        - Implement a form with fields for email and password.
+        - Add client-side validation for email format and password strength.
+      - Task: Implement Registration API Endpoint
+        - Create a Next.js API Route Handler at `app/api/auth/register/route.ts`.
+        - The endpoint should accept `email` and `password` in the request body.
+        - Use the Supabase client (from `lib/supabaseClient.ts`) to call `supabase.auth.signUp()`.
+        - Handle success and error responses from Supabase.
+      - Task: Set up Email Verification
+        - Ensure Supabase project is configured to send verification emails. This may involve configuring a custom email provider like Resend if desired (as per `architecture.md`).
+        - Configure the verification email template in Supabase if necessary.
+      - Task: Implement Post-Verification Logic
+        - Configure NextAuth.js to handle the user session after they are redirected back from the verification link.
+        - The user should be automatically logged in and redirected to the dashboard (`/dashboard`).
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. Given I am on the registration page, When I submit the form with a valid email and a password that meets complexity requirements, Then an account creation process is initiated.
+    2. Given the account creation is initiated, Then a verification email is dispatched to my email address.
+    3. Given the account creation is initiated, Then a new entry for the user is created in the `auth.users` table in Supabase, initially in an unconfirmed state.
+    4. Given I click the verification link in the email, Then my account is confirmed and I am automatically logged in.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR1.1 - User Registration</section>
+        <snippet>A new user can create an account using an email address and password. Acceptance Criteria: User provides a valid email and a password meeting minimum strength requirements. A verification email is sent to the user's email address. The user's account is created in the database but remains inactive until verified. The user is automatically logged in after clicking the verification link.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>API Endpoint Overview - POST /api/auth/register</section>
+        <snippet>User registration.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>APIs and Interfaces - POST /api/auth/register</section>
+        <snippet>User registration. Logic will be custom to handle Supabase sign-up. Request Body: { email, password }. Response: { success: true } or { error: "..." }</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>Workflows and Sequencing - 1. User Registration Flow (FR1.1)</section>
+        <snippet>Frontend: User navigates to /register, fills in the email and password form, and submits. Backend: The form submission calls a Server Action that uses the Supabase client to `supabase.auth.signUp()`. Email: Supabase sends a confirmation email. Confirmation: User clicks verification link. Frontend: User is redirected to login page.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>Acceptance Criteria - Story 1.3: User Registration (FR1.1)</section>
+        <snippet>AC1: A new user can submit the registration form with a valid email and a password meeting complexity requirements. AC2: Upon form submission, a verification email is dispatched. AC3: A new entry for the user is created in `auth.users` table, initially unconfirmed.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>Traceability Mapping - 1.3.AC1-3</section>
+        <snippet>E2E Test: A new user registers and receives email.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Core Setup</title>
+        <section>Risks, Assumptions, Open Questions</section>
+        <snippet>Question: What are the specific password strength requirements (minimum length, character types, etc.) for user registration? Next Step: This needs to be clarified with the product owner before building the registration form to ensure the validation logic is correct.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Decision Summary - Authentication</section>
+        <snippet>NextAuth.js with Supabase Auth: Secure, flexible, and easy-to-implement authentication solution for Next.js, leveraging Supabase for backend user management.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>FR Category to Architecture Mapping - User & Profile Management</section>
+        <snippet>Frontend routes in `app/(auth)/`, NextAuth.js API routes in `app/api/auth/`, Supabase Auth, and PostgreSQL tables for user data.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure - app/(auth)</section>
+        <snippet>Authentication routes (login, register, forgot-password)</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure - api/auth</section>
+        <snippet>API routes for authentication (handled by NextAuth.js)</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Technology Stack Details - Authentication</section>
+        <snippet>NextAuth.js (v4.24.13), Supabase Auth</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Security Architecture - Authentication</section>
+        <snippet>NextAuth.js integrated with Supabase Auth for secure user registration, login, and session management.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Naming Conventions</section>
+        <snippet>kebab-case for files/folders; PascalCase for React components; camelCase for variables/functions; snake_case for database tables/columns; consistent, descriptive API endpoints</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Structure Patterns</section>
+        <snippet>Adhere to the project structure defined in the Project Structure section; co-locate `route.ts`, `page.tsx`, and `layout.tsx` within feature-specific `app` sub-folders; UI components in `components/ui`, `components/common`, and `components/specific`; `lib/` for utilities, types, and API client logic; top-level `tests/` directory mirroring `app/`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Format Patterns</section>
+        <snippet>JSON for all API communications; UTC ISO 8601 strings for date/time; `camelCase` for JSON keys in API responses; explicit API request and response schemas (e.g., Zod for validation) to ensure data integrity.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Communication Patterns</section>
+        <snippet>React Hooks (`useEffect`, `useState`, etc.) for component lifecycle and state; Next.js Server Components and Server Actions for data loading/mutations; consistent `loading` and `error` states for data-fetching UI components.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Lifecycle Patterns</section>
+        <snippet>React Hooks (`useEffect`, `useState`, etc.) for component lifecycle and state; Next.js Server Components and Server Actions for data loading/mutations; consistent `loading` and `error` states for data-fetching UI components.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Location Patterns</section>
+        <snippet>Strict adherence to the Project Structure defined; Next.js App Router files (`page.tsx`, `layout.tsx`, `route.ts`) in their respective feature folders under `app/`; UI components categorized under `components/ui` (for shadcn), `components/common`, or `components/specific`; shared utilities, types, and client-side Supabase logic in `lib/`; static assets in `public/`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Implementation Patterns - Consistency Patterns</section>
+        <snippet>Consistent UI/UX experience across the application using the chosen design system (shadcn/ui, Tailwind CSS) and following the UX Design Specification; adherence to WCAG 2.1 AA accessibility standards; established code style (e.g., using Prettier and ESLint); TypeScript best practices for type safety; consistent tone and voice for user-facing texts and messages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>Design System Foundation - Design System Choice</section>
+        <snippet>System: shadcn/ui. Rationale: "copy-paste" philosophy provides complete ownership and control over the UI components. Built on Tailwind CSS and Radix UI, it offers excellent performance, accessibility, and seamless integration, supporting a "clean & modern" UI.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>Visual Foundation & Aesthetics - Color System</section>
+        <snippet>Chosen Theme: 1. Fresh & Organic (Green). Rationale: refreshing green color (`#22c55e`) immediately conveys a sense of freshness and health, aligning with the app's goals.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>Visual Foundation & Aesthetics - Typography System</section>
+        <snippet>Font Family: Inter. Icon Library: Material Symbols Outlined. Scale: Modular scale. Font Weights: 400 (Regular) for body text and 600 (Semi-Bold) for all headings. Line Heights: 1.5 for body, 1.25 for headings.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>UX Pattern Decisions - Feedback Patterns</section>
+        <snippet>Use Toast Notifications for non-blocking feedback and Modals for blocking actions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>UX Pattern Decisions - Modal Patterns</section>
+        <snippet>Default modal size is Medium (600px). Can be dismissed with Esc or outside click unless the action is destructive.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>Responsive Design & Accessibility - Responsive Strategy</section>
+        <snippet>The application adheres to a Mobile-First approach while maintaining full support and usability on PC/Desktop. WCAG 2.1 AA is the goal.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Epic 1: Foundation & Core Setup - Story 1.3: User Registration</section>
+        <snippet>As a new user, I want to create an account with an email and password, so that I can access the application.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>FR Coverage Matrix - FR1.1: User Registration</section>
+        <snippet>FR1.1: User Registration → Epic 1, Story 1.3</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/(auth)/login/page.tsx</path>
+        <kind>component</kind>
+        <symbol>LoginPage</symbol>
+        <reason>Example of existing authentication UI pattern and NextAuth.js signIn usage.</reason>
+      </artifact>
+      <artifact>
+        <path>lib/auth.ts</path>
+        <kind>configuration</kind>
+        <symbol>authOptions</symbol>
+        <reason>NextAuth.js configuration showing CredentialsProvider and Supabase integration.</reason>
+      </artifact>
+      <artifact>
+        <path>lib/supabaseClient.ts</path>
+        <kind>client</kind>
+        <symbol>supabase</symbol>
+        <reason>Supabase client instance for interacting with Supabase Auth (e.g., signUp).</reason>
+      </artifact>
+      <artifact>
+        <path>app/(auth)/register/page.tsx</path>
+        <kind>new-component</kind>
+        <symbol>RegisterPage</symbol>
+        <reason>New UI component for user registration form.</reason>
+      </artifact>
+      <artifact>
+        <path>app/api/auth/register/route.ts</path>
+        <kind>new-api-route</kind>
+        <symbol>POST</symbol>
+        <reason>New API route handler for processing user registration requests.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <framework>Next.js</framework>
+      <framework>React</framework>
+      <framework>Tailwind CSS</framework>
+      <framework>shadcn/ui</framework>
+      <framework>Supabase</framework>
+      <npm package="next" />
+      <npm package="react" />
+      <npm package="react-dom" />
+      <npm package="typescript" />
+      <npm package="tailwindcss" />
+      <npm package="next-auth" />
+      <npm package="@supabase/supabase-js" />
+      <npm package="resend" />
+      <npm package="lucide-react" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Authentication: Use NextAuth.js with Supabase Auth.</constraint>
+    <constraint>API Pattern: Implement registration logic in a Next.js API Route Handler.</constraint>
+    <constraint>Utilize the Supabase client from lib/supabaseClient.ts.</constraint>
+    <constraint>Follow the User Registration Flow defined in tech-spec-epic-1.md.</constraint>
+    <constraint>Source tree components to touch: app/(auth)/register/page.tsx (new), app/api/auth/register/route.ts (new), potentially lib/auth.ts.</constraint>
+    <constraint>Security: Passwords securely hashed by Supabase Auth; all communication over HTTPS.</constraint>
+    <constraint>Naming Conventions: kebab-case for files/folders; PascalCase for React components; camelCase for variables/functions; snake_case for database tables/columns; consistent, descriptive API endpoints.</constraint>
+    <constraint>Structure Patterns: Co-locate route.ts, page.tsx within feature-specific app sub-folders.</constraint>
+    <constraint>Format Patterns: JSON for all API communications; UTC ISO 8601 strings for date/time; camelCase for JSON keys in API responses; explicit API request and response schemas (e.g., Zod for validation).</constraint>
+    <constraint>Communication Patterns: Use standard fetch API within server components/API routes for Supabase interactions.</constraint>
+    <constraint>Lifecycle Patterns: React Hooks for component lifecycle, Next.js Server Components and Server Actions for data loading/mutations.</constraint>
+    <constraint>Location Patterns: app/(auth)/register/page.tsx, app/api/auth/register/route.ts.</constraint>
+    <constraint>Password Strength: Needs clarification with product owner.</constraint>
+  </constraints>
+  <interfaces></interfaces>
+  <tests>
+    <standards>
+      <standard>Multi-layered testing strategy (Unit, Integration, E2E).</standard>
+      <standard>Unit Tests: Jest / React Testing Library for individual React components (e.g., registration form).</standard>
+      <standard>Integration Tests: Jest / Supabase Client for API endpoint interaction with Supabase (e.g., /api/auth/register).</standard>
+      <standard>E2E Tests: Playwright / Cypress for simulating full user journeys (e.g., complete registration flow including email verification).</standard>
+    </standards>
+    <locations>
+      <location>Top-level `tests/` directory mirroring `app/`.</location>
+      <location>Test files co-located with components where appropriate (e.g., registration form component tests).</location>
+    </locations>
+    <ideas>
+      <idea>E2E Test: Simulate a new user registering and successfully receiving a verification email.</idea>
+      <idea>Unit Test: Validate client-side form validation for email format and password strength.</idea>
+      <idea>Integration Test: Verify that the `/api/auth/register` endpoint correctly calls `supabase.auth.signUp()` and handles success/error responses.</idea>
+      <idea>E2E Test: Verify redirection to login page after successful registration.</idea>
+    </ideas>
+  </tests>
+</story-context>
