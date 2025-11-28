@@ -1,0 +1,219 @@
+[
+  {
+    "request": {
+      "session.id": "9e49377b-3f9e-4906-b14a-7656e4ab387a",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_request",
+      "event.timestamp": "2025-11-23T22:45:11.349Z",
+      "model": "gemini-2.5-flash",
+      "prompt_id": "9e49377b-3f9e-4906-b14a-7656e4ab387a########0",
+      "request_text": [
+        {
+          "role": "user",
+          "parts": [
+            {
+              "text": "This is the Gemini CLI. We are setting up the context for our chat.\nToday's date is søndag 23. november 2025 (formatted according to the user's locale).\nMy operating system is: win32\nThe project's temporary directory is: C:\\Users\\Administrator\\.gemini\\tmp\\eedd460a10abc62dd442852ba4787b67a460e57302e97b364720010e49e5e321\nI'm currently working in the directory: C:\\IBE160\\SG-Gruppe-Stavanger\nHere is the folder structure of the current working directories:\n\nShowing up to 200 items (files + folders). Folders or files indicated with ... contain more items not shown, were ignored, or the display limit (200 items) was reached.\n\nC:\\IBE160\\SG-Gruppe-Stavanger\\\n├───.gitignore\n├───README.md\n├───.bmad\\\n│   ├───_cfg\\\n│   │   ├───agent-manifest.csv\n│   │   ├───files-manifest.csv\n│   │   ├───manifest.yaml\n│   │   ├───task-manifest.csv\n│   │   ├───tool-manifest.csv\n│   │   ├───workflow-manifest.csv\n│   │   ├───agents\\\n│   │   └───ides\\\n│   ├───bmm\\\n│   │   ├───config.yaml\n│   │   ├───README.md\n│   │   ├───agents\\\n│   │   ├───docs\\\n│   │   ├───teams\\\n│   │   ├───testarch\\\n│   │   └───workflows\\\n│   ├───cis\\\n│   │   ├───config.yaml\n│   │   ├───README.md\n│   │   ├───agents\\\n│   │   ├───teams\\\n│   │   └───workflows\\\n│   ├───core\\\n│   │   ├───config.yaml\n│   │   ├───agents\\\n│   │   ├───resources\\\n│   │   ├───tasks\\\n│   │   ├───tools\\\n│   │   └───workflows\\\n│   └───docs\\\n│       ├───claude-code-instructions.md\n│       └───gemini-instructions.md\n├───.gemini\\\n│   ├───settings.json\n│   ├───bmad\\\n│   │   ├───bmm\\\n│   │   ├───cis\\\n│   │   └───core\\\n│   └───commands\\\n│       ├───bmad-agent-bmm-analyst.toml\n│       ├───bmad-agent-bmm-architect.toml\n│       ├───bmad-agent-bmm-dev.toml\n│       ├───bmad-agent-bmm-pm.toml\n│       ├───bmad-agent-bmm-sm.toml\n│       ├───bmad-agent-bmm-tea.toml\n│       ├───bmad-agent-bmm-tech-writer.toml\n│       ├───bmad-agent-bmm-ux-designer.toml\n│       ├───bmad-agent-cis-brainstorming-coach.toml\n│       ├───bmad-agent-cis-creative-problem-solver.toml\n│       ├───bmad-agent-cis-design-thinking-coach.toml\n│       ├───bmad-agent-cis-innovation-strategist.toml\n│       ├───bmad-agent-cis-README.toml\n│       ├───bmad-agent-cis-storyteller.toml\n│       ├───bmad-agent-core-bmad-master.toml\n│       ├───bmad-task-bmm-daily-standup.toml\n│       ├───bmad-task-core-adv-elicit.toml\n│       ├───bmad-task-core-index-docs.toml\n│       ├───bmad-task-core-validate-workflow.toml\n│       ├───bmad-task-core-workflow.toml\n│       └───run-agent-task.toml\n├───.git\\...\n├───.logging\\\n│   ├───.gitignore\n│   ├───api-viewer.html\n│   ├───api-viewer.html.bak\n│   ├───process-api-requests.py\n│   ├───README.md\n│   ├───requirements.txt\n│   ├───server.py\n│   ├───server.py.backup\n│   ├───session-log-2025-11-20.md\n│   ├───telemetry.md\n│   ├───truncate.py\n│   ├───watcher.py\n│   └───requests\\\n│       ├───2025-11-11_21-23-24-a8707559-1df2-4ee4-8810-49c3e4337671.json\n│       ├───2025-11-11_22-27-49-5f6f4192-8a3f-44a1-acf8-7f0ee9693966.json\n│       ├───2025-11-11_23-26-57-2f9d7ee7-a45f-4b1f-b033-5ae8a3c5ba26.json\n│       ├───2025-11-14_09-26-01-438652ff-8be0-4a50-9b5a-e043be7c7feb.json\n│       ├───2025-11-14_09-39-34-4f9aead9-50d8-4148-8b21-053fb1461043.json\n│       ├───2025-11-14_09-50-33-4fc07d6e-ec94-4bc3-839c-302ad73c253f.json\n│       ├───2025-11-14_10-07-58-924f48d5-4f55-474f-87ad-b1dca04d5cbe.json\n│       ├───2025-11-14_10-24-28-66be89cc-e41f-412e-9ef8-c2d7c61410d0.json\n│       ├───2025-11-19_15-01-41-148fd2dc-b306-4fb1-bc07-3683fdca60af.json\n│       ├───2025-11-20_21-05-53-39cde5be-5f6c-49ae-9f81-e5f3e7cadf91.json\n│       └───2025-11-21_16-25-55-945aab1f-b421-4251-8022-0819943de90a.json\n├───.vscode\\\n│   ├───launch.json\n│   ├───settings.json\n│   └───tasks.json\n├───docs\\\n│   ├───bmm-workflow-status.md\n│   ├───bmm-workflow-status.yaml\n│   ├───epics.md\n│   ├───PRD.md\n│   ├───project-plan.md\n│   ├───project-review.md\n│   ├───proposal.md\n│   ├───reflection-report-template.md\n│   ├───validation-report-2025-11-11T21-18-44.md\n│   ├───images\\\n│   │   └───bmad-workflow.svg\n│   ├───references\\\n│   │   └───images\\\n│   └───stich\\\n│       ├───add_item_dialog.html\n│       ├───ai-prompt.md\n│       ├───expiration_alerts_dashboard.html\n│       ├───landing_page.html\n│       ├───pantry_overview.html\n│       ├───recipe_browser.html\n│       ├───smart_grocery_list.html\n│       └───user_profile.html\n├───fase-0\\\n│   ├───brainstorming-session-results-2025-10-28.md\n│   ├───product-brief-ibe160-2025-11-03.md\n│   ├───README.md\n│   ├───research-findings.md\n│   └───research-technical-2025-10-28.md\n├───fase-1\\\n│   ├───add_item_dialog.html\n│   ├───ci-pipeline-config.yml\n│   ├───expiration_alerts_dashboard.html\n│   ├───landing_page.html\n│   ├───pantry_overview.html\n│   ├───README.md\n│   ├───recipe_browser.html\n│   ├───smart_grocery_list.html\n│   ├───user_profile.html\n│   ├───ux-color-themes.html\n│   ├───ux-design-directions.html\n│   ├───ux-design-specification.md\n│   ├───ux-design.html\n│   └───validation-report.md\n├───fase-2\\\n│   ├───architecture.md\n│   ├───epics.md\n│   ├───README.md\n│   ├───solutioning-gate-check-report.md\n│   └───test-design.md\n├───fase-3\\\n│   ├───README.md\n│   └───sprint-artifacts\\\n│       ├───sprint-status.yaml\n│       ├───story-1.1.context.xml\n│       ├───story-1.1.md\n│       ├───story-1.3.md\n│       ├───story-2.1.context.xml\n│       ├───story-2.1.md\n│       ├───story-3.1.context.xml\n│       ├───story-3.1.md\n│       ├───story-5.1.md\n│       ├───tech-spec-epic-001.md\n│       ├───tech-spec-epic-002.md\n│       ├───tech-spec-epic-003.md\n│       └───tech-spec-epic-004-008.md\n└───ibe160-app\\\n    ├───.gitignore\n    ├───500\n    ├───API-SETUP.md\n    ├───auth.ts\n    ├───cd\n    ├───cls\n    ├───components.json\n    ├───DEPLOYMENT-QUICK-START.md\n    ├───DEPLOYMENT.md\n    ├───eslint.config.mjs\n    ├───MIGRATION_REQUIRED.md\n    ├───next.config.ts\n    ├───node\n    ├───package-lock.json\n    ├───package.json\n    ├───PHASE2-3-FEATURES.md\n    ├───postcss.config.mjs\n    ├───PRODUCTION_READINESS.md\n    ├───README.md\n    ├───READY_FOR_STAKEHOLDERS.md\n    ├───setup-supabase.js\n    ├───tsconfig.json\n    ├───VERCEL_ENV_SETUP.txt\n    ├───vercel.json\n    ├───.next\\\n    │   └───dev\\...\n    ├───.vercel\\...\n    ├───node_modules\\...\n    ├───prisma\\\n    │   ├───schema.prisma\n    │   └───migrations\\\n    ├───public\\\n    │   ├───file.svg\n    │   ├───globe.svg\n    │   ├───next.svg\n    │   ├───vercel.svg\n    │   └───window.svg\n    └───src\\\n        ├───app\\\n        └───...\n\nReminder: Do not return an empty response when a tool call is required.\n\nMy setup is complete. I will provide my first command in the next turn."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "text": "Here is the user's editor context as a JSON object. This is for your information only.\n```json\n{\n  \"activeFile\": {\n    \"path\": \"c:\\\\IBE160\\\\SG-Gruppe-Stavanger\\\\.git\\\\COMMIT_EDITMSG\",\n    \"cursor\": {\n      \"line\": 1,\n      \"character\": 6\n    }\n  }\n}\n```"
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "text": "untime Error\n\nInvalid src prop (https://img.spoonacular.com/ingredients_250x250/red.jpg) on `next/image`, hostname \"img.spoonacular.com\" is not configured under images in your `next.config.js`\nSee more info: https://nextjs.org/docs/messages/next-image-unconfigured-host\nsrc/components/PantryItemCard.tsx (290:11) @ PantryItemCard\n\n\n  288 |       <div className=\"aspect-square w-full rounded-lg bg-[#F7F7F7] flex items-center justify-center overflow-hidden relative\">\n  289 |         {imageUrl && !imageError ? (\n> 290 |           <Image\n      |           ^\n  291 |             src={imageUrl}\n  292 |             alt={item.name}\n  293 |             fill\nCall Stack\n24\n\nShow 20 ignore-listed frame(s)\nPantryItemCard\nsrc/components/PantryItemCard.tsx (290:11)\n<unknown>\nsrc/app/(auth)/pantry/page.tsx (252:17)\nArray.map\n<anonymous>\nPantryPage\nsrc/app/(auth)/pantry/page.tsx (251:22)\n\n\n ✓ Starting...\n ✓ Ready in 2.1s\n ○ Compiling / ...\n GET / 200 in 5.2s (compile: 4.7s, render: 506ms)\n GET /sw.js 404 in 1860ms (compile: 1704ms, render: 156ms)\n GET /login 200 in 1538ms (compile: 1465ms, render: 73ms)\n GET /api/auth/providers 200 in 2.5s (compile: 2.5s, render: 54ms)\n GET /api/auth/csrf 200 in 38ms (compile: 23ms, render: 15ms)\n POST /api/auth/callback/credentials? 200 in 1129ms (compile: 6ms, render: 1123ms)\n GET /pantry 200 in 2.6s (compile: 2.5s, render: 91ms)\n GET /pantry 200 in 200ms (compile: 16ms, render: 183ms)\n GET /api/pantry 200 in 1277ms (compile: 1133ms, render: 144ms)\n\nhvorfor kommer denne feilen i ibe160-app"
+            }
+          ]
+        },
+        {
+          "role": "model",
+          "parts": [
+            {
+              "thoughtSignature": "CikB4/H/XmWcfbjk2TCgoG1Svgv4nHAr2YaK5EVtnhvA9f6jDsT+1LjfxQqGAQHj8f9ezLZejLRJs/dBNvqYs9J4Z9a/RQpzZe6yCScnCXhXShpOroNp7FttYst18UpQR+3AoDshYLPq4Wv69AJGyKnslmwvFXQSi5gQly+GFp61JYLVOXFgverGl8YdcWmI/MU7+Nm3vvAmBlmFNM1+KxP9yPUb7/Clm79hS9rkt4EjEIgkCmEB4/H/Xt4F8ADUX2Q3CyBJCALHqGuRbNkY3uk6EF0MYlpd/89Ka+IDEjuwQ2FuL2jATVqkPJE3WJNSiElUqqouFAfX1sy6Uf9jGTeIDtyyt+rWeHxrvfxyqP/m+rB7sRNwCoABAePx/149Maqkd8DQRhOzwcvRBN4nipBhqTL2+wsqk8eJceGYNEpKzrpnCbl9VXayO1eELwgpNPXsVZ55rlqGZosY1hlM6WnKm4I19q5DzN1VxDXS1Y4DuepihgEGR0R7Fd9/gojoWfCIAlEizzdZfqO+4c440qA4yC2yTLAcoKMKrQEB4/H/XjqsZ/yYsNA5z/9tUZjb5zgrPmDjwav9BcJnWlTmO9Aq4BcAi0FuQ63A5VMVpvJa6+1hD3xjCIwCkUSDczY48CCe7JUYvlr0c8x5iBYAnIKj+G8WqDAEdo3KjEbZYsbXJ31QghXJqd/2+/xLemSt0jk2sWO6mWlR90tg2Bni6rllNGXKmtZS6DOjxPz3vZh7Jg8c/lxv+N0ktH9nIUqKKv8kFHie4I2KgwrRAQHj8f9eoC3o9krgkAvgjjI7YcHLASYDFCh/biEUNmw5UcDOt556V+kir24ni2z/KjerOAQkRzb9+J4Gu0YGnI52UagaCp0PCs5LFoAwarsNPLEid7dAc69HXH/3JfSkKv47wJiPL/2vEmM076qejzPnd14XVk5s/h6PjgkUVKd0emMfUCOQdvm/IPB/bd9q26N3ZJt2wZ+g0DQ0g4NewGhpXuIik+M+rcDmKe5XdLnXv2DDsaQELDgxk3BXbuhff1Pt2t5G/VqGEwAV12oEelAeCqEBAePx/154xcaNgc1R6XaShwQahzfKBl3m9WhdgsiCpTVLfT3ji37LyiMIVVtSQbpVjfLUTLZcKIaxGizA7cW6ZIPej30LWF9WRYzq4qur7KB09W4q3IN+Ys5nUOYrPOlOAy2ulq/GorBOqNhVKkUhhq9T/cQostC5kFTOZs3ZUatb4ywiAA8b9NKzqfEF7H9Bmx35y8pfeKbf9QXvRWTaS9MK9QEB4/H/XkyWaYEfYrz1WxwlK+8kDgEDQvGz1xxmwDs902lkzwvIdr5g+9SA2Q5YRJik6Ju+eX2iVmxzR8hKanxufVkoX2yCsTSewhP3q/yJ2PHlX/G6thwaKzH82y+dIdwO0W3KLmCpLNX5VUnxMgm8MybEGi5vKCb2+6scN0jX8YNfqXYNU8D2ag3Vch4T3dlh82dNVe20zJNoht+F4GJsZDrMaEJ6kmTcnMEUtZRrw2/jc19jOXWp7H+c0ebnz/oke3vLDC3qlguqK6lBme/5pWbiRhC+5BhBd1A0D+ZODAzqTfEHZQPr/CHIIcl2/8K+XSnopQpZAePx/14EZyTGKcIVZYuIJntrX79p4rmzrJt4q/S+a7/cIUdBrLVj4/GZIObLMVBBy0Wl/juy4FwFdVeWeV/YmS1mIpdwIGS90OBcpkMSfuxeHWSGf7zBt6k=",
+              "text": "The error indicates that the hostname `img.spoonacular.com` is not configured in your Next.js application's `next.config.js` file for image optimization.\n\nHere's the plan to fix it:\n1.  **Read `ibe160-app/next.config.ts`**: Read the content of the `next.config.ts` file to understand its current configuration.\n2.  **Modify `next.config.ts`**: Add `img.spoonacular.com` to the `images.remotePatterns` array. If `images` or `remotePatterns` don't exist, they will be created."
+            },
+            {
+              "functionCall": {
+                "name": "read_file",
+                "args": {
+                  "file_path": "ibe160-app/next.config.ts"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "functionResponse": {
+                "id": "read_file-1763937887293-3d006e25fae7c",
+                "name": "read_file",
+                "response": {
+                  "output": "import type { NextConfig } from \"next\";\r\n\r\nconst nextConfig: NextConfig = {\r\n  images: {\r\n    remotePatterns: [\r\n      {\r\n        protocol: 'https',\r\n        hostname: 'images.unsplash.com',\r\n      },\r\n      {\r\n        protocol: 'https',\r\n        hostname: 'images.openfoodfacts.org',\r\n      },\r\n    ],\r\n  },\r\n};\r\n\r\nexport default nextConfig;\r\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "model",
+          "parts": [
+            {
+              "thoughtSignature": "Ci8B4/H/Xkr9mjd/AYp4d6CfMiWR7uAxWK37lsbtq0omrUpImbvklClUp1aXhUR2gQpgAePx/17ILYG+ecpoprNCngRMxhot6KpCJQfYNhPU3M1E+kuv8kZ19ONrNSGQ70yPbwqC52YDOidUOsoedz7YHklF5uUm4dYSEIivZjNRerNxtf7fqKfvqoDGRy7xmLfPCmIB4/H/Xvj96mONs71dy3tA6P0hNzUncVc+KUA9IeBmKzsaS9SOUajJ1zmIPI8/+bhs7tUl1YrwR04Vg5iBypEGOZV/4x7xiJlDT5efweDlWDoHJh8FtOAxK5T4vBA5BLVJ3QoiAePx/157xtuQy7LiFSgcRpXOY1NDzINkeFG8/X5RQz+ZwA==",
+              "functionCall": {
+                "name": "replace",
+                "args": {
+                  "file_path": "C:\\IBE160\\SG-Gruppe-Stavanger\\ibe160-app\\next.config.ts",
+                  "new_string": "import type { NextConfig } from \"next\";\n\nconst nextConfig: NextConfig = {\n  images: {\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: 'images.unsplash.com',\n      },\n      {\n        protocol: 'https',\n        hostname: 'images.openfoodfacts.org',\n      },\n      {\n        protocol: 'https',\n        hostname: 'img.spoonacular.com',\n      },\n    ],\n  },\n};\n\nexport default nextConfig;\n",
+                  "instruction": "Add 'img.spoonacular.com' to the images.remotePatterns array in next.config.ts to allow image optimization from this domain.",
+                  "old_string": "import type { NextConfig } from \"next\";\n\nconst nextConfig: NextConfig = {\n  images: {\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: 'images.unsplash.com',\n      },\n      {\n        protocol: 'https',\n        hostname: 'images.openfoodfacts.org',\n      },\n    ],\n  },\n};\n\nexport default nextConfig;\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "functionResponse": {
+                "id": "replace-1763937892286-7fa6b98a4b184",
+                "name": "replace",
+                "response": {
+                  "output": "Successfully modified file: C:\\IBE160\\SG-Gruppe-Stavanger\\ibe160-app\\next.config.ts (1 replacements)."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "response": {
+      "session.id": "9e49377b-3f9e-4906-b14a-7656e4ab387a",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_response",
+      "event.timestamp": "2025-11-23T22:45:13.466Z",
+      "model": "gemini-2.5-flash",
+      "duration_ms": 2117,
+      "input_token_count": 10308,
+      "output_token_count": 45,
+      "cached_content_token_count": 0,
+      "thoughts_token_count": 49,
+      "tool_token_count": 0,
+      "total_token_count": 10402,
+      "prompt_id": "9e49377b-3f9e-4906-b14a-7656e4ab387a########0",
+      "auth_type": "oauth-personal",
+      "status_code": 200,
+      "response_text": [
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "thought": true,
+                    "text": "**Fixing Image Optimization Issue**\n\nOkay, I've updated the `next.config.ts` file, and I've added `img.spoonacular.com` to the `remotePatterns`. Seems straightforward, hopefully, this will finally resolve that image optimization error. It's done now.\n\n\n"
+                  }
+                ]
+              }
+            }
+          ],
+          "usageMetadata": {
+            "trafficType": "PROVISIONED_THROUGHPUT"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "7db6a0d52f30726c"
+        },
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "thoughtSignature": "CisB4/H/XnrBaevZwbGVuX/+BVvOR9AF/Yl5fmTHh17M+qjjMl6y22SuBkgxCmEB4/H/XnyOd95Xe5L54kZFbbNoKg+op3kgVOsdRsxpq3rewQ0nrtWncsC2FR1SbxRmGMHQQuLuQDVervaHWM6bDKXHT7BJel27eazmRJkdKP2HwPcZEeO631l+sa6i70FbCnUB4/H/XrmKYKMY7T7U0vHek/DBJqgn8d6mHTJlseQb1qv5pnQptSomvvcTIzbrAlEPQzg4tUwvjwUyzj1AgvRvl4CNEk1IKWrW+kRmmnioUdP6ozM2ezoGcf9HdzidyaDfTau6OVvRsLk8XHTvymZp2oS/4d8KOAHj8f9emuInC7ylYJ01ofvwFvXaBBRXU6LS1ug4XzOrRHc2btgpMCfANDy/KxX5Es/aSPKjHJhy",
+                    "text": "The `img.spoonacular.com` hostname has been successfully added to the `images.remotePatterns` in `ibe160-app/next.config.ts`."
+                  }
+                ]
+              }
+            }
+          ],
+          "usageMetadata": {
+            "trafficType": "PROVISIONED_THROUGHPUT"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "7db6a0d52f30726c"
+        },
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": " This should resolve the image loading issue."
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 10308,
+            "candidatesTokenCount": 45,
+            "totalTokenCount": 10402,
+            "trafficType": "PROVISIONED_THROUGHPUT",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 10308
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 45
+              }
+            ],
+            "thoughtsTokenCount": 49
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "7db6a0d52f30726c"
+        }
+      ],
+      "http.status_code": 200
+    },
+    "error": {
+      "session.id": "9e49377b-3f9e-4906-b14a-7656e4ab387a",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_error",
+      "event.timestamp": "2025-11-23T22:44:47.975Z",
+      "error.message": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 2s.\",\n    \"errors\": [\n      {\n        \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 2s.\",\n        \"domain\": \"global\",\n        \"reason\": \"rateLimitExceeded\"\n      }\n    ],\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"RATE_LIMIT_EXCEEDED\",\n        \"domain\": \"cloudcode-pa.googleapis.com\",\n        \"metadata\": {\n          \"model\": \"gemini-2.5-flash\",\n          \"quotaResetDelay\": \"2.034647193s\",\n          \"quotaResetTimeStamp\": \"2025-11-23T22:44:50Z\",\n          \"uiMessage\": \"true\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"2.034647193s\"\n      }\n    ]\n  }\n}\n]",
+      "model_name": "gemini-2.5-flash",
+      "duration": 488,
+      "model": "gemini-2.5-flash",
+      "error": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 2s.\",\n    \"errors\": [\n      {\n        \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 2s.\",\n        \"domain\": \"global\",\n        \"reason\": \"rateLimitExceeded\"\n      }\n    ],\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"RATE_LIMIT_EXCEEDED\",\n        \"domain\": \"cloudcode-pa.googleapis.com\",\n        \"metadata\": {\n          \"model\": \"gemini-2.5-flash\",\n          \"quotaResetDelay\": \"2.034647193s\",\n          \"quotaResetTimeStamp\": \"2025-11-23T22:44:50Z\",\n          \"uiMessage\": \"true\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"2.034647193s\"\n      }\n    ]\n  }\n}\n]",
+      "status_code": 429,
+      "duration_ms": 488,
+      "prompt_id": "9e49377b-3f9e-4906-b14a-7656e4ab387a########0",
+      "auth_type": "oauth-personal",
+      "error.type": "Error",
+      "http.status_code": 429
+    }
+  }
+]
