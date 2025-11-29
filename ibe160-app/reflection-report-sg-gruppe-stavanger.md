@@ -734,7 +734,7 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
 ## Vedlegg
 
 ### A. Lenker
-- **Repository:** `[GitHub URL - fyll inn]`
+- **Repository:** `https://github.com/IBE160/SG-Gruppe-Stavanger.git`
 - **Deployed app:** `[Vercel URL - fyll inn]`
 - **Dokumentasjon:**
   - `fase-0/` - Discovery: brainstorming, research, product-brief
