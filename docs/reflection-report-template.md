@@ -420,47 +420,63 @@ Kurset krever "evne til å vurdere etikk og juridiske problemstillinger knyttet 
 
 *Her fyller hvert gruppemedlem ut sin egen seksjon. Teksten under er kun et eksempel på hvordan det kan gjøres.*
 
-### 6.1 Gruppemedlem 1: [Fyll inn navn]
+### 6.1 Gruppemedlem 1: Thomas Ekrem Jensen
 
-**Hovedansvar:**
-[Fyll inn: f.eks. Backend-utvikling, API-integrasjoner]
+**Rolle:** [Fyll inn rolle, f.eks. Lead Developer, Full-stack]
 
 **Konkrete bidrag:**
-- [Fyll inn spesifikke komponenter/features utviklet]
-- [Fyll inn API-routes implementert]
-- [Fyll inn database-arbeid]
+- Komplett prosjektplanlegging og dokumentasjon (BMAD-metodikk)
+- Database-design med Prisma schema
+- Backend API-routes for pantry, recipes, grocery list, notifications
+- Frontend-komponenter med React og shadcn/ui
+- Spoonacular API-integrasjon med caching
+- UX-design med 7 HTML mockups
+- Testing og kvalitetssikring
+- Deployment til Vercel
 
 **KI-verktøy brukt og erfaring:**
-- **Primært verktøy:** [f.eks. Claude Code]
-- **Prompting-stil:** [Beskriv hvordan du formulerte prompts]
+- **Primært verktøy:** Claude (Sonnet og Opus)
+- **Prompting-stil:** Strukturerte prompts med kontekst først, deretter spesifikke krav, og til slutt constraints
 - **Beste eksempel på effektiv KI-bruk:**
   ```
-  [Inkluder en faktisk prompt du brukte som ga godt resultat]
+  "Basert på UX-spesifikasjonen og Prisma-schemaet, lag en komplett 
+  pantry-side med:
+  - Grid-visning av matvarer med Card-komponenter fra shadcn/ui
+  - Fargekoding basert på utløpsdato (grønn/gul/rød)
+  - Quick-actions: edit, delete med confirmation dialog
+  - Add item dialog med form validation (react-hook-form + zod)
+  - Filter på kategori og sortering på utløpsdato
+  - Mobile-first responsive design
+  - Loading og error states
+  - Optimistic updates med React Query"
   ```
-  **Resultat:** [Beskriv hva som ble generert og hvorfor det var bra]
+  **Resultat:** Fungerende pantry-side som matchet mockups og spesifikasjoner på første forsøk.
 
 **Tekniske lærdommer:**
-- **Om KI-assistert utvikling:** [Hva lærte du om å jobbe med KI?]
-- **Nye teknologier mestret:** [f.eks. Prisma, NextAuth.js, etc.]
-- **Endret syn på programmering:** [Hvordan endret KI-bruk måten du tenker på?]
+- **Om KI-assistert utvikling:** KI er en fantastisk "pair programming partner" som aldri blir trøtt, men som trenger tydelig veiledning og alltid må verifiseres.
+- **Nye teknologier mestret:** Next.js 14 App Router, Prisma ORM, shadcn/ui, React Query, Zod.
+- **Endret syn på programmering:** Fokus har skiftet fra "hvordan skriver jeg denne syntaksen" til "hvordan beskriver jeg dette problemet presist".
 
 **Prosesslærdommer:**
-- **Presis kommunikasjon:** [Hva lærte du om å formulere tekniske krav?]
-- **Samarbeid med KI vs. teammedlemmer:** [Forskjeller og likheter]
+- **Presis kommunikasjon:** Den viktigste ferdigheten er å formulere klare, spesifikke krav - vage prompts gir vag output.
+- **Iterativ utvikling:** Bedre å starte enkelt og bygge ut enn å be om alt på en gang.
 
 **Utfordringer med KI-verktøy:**
 | Utfordring | Kontekst | Løsning | Lærdom |
-|------------|----------|---------|--------|
-| [f.eks. KI genererte utdatert kode] | [Situasjon der det skjedde] | [Hvordan du løste det] | [Hva du lærte] |
+|---|---|---|---|
+| API rate limits| Spoonacular 150 req/dag|Aggressiv caching med React Query|Alltid planlegg for constraints fra start|
+| Konteksttap| Lange Claude-samtaler|Ny samtale med oppsummering av key decisions|Dokumenter beslutninger underveis|
+| Utdatert kunnskap|Next.js 14 App Router patterns|Verifiser alltid mot offisiell docs|Ikke stol blindt på KI|
+| Hallusinasjoner|KI "oppfant" API-metoder|Teste all kode før commit|KI kan være overbevisende selv når den tar feil|
 
 **Etiske refleksjoner:**
-- **Dilemma:** [f.eks. Usikkerhet rundt kodeieierskap]
-- **Håndtering:** [Hvordan du forholdt deg til det]
+- **Dilemma:** Hvor mye av koden er "min" når KI genererte den?
+- **Håndtering:** Jeg gjennomgikk, forsto, testet og tok ansvar for all kode - det gjør den til min. KI er et verktøy, som en kalkulator eller IDE.
 
 **Selvvurdering:**
-- **Mest fornøyd med:** [Konkret bidrag du er stolt av]
-- **Ville gjort annerledes:** [Hva du ville endret]
-- **Fremtidig KI-bruk:** [Hvordan du vil bruke KI i karrieren]
+- **Mest fornøyd med:** Fleksibel oppskriftsmatching-algoritmen (🟢🟡⚪ tier-systemet) og den helhetlige brukeropplevelsen.
+- **Ville gjort annerledes:** Etablert bedre prompt-library fra dag 1, implementert tester tidligere.
+- **Fremtidig KI-bruk:** Vil definitivt fortsette å bruke KI som utviklingsverktøy i karrieren - det er som å ha en junior developer som jobber 100x raskere.
 
 ---
 
@@ -773,6 +789,8 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
   - `fase-3/sprint-artifacts/` - Implementation: sprint-status, tech-specs, stories
 
 ### B. Prompt-eksempler
+
+*Følgende er kuraterte eksempler på effektive prompts vi brukte i prosjektet. For en fullstendig, ufiltrert historikk av alle interaksjoner, se loggfilene i mappen `.logging/requests`. Filnavn (f.eks. `2025-11-24_18-58-55-250b93ab-b335-486c-b003-a07793e553ba.json`) kan brukes til å referere til spesifikke samtaler direkte i rapportteksten.*
 
 **Eksempel 1: Prisma Schema**
 ```
