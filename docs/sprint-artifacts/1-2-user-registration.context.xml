@@ -1,0 +1,272 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>2</storyId>
+    <title>User Registration</title>
+    <status>Drafted</status>
+    <generatedAt>2025-11-29</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-user-registration.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>As a new user,</asA>
+    <iWant>I want to register for an account with my email and a secure password,</iWant>
+    <soThat>So that I can access the platform's features.</soThat>
+    <tasks>
+- Frontend Development (Registration Form UI)
+  - Implement `RegistrationForm` component (Next.js Client Component). (AC: #4, #5, #6)
+  - Apply "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui. (AC: #4)
+  - Ensure form responsiveness across devices. (AC: #5)
+  - Implement client-side validation for email format and password complexity. (AC: #1)
+  - Integrate display of success/error messages within the UI. (AC: #3)
+  - Ensure accessibility standards (WCAG 2.1 AA) for form fields and buttons. (AC: #6)
+- Backend Development (Registration API)
+  - Create `POST /api/auth/register` Next.js API Route. (AC: #1)
+  - Implement server-side validation for request body (`email`, `password`). (AC: #1)
+  - Integrate NextAuth.js `CredentialsProvider` for user creation logic. (AC: #1, #2)
+- Authentication & Database Integration
+  - Use Prisma to create a new `User` record in the Supabase PostgreSQL database. (AC: #2)
+  - Ensure passwords are securely hashed using NextAuth.js's built-in mechanism before storage (`passwordHash` field in `User` model). (AC: #2)
+  - Establish a secure session via NextAuth.js upon successful registration. (AC: #1)
+- Testing
+  - Unit Tests: (AC: #1, #2, #3, #4, #5, #6)
+    - `RegistrationForm` component client-side validation logic.
+    - API route handler for `/api/auth/register`.
+    - Prisma `User` model interactions (e.g., `createUser` function).
+    - NextAuth.js configuration for registration.
+  - Integration Tests: (AC: #1, #2)
+    - Verify the full flow of `POST /api/auth/register` integrating NextAuth.js, Prisma, and Supabase.
+    - Test edge cases: existing email, invalid password format.
+  - End-to-End (E2E) Tests: (AC: #1, #3, #4, #5, #6)
+    - Simulate complete user registration flow through the UI, from form submission to redirection. (Test with Playwright/Cypress).
+  - UI/UX Tests: (AC: #4, #5, #6)
+    - Manual visual inspection for "Farmhouse Kitchen" aesthetic and responsiveness.
+    - Manual accessibility audit for WCAG 2.1 AA compliance (keyboard navigation, screen reader support, focus indicators).
+- Documentation/Refinement
+  - Document any specific password complexity rules decided during implementation.
+  - Update `tech-spec-epic-epic-1.md` if any new architectural patterns or significant decisions emerge during implementation.
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+    * Given I am on the registration page,
+    * When I provide a valid email address and a password meeting complexity requirements,
+    * And I submit the registration form,
+    * Then my account is successfully created and I am logged in.
+    * And my password is securely hashed and stored in the Supabase database via Prisma.
+    * And a success message is displayed.
+    * And the UI reflects the "Farmhouse Kitchen" aesthetic (UX Ref: `ux-design-specification.md` section 3.1, 3.2, 4.1).
+    * And the registration form is responsive across devices (UX Ref: `ux-design-specification.md` section 8.1).
+    * And accessibility standards (WCAG 2.1 AA) are met for the form fields and buttons (UX Ref: `ux-design-specification.md` section 8.2).
+</acceptanceCriteria>
+
+  <artifacts>
+<docs>
+    <doc>
+      <path>docs/PRD.md</path>
+      <title>ibe160 - Product Requirements Document</title>
+      <section>Functional Requirements</section>
+      <snippet>FR-001: User Authentication: Secure registration and login for users.</snippet>
+    </doc>
+    <doc>
+      <path>docs/PRD.md</path>
+      <title>ibe160 - Product Requirements Document</title>
+      <section>Non-Functional Requirements - Security</section>
+      <snippet>User data (email, password, inventory) must be secure, using standard practices like NextAuth.js.</snippet>
+    </doc>
+    <doc>
+      <path>docs/architecture.md</path>
+      <title>Smart Food &amp; Recipe Platform - Architecture Document</title>
+      <section>High-Level Architecture</section>
+      <snippet>The system follows a typical client-server architecture with a clear separation of concerns. User Interface (Client), Application Layer (Backend), Database (Persistence), and External Services (Spoonacular API, Vercel, Supabase, NextAuth.js).</snippet>
+    </doc>
+    <doc>
+      <path>docs/architecture.md</path>
+      <title>Smart Food &amp; Recipe Platform - Architecture Document</title>
+      <section>Technology Stack Overview - 3.4 Authentication</section>
+      <snippet>Library: NextAuth.js. Role: A complete open-source authentication solution for Next.js applications, supporting email/password authentication.</snippet>
+    </doc>
+    <doc>
+      <path>docs/architecture.md</path>
+      <title>Smart Food &amp; Recipe Platform - Architecture Document</title>
+      <section>4. Data Model</section>
+      <snippet>The core data entities are defined using Prisma, ensuring a type-safe and relational structure. Includes User model with id, email, passwordHash.</snippet>
+    </doc>
+    <doc>
+      <path>docs/architecture.md</path>
+      <title>Smart Food &amp; Recipe Platform - Architecture Document</title>
+      <section>7. Authentication &amp; Authorization</section>
+      <snippet>NextAuth.js will be the backbone of user authentication. Email/password authentication, session management, route protection, and Supabase integration.</snippet>
+    </doc>
+    <doc>
+      <path>docs/ux-design-specification.md</path>
+      <title>ibe160 UX Design Specification</title>
+      <section>5.1 Critical User Paths - Landing Page / Onboarding</section>
+      <snippet>Goal: Invite new users into the "Farmhouse Kitchen" and encourage initial engagement. Flow: Full-screen immersive illustration with a single call to action: "Open Your Pantry."</snippet>
+    </doc>
+    <doc>
+      <path>docs/ux-design-specification.md</path>
+      <title>ibe160 UX Design Specification</title>
+      <section>8.1 Responsive Strategy</section>
+      <snippet>The "Farmhouse Kitchen" experience will adapt gracefully across devices, prioritizing usability while retaining its charm. Mobile: The experience shifts to a "focused" view with a simple, bottom-tab-bar.</snippet>
+    </doc>
+    <doc>
+      <path>docs/ux-design-specification.md</path>
+      <title>ibe160 UX Design Specification</title>
+      <section>8.2 Accessibility Strategy</section>
+      <snippet>The application will adhere to WCAG 2.1 Level AA standards. Key Requirements: Color Contrast, Keyboard Navigation, Screen Reader Support (ARIA), Focus Indicators, Reduced Motion.</snippet>
+    </doc>
+    <doc>
+      <path>docs/epics.md</path>
+      <title>ibe160 - Epic Breakdown</title>
+      <section>Epic 1: Foundation &amp; User Onboarding</section>
+      <snippet>Goal: Establish the core project infrastructure and allow users to securely register and log in to the platform.</snippet>
+    </doc>
+    <doc>
+      <path>docs/epics.md</path>
+      <title>ibe160 - Epic Breakdown</title>
+      <section>Story 1.2: User Registration</section>
+      <snippet>As a new user, I want to register for an account with my email and a secure password, So that I can access the platform's features.</snippet>
+    </doc>
+    <doc>
+      <path>docs/epics.md</path>
+      <title>ibe160 - Epic Breakdown</title>
+      <section>Story 1.2: User Registration - Technical Notes</section>
+      <snippet>Frontend: Next.js client component for the registration form. Backend: Next.js API Route for handling registration (POST `/api/auth/register`). Authentication: NextAuth.js. Database: Prisma to interact with the `User` model in Supabase.</snippet>
+    </doc>
+</docs>
+    <code>
+      <artifact>
+        <path>app/api/auth/[...nextauth]/route.ts</path>
+        <kind>authentication handler</kind>
+        <symbol>NextAuth handler</symbol>
+        <reason>Core NextAuth.js configuration and authentication logic.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/prisma.ts</path>
+        <kind>utility</kind>
+        <symbol>prisma</symbol>
+        <reason>Prisma client instance for database interaction.</reason>
+      </artifact>
+      <artifact>
+        <path>app/prisma-client.ts</path>
+        <kind>configuration</kind>
+        <symbol>prisma</symbol>
+        <reason>Main Prisma client configuration with PrismaPg adapter.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js">
+        <package name="@auth/prisma-adapter" version="^2.11.1"/>
+        <package name="@prisma/adapter-pg" version="^7.0.1"/>
+        <package name="@prisma/client" version="^7.0.1"/>
+        <package name="@radix-ui/react-slot" version="^1.2.4"/>
+        <package name="bcrypt" version="^6.0.0"/>
+        <package name="bcryptjs" version="^3.0.3"/>
+        <package name="class-variance-authority" version="^0.7.1"/>
+        <package name="clsx" version="^2.1.1"/>
+        <package name="dotenv" version="^17.2.3"/>
+        <package name="lucide-react" version="^0.555.0"/>
+        <package name="next" version="16.0.4"/>
+        <package name="next-auth" version="^4.24.13"/>
+        <package name="pg" version="^8.16.3"/>
+        <package name="react" version="19.2.0"/>
+        <package name="react-dom" version="19.2.0"/>
+        <package name="tailwind-merge" version="^3.4.0"/>
+        <package name="tailwindcss-animate" version="^1.0.7"/>
+      </ecosystem>
+      <ecosystem name="Node.js Dev Dependencies">
+        <package name="@tailwindcss/postcss" version="^4.1.17"/>
+        <package name="@types/bcrypt" version="^6.0.0"/>
+        <package name="@types/bcryptjs" version="^2.4.6"/>
+        <package name="@types/node" version="^20"/>
+        <package name="@types/react" version="^19"/>
+        <package name="@types/react-dom" version="^19"/>
+        <package name="autoprefixer" version="^10.4.22"/>
+        <package name="eslint" version="^9"/>
+        <package name="eslint-config-next" version="16.0.4"/>
+        <package name="postcss" version="^8.5.6"/>
+        <package name="prisma" version="^7.0.1"/>
+        <package name="tailwindcss" version="^4.1.17"/>
+        <package name="typescript" version="^5"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Security</type>
+      <description>Password Hashing: Passwords must be securely hashed using an industry-standard algorithm with salting (NextAuth.js built-in mechanism).</description>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Session Management: Securely managed via NextAuth.js (JWTs with proper signing, encryption, expiry).</description>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Data Protection: All sensitive data (email, password) encrypted in transit (HTTPS/TLS).</description>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Vulnerability Protection: Protection against XSS, CSRF, SQL Injection, and Brute Force attacks (rate limiting).</description>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Access Control: Only authenticated/authorized users access protected resources.</description>
+    </constraint>
+    <constraint>
+      <type>Performance</type>
+      <description>Registration API response within 500ms (90th percentile).</description>
+    </constraint>
+    <constraint>
+      <type>Performance</type>
+      <description>Concurrency: Authentication system supports at least 100 concurrent requests without significant degradation.</description>
+    </constraint>
+    <constraint>
+      <type>Architecture</type>
+      <description>Architecture Patterns: Client-server architecture with clear separation. Serverless-first approach using Next.js API Routes.</description>
+    </constraint>
+    <constraint>
+      <type>Testing</type>
+      <description>Testing Requirements: Unit Tests (client-side validation, API routes, Prisma interactions, NextAuth.js config), Integration Tests (full POST /api/auth/register flow), E2E Tests (full UI flow), UI/UX Tests (manual for aesthetic, responsiveness, accessibility).</description>
+    </constraint>
+    <constraint>
+      <type>Coding Standard</type>
+      <description>Coding Standards: Adhere to guidelines in docs/coding-standards.md (once available).</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Register User API</name>
+      <kind>REST endpoint</kind>
+      <signature>POST /api/auth/register</signature>
+      <path>app/api/auth/[...nextauth]/route.ts</path>
+    </interface>
+    <interface>
+      <name>User Model</name>
+      <kind>Prisma model</kind>
+      <signature>model User { id String @id @default(cuid()) email String @unique passwordHash String }</signature>
+      <path>app/prisma/schema.prisma</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>The project adheres to general coding standards (to be defined in `docs/coding-standards.md`). Unit tests will utilize Jest and React Testing Library for frontend components. Integration tests will use Jest and Supertest for API routes. End-to-end tests will be performed using Playwright or Cypress. UI/UX tests will involve manual review and accessibility auditing tools.</standards>
+    <locations>
+      <location>app/**/*.test.ts</location>
+      <location>app/components/**/*.test.ts</location>
+      <location>app/api/**/*.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac_id="1">Unit test `RegistrationForm` component client-side validation logic.</idea>
+      <idea ac_id="1,2">Unit test API route handler for `/api/auth/register`.</idea>
+      <idea ac_id="2">Unit test Prisma `User` model interactions (e.g., `createUser` function).</idea>
+      <idea ac_id="1,2">Unit test NextAuth.js configuration for registration.</idea>
+      <idea ac_id="1,2">Integration test: Verify the full flow of `POST /api/auth/register` integrating NextAuth.js, Prisma, and Supabase.</idea>
+      <idea ac_id="1">Integration test: Test edge cases such as existing email and invalid password format.</idea>
+      <idea ac_id="1,3,4,5,6">E2E test: Simulate complete user registration flow through the UI, from form submission to redirection (Playwright/Cypress).</idea>
+      <idea ac_id="4,5">UI/UX test: Manual visual inspection for "Farmhouse Kitchen" aesthetic and responsiveness.</idea>
+      <idea ac_id="6">UI/UX test: Manual accessibility audit for WCAG 2.1 AA compliance (keyboard navigation, screen reader support, focus indicators).</idea>
+    </ideas>
+  </tests>
+</story-context>
