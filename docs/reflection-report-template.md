@@ -667,24 +667,24 @@ Når vi forklarte KI-generert kode til ikke-tekniske interessenter, fokuserte vi
 ### 7.3 Arbeidsfordeling
 
 **Hvordan fordelte vi arbeidet?**
-- Epics ble fordelt basert på interesse og kompetanse
-- Stories ble tatt fra backlog i sprint planning
-- Par-programmering for kompleks logikk
+- **Ukentlig syklus:** Vi opererte i en ukes-syklus. Oppgaver (stories) ble fordelt i starten av uken, og hvert teammedlem jobbet på sin egen dedikerte `feature-branch` i Git.
+- **Individuelt fokus:** Dette ga rom for individuelt fokus og eksperimentering med KI-verktøy gjennom uken.
+- **Felles eierskap:** Selv om oppgaver var individuelt fordelt, opprettholdt vi et felles eierskap til hele kodebasen.
 
 **Håndtering av KI-assistert kode fra ulike teammedlemmer:**
-- Etablerte felles conventions i første uke
-- Code reviews sikret konsistens
-- Shared prompt library for lignende oppgaver
+- **Ukentlig kodegjennomgang:** På slutten av hver uke holdt vi et møte der hver person presenterte endringene fra sin branch.
+- **Felles evaluering:** I fellesskap diskuterte og evaluerte vi de ulike løsningsforslagene som KI hadde generert for de ulike medlemmene.
+- **"Best of breed"-prinsippet:** Vi valgte den beste løsningen basert på kvalitet, ytelse og hvor godt den passet inn i den eksisterende arkitekturen. Denne løsningen ble så merget inn i hovedbranchen (`main`/`develop`).
+- **Konsistens:** Denne prosessen sikret at vi opprettholdt en konsistent kodestil og kvalitet, selv om koden ble generert av ulike personer via KI.
 
 **Hva fungerte godt?**
-- Klare ansvarsområder reduserte overlapping
-- GitHub Projects for synlighet
-- Asynkron kommunikasjon for fleksibilitet
+- Den ukentlige syklusen ga en god balanse mellom individuell produktivitet og felles kvalitetssikring.
+- Presentasjonene i møtene førte til viktig kunnskapsdeling, spesielt rundt effektive prompting-teknikker.
+- Det å jobbe i separate branches reduserte merge-konflikter og lot oss eksperimentere fritt.
 
 **Hva kunne vært bedre?**
-- Mer strukturert prompt-deling
-- Bedre dokumentasjon av KI-beslutninger
-- Tidligere testing-integrasjon
+- Noen ganger kunne diskusjonene om "beste" løsning ta lang tid. En mer formell sjekkliste for evaluering kunne effektivisert dette.
+- Vi kunne hatt et felles repository for "gode prompts" for å unngå at flere fant opp hjulet på nytt for lignende oppgaver.
 
 ### 7.4 Konflikthåndtering
 
