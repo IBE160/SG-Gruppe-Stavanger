@@ -74,6 +74,12 @@
         <section>Story 2.3: Edit Food Item</section>
         <snippet>As a user, I want to edit the details of an existing food item, so that I can correct or update information. Technical Notes: Use PUT /api/inventory/{id}. Refer to architecture.md and FR2.3 in PRD.md.</snippet>
       </artifact>
+      <artifact>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Modal Patterns</section>
+        <snippet>Default modal size is Medium (600px). Can be dismissed with Esc or outside click unless the action is destructive.</snippet>
+      </artifact>
     </docs>
     <code>
       <artifact>
@@ -100,7 +106,7 @@
     </code>
 <dependencies>
       <ecosystem name="npm">
-        <package>NOTE: package.json not found. Dependencies could not be extracted.</package>
+        <package>package.json exists, but no dependencies are listed yet.</package>
       </ecosystem>
     </dependencies>
   </artifacts>
