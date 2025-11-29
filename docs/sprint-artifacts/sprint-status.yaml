@@ -46,7 +46,7 @@ development_status:
   2-1-add-food-item: ready-for-dev
   2-2-view-inventory: drafted
   2-3-edit-food-item: ready-for-dev
-  2-4-delete-food-item: drafted
+  2-4-delete-food-item: ready-for-dev
   epic-2-retrospective: optional
   epic-3: backlog
   3-1-search-recipes: backlog

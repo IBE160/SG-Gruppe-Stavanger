@@ -1,0 +1,175 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>4</storyId>
+    <title>Delete Food Item</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-29</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to delete an item from my inventory</iWant>
+    <soThat>I can remove items I no longer have.</soThat>
+    <tasks>
+- [ ] **Backend: API Endpoint** (AC: #1, #2, #3)
+    - [ ] Implement a `DELETE` route handler in `app/api/inventory/[id]/route.ts`.
+    - [ ] Add logic to delete an item from the `inventory` table in the Supabase database.
+    - [ ] Ensure the endpoint is protected and only the item's owner can perform the deletion, enforcing RLS policies.
+- [ ] **Frontend: UI Component** (AC: #1, #2)
+    - [ ] Add a "Delete" button to the inventory item display (e.g., within an `InventoryItemCard`).
+    - [ ] Implement a confirmation modal component (using `shadcn/ui`) that appears when the "Delete" button is clicked.
+    - [ ] On confirmation, trigger the client-side delete function.
+- [ ] **Frontend: Client-side Logic** (AC: #2)
+    - [ ] Create or extend a function in `lib/inventoryClient.ts` (or equivalent) to send the `DELETE` request to the API.
+    - [ ] Integrate this function with the confirmation modal.
+    - [ ] Update the local state of the inventory list to reflect the deletion (optimistic update or after API confirmation).
+- [ ] **Testing** (AC: #1, #2, #3)
+    - [ ] **Unit Test:** (AC: #1) Write a frontend unit test for the confirmation modal to ensure it appears on button click and handles user confirmation/cancellation correctly.
+    - [ ] **Integration Test:** (AC: #2, #3) Write an API integration test for the `DELETE /api/inventory/{id}` endpoint to:
+        - Verify it successfully deletes an item and returns a 204 status.
+        - Verify it returns a 401/403 error when accessed without authentication.
+        - Verify it returns a 404/403 error when a user tries to delete an item belonging to another user (testing RLS).
+    - [ ] **E2E Test:** (AC: #1, #2) Write an end-to-end test that simulates a user logging in, clicking a delete button, confirming the action in the modal, and verifying the item is removed from the UI.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1.  **Given** I am viewing an item in my inventory, **When** I click to delete the item, **Then** a confirmation prompt is displayed.
+    2.  **And** upon confirmation, the item is permanently removed from the inventory.
+    3.  **And** only the item's owner can delete it, enforced by Supabase RLS.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR2.4 - Delete Food Item</section>
+        <snippet>A user can delete an item from their inventory. A confirmation prompt is displayed before deletion. The item is permanently removed from the inventory list upon confirmation.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>API Pattern</section>
+        <snippet>RESTful API using Next.js API Routes (Route Handlers). Standard, flexible, and widely supported approach. Simplifies the tech stack by integrating API directly into the Next.js project.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Security</section>
+        <snippet>Leverages the secure foundations of chosen technologies to protect user data, prevent unauthorized access, and ensure resilience against threats. Combines strong authentication, fine-grained data access control (Supabase RLS), and robust API security.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>FR Category to Architecture Mapping - Inventory Management</section>
+        <snippet>Frontend routes in `app/(main)/inventory/`, API routes in `app/api/inventory/` for CRUD, Supabase PostgreSQL tables for data, Supabase Realtime for live updates, and PG Cron for expiration checks.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>UX Pattern Decisions - Modal Patterns</section>
+        <snippet>Default modal size is Medium (600px). Can be dismissed with Esc or outside click unless the action is destructive.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library - Custom/Key Components</section>
+        <snippet>Inventory Deduction Modal: A custom modal to confirm ingredient deduction after cooking. (Relevant for delete confirmation.)</snippet>
+      </artifact>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/api/inventory/[id]/route.ts</path>
+        <kind>API Route Handler</kind>
+        <symbol>DELETE</symbol>
+        <reason>Implements the deletion logic for an inventory item, including Supabase integration and RLS enforcement as per Story Task (Backend: API Endpoint).</reason>
+      </artifact>
+      <artifact>
+        <path>lib/inventoryClient.ts</path>
+        <kind>Utility/Client Function</kind>
+        <symbol>deleteInventoryItem(id: string)</symbol>
+        <reason>Function to call the DELETE API endpoint and handle client-side state updates as per Story Task (Frontend: Client-side Logic).</reason>
+      </artifact>
+      <artifact>
+        <path>components/specific/InventoryItemCard.tsx</path>
+        <kind>React Component</kind>
+        <symbol>Delete Button / Confirmation Modal</symbol>
+        <reason>UI elements for initiating the delete action and confirming it as per Story Task (Frontend: UI Component).</reason>
+      </artifact>
+      <artifact>
+        <path>tests/unit/components/InventoryItemCard.test.tsx</path>
+        <kind>Unit Test</kind>
+        <symbol>Test cases for confirmation modal interaction</symbol>
+        <reason>Verify frontend component behavior for AC#1 as per Story Task (Testing).</reason>
+      </artifact>
+      <artifact>
+        <path>tests/integration/api/inventory/[id]/route.test.ts</path>
+        <kind>Integration Test</kind>
+        <symbol>Test cases for DELETE /api/inventory/{id} endpoint</symbol>
+        <reason>Verify backend API functionality, authentication, and RLS for AC#2, AC#3 as per Story Task (Testing).</reason>
+      </artifact>
+      <artifact>
+        <path>tests/e2e/delete-food-item.spec.ts</path>
+        <kind>E2E Test</kind>
+        <symbol>End-to-end user flow for deleting an item</symbol>
+        <reason>Verify complete user journey for AC#1, AC#2 as per Story Task (Testing).</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js/JavaScript">
+        <package name="Next.js" version="v16" />
+        <package name="React" reason="Inferred from Next.js usage" />
+        <package name="Tailwind CSS" />
+        <package name="shadcn/ui" />
+        <package name="NextAuth.js" version="v4.24.13" />
+        <package name="Supabase JS client" reason="Inferred from Supabase usage" />
+      </ecosystem>
+      <ecosystem name="Database">
+        <package name="Supabase PostgreSQL" version="v17" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architecture</type>
+      <description>The implementation must follow the RESTful API pattern using Next.js Route Handlers. All data access must go through the defined API layer and respect the Supabase RLS policies.</description>
+    </constraint>
+    <constraint>
+      <type>Styling</type>
+      <description>Use `shadcn/ui` components for the confirmation modal to maintain visual consistency.</description>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Row Level Security (RLS) policies in Supabase PostgreSQL must ensure users only access and modify their own data.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Delete Inventory Item API</name>
+      <kind>REST endpoint</kind>
+      <signature>DELETE /api/inventory/{id}</signature>
+      <path>app/api/inventory/[id]/route.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>Multi-layered testing strategy including Unit Tests (Jest, React Testing Library), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (Playwright, Cypress).</standard>
+      <standard>Tests should focus on user-centric scenarios and ensure the reliability and stability of the application.</standard>
+    </standards>
+    <locations>
+      <location>tests/unit/components/</location>
+      <location>tests/integration/api/</location>
+      <location>tests/e2e/</location>
+    </locations>
+    <ideas>
+      <idea ac_id="AC#1">Frontend unit test for the confirmation modal: ensure it appears on button click and handles user confirmation/cancellation correctly.</idea>
+      <idea ac_id="AC#2, AC#3">API integration test for the `DELETE /api/inventory/{id}` endpoint: verify successful deletion, 401/403 for unauthorized access, and 404/403 for cross-user deletion (RLS).</idea>
+      <idea ac_id="AC#1, AC#2">End-to-end test: simulate user login, click delete button, confirm action, and verify item removal from UI.</idea>
+    </ideas>
+  </tests>
+</story-context>

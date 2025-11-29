@@ -1,6 +1,6 @@
 # Story 2.4: Delete Food Item
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -64,7 +64,7 @@ so that I can remove items I no longer have.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts/2-4-delete-food-item.context.xml
 
 ### Agent Model Used
 
