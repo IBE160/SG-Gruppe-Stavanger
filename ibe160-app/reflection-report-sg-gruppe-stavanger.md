@@ -206,7 +206,11 @@ Vi ville definitivt brukt BMAD igjen. Strukturen hjalp med å organisere arbeide
 | Anthropic Claude (Web) | Tekstgenerering, dokumentasjon, arkitektur | Utmerket på lange og kreative tekster, god på å holde en "personlighet" | Tregere på respons, ingen verktøybruk i web-versjon |
 | GitHub Copilot | Inline code completion | Rask, integrert i VS Code | Mangler helhetlig prosjektforståelse |
 
-**Primære verktøy:** Vi vekslet mellom Google Gemini og Anthropic Claude som våre primære verktøy, avhengig av oppgaven. Gemini ble foretrukket for kodegenerering og logiske problemer, mens Claude ofte ble brukt for å utarbeide lengre tekster og dokumentasjon. Vi estimerer at KI-verktøy samlet sett sto for ~85-90% av den skrevne koden.
+**Primære verktøy og agent-basert arbeidsflyt:** Vår arbeidsflyt startet ikke bare med en prompt, men med et bevisst valg av **agent** for oppgaven. Vi vekslet strategisk mellom Google Gemini (via CLI-agent) og Anthropic Claude (via web-grensesnitt) avhengig av konteksten:
+- **Google Gemini (Agent):** Ble foretrukket for komplekse kodegenereringsoppgaver, feilsøking og logiske problemer som krevde verktøybruk (Tool Use) og trinnvis resonnering. Agentens evne til å interagere med filsystemet og kjøre kommandoer var avgjørende her.
+- **Anthropic Claude (Assistent):** Ble primært brukt til å generere og bearbeide tekst, slik som dokumentasjon (f.eks. PRD, user stories) og arkitekturbeskrivelser, hvor dens styrker i kreativ og langformat tekstproduksjon kom til sin rett.
+
+Denne "agent-først"-tilnærmingen var en sentral del av vår metodikk og lot oss utnytte de unike styrkene til hvert verktøy. Vi estimerer at KI-verktøy samlet sett sto for ~85-90% av den skrevne koden.
 
 ### 3.2 Utviklingsmiljø for KI-assistert utvikling
 
@@ -740,7 +744,7 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
 
 ### B. Prompt-eksempler
 
-*Følgende er kuraterte eksempler på effektive prompts vi brukte i prosjektet. For en fullstendig, ufiltrert historikk av alle interaksjoner, se loggfilene i mappen `.logging/requests`. Filnavn (f.eks. `2025-11-24_18-58-55-250b93ab-b335-486c-b003-a07793e553ba.json`) kan brukes til å referere til spesifikke samtaler direkte i rapportteksten.*
+*Følgende er kuraterte eksempler på effektive prompts vi brukte i prosjektet. Det er viktig å merke seg at valget av KI-verktøy (agent) ofte foregikk **før** selve prompten ble formulert, basert på oppgavens art, som beskrevet i Del 3.1. Disse eksemplene viser hvordan vi formulerte våre instruksjoner for å oppnå best mulig resultat fra den valgte agenten. For en fullstendig, ufiltrert historikk av alle interaksjoner, se loggfilene i mappen `.logging/requests`. Filnavn (f.eks. `2025-11-24_11-22-33-abcde123.json`) kan brukes til å referere til spesifikke samtaler direkte i rapportteksten.*
 
 **Eksempel 1: Prisma Schema**
 ```
