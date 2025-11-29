@@ -53,6 +53,29 @@
             <section>FR1.3: User Logout</section>
             <snippet>As a logged-in user, I must be able to log out of my account to securely end my session. This action should be easily accessible from the main application interface.</snippet>
         </doc>
+        <doc>
+            <path>docs/ux-design-specification.md</path>
+            <title>UX Design Specification</title>
+            <section>Custom/Key Components</section>
+            <snippet>
+Custom/Key Components:
+* **Profile Page:** A dedicated screen that includes:
+    * User avatar and information header.
+    * sections for account settings, preferences, and app information.
+    * A prominent logout button.
+            </snippet>
+        </doc>
+        <doc>
+            <path>docs/product-brief-ibe160-2025-11-14.md</path>
+            <title>Product Brief</title>
+            <section>MVP Scope</section>
+            <snippet>
+MVP Scope
+Core Features
+The Minimum Viable Product (MVP) will include the following core functionalities:
+- **User Authentication:** Secure registration and login.
+            </snippet>
+        </doc>
     </docs>
     <code>
         <file>
