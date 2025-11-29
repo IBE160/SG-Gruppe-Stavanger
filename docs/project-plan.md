@@ -54,7 +54,7 @@
     - [ ] /run-agent-task sm create-epic-tech-context {prompt / user-input-file}
       - [x] File: sprint-artifacts/tech-spec-epic-1.md
       - [x] File: sprint-artifacts/tech-spec-epic-2.md
-      - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
+      - [x] File: sprint-artifacts/tech-spec-epic-3.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
     - [x] epic 1 story
