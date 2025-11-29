@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma'; // Assuming this path is correct
+import { rateLimiter } from '@/lib/rate-limiter'; // Import the rate limiter
 
 import logger from '@/lib/logger';
 
@@ -13,14 +14,12 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 export async function POST(req: NextRequest) {
   // TODO: Implement a distributed rate limiting solution suitable for serverless environments (e.g., using Redis, Upstash, or a dedicated rate limiting service)
   // The current in-memory rate limiter is not effective across multiple serverless instances.
-  // import { rateLimiter } from '@/lib/rate-limiter'; // Example import for a distributed rate limiter
 
-  // If a distributed rate limiter were in place:
-  // const ip = req.ip || '127.0.0.1';
-  // const rateLimitResult = await rateLimiter.check(ip);
-  // if (rateLimitResult.limited) {
-  //   return NextResponse.json({ message: 'Too many requests. Please try again later.' }, { status: 429 });
-  // }
+  const ip = req.ip || '127.0.0.1'; // Use a default IP for local development if req.ip is not available
+  const rateLimitResult = rateLimiter.check(ip);
+  if (rateLimitResult.limited) {
+    return NextResponse.json({ message: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
 
   try {
     const { email, password } = await req.json();
