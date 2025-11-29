@@ -734,7 +734,7 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
 ## Vedlegg
 
 ### A. Lenker
-- **Repository:** `[GitHub URL - fyll inn]`
+- **Repository:** `https://github.com/IBE160/SG-Gruppe-Stavanger.git`
 - **Deployed app:** `[Vercel URL - fyll inn]`
 - **Dokumentasjon:**
   - `fase-0/` - Discovery: brainstorming, research, product-brief
@@ -866,10 +866,10 @@ Formatet for hver user story skal være:
 
 ### D. Statistikk
 
-- **Antall commits:** `[Fyll inn fra git log --oneline | wc -l]`
-- **Linjer kode:** `[Fyll inn fra cloc src/]`
-- **Antall API-endepunkter:** ~8-10
-- **Antall komponenter:** `[Fyll inn fra ls src/components/*.tsx | wc -l]`
+- **Antall commits:** 351
+- **Linjer kode:** [Klarte ikke hente: 'cloc' er ikke installert]
+- **Antall API-endepunkter:** 8
+- **Antall komponenter:** 7
 - **Estimert andel KI-generert kode:** 85%
 - **Antall prompts brukt (estimat):** 150+
 
