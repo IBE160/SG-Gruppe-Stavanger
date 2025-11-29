@@ -170,6 +170,8 @@ As a user, I want to view all items in my inventory, so that I can see what food
 **Then** all my items are displayed with name, quantity, unit, and expiration date.
 **And** items are sorted by expiration date, soonest-expiring first.
 **And** items nearing expiration have a color-coded border (per UX).
+**And** the API endpoint for fetching the inventory is secure and only returns items belonging to the authenticated user.
+**And** the UI gracefully handles an empty state with a call-to-action if no items are present.
 
 **Prerequisites:** Story 2.1
 

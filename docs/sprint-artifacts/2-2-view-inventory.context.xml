@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <story id="2.2" status="drafted" author="BIP" date="2025-11-29">
+        <title>View Inventory</title>
+        <userStory>As a user, I want to view all items in my inventory, so that I can see what food I have.</userStory>
+        <acceptanceCriteria>
+            <criterion id="AC1">A logged-in user can view a list of all their inventory items on the inventory page.</criterion>
+            <criterion id="AC2">Each item in the list displays its name, quantity, unit, and expiration date.</criterion>
+            <criterion id="AC3">The inventory list is sorted by expiration date, with the soonest-expiring items at the top.</criterion>
+            <criterion id="AC4">Items nearing their expiration date have a color-coded border for quick visual identification, as per the UX specification.</criterion>
+            <criterion id="AC5">The API endpoint for fetching the inventory is secure and only returns items belonging to the authenticated user.</criterion>
+            <criterion id="AC6">The UI gracefully handles an empty state, displaying a friendly message and a call-to-action to add the first item.</criterion>
+        </acceptanceCriteria>
+        <tasks>
+            <task id="T1" type="Backend" coveredBy="AC1,AC5">Create the API route file `app/api/inventory/route.ts` if it doesn't exist.</task>
+            <task id="T2" type="Backend" coveredBy="AC1,AC2,AC3,AC5">Implement the `GET` request handler in `app/api/inventory/route.ts` (lines 10-50) to fetch inventory items for the authenticated user.</task>
+            <task id="T3" type="Backend" coveredBy="AC3">Ensure the database query within the `GET` handler sorts items by `expiration_date` in ascending order.</task>
+            <task id="T4" type="Frontend" coveredBy="AC1,AC2,AC3,AC4,AC6">Create the UI component file `components/specific/InventoryList.tsx`.</task>
+            <task id="T5" type="Frontend" coveredBy="AC2,AC4">In `InventoryList.tsx` (lines 25-70), build the UI to display the list of inventory items, using the `Recipe Card` component as a base for styling.</task>
+            <task id="T6" type="Frontend" coveredBy="AC4">In `InventoryList.tsx` (lines 75-90), implement the logic to apply the color-coded border based on the expiration date.</task>
+            <task id="T7" type="Frontend" coveredBy="AC1">In the inventory page component (`app/(main)/inventory/page.tsx`, lines 15-35), implement the data fetching logic to call the `GET /api/inventory` endpoint.</task>
+            <task id="T8" type="Frontend" coveredBy="AC6">In `InventoryList.tsx` (lines 95-110), implement the empty state UI for when no inventory items are returned.</task>
+            <task id="T9" type="Testing" coveredBy="AC5">Write an integration test for the `GET /api/inventory` endpoint, including a check for user-specific data access.</task>
+            <task id="T10" type="Testing" coveredBy="AC3,AC4,AC6">Write unit tests for the `InventoryList.tsx` component to verify sorting and conditional styling for expiration.</task>
+            <task id="T11" type="Testing" coveredBy="AC1,AC2">Write an E2E test to verify that a logged-in user can navigate to the inventory page and see their list of items with all the correct data fields.</task>
+        </tasks>
+    </story>
+
+    <developerNotes>
+        <context item="Requirements">
+            <reference source="docs/PRD.md" detail="This story implements FR2.2 - View Inventory."/>
+            <reference source="docs/epics.md" detail="This is a core part of Epic 2: Inventory Management."/>
+            <reference source="docs/ux-design-specification.md" detail="AC4 and AC6 are derived from the UX spec to ensure a better user experience."/>
+        </context>
+        <context item="Technical Specification">
+            <reference source="docs/sprint-artifacts/tech-spec-epic-2.md"/>
+            <apiContract>
+                <endpoint method="GET" path="/api/inventory"/>
+                <description>Fetches all inventory items for the currently authenticated user.</description>
+                <request>
+                    <parameters>None</parameters>
+                </request>
+                <response status="200 - OK">
+                    <description>An array of inventory items.</description>
+                    <body><![CDATA[
+[
+    {
+        "id": "uuid-string-goes-here",
+        "name": "Milk",
+        "quantity": 1,
+        "unit": "liter",
+        "expiration_date": "YYYY-MM-DD"
+    },
+    ...
+]
+                    ]]></body>
+                </response>
+                <response status="401 - Unauthorized">
+                    <description>If the user is not authenticated.</description>
+                </response>
+                <response status="500 - Internal Server Error">
+                    <description>If there is a server-side error during data fetching.</description>
+                </response>
+            </apiContract>
+            <workflow>
+                <step>1. `InventoryPage` loads.</step>
+                <step>2. Calls `InventoryClient.getItems`.</step>
+                <step>3. `InventoryClient` sends a `GET` request to `/api/inventory`.</step>
+                <step>4. The response is displayed in the `InventoryList.tsx` component.</step>
+            </workflow>
+        </context>
+        <context item="Architecture">
+            <reference source="docs/architecture.md"/>
+            <pattern name="API">Use the existing RESTful API pattern in Next.js API Routes.</pattern>
+            <pattern name="Authentication">Endpoint must be protected by NextAuth.js. RLS policies on the `inventory` table are critical.</pattern>
+            <projectStructure>
+                <file type="UI Page">app/(main)/inventory/page.tsx</file>
+                <file type="UI Component">components/specific/InventoryList.tsx</file>
+            </projectStructure>
+        </context>
+        <context item="UX and Testing">
+            <reference source="docs/ux-design-specification.md" detail="The inventory list is a primary screen and must be mobile-first."/>
+            <reference source="docs/architecture.md" section="Testing Strategy" detail="Follow the multi-layered testing strategy."/>
+        </context>
+        <context item="Learnings">
+            <note>Builds on story 2.1 (`2-1-add-food-item.md`), which established the `POST` endpoint. This story adds the `GET` endpoint and list view.</note>
+            <note>Ensure consistency in data validation and error handling between `POST` and `GET` operations.</note>
+        </context>
+    </developerNotes>
+
+    <changeLog>
+        <log date="2025-11-29">Initial draft created by SM agent.</log>
+        <log date="2025-11-29">Updated based on validation report to improve test coverage and add citations.</log>
+        <log date="2025-11-29">Refactored to structured XML and added detailed API contract based on validation report.</log>
+    </changeLog>
+
+    <referencedDocuments>
+        <document path="docs/sprint-artifacts/2-2-view-inventory.md"/>
+        <document path="docs/PRD.md"/>
+        <document path="docs/epics.md"/>
+        <document path="docs/ux-design-specification.md"/>
+        <document path="docs/sprint-artifacts/tech-spec-epic-2.md"/>
+        <document path="docs/architecture.md"/>
+    </referencedDocuments>
+</storyContext>

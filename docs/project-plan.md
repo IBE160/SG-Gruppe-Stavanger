@@ -87,7 +87,7 @@
         - [x] File: sprint-artifacts/1-5-user-logout.md
       - [ ] Epic 2 story
         - [x] File: sprint-artifacts/2-1-add-food-item.md
-        - [ ] File: sprint-artifacts/2-2-view-inventory.md
+        - [x] File: sprint-artifacts/2-2-view-inventory.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
@@ -113,7 +113,7 @@
         - [x] File: sprint-artifacts/1-5-user-logout.context.xml
       - [ ] Epic 2 context
         - [x] File: sprint-artifacts/2-1-add-food-item.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
+        - [x] File: sprint-artifacts/2-2-view-inventory.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
