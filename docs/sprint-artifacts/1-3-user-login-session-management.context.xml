@@ -1,0 +1,351 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>User Login &amp; Session Management</title>
+    <status>drafted</status>
+    <generatedAt>lørdag 29. november 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs\sprint-artifacts\1-3-user-login-session-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>As a registered user,</asA>
+    <iWant>I want to securely log in to my account and have my session maintained,</iWant>
+    <soThat>So that I can seamlessly access the platform and its features without repeated authentication.</soThat>
+    <tasks>
+- [ ] **Frontend Development (Login Form UI)**
+  - [ ] Implement `LoginForm` component (Next.js Client Component) (AC: #8).
+  - [ ] Apply "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui (AC: #8).
+  - [ ] Ensure form responsiveness across devices (AC: #8).
+  - [ ] Implement client-side validation for email format and password presence (AC: #7).
+  - [ ] Integrate display of success/error messages within the UI (AC: #7).
+  - [ ] Add "Remember Me" checkbox and integrate with NextAuth.js session options (AC: #6).
+  - [ ] Ensure accessibility standards (WCAG 2.1 AA) for form fields and buttons (AC: #8).
+
+- [ ] **Backend Development (Login API)**
+  - [ ] Create `POST /api/auth/login` Next.js API Route (AC: #1, #2, #3, #4, #5).
+  - [ ] Implement server-side validation for request body (`email`, `password`) (AC: #7).
+  - [ ] Integrate NextAuth.js `CredentialsProvider` for user authentication logic (AC: #1, #2, #3, #4, #5).
+  - [ ] Implement distributed rate limiting for `POST /api/auth/login` endpoint (addressing technical debt from Story 1.2) (AC: #1, #2, #4, #5).
+
+- [ ] **Authentication & Database Integration**
+  - [ ] Use Prisma to lookup `User` for credential verification against `passwordHash` (AC: #1, #2, #3).
+  - [ ] Establish a secure session via NextAuth.js upon successful login (AC: #4, #5).
+- [ ] **Testing**
+  - [ ] **Unit Tests:**
+    - [ ] `LoginForm` component client-side validation logic (AC: #7, #8).
+    - [ ] API route handler for `/api/auth/login` (AC: #1, #2, #3, #4, #5, #7).
+    - [ ] NextAuth.js configuration for login (AC: #4, #5, #6).
+  - [ ] **Integration Tests:**
+    - [ ] Verify the full flow of `POST /api/auth/login` integrating NextAuth.js, Prisma, and Supabase (AC: #1, #2, #3, #4, #5, #7).
+    - [ ] Test edge cases: invalid credentials, locked accounts (if applicable) (AC: #7).
+    - [ ] Test rate limiting functionality (AC: #1, #2, #4, #5).
+  - [ ] **End-to-End (E2E) Tests:**
+    - [ ] Simulate complete user login flow through the UI, from form submission to redirection (AC: #1, #2, #3, #4, #5, #6, #7, #8).
+  - [ ] **UI/UX Tests (Manual - as per previous story learning):**
+    - [ ] Manual visual inspection for "Farmhouse Kitchen" aesthetic and responsiveness (AC: #8).
+    - [ ] Manual accessibility audit for WCAG 2.1 AA compliance (keyboard navigation, screen reader support, focus indicators) (AC: #8).
+
+- [ ] **Documentation/Refinement**
+  - [ ] Document the implemented distributed rate limiting solution and its configuration (AC: #1, #2, #4, #5).
+  - [ ] Update `tech-spec-epic-epic-1.md` if any new architectural patterns or significant decisions emerge during implementation (AC: #1, #2, #3, #4, #5, #6, #7, #8).
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I have a registered account,
+*   **When** I am on the login page and provide valid credentials,
+*   **And** I submit the login form,
+*   **Then** I am successfully authenticated and redirected to my dashboard/pantry view.
+*   **And** my session is securely managed by NextAuth.js.
+*   **And** an option to "Remember Me" is available, extending session duration.
+*   **And** error messages are displayed for invalid credentials.
+*   **And** the login form adheres to the "Farmhouse Kitchen" UI principles and responsiveness.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Functional Requirements</section>
+        <snippet>FR-001: User Authentication: Secure registration and login for users. This requirement is foundational for enabling user access to the platform.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Non-Functional Requirements - Security</section>
+        <snippet>User data (email, password, inventory) must be secure, using standard practices like NextAuth.js. This ensures the integrity and confidentiality of sensitive user information.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Mobile-responsive web application Specific Requirements</section>
+        <snippet>The technical foundation will be a modern stack designed for robustness and a high-quality user experience: Frontend: Next.js 14, Backend: Next.js API Routes, Database: Supabase (PostgreSQL), Authentication: NextAuth.js.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>3.4 Authentication</section>
+        <snippet>NextAuth.js is the chosen library for user authentication, providing a complete open-source solution for Next.js applications, supporting email/password authentication and extendability.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>6. Backend Architecture</section>
+        <snippet>The backend logic primarily resides within Next.js API Routes, functioning as serverless endpoints. These endpoints handle authentication &amp; authorization, integrated with NextAuth.js callbacks and middleware to protect routes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>7. Authentication &amp; Authorization</section>
+        <snippet>NextAuth.js forms the backbone of user authentication, handling session creation, validation, renewal, and providing secure JWT tokens. Middleware and getServerSession will protect API Routes and frontend pages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>4. Data Model (User and Session)</section>
+        <snippet>The core data entities are defined using Prisma. The User model includes id, email, passwordHash. The Session model, managed by NextAuth.js, includes id, userId, expires, sessionToken.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>9. Scalability &amp; Performance Considerations</section>
+        <snippet>Serverless API Routes scale automatically. NextAuth.js session management is efficient. Database query optimization and careful indexing will ensure fast data retrieval.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>2.1 Defining Experience</section>
+        <snippet>The core user experience is defined by a highly immersive and tactile interaction with a "Farmhouse Kitchen" environment. The application intelligently adapts its interface and presented information to the user's current "mode".</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>3.1 Color System</section>
+        <snippet>The "Farmhouse Kitchen" theme uses a hybrid palette combining "Heirloom Garden" and "Blue Plate Special". Key colors include Light Beige, Cornflower Blue, Terracotta, Sage Green, and Charcoal.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>8.2 Accessibility Strategy</section>
+        <snippet>The application will adhere to WCAG 2.1 Level AA standards. Key requirements include color contrast, keyboard navigation, screen reader support (ARIA), and clear focus indicators.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>7.1 Consistency Rules (Feedback Patterns)</section>
+        <snippet>Feedback is gentle and integrated, with brief, satisfying sparkle animations for success and subtle shakes for errors. Loading states are represented by a charming, non-intrusive animation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>7.1 Consistency Rules (Form Patterns)</section>
+        <snippet>In cases of text input, forms will use floating labels that move above the input field on focus. Validation occurs on submit to prevent user distraction.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Overview</section>
+        <snippet>This document outlines the architecture for Epic 1: Foundation &amp; User Onboarding, establishing core project infrastructure and user registration/login functionality.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Objectives and Scope</section>
+        <snippet>Objectives include establishing foundational project infrastructure, enabling secure user registration and login, and implementing session management for authenticated users.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Detailed Design - Services and Modules</section>
+        <snippet>Frontend client components include `LoginForm` for user credential input. Backend services involve `/api/auth/login` (POST) for user authentication, interacting with NextAuth.js and Prisma.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Detailed Design - Data Models and Contracts</section>
+        <snippet>The `User` model includes `id`, `email`, `password_hash`. The `Session` model, managed by NextAuth.js, tracks user sessions with `id`, `userId`, `expires`, and `sessionToken`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Detailed Design - APIs and Interfaces</section>
+        <snippet>The `POST /api/auth/login` API requires `email` and `password` in the request body. It returns a success message and user details on successful login, or an error for unauthorized access.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Detailed Design - Workflows and Sequencing (User Login Workflow)</section>
+        <snippet>The User Login Workflow involves a user navigating to `/login`, inputting credentials into `LoginForm`, which then sends a POST request to `/api/auth/login`. The backend verifies credentials via NextAuth.js and establishes a secure session.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Non-Functional Requirements - Security</section>
+        <snippet>The system must be protected against common web vulnerabilities. Distributed rate limiting will be implemented for authentication endpoints to mitigate brute force attacks and other security risks.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Acceptance Criteria (Authoritative)</section>
+        <snippet>Story 1.3: User Login &amp; Session Management outlines criteria for successful authentication, secure session management via NextAuth.js, "Remember Me" option, error display for invalid credentials, and adherence to UI principles.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; User Onboarding</title>
+        <section>Test Strategy Summary</section>
+        <snippet>The testing strategy for Epic 1 includes Unit, Integration, E2E, and UI/UX tests. It focuses on ensuring robustness, security, and adherence to ACs for project setup, user registration, and login functionalities.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <code-artifact>
+        <path>app/api/auth/register/route.ts</path>
+        <kind>API Route</kind>
+        <symbol>POST /api/auth/register</symbol>
+        <lines>all</lines>
+        <reason>Example of an existing authentication API route; the login API will follow a similar structure for user authentication and session management.</reason>
+      </code-artifact>
+      <code-artifact>
+        <path>app/register/page.tsx</path>
+        <kind>Frontend Component</kind>
+        <symbol>RegistrationPage</symbol>
+        <lines>all</lines>
+        <reason>Implemented the registration UI, demonstrating how to build authentication-related client components. The login UI (`app/login/page.tsx`) will leverage this experience.</reason>
+      </code-artifact>
+      <code-artifact>
+        <path>app/api/auth/[...nextauth]/route.ts</path>
+        <kind>Authentication Configuration</kind>
+        <symbol>NextAuth</symbol>
+        <lines>all</lines>
+        <reason>Contains the NextAuth.js configuration for secure user authentication and session management. This will be extended for login functionality.</reason>
+      </code-artifact>
+      <code-artifact>
+        <path>app/prisma-client.ts</path>
+        <kind>Database Client</kind>
+        <symbol>PrismaClient</symbol>
+        <lines>all</lines>
+        <reason>Prisma client instance for type-safe database interactions, used for user lookup and session management.</reason>
+      </code-artifact>
+      <code-artifact>
+        <path>app/prisma/schema.prisma</path>
+        <kind>Database Schema</kind>
+        <symbol>User, Session</symbol>
+        <lines>all</lines>
+        <reason>Defines the database schema, including the User and Session models, essential for authentication and session management.</reason>
+      </code-artifact>
+    </code>
+    <dependencies>
+      <nodejs>
+        <dependencies>
+          <package name="@auth/prisma-adapter" version="^2.11.1" />
+          <package name="@prisma/adapter-pg" version="^7.0.1" />
+          <package name="@prisma/client" version="^7.0.1" />
+          <package name="@radix-ui/react-slot" version="^1.2.4" />
+          <package name="bcrypt" version="^6.0.0" />
+          <package name="bcryptjs" version="^3.0.3" />
+          <package name="class-variance-authority" version="^0.7.1" />
+          <package name="clsx" version="^2.1.1" />
+          <package name="dotenv" version="^17.2.3" />
+          <package name="lucide-react" version="^0.555.0" />
+          <package name="next" version="16.0.4" />
+          <package name="next-auth" version="^4.24.13" />
+          <package name="pg" version="^8.16.3" />
+          <package name="react" version="19.2.0" />
+          <package name="react-dom" version="19.2.0" />
+          <package name="tailwind-merge" version="^3.4.0" />
+          <package name="tailwindcss-animate" version="^1.0.7" />
+        </dependencies>
+        <devDependencies>
+          <package name="@babel/preset-env" version="^7.28.5" />
+          <package name="@babel/preset-react" version="^7.28.5" />
+          <package name="@babel/preset-typescript" version="^7.28.5" />
+          <package name="@playwright/test" version="^1.57.0" />
+          <package name="@tailwindcss/postcss" version="^4.1.17" />
+          <package name="@testing-library/jest-dom" version="^6.9.1" />
+          <package name="@testing-library/react" version="^16.3.0" />
+          <package name="@types/bcrypt" version="^6.0.0" />
+          <package name="@types/bcryptjs" version="^2.4.6" />
+          <package name="@types/jest" version="^30.0.0" />
+          <package name="@types/node" version="^20" />
+          <package name="@types/react" version="^19" />
+          <package name="@types/react-dom" version="^19" />
+          <package name="@types/supertest" version="^6.0.3" />
+          <package name="autoprefixer" version="^10.4.22" />
+          <package name="babel-jest" version="^30.2.0" />
+          <package name="eslint" version="^9" />
+          <package name="eslint-config-next" version="16.0.4" />
+          <package name="jest" version="^30.2.0" />
+          <package name="jest-environment-jsdom" version="^30.2.0" />
+          <package name="playwright" version="^1.57.0" />
+          <package name="postcss" version="^8.5.6" />
+          <package name="prisma" version="^7.0.1" />
+          <package name="supertest" version="^7.1.4" />
+          <package name="tailwindcss" version="^4.1.17" />
+          <package name="ts-jest" version="^29.4.5" />
+          <package name="typescript" version="^5" />
+        </devDependencies>
+      </nodejs>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <description>Password complexity rules: at least 8 characters, one uppercase, one lowercase, one number, and one special character.</description>
+    </constraint>
+    <constraint>
+      <description>Distributed rate limiting must be implemented for authentication endpoints (login and registration) to prevent brute-force attacks.</description>
+    </constraint>
+    <constraint>
+      <description>Adherence to "Farmhouse Kitchen" UI principles and responsiveness, as detailed in the UX Design Specification.</description>
+    </constraint>
+    <constraint>
+      <description>WCAG 2.1 AA compliance for accessibility.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>POST /api/auth/register</name>
+      <kind>REST endpoint</kind>
+      <signature>POST /api/auth/register (email: string, password: string)</signature>
+      <path>app/api/auth/register/route.ts</path>
+    </interface>
+    <interface>
+      <name>POST /api/auth/login</name>
+      <kind>REST endpoint</kind>
+      <signature>POST /api/auth/login (email: string, password: string)</signature>
+      <path>new app/api/auth/login/route.ts</path>
+    </interface>
+    <interface>
+      <name>NextAuth.js CredentialsProvider</name>
+      <kind>Authentication Provider</kind>
+      <signature>CredentialsProvider({ name: "Credentials", authorize(credentials, req) })</signature>
+      <path>app/api/auth/[...nextauth]/route.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>Unit Tests: Jest, React Testing Library (for frontend components).</standard>
+      <standard>Integration Tests: Jest, Supertest (for API routes).</standard>
+      <standard>E2E Tests: Playwright or Cypress (for full user flow).</standard>
+      <standard>UI/UX Tests: Manual review, browser developer tools, accessibility auditing tools.</standard>
+      <standard>Adhere to guidelines in `docs/coding-standards.md` (once available).</standard>
+    </standards>
+    <locations>
+      <location>app/e2e/registration.spec.ts (existing E2E test example)</location>
+      <location>New unit/integration test files to be created alongside new components and API routes.</location>
+    </locations>
+    <ideas>
+      <idea>Unit Test: LoginForm component client-side validation logic.</idea>
+      <idea>Unit Test: API route handler for `/api/auth/login`.</idea>
+      <idea>Unit Test: NextAuth.js configuration for login.</idea>
+      <idea>Integration Test: Verify the full flow of `POST /api/auth/login` integrating NextAuth.js, Prisma, and Supabase.</idea>
+      <idea>Integration Test: Test edge cases: invalid credentials, locked accounts (if applicable).</idea>
+      <idea>Integration Test: Test rate limiting functionality.</idea>
+      <idea>E2E Test: Simulate complete user login flow through the UI, from form submission to redirection.</idea>
+      <idea>UI/UX Test (Manual): Manual visual inspection for "Farmhouse Kitchen" aesthetic and responsiveness.</idea>
+      <idea>UI/UX Test (Manual): Manual accessibility audit for WCAG 2.1 AA compliance (keyboard navigation, screen reader support, focus indicators).</idea>
+    </ideas>
+  </tests>
+</story-context>
