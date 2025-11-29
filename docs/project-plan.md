@@ -95,7 +95,7 @@
       - [x] /run-agent-task sm *validate-story-context  
         - [x] /run-agent-task dev *develop-story {prompt / user-input-file}
         - [x] /run-agent-task dev *code-review {prompt / user-input-file}
-      - [ ] /run-agent-task dev *story-done {prompt / user-input-file}
+      - [x] /run-agent-task dev *story-done {prompt / user-input-file}
       - [ ] /run-agent-task sm *test-review {prompt / user-input-file}
 ####  Story 1.3: User Login & Session Management.
       - [ ] /run-agent-task sm *create-story {prompt / user-input-file}

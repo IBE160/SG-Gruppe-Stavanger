@@ -1,11 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <main className="p-6 space-y-4">
-      <Input placeholder="Test input" />
-      <Button>Test Button</Button>
-    </main>
-  )
+  redirect('/register');
 }
+

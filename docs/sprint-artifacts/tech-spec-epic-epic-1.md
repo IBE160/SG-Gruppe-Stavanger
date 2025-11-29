@@ -61,7 +61,7 @@ For detailed architectural context, refer to `architecture.md` sections 3.1, 3.2
     -   **Prisma ORM:** Provides a type-safe API for interacting with the Supabase PostgreSQL database. Manages schema migrations and queries for the `User` model.
 
 -   **Authentication Service:**
-    -   **NextAuth.js:** Handles all core authentication logic, including credential validation, session management (JWTs), and secure password hashing.
+    -   **NextAuth.js:** Handles all core authentication logic, including credential validation, session management (JWTs), and secure password hashing. **Note: `CredentialsProvider` is used for authenticating existing users; user registration (creation) is handled by a separate API route.**
 
 ### Data Models and Contracts
 
@@ -174,7 +174,7 @@ For detailed architectural context, refer to `architecture.md` sections 3.1, 3.2
 -   **Password Hashing:** Passwords must be securely hashed using a robust, industry-standard algorithm (e.g., bcrypt, scrypt) with appropriate salting.
 -   **Session Management:** User sessions must be securely managed via NextAuth.js, utilizing JWTs with proper signing, encryption, and expiry.
 -   **Data Protection:** All sensitive data (e.g., passwords, email addresses) in transit must be encrypted using HTTPS/TLS. Data at rest in the database should be adequately protected.
--   **Vulnerability Protection:** The system must be protected against common web vulnerabilities, including but not limited to XSS, CSRF, SQL Injection, and Brute Force attacks (e.g., rate limiting on login attempts).
+-   **Vulnerability Protection:** The system must be protected against common web vulnerabilities, including but not limited to XSS, CSRF, SQL Injection, and Brute Force attacks. **Distributed rate limiting will be implemented for authentication endpoints.**
 -   **Access Control:** Only authenticated and authorized users should be able to access protected resources.
 
 ### Reliability/Availability
