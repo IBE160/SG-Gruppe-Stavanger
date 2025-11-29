@@ -1,0 +1,143 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>1</storyId>
+    <title>Add Food Item</title>
+    <status>Draft</status>
+    <generatedAt>2025-11-29</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-1-add-food-item.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to manually add a food item to my inventory</iWant>
+    <soThat>I can track my kitchen items</soThat>
+    <tasks>
+      <task id="T1">**Backend:** Create the API route file `app/api/inventory/route.ts`.</task>
+      <task id="T2">**Backend:** Implement the `POST` request handler within the new API route.</task>
+      <task id="T3">**Backend:** Implement server-side input validation for the request body (name, quantity, unit, expiration_date).</task>
+      <task id="T4">**Backend:** Implement the database logic to insert the new inventory item using the Supabase client, associating it with the authenticated user.</task>
+      <task id="T5">**Frontend:** Create the UI component file `components/specific/AddItemForm.tsx`.</task>
+      <task id="T6">**Frontend:** Build the form UI using shadcn/ui components, including the custom "Quick-Add Input".</task>
+      <task id="T7">**Frontend:** Implement client-side state management and validation for the form.</task>
+      <task id="T8">**Frontend:** Implement the API client logic to send the `POST` request to `/api/inventory` on form submission.</task>
+      <task id="T9">**Testing:** Write integration tests for the `POST /api/inventory` endpoint to cover success, auth failure, and validation error cases.</task>
+      <task id="T10">**Testing:** Write unit tests for the `AddItemForm.tsx` component to verify its behavior and validation logic.</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+      <criterion id="AC1">A logged-in user can access a form to add a new food item.</criterion>
+      <criterion id="AC2">The form must capture the item's name, quantity, unit, and expiration date.</criterion>
+      <criterion id="AC3">Upon submission, the new item is saved to the user's inventory in the database.</criterion>
+      <criterion id="AC4">The user's inventory view updates immediately to show the newly added item.</criterion>
+      <criterion id="AC5">The API endpoint for adding an item must be secure and only accessible by authenticated users.</criterion>
+      <criterion id="AC6">Users can only add items to their own inventory (RLS policy must be effective).</criterion>
+      <criterion id="AC7">Both client-side and server-side validation must be implemented for all input fields.</criterion>
+    </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR2.1 - Add Food Item</section>
+        <snippet>A user can manually add a food item to their inventory. The user must provide a name, quantity, unit, and expiration date for each item.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>APIs and Interfaces</section>
+        <snippet>POST /api/inventory - Add a new item to the inventory. Request Body: {"name": "...", "quantity": "...", "unit": "...", "expiration_date": "..."}</snippet>
+      </doc>
+	  <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Data Models and Contracts</section>
+        <snippet>CREATE TABLE inventory (id UUID PRIMARY KEY, user_id UUID, name TEXT, quantity NUMERIC, unit TEXT, expiration_date TIMESTAMPTZ);</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure</section>
+        <snippet>UI components in components/specific/AddItemForm.tsx, API route in app/api/inventory/route.ts.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library</section>
+        <snippet>Quick-Add Input: A highly customized input for parsing food item details from a single string.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>lib/supabaseClient.ts</path>
+        <kind>utility</kind>
+        <symbol>supabase</symbol>
+        <lines>1-6</lines>
+        <reason>Provides the Supabase client instance for database communication.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>Next.js</name>
+        <version>16</version>
+        <reason>Core application framework.</reason>
+      </dependency>
+      <dependency>
+        <name>React</name>
+        <version>18</version>
+        <reason>UI library for Next.js.</reason>
+      </dependency>
+      <dependency>
+        <name>Tailwind CSS</name>
+        <version>latest</version>
+        <reason>CSS framework for styling.</reason>
+      </dependency>
+	  <dependency>
+        <name>shadcn/ui</name>
+        <version>latest</version>
+        <reason>UI component library.</reason>
+      </dependency>
+      <dependency>
+        <name>Supabase</name>
+        <version>latest</version>
+        <reason>Backend-as-a-Service for database, auth, and more.</reason>
+      </dependency>
+      <dependency>
+        <name>NextAuth.js</name>
+        <version>4.24.13</version>
+        <reason>Authentication library.</reason>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+      <constraint>API endpoints MUST be protected and require a valid JWT token.</constraint>
+      <constraint>Supabase RLS policies for the 'inventory' table MUST be implemented and enforced.</constraint>
+      <constraint>All incoming API request bodies MUST be validated against the defined schema.</constraint>
+      <constraint>The UI for adding items must be optimized for speed and ease of use, as per the UX specification.</constraint>
+	  <constraint>Follow established project patterns for file structure, naming conventions, and code style.</constraint>
+    </constraints>
+  <interfaces>
+      <interface>
+        <name>Add Inventory Item</name>
+        <kind>REST</kind>
+        <signature>POST /api/inventory</signature>
+        <path>app/api/inventory/route.ts</path>
+		<description>Adds a new item to the user's inventory. Body must contain { name, quantity, unit, expiration_date }. Returns the created item on success.</description>
+      </interface>
+    </interfaces>
+  <tests>
+    <standards>The project uses a multi-layered testing strategy: Unit Tests (Jest, React Testing Library), Integration Tests (API routes, database interactions), and E2E Tests (Playwright/Cypress).</standards>
+    <locations>tests/</locations>
+    <ideas>
+		<idea for="AC1">E2E test: Log in, navigate to inventory, open the 'Add Item' form, fill it out, submit, and verify the new item appears in the list.</idea>
+		<idea for="AC1">Integration test: Send a valid POST request to /api/inventory and verify a 201 response and correct database insertion.</idea>
+		<idea for="NFR-Security">Integration test: Send a POST request to /api/inventory without an auth token and verify a 401 Unauthorized response.</idea>
+		<idea for="NFR-Security">Integration test: Send a POST request to /api/inventory with an invalid body and verify a 400 Bad Request response.</idea>
+		<idea for="UI">Unit test: The AddItemForm component should correctly handle user input and form submission.</idea>
+	</ideas>
+  </tests>
+</story-context>

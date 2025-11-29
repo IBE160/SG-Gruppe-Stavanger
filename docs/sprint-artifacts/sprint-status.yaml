@@ -42,9 +42,9 @@ development_status:
   1-4-user-login: ready-for-dev
   1-5-user-logout: ready-for-dev
   epic-1-retrospective: optional
-  epic-2: backlog
-  2-1-add-food-item: backlog
-  2-2-view-inventory: backlog
+    epic-2: contexted
+  2-1-add-food-item: ready-for-dev
+  2-2-view-inventory: drafted
   2-3-edit-food-item: backlog
   2-4-delete-food-item: backlog
   epic-2-retrospective: optional

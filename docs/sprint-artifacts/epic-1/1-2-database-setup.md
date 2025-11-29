@@ -69,7 +69,7 @@ so that I can store and manage application data.
 
 ### Agent Model Used
 
-Gemini (in #yolo mode)
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 ### Debug Log References
 

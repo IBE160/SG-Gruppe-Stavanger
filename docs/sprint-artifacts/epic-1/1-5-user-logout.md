@@ -59,6 +59,8 @@ so that I can securely end my session.
 
 ### Agent Model Used
 
+Gemini 2.5 Pro and Flesh (in #yolo mode)
+
 {{agent_model_name_version}}
 
 ### Debug Log References

@@ -12,7 +12,7 @@ Status: ready-for-dev
 
 ### Agent Model Used
 
-Gemini
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 ### Debug Log References
 

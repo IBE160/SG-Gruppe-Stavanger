@@ -78,7 +78,7 @@ so that I can access the application.
 
 ### Agent Model Used
 
-Gemini (in #yolo mode)
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 ### Debug Log References
 
