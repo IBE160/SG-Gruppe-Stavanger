@@ -53,7 +53,7 @@
   - foreach epic in sprint planning:
     - [ ] /run-agent-task sm create-epic-tech-context {prompt / user-input-file}
       - [x] File: sprint-artifacts/tech-spec-epic-1.md
-      - [ ] File: sprint-artifacts/tech-spec-epic-2.md
+      - [x] File: sprint-artifacts/tech-spec-epic-2.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
@@ -85,7 +85,7 @@
         - [x] File: sprint-artifacts/1-3-user-registration.md
         - [x] File: sprint-artifacts/1-4-user-login.md
         - [x] File: sprint-artifacts/1-5-user-logout.md
-      - [ ] Epic 2 story
+      - [x] Epic 2 story
         - [x] File: sprint-artifacts/2-1-add-food-item.md
         - [x] File: sprint-artifacts/2-2-view-inventory.md
         - [x] File: sprint-artifacts/2-3-edit-food-item.md
@@ -110,7 +110,7 @@
         - [x] File: sprint-artifacts/1-3-user-registration.context.xml
         - [x] File: sprint-artifacts/1-4-user-login.context.xml
         - [x] File: sprint-artifacts/1-5-user-logout.context.xml
-      - [ ] Epic 2 context
+      - [x] Epic 2 context
         - [x] File: sprint-artifacts/2-1-add-food-item.context.xml
         - [x] File: sprint-artifacts/2-2-view-inventory.context.xml
         - [x] File: sprint-artifacts/2-3-edit-food-item.context.xml
