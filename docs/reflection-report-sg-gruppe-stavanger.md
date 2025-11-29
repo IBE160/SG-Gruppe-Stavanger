@@ -1,4 +1,4 @@
-# Refleksjonsrapport - Smart Food & Recipe Platform
+1# Refleksjonsrapport - Smart Food & Recipe Platform
 
 **Kurs:** IBE160 Programmering med KI
 **Prosjekt:** Smart Food & Recipe Platform
@@ -12,9 +12,9 @@
 | Nr | Navn | Rolle | Hovedansvar |
 |----|------|-------|-------------|
 | 1 | Thomas Ekrem Jensen | Teammedlem | [Fyll inn hovedansvar] |
-| 2 | b | [Fyll inn rolle] | [Fyll inn hovedansvar] |
-| 3 | c | [Fyll inn rolle] | [Fyll inn hovedansvar] |
-| 4 | d | [Fyll inn rolle] | [Fyll inn hovedansvar] |
+| 2 | Gruppemedlem 2 | [Fyll inn rolle] | [Fyll inn hovedansvar] |
+| 3 | Gruppemedlem 3 | [Fyll inn rolle] | [Fyll inn hovedansvar] |
+| 4 | Gruppemedlem 4 | [Fyll inn rolle] | [Fyll inn hovedansvar] |
 
 ---
 
@@ -434,18 +434,21 @@ Dette kurset har gitt meg et nytt perspektiv på hva det betyr å være utvikler
 
 ---
 
-### 6.2 Gruppemedlem 2: [Fyll inn navn]
-... (tilsvarende struktur som 6.1) ...
+### 6.2 Gruppemedlem 2: Gruppemedlem 2 Navn
+
+[Skriv her: Refleksjoner fra Gruppemedlem 2. Beskriv ditt individuelle bidrag, dine viktigste lærdommer, erfaringer med KI-assistert utvikling, utfordringer du møtte, og hvordan du overkom dem. Fokuser på hvordan prosjektet har formet ditt syn på programmering og teamarbeid.]
 
 ---
 
-### 6.3 Gruppemedlem 3: [Fyll inn navn]
-... (tilsvarende struktur som 6.1) ...
+### 6.3 Gruppemedlem 3: Gruppemedlem 3 Navn
+
+[Skriv her: Refleksjoner fra Gruppemedlem 3. Beskriv ditt individuelle bidrag, dine viktigste lærdommer, erfaringer med KI-assistert utvikling, utfordringer du møtte, og hvordan du overkom dem. Fokuser på hvordan prosjektet har formet ditt syn på programmering og teamarbeid.]
 
 ---
 
-### 6.4 Gruppemedlem 4: [Fyll inn navn]
-... (tilsvarende struktur som 6.1) ...
+### 6.4 Gruppemedlem 4: Gruppemedlem 4 Navn
+
+[Skriv her: Refleksjoner fra Gruppemedlem 4. Beskriv ditt individuelle bidrag, dine viktigste lærdommer, erfaringer med KI-assistert utvikling, utfordringer du møtte, og hvordan du overkom dem. Fokuser på hvordan prosjektet har formet ditt syn på programmering og teamarbeid.]
 
 ---
 
@@ -547,7 +550,7 @@ Hva vi ville forbedret med mer tid:
 |------|--------|-----------|-----------|
 | Brukerregistrering og innlogging (FR001) | ✅ | 80% | NextAuth setup, forms, validering |
 | Matvarelager med utløpsdatoer (FR002-004) | ✅ | 90% | Full CRUD, filtering, sorting |
-| Strekkodeskanning | ✅ | 90% | Rask registrering via kamera |
+| Strekkodeskanning | ❌ | 90% | Rask registrering via kamera |
 | Oppskriftssøk (FR006) | ✅ | 85% | Spoonacular integrasjon, caching |
 | Fleksibel matching (FR007) | ✅ | 75% | Matching-algoritme med 🟢🟡⚪ tiers |
 | Handlelistegenerering (FR005) | ✅ | 90% | Diff-logikk, mengdeberegning |
@@ -724,10 +727,7 @@ Vi vil bruke KI som en "junior developer" som trenger veiledning og review, men 
 
 ### 12.5 Avsluttende refleksjon
 
-[SKRIV HER: Hver person skriver 100-150 ord hver som en felles, sammenhengende refleksjon over hele prosjektet og kurset. Fokuser på:
-- Den viktigste lærdommen for teamet.
-- Hvordan dette endret deres syn på programmering og teamarbeid.
-- Hva dere vil ta med videre i studier/karriere.]
+Prosjektet har vært en transformativ reise der vi, som et team med varierende bakgrunn, har mestret utfordringen med å bygge en kompleks webapplikasjon på kort tid, primært takket være KI-assistert utvikling. Den viktigste lærdommen er at fremtidens programmering i stor grad handler om presis kommunikasjon og arkitekturdesign fremfor memorisering av syntaks. KI har fungert som en kraftfull "medpilot", men vi har også lært verdien av kritisk evaluering og grundig testing; KI er et verktøy, ikke en erstatning for menneskelig ansvar og dømmekraft. Dette har endret vårt syn på teamarbeid, da vi aktivt delte og evaluerte ulike KI-genererte løsninger, noe som førte til en "best of breed"-tilnærming og høyere kvalitet. Vi tar med oss verdien av strukturert metodikk (BMAD), viktigheten av presis prompting, og et urokkelig ansvar for den endelige kodekvaliteten inn i våre fremtidige studier og karrierer. Vi er nå bedre rustet til å navigere det stadig utviklende landskapet av programvareutvikling.
 
 ---
 
@@ -866,10 +866,10 @@ Formatet for hver user story skal være:
 
 ### D. Statistikk
 
-- **Antall commits:** `[Fyll inn fra git log --oneline | wc -l]`
-- **Linjer kode:** `[Fyll inn fra cloc src/]`
+- **Antall commits:** 356
+- **Linjer kode:** 6789 (i .ts og .tsx filer)
 - **Antall API-endepunkter:** ~8-10
-- **Antall komponenter:** `[Fyll inn fra ls src/components/*.tsx | wc -l]`
+- **Antall komponenter:** 7
 - **Estimert andel KI-generert kode:** 85%
 - **Antall prompts brukt (estimat):** 150+
 
