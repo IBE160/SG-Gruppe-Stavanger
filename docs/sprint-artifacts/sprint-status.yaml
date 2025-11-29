@@ -28,14 +28,14 @@
 # - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
 # - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
 
-generated: 2025-11-28
+generated: 2025-11-29
 project: ibe160
 project_key: unknown
 tracking_system: file-system
 story_location: docs/sprint-artifacts
 
 development_status:
-  epic-1: contexted
+  epic-1: ready-for-dev
   1-1-project-initialization: ready-for-dev
   1-2-database-setup: ready-for-dev
   1-3-user-registration: ready-for-dev
