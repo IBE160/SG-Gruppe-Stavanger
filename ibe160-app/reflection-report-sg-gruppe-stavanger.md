@@ -11,7 +11,7 @@
 
 | Nr | Navn | Rolle | Hovedansvar |
 |----|------|-------|-------------|
-| 1 | a | [Fyll inn rolle] | [Fyll inn hovedansvar] |
+| 1 | Thomas Ekrem Jensen | Teammedlem | [Fyll inn hovedansvar] |
 | 2 | b | [Fyll inn rolle] | [Fyll inn hovedansvar] |
 | 3 | c | [Fyll inn rolle] | [Fyll inn hovedansvar] |
 | 4 | d | [Fyll inn rolle] | [Fyll inn hovedansvar] |
