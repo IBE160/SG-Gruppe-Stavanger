@@ -2,7 +2,7 @@
 
 **Date:** 2025-11-29
 **Author:** BIP
-**Status:** drafted
+Status: ready-for-dev
 
 ---
 
