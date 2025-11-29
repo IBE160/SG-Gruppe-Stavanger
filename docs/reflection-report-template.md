@@ -201,14 +201,12 @@ Vi ville definitivt brukt BMAD igjen. Strukturen hjalp med å organisere arbeide
 ### 3.1 KI-verktøy brukt i prosjektet
 
 | Verktøy | Bruksområde | Styrker | Svakheter |
-|---------|-------------|---------|-----------|
-| Claude (Sonnet/Opus) | Primær koding, arkitektur, dokumentasjon | Utmerket på kompleks kode, forstår kontekst godt, god på Next.js/React | Kan miste kontekst over lange samtaler |
-| GitHub Copilot | Inline code completion | Rask, integrert i VS Code | Mangler helhetlig forståelse |
+|---|---|---|---|
+| Google Gemini (via CLI) | Primær koding, feilsøking, logikk, verktøybruk | Rask, god på verktøybruk (Tool Use), sterk på trinnvis resonnering | Kan kreve mer spesifikk og strukturert kontekst |
+| Anthropic Claude (Web) | Tekstgenerering, dokumentasjon, arkitektur | Utmerket på lange og kreative tekster, god på å holde en "personlighet" | Tregere på respons, ingen verktøybruk i web-versjon |
+| GitHub Copilot | Inline code completion | Rask, integrert i VS Code | Mangler helhetlig prosjektforståelse |
 
-**Primært verktøy:** Claude ble brukt for ~90% av kodeutviklingen på grunn av:
-- Evne til å forstå hele prosjektkonteksten
-- Konsistent kodestil gjennom prosjektet
-- Utmerket på TypeScript og moderne React-patterns
+**Primære verktøy:** Vi vekslet mellom Google Gemini og Anthropic Claude som våre primære verktøy, avhengig av oppgaven. Gemini ble foretrukket for kodegenerering og logiske problemer, mens Claude ofte ble brukt for å utarbeide lengre tekster og dokumentasjon. Vi estimerer at KI-verktøy samlet sett sto for ~85-90% av den skrevne koden.
 
 ### 3.2 Utviklingsmiljø for KI-assistert utvikling
 
@@ -817,6 +815,37 @@ Lag en AddItemDialog React komponent for Next.js:
 ```
 **Resultat:** Komplett dialog med all funksjonalitet.
 
+**Eksempel 4: Feilsøking av en bug**
+```
+Jeg opplever et problem der bildet i "Recipe Details Modal" er tomt 
+eller ødelagt når jeg klikker på en AI-generert oppskrift.
+
+Vennligst analyser prosjektet for å finne rotårsaken. IKKE rediger
+noen filer ennå, bare forklar hva som er galt.
+
+Sjekk disse spesifikke tingene:
+1. Sjekk `src/lib/googleai.ts`: Hvilken bilde-URL blir tildelt AI-oppskriftene?
+2. Sjekk `next.config.ts`: Er vertsnavnet for bilde-URL-en riktig tillatt i remotePatterns?
+3. Sjekk `src/app/(auth)/recipes/page.tsx`: Hvordan blir bildet gjengitt inne i modalen? Bruker vi Next.js <Image>-komponenten eller en standard <img>-tag?
+
+Basert på koden, hvorfor lastes ikke bildet?
+```
+**Resultat:** KI-en fulgte instruksjonene trinnvis, identifiserte at en standard `<img>`-tag ble brukt i stedet for Next.js sin `<Image>`-komponent, og forklarte korrekt at dette omgår `remotePatterns`-konfigurasjonen og sannsynligvis bryter med sidens Content Security Policy (CSP).
+
+**Eksempel 5: Generering av Dokumentasjon (User Stories)**
+```
+Du er en erfaren produktsjef. Basert på vår `product-brief-ibe160-2025-11-03.md`, generer en "User Stories"-seksjon for vår PRD.
+
+Inkluder minst tre brukerhistorier for hver av disse personaene:
+1.  **Den travle familien:** Ønsker raske, sunne middager og å unngå matsvinn.
+2.  **Studenten på budsjett:** Ønsker billige oppskrifter og å bruke opp alt de kjøper.
+3.  **Den matinteresserte hobbykokken:** Ønsker å eksperimentere med ingrediensene de har.
+
+Formatet for hver user story skal være:
+"Som en [persona], ønsker jeg å [mål], slik at [utbytte]."
+```
+**Resultat:** KI-en genererte en velstrukturert liste med brukerhistorier i korrekt format, tilpasset de ulike personaene, som kunne limes rett inn i prosjektets PRD.
+
 ### C. Prosjektstruktur
 ```
 /
@@ -874,10 +903,15 @@ Lag en AddItemDialog React komponent for Next.js:
 
 ### E. KI-verktøy konfigurasjon
 
-**Claude oppsett:**
-- Brukt via claude.ai web interface
-- Prosjekt-kontekst lagret i Claude Projects
-- Dokumenter fra fase-0 til fase-2 brukt som kontekst
+**Google Gemini CLI oppsett:**
+- Installert via Google Cloud SDK.
+- Kjøres med `gemini` kommandoen i terminalen.
+- Bruker `gcloud auth application-default login` for autentisering.
+
+**Anthropic Claude oppsett:**
+- Brukt via claude.ai web interface.
+- Prosjekt-kontekst lagret i Claude Projects.
+- Dokumenter fra fase-0 til fase-2 brukt som kontekst for å opprettholde samtalehistorikk.
 
 **VS Code settings:**
 ```json
