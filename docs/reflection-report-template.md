@@ -579,17 +579,17 @@ Hva vi ville forbedret med mer tid:
 |------|--------|-----------|-----------|
 | Brukerregistrering og innlogging (FR001) | ✅ | 80% | NextAuth setup, forms, validering |
 | Matvarelager med utløpsdatoer (FR002-004) | ✅ | 90% | Full CRUD, filtering, sorting |
+| Strekkodeskanning | ✅ | 90% | Rask registrering via kamera |
 | Oppskriftssøk (FR006) | ✅ | 85% | Spoonacular integrasjon, caching |
 | Fleksibel matching (FR007) | ✅ | 75% | Matching-algoritme med 🟢🟡⚪ tiers |
 | Handlelistegenerering (FR005) | ✅ | 90% | Diff-logikk, mengdeberegning |
 | Utløpsvarsler (FR009-010) | ✅ | 85% | In-app notifikasjoner |
 
-### 9.2 Phase 2-3 funksjoner (ikke implementert i MVP)
+### 9.2 Phase 2-3 funksjoner
 
 | Funksjon | Status | Kommentar |
 |----------|--------|-----------|
-| Strekkodeskanning | ❌ | Planlagt Phase 2 |
-| AI-søk | ❌ | Planlagt Phase 2 |
+| AI-drevet semantisk søk | ✅ | Implementert i `src/app/api/ai/search` |
 | Ernæringsanalyse | ❌ | Planlagt Phase 2 |
 | Husholdningsdeling | ❌ | Planlagt Phase 3 |
 | Gamification | ❌ | Planlagt Phase 3 |
