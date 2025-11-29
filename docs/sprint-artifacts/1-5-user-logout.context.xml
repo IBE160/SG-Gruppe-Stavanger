@@ -28,11 +28,10 @@
   </story>
 
   <acceptanceCriteria>
-1.  **Given** I am logged in
-2.  **When** I click the logout button
-3.  **Then** I am logged out and redirected to the landing page.
+  1. A logged-in user can trigger a logout action from the UI. (AC: #1)
+  2. When logout is triggered, the user's session is terminated securely on the server. (AC: #2)
+  3. Upon successful logout, the user is redirected to the public landing page. (AC: #3)
   </acceptanceCriteria>
-
   <artifacts>
     <docs>
         <doc>
@@ -82,18 +81,21 @@ The Minimum Viable Product (MVP) will include the following core functionalities
             <path>lib/auth.ts</path>
             <kind>service</kind>
             <symbol>NextAuth</symbol>
+            <line-hints>1, 46</line-hints>
             <reason>This file likely contains the NextAuth.js configuration, including providers and callbacks.</reason>
         </file>
         <file>
             <path>app/api/auth/[...nextauth]/route.ts</path>
             <kind>api-route</kind>
             <symbol>NextAuth</symbol>
+            <line-hints>1, 3, 5</line-hints>
             <reason>This is the dynamic API route that NextAuth.js uses to handle all authentication requests (including sign out).</reason>
         </file>
         <file>
             <path>lib/supabaseClient.ts</path>
             <kind>service</kind>
             <symbol>supabase</symbol>
+            <line-hints>6</line-hints>
             <reason>Contains the Supabase client initialization, which may be needed for server-side logout actions.</reason>
         </file>
     </code>

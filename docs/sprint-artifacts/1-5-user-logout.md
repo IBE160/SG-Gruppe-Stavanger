@@ -1,6 +1,6 @@
 # Story 1.5: User Logout
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 

@@ -57,7 +57,7 @@
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
       - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
-    - [ ] epic 1 story
+    - [x] epic 1 story
       - [x] File: validation-report-2025-11-28_20-00-00-.md (for epic 1)
       - [ ] File: validation-report{{epic_2}}.md
       - [ ] File: validation-report{{epic_3}}.md
@@ -79,7 +79,7 @@
       - [ ] File: validation-report{{epic_2}}.md
     - foreach story in epic:
       - [ ] /run-agent-task sm *create-story {prompt / user-input-file}
-      - [ ] Epic 1 story
+      - [x] Epic 1 story
         - [x] File: sprint-artifacts/1-1-project-initialization.md
         - [x] File: sprint-artifacts/1-2-database-setup.md
         - [x] File: sprint-artifacts/1-3-user-registration.md
@@ -105,12 +105,12 @@
         - [ ] File: sprint-artifacts/{{story_key}}.md
       - [ ] /run-agent-task sm *validate-create-story {prompt / user-input-file}
       - [ ] /run-agent-task sm *create-story-context {prompt / user-input-file}
-      - [ ] Epic 1 context
+      - [x] Epic 1 context
         - [x] File: sprint-artifacts/1-1-project-initialization.context.xml
         - [x] File: sprint-artifacts/1-2-database-setup.context.xml
         - [x] File: sprint-artifacts/1-3-user-registration.context.xml
         - [x] File: sprint-artifacts/1-4-user-login.context.xml
-        - [ ] File: sprint-artifacts/1-5-user-logout.context.xml
+        - [x] File: sprint-artifacts/1-5-user-logout.context.xml
       - [ ] Epic 2 context
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
