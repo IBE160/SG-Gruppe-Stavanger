@@ -45,7 +45,7 @@ development_status:
     epic-2: contexted
   2-1-add-food-item: ready-for-dev
   2-2-view-inventory: drafted
-  2-3-edit-food-item: drafted
+  2-3-edit-food-item: ready-for-dev
   2-4-delete-food-item: backlog
   epic-2-retrospective: optional
   epic-3: backlog

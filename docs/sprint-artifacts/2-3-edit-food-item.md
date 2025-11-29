@@ -1,6 +1,6 @@
 # Story 2.3: Edit Food Item
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -52,11 +52,15 @@ so that I can correct or update information.
 - **Architecture Guide:** `docs/architecture.md#api-pattern`
 - **PRD / Functional Requirement:** `docs/PRD.md#fr23---edit-food-item`
 
+## Change Log
+
+- **2025-11-29:** Initial draft created by the Scrum Master agent.
+
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- `docs/sprint-artifacts/2-3-edit-food-item.context.xml`
 
 ### Agent Model Used
 

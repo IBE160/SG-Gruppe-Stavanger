@@ -88,7 +88,7 @@
       - [ ] Epic 2 story
         - [x] File: sprint-artifacts/2-1-add-food-item.md
         - [x] File: sprint-artifacts/2-2-view-inventory.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
+        - [x] File: sprint-artifacts/2-3-edit-food-item.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
       - [ ] Epic 3 story
