@@ -55,7 +55,7 @@
       - [x] File: sprint-artifacts/tech-spec-epic-1.md
       - [x] File: sprint-artifacts/tech-spec-epic-2.md
       - [x] File: sprint-artifacts/tech-spec-epic-3.md
-      - [ ] File: sprint-artifacts/tech-spec-epic-{{epic_id}}.md
+      - [x] File: sprint-artifacts/tech-spec-epic-4.md
     - [ ] /run-agent-task sm validate-epic-tech-context {prompt / user-input-file}
     - [x] epic 1 story
       - [x] File: validation-report-2025-11-28_20-00-00-.md (for epic 1)
@@ -94,7 +94,7 @@
         - [x] File: sprint-artifacts/3-1-search-recipes.md
         - [x] File: sprint-artifacts/3-2-view-recipe-details.md
       - [ ] Epic 4 story
-        - [ ] File: sprint-artifacts/{{story_key}}.md
+        - [ ] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md

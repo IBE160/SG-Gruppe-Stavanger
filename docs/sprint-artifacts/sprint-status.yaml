@@ -53,7 +53,7 @@ development_status:
   3-2-view-recipe-details: ready-for-dev
   epic-3-retrospective: optional
   epic-4: contexted
-  4-1-get-smart-recipe-suggestions: backlog
+  4-1-get-smart-recipe-suggestions: drafted
   4-2-mark-recipe-as-cooked-and-deduct-inventory: backlog
   4-3-expiration-alerts: backlog
   4-4-instant-idea-generation: backlog
