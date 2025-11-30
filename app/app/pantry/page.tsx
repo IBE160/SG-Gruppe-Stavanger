@@ -6,22 +6,17 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AddFoodItemForm } from '@/components/pantry/AddFoodItemForm';
-
-type FoodItem = {
-  id: string;
-  name: string;
-  category: string;
-  bestBeforeDate: string;
-  quantity: number;
-  unit: string;
-  createdAt: string;
-};
+import { PantryShelf } from '@/components/pantry/PantryShelf';
+import { SortControls, SortField, SortOrder } from '@/components/pantry/SortControls';
+import { FoodItem } from '@/components/pantry/IngredientIcon';
 
 export default function PantryPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState<SortField>('createdAt');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -29,10 +24,18 @@ export default function PantryPage() {
     }
   }, [status, router]);
 
-  const fetchFoodItems = async () => {
+  const fetchFoodItems = async (sortField?: SortField, sortDirection?: SortOrder) => {
     try {
       setLoading(true);
-      const response = await fetch('/api/inventory');
+      const field = sortField || sortBy;
+      const direction = sortDirection || sortOrder;
+
+      const params = new URLSearchParams({
+        sortBy: field,
+        sortOrder: direction,
+      });
+
+      const response = await fetch(`/api/inventory?${params}`);
       if (response.ok) {
         const data = await response.json();
         setFoodItems(data.foodItems || []);
@@ -51,23 +54,22 @@ export default function PantryPage() {
   }, [session]);
 
   const handleAddSuccess = () => {
-    // Refresh the food items list
     fetchFoodItems();
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+  const handleSortChange = (newSortBy: SortField, newSortOrder: SortOrder) => {
+    setSortBy(newSortBy);
+    setSortOrder(newSortOrder);
+    fetchFoodItems(newSortBy, newSortOrder);
   };
 
   if (status === 'loading' || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-light-beige">
-        <p className="text-charcoal">Loading...</p>
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-green" />
+          <p className="text-charcoal">Loading your pantry...</p>
+        </div>
       </div>
     );
   }
@@ -77,72 +79,49 @@ export default function PantryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-light-beige p-8">
-      <div className="mx-auto max-w-6xl space-y-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-bold text-charcoal">My Pantry</h1>
-          <div className="flex gap-4">
+    <div className="min-h-screen bg-light-beige p-4 sm:p-8">
+      <div className="mx-auto max-w-7xl space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-charcoal">My Pantry</h1>
+            <p className="text-sm text-charcoal/70 mt-1">
+              Manage your food inventory and reduce waste
+            </p>
+          </div>
+          <div className="flex gap-3 w-full sm:w-auto">
             <AddFoodItemForm onSuccess={handleAddSuccess} />
             <Button
               onClick={() => signOut({ callbackUrl: '/login' })}
               variant="outline"
-              className="text-charcoal"
+              className="text-charcoal border-charcoal/20 hover:bg-charcoal/5"
             >
               Sign Out
             </Button>
           </div>
         </div>
 
-        <Card className="bg-white shadow-farmhouse">
-          <CardHeader>
-            <CardTitle className="text-charcoal">Open Shelves</CardTitle>
-            <CardDescription className="text-sage-green">
-              View and manage your food inventory
-            </CardDescription>
+        {/* Main Content Card */}
+        <Card className="bg-white shadow-farmhouse border-sage-green/20">
+          <CardHeader className="border-b border-sage-green/10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <CardTitle className="text-2xl text-charcoal">Open Shelves</CardTitle>
+                <CardDescription className="text-sage-green mt-1">
+                  {foodItems.length} {foodItems.length === 1 ? 'item' : 'items'} in your inventory
+                </CardDescription>
+              </div>
+              {foodItems.length > 0 && (
+                <SortControls
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                  onSortChange={handleSortChange}
+                />
+              )}
+            </div>
           </CardHeader>
-          <CardContent>
-            {foodItems.length === 0 ? (
-              <div className="rounded-lg bg-light-beige p-8 text-center">
-                <p className="text-charcoal">
-                  Your pantry is empty. Click "Add Item" to start tracking your food inventory.
-                </p>
-              </div>
-            ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {foodItems.map((item) => (
-                  <Card key={item.id} className="border-sage-green/20">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg text-charcoal">
-                        {item.name}
-                      </CardTitle>
-                      <CardDescription className="text-sage-green">
-                        {item.category}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-charcoal/70">Quantity:</span>
-                        <span className="font-medium text-charcoal">
-                          {item.quantity} {item.unit}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-charcoal/70">Best Before:</span>
-                        <span className="font-medium text-charcoal">
-                          {formatDate(item.bestBeforeDate)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-charcoal/70">Added:</span>
-                        <span className="font-medium text-charcoal">
-                          {formatDate(item.createdAt)}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+          <CardContent className="pt-6">
+            <PantryShelf foodItems={foodItems} />
           </CardContent>
         </Card>
       </div>

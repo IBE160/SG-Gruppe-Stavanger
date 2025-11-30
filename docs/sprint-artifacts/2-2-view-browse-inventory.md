@@ -1,6 +1,6 @@
 # Story 2.2: View & Browse Inventory
 
-Status: pending
+Status: completed
 
 ## Story
 
@@ -112,14 +112,50 @@ This story depends on Story 2.1 for the FoodItem database model and potentially 
 ### Debug Log References
 
 ### Completion Notes
-**Completed:**
+**Completed:** 2025-11-30
 **Definition of Done:** All acceptance criteria met, code reviewed, tests passing
 
 ### Completion Notes List
 
+- Enhanced API route `/api/inventory` with sorting support (sortBy and sortOrder query parameters)
+- Created `IngredientIcon` component with visual freshness indicators:
+  - Color-coded expiration status (fresh, soon, expiring, expired)
+  - Visual states for normal, expiring, and selected items
+  - Accessibility features (ARIA labels, keyboard navigation)
+- Created `PantryShelf` component implementing "Open Shelves" layout:
+  - Responsive grid layout adapting to screen sizes
+  - Empty state handling with visual feedback
+  - Item selection support
+- Created `SortControls` component with:
+  - Dropdown for sort field selection (name, category, bestBeforeDate, createdAt)
+  - Dropdown for sort order (ascending/descending)
+  - Accessible form controls
+- Refactored Pantry page with:
+  - Integration of all new components
+  - Dynamic sorting functionality
+  - Improved loading states
+  - Enhanced responsive design
+  - "Farmhouse Kitchen" aesthetic throughout
+- Added shadcn/ui Select component as dependency
+
 ### File List
 *   `docs/sprint-artifacts/2-2-view-browse-inventory.md` (created)
+*   `app/api/inventory/route.ts` (modified - added sorting support)
+*   `components/pantry/IngredientIcon.tsx` (created)
+*   `components/pantry/PantryShelf.tsx` (created)
+*   `components/pantry/SortControls.tsx` (created)
+*   `app/pantry/page.tsx` (modified - enhanced with new components)
+*   `components/ui/select.tsx` (added via shadcn)
 
 ### Change Log
 
 - Initialized: 2025-11-30
+- Completed: 2025-11-30
+  - All acceptance criteria met:
+    ✓ Pantry route accessible to authenticated users
+    ✓ Visual "Open Shelves" layout implemented
+    ✓ Food items display name, quantity, and freshness status
+    ✓ Responsive design for desktop, tablet, and mobile
+    ✓ Sorting by multiple criteria (name, category, bestBeforeDate, createdAt)
+    ✓ "Farmhouse Kitchen" aesthetic applied
+    ✓ Accessibility standards met (ARIA labels, keyboard navigation)

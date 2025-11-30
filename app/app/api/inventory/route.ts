@@ -17,17 +17,29 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Fetch all food items for the authenticated user
+    // Get sorting parameters from query string
+    const { searchParams } = new URL(request.url);
+    const sortBy = searchParams.get('sortBy') || 'createdAt';
+    const sortOrder = searchParams.get('sortOrder') || 'desc';
+
+    // Validate sort parameters
+    const validSortFields = ['name', 'category', 'bestBeforeDate', 'createdAt'];
+    const validSortOrders = ['asc', 'desc'];
+
+    const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
+    const sortDirection = validSortOrders.includes(sortOrder) ? sortOrder : 'desc';
+
+    // Fetch all food items for the authenticated user with sorting
     const foodItems = await prisma.foodItem.findMany({
       where: {
         userId: session.user.id,
       },
       orderBy: {
-        createdAt: 'desc',
+        [sortField]: sortDirection,
       },
     });
 
-    logger.info(`Fetched ${foodItems.length} food items for user: ${session.user.id}`);
+    logger.info(`Fetched ${foodItems.length} food items for user: ${session.user.id} (sorted by ${sortField} ${sortDirection})`);
 
     return NextResponse.json(
       {
