@@ -25,58 +25,58 @@ so that I can find meal ideas.
 ## Tasks / Subtasks
 
 -   **Frontend Development:**
-    -   [ ] **Create Recipes Page Layout:**
+    -   [ ] **Create Recipes Page Layout (AC: #1, #2, #11):**
         -   [ ] Implement `app/(main)/recipes/page.tsx` and `layout.tsx` (or modify existing `layout.tsx`).
         -   [ ] Ensure `page.tsx` includes a search input field and an area for displaying recipe results.
         -   [ ] Implement responsive design using Tailwind CSS and shadcn/ui components.
-    -   [ ] **Implement Search Input Component:**
+    -   [ ] **Implement Search Input Component (AC: #3, #4):**
         -   [ ] Create a reusable `SearchInput` component (e.g., in `components/common/SearchInput.tsx`).
         -   [ ] Integrate the `SearchInput` component into the recipes page.
         -   [ ] Implement client-side state management for the search query using React Hooks.
-    -   [ ] **Implement Recipe Card Component:**
+    -   [ ] **Implement Recipe Card Component (AC: #6):**
         -   [ ] Create `components/specific/RecipeCard.tsx` to display recipe image, title, and cooking time.
         -   [ ] Ensure `RecipeCard` adheres to UX design principles (e.g., visual style, responsiveness).
-    -   [ ] **Integrate Client-Side Data Fetching (React Query/SWR):**
+    -   [ ] **Integrate Client-Side Data Fetching (React Query/SWR) (AC: #4, #5, #7):**
         -   [ ] Use `React Query` (or `SWR`) for efficient client-side data fetching from `/api/recipes/search`.
         -   [ ] Implement `loading` and `error` states for the recipe results display.
         -   [ ] Handle debouncing of search input to optimize API calls.
-    -   [ ] **Display Search Results:**
+    -   [ ] **Display Search Results (AC: #6):**
         -   [ ] Map fetched recipe data to `RecipeCard` components for display.
         -   [ ] Implement pagination or infinite scroll if needed (consider scope for MVP).
-    -   [ ] **Handle Empty States and Errors:**
+    -   [ ] **Handle Empty States and Errors (AC: #8, #9):**
         -   [ ] Display "No results found" message when appropriate.
         -   [ ] Show user-friendly error messages for API failures.
 
 -   **Backend Development (Next.js API Route):**
-    -   [ ] **Create API Route for Recipe Search:**
+    -   [ ] **Create API Route for Recipe Search (AC: #5):**
         -   [ ] Implement `app/api/recipes/search/route.ts`.
         -   [ ] Ensure the route handles `GET` requests with a `query` parameter.
-    -   [ ] **Integrate with Spoonacular API:**
+    -   [ ] **Integrate with Spoonacular API (AC: #5, #8):**
         -   [ ] Use the standard `fetch` API within the API route to call the Spoonacular API.
         -   [ ] Implement secure handling of the Spoonacular API key (environment variables).
         -   [ ] Map Spoonacular API response to a consistent JSON format with `camelCase` keys.
         -   [ ] Implement basic error handling for Spoonacular API calls.
-    -   [ ] **Implement API Response Formatting:**
+    -   [ ] **Implement API Response Formatting (AC: #5, #6):**
         -   [ ] Ensure consistent JSON structure for API responses (`data` for success, `error` for errors).
         -   [ ] Use `camelCase` for all JSON keys.
         -   [ ] Validate API request and response schemas (e.g., using Zod).
-    -   [ ] **Performance Considerations:**
+    -   [ ] **Performance Considerations (AC: #7):**
         -   [ ] Implement caching within the API route for frequently searched terms to reduce Spoonacular API calls and improve performance.
         -   [ ] Consider Vercel Edge Caching configuration for the API route.
 
 -   **Testing:**
-    -   [ ] **Unit Tests:**
+    -   [ ] **Unit Tests (AC: #3, #6):**
         -   [ ] Write unit tests for `SearchInput` component.
         -   [ ] Write unit tests for `RecipeCard` component.
         -   [ ] Write unit tests for any utility functions created (e.g., API response parsing).
-    -   [ ] **Integration Tests:**
+    -   [ ] **Integration Tests (AC: #5, #8):**
         -   [ ] Write integration tests for `app/api/recipes/search/route.ts` to mock Spoonacular API and verify response.
         -   [ ] Write integration tests for the client-side data fetching logic.
-    -   [ ] **End-to-End (E2E) Tests:**
+    -   [ ] **End-to-End (E2E) Tests (AC: #1, #2, #3, #4, #6, #8, #9):**
         -   [ ] Write E2E tests using `Playwright` or `Cypress` for the entire search flow: navigating to recipes page, typing a query, verifying results display, and error handling.
-    -   [ ] **Performance Testing:**
+    -   [ ] **Performance Testing (AC: #7):**
         -   [ ] Verify search performance is under 1 second under various network conditions.
-    -   [ ] **Accessibility Testing:**
+    -   [ ] **Accessibility Testing (AC: #10):**
         -   [ ] Perform automated and manual accessibility checks for WCAG 2.1 AA compliance.
 
 -   **Documentation:**
@@ -166,7 +166,11 @@ As a user, I want to search for recipes, so that I can find meal ideas.
 
 ### References
 
-- Cite all technical details with source paths and sections, e.g. [Source: docs/<file>.md#Section]
+- [Source: `docs/sprint-artifacts/tech-spec-epic-3.md`](docs/sprint-artifacts/tech-spec-epic-3.md)
+- [Source: `docs/epics.md`](docs/epics.md)
+- [Source: `docs/PRD.md`](docs/PRD.md)
+- [Source: `docs/architecture.md`](docs/architecture.md)
+- [Source: `docs/ux-design-specification.md`](docs/ux-design-specification.md)
 
 ## Dev Agent Record
 
@@ -183,3 +187,8 @@ Gemini 2.5 Pro and Flesh (in #yolo mode)
 ### Completion Notes List
 
 ### File List
+
+## Change Log
+
+- **2025-11-30:** Initial draft created by agent.
+- **2025-11-30:** Corrected by agent based on validation report: Added task-AC mapping, populated references, and added this change log.

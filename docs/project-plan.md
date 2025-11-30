@@ -91,7 +91,7 @@
         - [x] File: sprint-artifacts/2-3-edit-food-item.md
         - [x] File: sprint-artifacts/2-4-delete-food-item.md
       - [ ] Epic 3 story
-        - [ ] File: sprint-artifacts/{{story_key}}.md
+        - [ ] File: sprint-artifacts/3-1-search-recipes.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
