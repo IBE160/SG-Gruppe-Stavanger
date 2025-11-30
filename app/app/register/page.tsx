@@ -20,7 +20,7 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   const validateEmail = (email: string) => {
     if (!email) {
@@ -41,7 +41,7 @@ export default function RegisterPage() {
       return false;
     }
     if (!passwordRegex.test(password)) {
-      setPasswordError('Password must be at least 8 characters with uppercase, lowercase, number, and special character.');
+      setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.');
       return false;
     }
     setPasswordError('');
@@ -112,7 +112,10 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="m@example.com"
                 value={email}
-                onChange={(e) => { setEmail(e.target.value); validateEmail(e.target.value); }}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (emailError) setEmailError(''); // Clear error on change
+                }}
                 className="border-2 border-sage-green focus:border-terracotta"
               />
               {emailError && <p className="text-terracotta text-sm">{emailError}</p>}
@@ -123,10 +126,16 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); validatePassword(e.target.value); }}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (passwordError) setPasswordError(''); // Clear error on change
+                }}
                 className="border-2 border-sage-green focus:border-terracotta"
               />
               {passwordError && <p className="text-terracotta text-sm">{passwordError}</p>}
+              <p className="text-xs text-sage-green">
+                Password must be at least 8 characters with uppercase, lowercase, number, and special character (@$!%*?&).
+              </p>
             </div>
             {error && <p className="text-terracotta text-sm">{error}</p>}
             {success && <p className="text-sage-green text-sm">{success}</p>}
