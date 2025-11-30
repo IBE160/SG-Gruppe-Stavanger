@@ -1,0 +1,266 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-2</epicId>
+    <storyId>2.1</storyId>
+    <title>Add Food Item to Inventory</title>
+    <status>Pending</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-1-add-food-item-to-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>add food items to my inventory with relevant details,</iWant>
+    <soThat>I can track what food I have available in my kitchen.</soThat>
+    <tasks>
+- [ ] **Create FoodItem Database Model (AC: Database schema ready)**
+  - [ ] Add `FoodItem` model to `schema.prisma`
+  - [ ] Define fields: `id`, `name`, `category`, `bestBeforeDate`, `quantity`, `unit`, `userId`, `createdAt`
+  - [ ] Create relation to `User` model
+  - [ ] Run `npx prisma db push` to synchronize schema with Supabase
+  - [ ] **Testing:** Verify `FoodItem` table creation in Supabase
+- [ ] **Implement Add Food Item API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/inventory/add` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Implement server-side validation for all fields
+  - [ ] Implement Prisma mutation to create new FoodItem
+  - [ ] Return appropriate success/error responses
+  - [ ] **Testing:** Unit test API route with valid/invalid data
+- [ ] **Create AddFoodItemForm Component (AC: Form UI complete)**
+  - [ ] Create `AddFoodItemForm` client component using shadcn/ui Dialog
+  - [ ] Implement form fields for name, category, bestBeforeDate, quantity, unit
+  - [ ] Add client-side validation
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design and accessibility
+  - [ ] **Testing:** Render form and verify all fields are present
+- [ ] **Implement Form Submission Logic (AC: Form submits data)**
+  - [ ] Connect form to POST `/api/inventory/add` endpoint
+  - [ ] Handle success response (close form, show feedback)
+  - [ ] Handle error response (display error message)
+  - [ ] Implement optimistic UI update for Pantry View
+  - [ ] **Testing:** E2E test adding a food item through the UI
+- [ ] **Add "Add Item" Trigger to Pantry View (AC: User can access form)**
+  - [ ] Add grocery bag icon or "Add Item" button to Pantry View
+  - [ ] Connect button to open `AddFoodItemForm`
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Verify button opens form when clicked
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in and on the "My Pantry" view,
+*   **When** I initiate the "Add Food Item" flow (e.g., by clicking a grocery bag icon or "Add Item" button),
+*   **And** I provide the food item's name, quantity, unit, category, and a best-before date,
+*   **And** I submit the form,
+*   **Then** the food item is successfully added to my inventory and displayed in the "Open Shelves" view.
+*   **And** the "Add Food Item" interaction is smooth and delightful, adhering to UX principles.
+*   **And** input validation is performed for all fields (client-side and server-side).
+*   **And** the UI reflects the "Farmhouse Kitchen" aesthetic using shadcn/ui components styled appropriately.
+*   **And** the form is responsive and accessible (WCAG 2.1 AA).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-002.1</section>
+        <snippet>Users can manually add food items with quantities and expiration dates.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Data Model - FoodItem</section>
+        <snippet>Defines the FoodItem entity with fields: id, name, category, bestBeforeDate, quantity, unit, userId, createdAt.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>APIs and Interfaces - POST /api/inventory/add</section>
+        <snippet>Defines the request/response contract for adding food items, including validation rules and error handling.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Workflows and Sequencing - Add Food Item Workflow</section>
+        <snippet>Details the complete user flow and system interactions for adding a food item, from UI trigger to database persistence.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library</section>
+        <snippet>Guidance on using shadcn/ui components for forms, dialogs, and input elements with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>prisma/schema.prisma</path>
+        <kind>schema</kind>
+        <symbol>FoodItem</symbol>
+        <reason>Database model definition for food items</reason>
+      </entry>
+      <entry>
+        <path>app/api/inventory/add/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Backend endpoint for adding food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/AddFoodItemForm.tsx</path>
+        <kind>client component</kind>
+        <symbol>AddFoodItemForm</symbol>
+        <reason>Form UI for adding food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/KitchenObjectNav.tsx</path>
+        <kind>client component</kind>
+        <symbol>KitchenObjectNav</symbol>
+        <reason>Navigation component with add item trigger</reason>
+      </entry>
+      <entry>
+        <path>app/pantry/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>PantryView</symbol>
+        <reason>Main pantry view page</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Form Validation">
+        <package name="zod" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All inventory API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Both client-side and server-side validation must be implemented.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Food items must be associated with the authenticated user via userId.</rule>
+      <source>Epic 2 Tech Spec - Data Models</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Form must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement optimistic UI updates with rollback on server failure.</rule>
+      <source>Epic 2 Tech Spec - Reliability</source>
+    </entry>
+    <entry>
+      <rule>API response time should be within 300ms under typical load.</rule>
+      <source>Epic 2 Tech Spec - Performance</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>FoodItem Model (Prisma)</name>
+      <kind>Prisma Schema</kind>
+      <signature>
+model FoodItem {
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  bestBeforeDate  DateTime
+  quantity        Float
+  unit            String
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+}
+      </signature>
+      <path>prisma/schema.prisma</path>
+    </entry>
+    <entry>
+      <name>POST /api/inventory/add</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "name": "string",
+  "category": "string",
+  "bestBeforeDate": "string (ISO 8601)",
+  "quantity": "number",
+  "unit": "string"
+}
+
+Response (200 OK):
+{
+  "message": "Food item added successfully",
+  "foodItem": { ...FoodItem }
+}
+
+Response (400 Bad Request):
+{
+  "error": "string"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/inventory/add/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation logic, form validation functions, and Prisma data access methods. Integration Tests will focus on API routes with database interactions and authentication flow. End-to-End (E2E) Tests will simulate the complete user flow from clicking add button to seeing the new item in pantry. UI/UX Tests will verify visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA).
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Database schema ready</id>
+        <description>Verify FoodItem table creation in Supabase with correct fields and relations.</description>
+      </entry>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/inventory/add with valid and invalid data, verify authentication, authorization, and database persistence.</description>
+      </entry>
+      <entry>
+        <id>AC: Form UI complete</id>
+        <description>Render AddFoodItemForm and verify all fields present, styled correctly, responsive, and accessible.</description>
+      </entry>
+      <entry>
+        <id>AC: Form submits data</id>
+        <description>E2E test: Fill form, submit, verify item appears in pantry and database.</description>
+      </entry>
+      <entry>
+        <id>AC: Validation performed</id>
+        <description>Test with missing/invalid fields, verify client and server validation error messages.</description>
+      </entry>
+      <entry>
+        <id>AC: Optimistic UI</id>
+        <description>Test optimistic update and rollback on server error.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

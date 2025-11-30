@@ -1,0 +1,276 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-2</epicId>
+    <storyId>2.3</storyId>
+    <title>Edit Food Item in Inventory</title>
+    <status>Pending</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-3-edit-food-item-in-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>edit existing food items in my inventory,</iWant>
+    <soThat>I can keep my inventory information accurate and up-to-date.</soThat>
+    <tasks>
+- [ ] **Implement Edit Food Item API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/inventory/[id]` PUT endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Implement server-side validation for all fields
+  - [ ] Verify food item exists and belongs to authenticated user
+  - [ ] Implement Prisma mutation to update FoodItem
+  - [ ] Return appropriate success/error responses (404, 403, 400)
+  - [ ] **Testing:** Unit test API route with valid/invalid data and authorization
+- [ ] **Create EditFoodItemForm Component (AC: Form UI complete)**
+  - [ ] Create `EditFoodItemForm` client component using shadcn/ui Dialog
+  - [ ] Implement form fields for name, category, bestBeforeDate, quantity, unit
+  - [ ] Pre-populate form with current item data
+  - [ ] Add client-side validation
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design and accessibility
+  - [ ] **Testing:** Render form with item data, verify fields are pre-populated
+- [ ] **Add Edit Trigger to IngredientIcon (AC: User can access edit)**
+  - [ ] Add edit action to IngredientIcon component (e.g., click or edit button)
+  - [ ] Connect trigger to open EditFoodItemForm with selected item
+  - [ ] Ensure accessibility (keyboard navigation, aria-labels)
+  - [ ] **Testing:** Verify clicking item opens edit form
+- [ ] **Implement Form Submission Logic (AC: Form updates data)**
+  - [ ] Connect form to PUT `/api/inventory/[id]` endpoint
+  - [ ] Handle success response (close form, show feedback)
+  - [ ] Handle error response (display error message)
+  - [ ] Implement optimistic UI update for Pantry View
+  - [ ] Implement rollback on server error
+  - [ ] **Testing:** E2E test editing a food item through the UI
+- [ ] **Add Authorization Checks (AC: Security enforced)**
+  - [ ] Verify user can only edit their own food items
+  - [ ] Handle 403 Forbidden response appropriately
+  - [ ] **Testing:** Test editing another user's item (should fail)
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am viewing a food item in my "My Pantry" inventory,
+*   **When** I select an item for editing (e.g., click on it or click an "Edit" icon),
+*   **And** I modify its name, quantity, unit, category, or best-before date,
+*   **And** I save the changes,
+*   **Then** the food item's details are updated in my inventory and the UI reflects these changes immediately.
+*   **And** input validation is performed for modified fields.
+*   **And** the edit interaction is smooth and uses the "Farmhouse Kitchen" themed UI components.
+*   **And** the form is responsive and accessible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-002.2</section>
+        <snippet>Users can view, edit, and delete items from their pantry or fridge.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Data Model - FoodItem</section>
+        <snippet>Defines the FoodItem entity with updatable fields.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>APIs and Interfaces - PUT /api/inventory/[id]</section>
+        <snippet>Defines the request/response contract for updating food items, including authorization and error handling.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Workflows and Sequencing - Edit Food Item Workflow</section>
+        <snippet>Details the complete user flow and system interactions for editing a food item, including authorization checks.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library</section>
+        <snippet>Guidance on using shadcn/ui components for forms and dialogs with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/api/inventory/[id]/route.ts</path>
+        <kind>api route</kind>
+        <symbol>PUT handler</symbol>
+        <reason>Backend endpoint for updating food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/EditFoodItemForm.tsx</path>
+        <kind>client component</kind>
+        <symbol>EditFoodItemForm</symbol>
+        <reason>Form UI for editing food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/IngredientIcon.tsx</path>
+        <kind>client component</kind>
+        <symbol>IngredientIcon</symbol>
+        <reason>Food item visualization with edit trigger</reason>
+      </entry>
+      <entry>
+        <path>app/pantry/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>PantryView</symbol>
+        <reason>Main pantry view integrating edit functionality</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Form Validation">
+        <package name="zod" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All inventory API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Users must only be able to edit their own food items (authorization check).</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Both client-side and server-side validation must be implemented.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Return 404 if food item not found, 403 if unauthorized, 400 for validation errors.</rule>
+      <source>Epic 2 Tech Spec - APIs</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Form must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement optimistic UI updates with rollback on server failure.</rule>
+      <source>Epic 2 Tech Spec - Reliability</source>
+    </entry>
+    <entry>
+      <rule>API response time should be within 300ms under typical load.</rule>
+      <source>Epic 2 Tech Spec - Performance</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>PUT /api/inventory/[id]</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "name": "string (optional)",
+  "category": "string (optional)",
+  "bestBeforeDate": "string (ISO 8601, optional)",
+  "quantity": "number (optional)",
+  "unit": "string (optional)"
+}
+
+Response (200 OK):
+{
+  "message": "Food item updated successfully",
+  "foodItem": { ...FoodItem }
+}
+
+Response (400 Bad Request):
+{
+  "error": "string" // e.g., "Invalid input", "No fields to update"
+}
+
+Response (404 Not Found):
+{
+  "error": "Food item not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (403 Forbidden):
+{
+  "error": "Access denied"
+}
+      </signature>
+      <path>app/api/inventory/[id]/route.ts</path>
+    </entry>
+    <entry>
+      <name>EditFoodItemForm Component Props</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+interface EditFoodItemFormProps {
+  item: FoodItem
+  onClose: () => void
+  onSuccess: (updatedItem: FoodItem) => void
+}
+      </signature>
+      <path>components/pantry/EditFoodItemForm.tsx</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation and authorization logic, form validation functions, and Prisma data access methods. Integration Tests will focus on API routes with database interactions and authentication/authorization flow. End-to-End (E2E) Tests will simulate the complete user flow from clicking an item to editing and seeing updated data. Security Tests will verify users cannot edit others' items. UI/UX Tests will verify visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA).
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test PUT /api/inventory/[id] with valid and invalid data, verify authentication, authorization, and database update.</description>
+      </entry>
+      <entry>
+        <id>AC: Form UI complete</id>
+        <description>Render EditFoodItemForm with item data, verify all fields are pre-populated and editable.</description>
+      </entry>
+      <entry>
+        <id>AC: User can access edit</id>
+        <description>UI test: Click item in pantry, verify edit form opens with correct item data.</description>
+      </entry>
+      <entry>
+        <id>AC: Form updates data</id>
+        <description>E2E test: Edit item fields, submit, verify changes in database and UI.</description>
+      </entry>
+      <entry>
+        <id>AC: Validation performed</id>
+        <description>Test with invalid edits, verify client and server validation error messages.</description>
+      </entry>
+      <entry>
+        <id>AC: Authorization enforced</id>
+        <description>Security test: Attempt to edit another user's item, verify 403 Forbidden response.</description>
+      </entry>
+      <entry>
+        <id>AC: Optimistic UI</id>
+        <description>Test optimistic update and rollback on server error.</description>
+      </entry>
+      <entry>
+        <id>AC: Item not found</id>
+        <description>Test editing non-existent item ID, verify 404 response.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

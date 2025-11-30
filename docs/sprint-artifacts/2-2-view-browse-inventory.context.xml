@@ -1,0 +1,291 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-2</epicId>
+    <storyId>2.2</storyId>
+    <title>View &amp; Browse Inventory</title>
+    <status>Pending</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-2-view-browse-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>view and browse my food inventory in a visual "Open Shelves" layout,</iWant>
+    <soThat>I can easily see what food I have available and manage my kitchen efficiently.</soThat>
+    <tasks>
+- [ ] **Create Pantry View Page (AC: Pantry route exists)**
+  - [ ] Create `/app/pantry/page.tsx` server component
+  - [ ] Implement authentication check and redirect if not logged in
+  - [ ] Set up basic page layout with "Farmhouse Kitchen" styling
+  - [ ] **Testing:** Verify route is accessible to authenticated users
+- [ ] **Implement Inventory Fetching API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/inventory` GET endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Implement Prisma query to fetch user's food items
+  - [ ] Add support for sortBy and sortOrder query parameters
+  - [ ] Return food items array in JSON format
+  - [ ] **Testing:** Unit test API route with different sort parameters
+- [ ] **Create PantryShelf Component (AC: Visual layout complete)**
+  - [ ] Create `PantryShelf` client component
+  - [ ] Implement "Open Shelves" layout design
+  - [ ] Handle responsive layout for different screen sizes
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Render component with mock data, verify layout
+- [ ] **Create IngredientIcon Component (AC: Food item visualization)**
+  - [ ] Create `IngredientIcon` client component
+  - [ ] Implement visual states: normal, expiring soon, selected
+  - [ ] Display item name, quantity, and unit
+  - [ ] Add freshness/expiration visual indicator
+  - [ ] Ensure accessibility (aria-labels, keyboard navigation)
+  - [ ] **Testing:** Render component in different states
+- [ ] **Integrate Data Fetching and Display (AC: Items displayed)**
+  - [ ] Fetch food items in Pantry View server component
+  - [ ] Pass data to PantryShelf component
+  - [ ] Map food items to IngredientIcon components
+  - [ ] Handle empty state (no items in inventory)
+  - [ ] **Testing:** E2E test viewing inventory with multiple items
+- [ ] **Implement Sorting Controls (AC: Sorting functional)**
+  - [ ] Add sorting UI controls (dropdown or buttons)
+  - [ ] Implement client-side state for sort preference
+  - [ ] Update API call when sort changes
+  - [ ] Re-render PantryShelf with sorted data
+  - [ ] **Testing:** Verify sorting by different criteria
+- [ ] **Optimize Performance (AC: Loads within 2 seconds)**
+  - [ ] Implement server-side data fetching for initial load
+  - [ ] Optimize image assets if any
+  - [ ] Implement loading states
+  - [ ] Test with large inventory (100+ items)
+  - [ ] **Testing:** Measure page load time with Lighthouse
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in,
+*   **When** I navigate to the "My Pantry" view,
+*   **Then** I see a visual representation of my food items in the "Open Shelves" layout.
+*   **And** each food item displays its name, quantity, and approximate freshness/expiration status.
+*   **And** the view is responsive, adapting to different screen sizes (desktop, tablet, mobile).
+*   **And** the inventory can be sorted by at least one criterion (e.g., by expiration date or creation date).
+*   **And** the Pantry View loads within 2 seconds on a typical connection.
+*   **And** the UI adheres to the "Farmhouse Kitchen" aesthetic and accessibility standards.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-002.2</section>
+        <snippet>Users can view, edit, and delete items from their pantry or fridge.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Frontend Architecture</section>
+        <snippet>Details Next.js Server Components for data fetching and Client Components for interactivity.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>APIs and Interfaces - GET /api/inventory</section>
+        <snippet>Defines the API contract for fetching inventory with sorting parameters.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Workflows and Sequencing - View &amp; Browse Inventory Workflow</section>
+        <snippet>Details the complete flow from navigation to data display, including server and client component interactions.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Pantry "Open Shelves" View</section>
+        <snippet>Design specifications for the visual "Open Shelves" layout, including responsive behavior and aesthetic requirements.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/pantry/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>PantryView</symbol>
+        <reason>Main pantry view page with data fetching</reason>
+      </entry>
+      <entry>
+        <path>app/api/inventory/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Backend endpoint for fetching user's inventory</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/PantryShelf.tsx</path>
+        <kind>client component</kind>
+        <symbol>PantryShelf</symbol>
+        <reason>Layout component for "Open Shelves" display</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/IngredientIcon.tsx</path>
+        <kind>client component</kind>
+        <symbol>IngredientIcon</symbol>
+        <reason>Visual representation of individual food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/SortControls.tsx</path>
+        <kind>client component</kind>
+        <symbol>SortControls</symbol>
+        <reason>UI controls for sorting inventory</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Pantry View must load within 2 seconds on typical connection.</rule>
+      <source>Epic 2 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Use Next.js Server Components for initial data fetching.</rule>
+      <source>Epic 2 Tech Spec - System Architecture</source>
+    </entry>
+    <entry>
+      <rule>All inventory data must be scoped to the authenticated user.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>UI must implement "Open Shelves" visual layout with "Farmhouse Kitchen" aesthetic.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>View must be fully responsive across desktop, tablet, and mobile.</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Must meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Support at least basic sorting (by expiration date or creation date).</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Handle inventory of up to 500 items without performance degradation.</rule>
+      <source>Epic 2 Tech Spec - Performance</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>GET /api/inventory</name>
+      <kind>API Route</kind>
+      <signature>
+Query Parameters:
+  sortBy: "name" | "category" | "bestBeforeDate" | "createdAt" (default: "createdAt")
+  sortOrder: "asc" | "desc" (default: "desc")
+
+Response (200 OK):
+{
+  "foodItems": [
+    {
+      "id": "string",
+      "name": "string",
+      "category": "string",
+      "bestBeforeDate": "string (ISO 8601)",
+      "quantity": "number",
+      "unit": "string",
+      "userId": "string",
+      "createdAt": "string (ISO 8601)"
+    }
+  ]
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/inventory/route.ts</path>
+    </entry>
+    <entry>
+      <name>PantryShelf Component Props</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+interface PantryShelfProps {
+  foodItems: FoodItem[]
+  onItemSelect?: (item: FoodItem) => void
+}
+      </signature>
+      <path>components/pantry/PantryShelf.tsx</path>
+    </entry>
+    <entry>
+      <name>IngredientIcon Component Props</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+interface IngredientIconProps {
+  item: FoodItem
+  state?: 'normal' | 'expiring' | 'selected'
+  onClick?: () => void
+}
+      </signature>
+      <path>components/pantry/IngredientIcon.tsx</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route query logic, sorting functions, and component rendering. Integration Tests will focus on API routes with database queries and authentication flow. End-to-End (E2E) Tests will simulate navigation to pantry and verify items are displayed correctly. Performance Tests will measure page load time with varying inventory sizes. UI/UX Tests will verify visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA).
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`, `app/pantry/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Pantry route exists</id>
+        <description>Verify /pantry route is accessible to authenticated users and redirects unauthenticated users.</description>
+      </entry>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test GET /api/inventory with authentication, verify correct data returned, test sorting parameters.</description>
+      </entry>
+      <entry>
+        <id>AC: Visual layout complete</id>
+        <description>Render PantryShelf with mock data, verify "Open Shelves" layout, test responsive behavior.</description>
+      </entry>
+      <entry>
+        <id>AC: Food item visualization</id>
+        <description>Render IngredientIcon in different states, verify visual indicators for freshness.</description>
+      </entry>
+      <entry>
+        <id>AC: Items displayed</id>
+        <description>E2E test: Login, navigate to pantry, verify all user's items are displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: Sorting functional</id>
+        <description>Test sorting by different criteria, verify items reorder correctly.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Lighthouse test to measure load time, load test with 500+ items.</description>
+      </entry>
+      <entry>
+        <id>AC: Empty state</id>
+        <description>Verify appropriate empty state message when user has no items.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

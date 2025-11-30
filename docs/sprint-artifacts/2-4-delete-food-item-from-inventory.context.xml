@@ -1,0 +1,268 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-2</epicId>
+    <storyId>2.4</storyId>
+    <title>Delete Food Item from Inventory</title>
+    <status>Pending</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-4-delete-food-item-from-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>delete food items from my inventory,</iWant>
+    <soThat>I can remove items I no longer have or that have been consumed.</soThat>
+    <tasks>
+- [ ] **Implement Delete Food Item API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/inventory/[id]` DELETE endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Verify food item exists and belongs to authenticated user
+  - [ ] Implement Prisma mutation to delete FoodItem
+  - [ ] Return appropriate success/error responses (404, 403)
+  - [ ] **Testing:** Unit test API route with authorization checks
+- [ ] **Create DeleteConfirmationDialog Component (AC: Confirmation UI complete)**
+  - [ ] Create `DeleteConfirmationDialog` using shadcn/ui Dialog
+  - [ ] Implement confirmation message and action buttons (Cancel/Delete)
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure accessibility (keyboard navigation, focus management)
+  - [ ] **Testing:** Render dialog and verify buttons work correctly
+- [ ] **Add Delete Trigger to IngredientIcon (AC: User can access delete)**
+  - [ ] Add delete action to IngredientIcon (e.g., delete button or drag to waste bin)
+  - [ ] Connect trigger to open DeleteConfirmationDialog
+  - [ ] Ensure accessibility (keyboard navigation, aria-labels)
+  - [ ] **Testing:** Verify delete action opens confirmation dialog
+- [ ] **Implement Delete Logic (AC: Deletion functional)**
+  - [ ] Connect confirmation dialog to DELETE `/api/inventory/[id]` endpoint
+  - [ ] Handle success response (close dialog, show feedback, update UI)
+  - [ ] Handle error response (display error message)
+  - [ ] Implement optimistic UI update (item fades out)
+  - [ ] Implement rollback on server error
+  - [ ] **Testing:** E2E test deleting a food item through the UI
+- [ ] **Add Visual Feedback (AC: Deletion provides feedback)**
+  - [ ] Implement fade-out animation when item is deleted
+  - [ ] Show success message or toast notification
+  - [ ] **Testing:** Verify animation plays on delete
+- [ ] **Add Authorization Checks (AC: Security enforced)**
+  - [ ] Verify user can only delete their own food items
+  - [ ] Handle 403 Forbidden response appropriately
+  - [ ] **Testing:** Test deleting another user's item (should fail)
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am viewing a food item in my "My Pantry" inventory,
+*   **When** I select an item for deletion (e.g., drag to a "waste bin" icon, or click a "Delete" button) and confirm the action,
+*   **Then** the food item is removed from my inventory and no longer displayed in the Pantry View.
+*   **And** a confirmation prompt is shown before permanent deletion to prevent accidental deletions.
+*   **And** the deletion interaction provides feedback (e.g., item fades out) and adheres to UX principles.
+*   **And** the confirmation dialog uses the "Farmhouse Kitchen" aesthetic.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-002.2</section>
+        <snippet>Users can view, edit, and delete items from their pantry or fridge.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Data Model - FoodItem</section>
+        <snippet>Defines the FoodItem entity that can be deleted from user's inventory.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>APIs and Interfaces - DELETE /api/inventory/[id]</section>
+        <snippet>Defines the request/response contract for deleting food items, including authorization and error handling.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Workflows and Sequencing - Delete Food Item Workflow</section>
+        <snippet>Details the complete user flow and system interactions for deleting a food item, including confirmation and authorization checks.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Component Library</section>
+        <snippet>Guidance on using shadcn/ui Dialog component for confirmations with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/api/inventory/[id]/route.ts</path>
+        <kind>api route</kind>
+        <symbol>DELETE handler</symbol>
+        <reason>Backend endpoint for deleting food items</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/DeleteConfirmationDialog.tsx</path>
+        <kind>client component</kind>
+        <symbol>DeleteConfirmationDialog</symbol>
+        <reason>Confirmation dialog for delete action</reason>
+      </entry>
+      <entry>
+        <path>components/pantry/IngredientIcon.tsx</path>
+        <kind>client component</kind>
+        <symbol>IngredientIcon</symbol>
+        <reason>Food item visualization with delete trigger</reason>
+      </entry>
+      <entry>
+        <path>app/pantry/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>PantryView</symbol>
+        <reason>Main pantry view integrating delete functionality</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Animations">
+        <package name="framer-motion" note="optional, for advanced animations" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All inventory API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Users must only be able to delete their own food items (authorization check).</rule>
+      <source>Epic 2 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Confirmation prompt must be shown before permanent deletion.</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Return 404 if food item not found, 403 if unauthorized.</rule>
+      <source>Epic 2 Tech Spec - APIs</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Confirmation dialog must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Deletion must provide visual feedback (e.g., fade-out animation).</rule>
+      <source>Epic 2 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement optimistic UI updates with rollback on server failure.</rule>
+      <source>Epic 2 Tech Spec - Reliability</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>DELETE /api/inventory/[id]</name>
+      <kind>API Route</kind>
+      <signature>
+Request: DELETE /api/inventory/{id}
+
+Response (200 OK):
+{
+  "message": "Food item deleted successfully",
+  "foodItemId": "string (cuid)"
+}
+
+Response (404 Not Found):
+{
+  "error": "Food item not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (403 Forbidden):
+{
+  "error": "Access denied"
+}
+      </signature>
+      <path>app/api/inventory/[id]/route.ts</path>
+    </entry>
+    <entry>
+      <name>DeleteConfirmationDialog Component Props</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+interface DeleteConfirmationDialogProps {
+  item: FoodItem
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: (itemId: string) => void
+}
+      </signature>
+      <path>components/pantry/DeleteConfirmationDialog.tsx</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route authorization logic and Prisma data access methods. Integration Tests will focus on API routes with database interactions and authentication/authorization flow. End-to-End (E2E) Tests will simulate the complete user flow from clicking delete to confirming and seeing the item removed. Security Tests will verify users cannot delete others' items. UI/UX Tests will verify visual aesthetic, animations, accessibility (WCAG 2.1 AA), and confirmation dialog usability.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test DELETE /api/inventory/[id], verify authentication, authorization, and database deletion.</description>
+      </entry>
+      <entry>
+        <id>AC: Confirmation UI complete</id>
+        <description>Render DeleteConfirmationDialog, verify message and buttons present and functional.</description>
+      </entry>
+      <entry>
+        <id>AC: User can access delete</id>
+        <description>UI test: Trigger delete action on item, verify confirmation dialog opens.</description>
+      </entry>
+      <entry>
+        <id>AC: Deletion functional</id>
+        <description>E2E test: Delete item, confirm, verify item removed from database and UI.</description>
+      </entry>
+      <entry>
+        <id>AC: Confirmation prevents accident</id>
+        <description>UI test: Trigger delete, click cancel, verify item not deleted.</description>
+      </entry>
+      <entry>
+        <id>AC: Visual feedback</id>
+        <description>Test fade-out animation plays on successful delete.</description>
+      </entry>
+      <entry>
+        <id>AC: Authorization enforced</id>
+        <description>Security test: Attempt to delete another user's item, verify 403 Forbidden response.</description>
+      </entry>
+      <entry>
+        <id>AC: Item not found</id>
+        <description>Test deleting non-existent item ID, verify 404 response.</description>
+      </entry>
+      <entry>
+        <id>AC: Optimistic UI rollback</id>
+        <description>Test optimistic update and rollback if server returns error.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>
