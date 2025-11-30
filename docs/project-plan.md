@@ -90,12 +90,9 @@
         - [x] File: sprint-artifacts/2-2-view-inventory.md
         - [x] File: sprint-artifacts/2-3-edit-food-item.md
         - [x] File: sprint-artifacts/2-4-delete-food-item.md
-      - [ ] Epic 3 story
+      - [x] Epic 3 story
         - [x] File: sprint-artifacts/3-1-search-recipes.md
         - [x] File: sprint-artifacts/3-2-view-recipe-details.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
       - [ ] Epic 4 story
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
@@ -115,12 +112,9 @@
         - [x] File: sprint-artifacts/2-2-view-inventory.context.xml
         - [x] File: sprint-artifacts/2-3-edit-food-item.context.xml
         - [x] File: sprint-artifacts/2-4-delete-food-item.context.xml
-      - [ ] Epic 3 context
+      - [x] Epic 3 context
         - [x] File: sprint-artifacts/3-1-search-recipes.context.xml
         - [x] File: sprint-artifacts/3-2-view-recipe-details.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
       - [ ] Epic 4 context
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
