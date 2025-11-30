@@ -1,0 +1,137 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>1</storyId>
+    <title>Search Recipes</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-1-search-recipes.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to search for recipes</iWant>
+    <soThat>I can find meal ideas</soThat>
+    <tasks>
+        -   **Frontend Development:**
+            -   [ ] **Create Recipes Page Layout (AC: #1, #2, #11):**
+            -   [ ] **Implement Search Input Component (AC: #3, #4):**
+            -   [ ] **Implement Recipe Card Component (AC: #6):**
+            -   [ ] **Integrate Client-Side Data Fetching (React Query/SWR) (AC: #4, #5, #7):**
+            -   [ ] **Display Search Results (AC: #6):**
+            -   [ ] **Handle Empty States and Errors (AC: #8, #9):**
+        -   **Backend Development (Next.js API Route):**
+            -   [ ] **Create API Route for Recipe Search (AC: #5):**
+            -   [ ] **Integrate with Spoonacular API (AC: #5, #8):**
+            -   [ ] **Implement API Response Formatting (AC: #5, #6):**
+            -   [ ] **Performance Considerations (AC: #7):**
+        -   **Testing:**
+            -   [ ] **Unit Tests (AC: #3, #6):**
+            -   [ ] **Integration Tests (AC: #5, #8):**
+            -   [ ] **End-to-End (E2E) Tests (AC: #1, #2, #3, #4, #6, #8, #9):**
+            -   [ ] **Performance Testing (AC: #7):**
+            -   [ ] **Accessibility Testing (AC: #10):**
+        -   **Documentation:**
+        -   **Code Quality & Standards:**
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1.  **Authentication:** The user must be logged in to access the recipes page.
+    2.  **Navigation:** When the user is on the recipes page (`app/(main)/recipes/`), a search input field is visible.
+    3.  **Search Input:** When the user enters a search query into the input field.
+    4.  **Live Search:** Search results are displayed immediately as the user types (Live Search pattern per `UX Design Specification.md`).
+    5.  **Spoonacular Integration:** The system sends the search query to the Spoonacular API via `GET /api/recipes/search`.
+    6.  **Results Display:** The system displays a list of recipes from the Spoonacular API matching the query. Each result is presented as a "Recipe Card" component, showing an image, title, and cooking time.
+    7.  **Performance:** Search results are delivered and rendered in under 1 second.
+    8.  **Error Handling (API):** If the Spoonacular API returns an error, a user-friendly error message is displayed.
+    9.  **Error Handling (No Results):** If no recipes are found for the query, a message indicating "No results found" is displayed, potentially with a suggestion for a broader search.
+    10. **Accessibility:** The search functionality and results display adhere to WCAG 2.1 AA guidelines.
+    11. **Responsiveness:** The recipe search page and results display are fully responsive across all major modern desktop and mobile browsers.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR3.2 - Search Recipes</section>
+        <snippet>A user can search for recipes from the Spoonacular API. Search results are displayed clearly with images and titles. Search performance meets the <1 second target.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Recipe Discovery & Browsing</title>
+        <section>APIs and Interfaces</section>
+        <snippet>GET /api/recipes/search - Searches for recipes from the Spoonacular API. Request: query: string. Response (200 OK): { "data": [ { "id": 716426, "title": "Cauliflower, Brown Rice, and Cheddar Soup", ... } ] }</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>API Pattern</section>
+        <snippet>RESTful API using Next.js API Routes (Route Handlers). Simplifies the tech stack by integrating API directly into the Next.js project.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Performance Optimization</section>
+        <snippet>Vercel Edge Caching & Next.js caching; Supabase PostgreSQL indexing. Maximizes performance by leveraging built-in optimizations.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Search Patterns</section>
+        <snippet>Use Live Search with immediate results.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.1: Search Recipes</section>
+        <snippet>As a user, I want to search for recipes, so that I can find meal ideas. Acceptance Criteria: Given I am logged in and on the recipes page, When I enter a search query, Then I see a list of recipes from the Spoonacular API matching my query.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <!-- No existing code artifacts found relevant to this story. -->
+    </code>
+    <dependencies>
+      <ecosystem type="Node.js">
+        <manifest>package.json</manifest>
+        <package name="next" reason="Core framework (Intended)"/>
+        <package name="react" reason="UI library (Intended)"/>
+        <package name="tailwindcss" reason="CSS framework (Intended)"/>
+        <package name="shadcn-ui" reason="Component library (Intended)"/>
+        <package name="next-auth" reason="Authentication (Intended)"/>
+        <package name="@supabase/supabase-js" reason="Database client (Intended)"/>
+        <package name="react-query" reason="Client-side data fetching (Intended)"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="pattern">Must use Next.js API Routes (Route Handlers) for the backend endpoint.</constraint>
+    <constraint type="pattern">Frontend must implement a "Live Search" pattern with debouncing for API calls.</constraint>
+    <constraint type="architecture">Code must adhere to the project structure: API route in `app/api/recipes/search/route.ts`, frontend page in `app/(main)/recipes/page.tsx`, reusable components in `components/`.</constraint>
+    <constraint type="testing">Unit tests for components, integration tests for the API route, and E2E tests for the full user flow are required.</constraint>
+    <constraint type="performance">End-to-end search and render time must be under 1 second.</constraint>
+    <constraint type="styling">UI must be built using shadcn/ui and Tailwind CSS, following the UX Design Specification.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Recipe Search API</name>
+      <kind>REST Endpoint</kind>
+      <signature>GET /api/recipes/search?query={string}</signature>
+      <path>app/api/recipes/search/route.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>A multi-layered testing strategy is required, including Unit Tests (Jest, React Testing Library), Integration Tests (for API routes and database interactions), and End-to-End (E2E) Tests (Playwright or Cypress).</standards>
+    <locations>All test files should be located in the top-level `tests/` directory, mirroring the structure of the `app/` directory.</locations>
+    <ideas>
+      <idea for="AC #3, #6">Unit test the SearchInput and RecipeCard components to ensure they render correctly and handle user input.</idea>
+      <idea for="AC #5, #8">Write an integration test for the `app/api/recipes/search/route.ts` API route, mocking the Spoonacular API to verify request/response logic and error handling.</idea>
+      <idea for="AC #1, #2, #4, #9">Create an E2E test for the complete search flow: user logs in, navigates to the recipes page, types a query, and verifies that results (or a 'no results' message) are displayed.</idea>
+      <idea for="AC #7">Conduct performance tests to ensure the end-to-end search request and render time is consistently under 1 second.</idea>
+      <idea for="AC #10">Perform automated accessibility checks using tools like Axe and manual testing to ensure WCAG 2.1 AA compliance.</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,6 +1,6 @@
 # Story 3.1: Search Recipes
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -176,7 +176,7 @@ As a user, I want to search for recipes, so that I can find meal ideas.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- [Context: `3-1-search-recipes.context.xml`](./3-1-search-recipes.context.xml)
 
 ### Agent Model Used
 

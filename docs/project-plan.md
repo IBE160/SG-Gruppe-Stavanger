@@ -116,7 +116,7 @@
         - [x] File: sprint-artifacts/2-3-edit-food-item.context.xml
         - [x] File: sprint-artifacts/2-4-delete-food-item.context.xml
       - [ ] Epic 3 context
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
+        - [ ] File: sprint-artifacts/3-1-search-recipes.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
