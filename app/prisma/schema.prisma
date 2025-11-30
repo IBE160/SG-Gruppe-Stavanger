@@ -20,12 +20,17 @@ model User {
 }
 
 model FoodItem {
-  id        String   @id @default(cuid())
-  name      String
-  ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id])
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  bestBeforeDate  DateTime
+  quantity        Float
+  unit            String
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
 
-  @@index([ownerId])
+  @@index([userId])
 }
 
 model UserPreference {

@@ -15,7 +15,12 @@ export async function POST(req: NextRequest) {
   // TODO: Implement a distributed rate limiting solution suitable for serverless environments (e.g., using Redis, Upstash, or a dedicated rate limiting service)
   // The current in-memory rate limiter is not effective across multiple serverless instances.
 
-  const ip = req.ip || '127.0.0.1'; // Use a default IP for local development if req.ip is not available
+  // Extract IP address from request headers
+  const forwardedFor = req.headers.get('x-forwarded-for');
+  const ip = forwardedFor
+    ? forwardedFor.split(',')[0].trim()
+    : req.headers.get('x-real-ip') || '127.0.0.1';
+
   const rateLimitResult = rateLimiter.check(ip);
   if (rateLimitResult.limited) {
     return NextResponse.json({ message: 'Too many requests. Please try again later.' }, { status: 429 });

@@ -73,5 +73,8 @@ export default defineConfig({
     command: 'npm run dev', // Command to start your Next.js dev server
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    env: {
+      NODE_ENV: 'test', // Set NODE_ENV to test for higher rate limits
+    },
   },
 });

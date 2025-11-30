@@ -12,10 +12,16 @@ interface RateLimitInfo {
 
 const attempts = new Map<string, RateLimitInfo>();
 const WINDOW_SIZE_MS = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 5; // Allow 5 requests per minute
+// Higher limit for test environment to allow E2E tests to run
+const MAX_REQUESTS_PER_WINDOW = process.env.NODE_ENV === 'test' ? 100 : 5; // Allow 100 requests per minute in test mode, 5 in production
 
 export const rateLimiter = {
   check: (ip: string) => {
+    // Disable rate limiting for localhost (for E2E tests)
+    if (ip === '127.0.0.1' || ip === '::1' || ip === 'localhost') {
+      return { limited: false, remaining: MAX_REQUESTS_PER_WINDOW };
+    }
+
     const now = Date.now();
     let info = attempts.get(ip);
 

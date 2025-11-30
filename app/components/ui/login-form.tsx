@@ -77,7 +77,7 @@ export function LoginForm() {
         redirect: false, // Prevent NextAuth.js from redirecting immediately
         email,
         password,
-        rememberMe, // Pass the rememberMe state to NextAuth.js
+        rememberMe: rememberMe.toString(), // Convert boolean to string for NextAuth
       });
 
       if (result?.error) {

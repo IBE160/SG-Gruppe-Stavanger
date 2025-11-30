@@ -1,13 +1,13 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/prisma-client";
 import bcrypt from "bcryptjs";
 import { rateLimiter } from '@/lib/rate-limiter';
 import logger from '@/lib/logger';
 
-const handler = NextAuth({
-  adapter: PrismaAdapter(prisma),
+export const authOptions: NextAuthOptions = {
+  // Note: PrismaAdapter cannot be used with CredentialsProvider
+  // CredentialsProvider uses JWT-only sessions
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -98,6 +98,8 @@ const handler = NextAuth({
     },
   },
   debug: process.env.NODE_ENV === 'development', // Enable debug mode in development
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
