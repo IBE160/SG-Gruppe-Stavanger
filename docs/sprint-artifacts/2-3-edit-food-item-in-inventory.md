@@ -1,6 +1,6 @@
 # Story 2.3: Edit Food Item in Inventory
 
-Status: pending
+Status: completed
 
 ## Story
 
@@ -97,17 +97,39 @@ This story depends on Stories 2.1 (FoodItem model) and 2.2 (viewing inventory). 
 *   2-3-edit-food-item-in-inventory.context.xml
 
 ### Agent Model Used
+Claude Sonnet 4.5 (claude-sonnet-4-5-20250929)
 
 ### Debug Log References
+None
 
 ### Completion Notes
-**Completed:**
+**Completed:** 2025-11-30
+
+**Implementation Summary:**
+- Created PUT API endpoint at `/api/inventory/[id]` with full authentication and authorization checks
+- Implemented EditFoodItemForm component with pre-populated form fields
+- Added edit trigger with hover state showing edit icon on IngredientIcon component
+- Integrated edit functionality in pantry page with optimistic UI updates and rollback
+- All form fields support validation (client-side and server-side)
+- Follows "Farmhouse Kitchen" aesthetic with Tailwind CSS and shadcn/ui components
+- Full accessibility support with proper ARIA labels and keyboard navigation
+
+**Tests Written:**
+- Unit tests for PUT /api/inventory/[id] endpoint (11 test cases covering success, validation, authorization, and error scenarios)
+- E2E tests for edit functionality (14 test cases covering UI interactions, form validation, accessibility, and authorization)
+
 **Definition of Done:** All acceptance criteria met, code reviewed, tests passing
 
 ### Completion Notes List
 
 ### File List
 *   `docs/sprint-artifacts/2-3-edit-food-item-in-inventory.md` (created)
+*   `app/api/inventory/[id]/route.ts` (created) - PUT endpoint for updating food items
+*   `app/api/inventory/[id]/__tests__/route.test.ts` (created) - Unit tests for PUT endpoint
+*   `components/pantry/EditFoodItemForm.tsx` (created) - Edit food item dialog form component
+*   `components/pantry/IngredientIcon.tsx` (modified) - Added hover state and edit icon
+*   `app/pantry/page.tsx` (modified) - Integrated edit functionality with optimistic updates
+*   `e2e/story-2-3-edit-food-item.spec.ts` (created) - E2E tests for edit functionality
 
 ### Change Log
 

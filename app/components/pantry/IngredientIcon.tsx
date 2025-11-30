@@ -1,8 +1,9 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Calendar } from 'lucide-react';
+import { AlertTriangle, Calendar, Edit3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export interface FoodItem {
   id: string;
@@ -21,6 +22,8 @@ export interface IngredientIconProps {
 }
 
 export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIconProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Calculate freshness status
   const getFreshnessStatus = () => {
     const bestBefore = new Date(item.bestBeforeDate);
@@ -53,7 +56,7 @@ export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIc
   return (
     <Card
       className={cn(
-        'transition-all duration-200 border-2',
+        'transition-all duration-200 border-2 relative',
         freshness.borderColor,
         state === 'selected' && 'ring-2 ring-sage-green shadow-lg',
         state === 'expiring' && freshness.status === 'expiring' && 'animate-pulse',
@@ -61,6 +64,8 @@ export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIc
         'bg-white'
       )}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       role={isClickable ? 'button' : undefined}
       tabIndex={isClickable ? 0 : undefined}
       onKeyDown={(e) => {
@@ -69,8 +74,15 @@ export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIc
           onClick?.();
         }
       }}
-      aria-label={`${item.name}, ${item.quantity} ${item.unit}, ${freshness.label}`}
+      aria-label={`${item.name}, ${item.quantity} ${item.unit}, ${freshness.label}${isClickable ? ', Click to edit' : ''}`}
     >
+      {/* Edit Button Overlay */}
+      {isClickable && isHovered && (
+        <div className="absolute top-2 right-2 z-10 bg-sage-green text-white rounded-full p-2 shadow-md transition-all duration-200">
+          <Edit3 className="h-4 w-4" aria-hidden="true" />
+        </div>
+      )}
+
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-lg font-semibold text-charcoal line-clamp-2">

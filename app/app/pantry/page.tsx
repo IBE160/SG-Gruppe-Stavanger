@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AddFoodItemForm } from '@/components/pantry/AddFoodItemForm';
+import { EditFoodItemForm } from '@/components/pantry/EditFoodItemForm';
 import { PantryShelf } from '@/components/pantry/PantryShelf';
 import { SortControls, SortField, SortOrder } from '@/components/pantry/SortControls';
 import { FoodItem } from '@/components/pantry/IngredientIcon';
@@ -17,6 +18,8 @@ export default function PantryPage() {
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<SortField>('createdAt');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const [editingItem, setEditingItem] = useState<FoodItem | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -61,6 +64,33 @@ export default function PantryPage() {
     setSortBy(newSortBy);
     setSortOrder(newSortOrder);
     fetchFoodItems(newSortBy, newSortOrder);
+  };
+
+  const handleItemSelect = (item: FoodItem) => {
+    setEditingItem(item);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditSuccess = (updatedItem: FoodItem) => {
+    // Optimistic UI update
+    const previousItems = [...foodItems];
+
+    setFoodItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === updatedItem.id ? updatedItem : item
+      )
+    );
+
+    // Verify the update by refetching from server
+    fetchFoodItems().catch(() => {
+      // Rollback on error
+      setFoodItems(previousItems);
+    });
+  };
+
+  const handleEditClose = () => {
+    setIsEditDialogOpen(false);
+    setEditingItem(null);
   };
 
   if (status === 'loading' || loading) {
@@ -121,9 +151,19 @@ export default function PantryPage() {
             </div>
           </CardHeader>
           <CardContent className="pt-6">
-            <PantryShelf foodItems={foodItems} />
+            <PantryShelf foodItems={foodItems} onItemSelect={handleItemSelect} />
           </CardContent>
         </Card>
+
+        {/* Edit Food Item Dialog */}
+        {editingItem && (
+          <EditFoodItemForm
+            item={editingItem}
+            open={isEditDialogOpen}
+            onClose={handleEditClose}
+            onSuccess={handleEditSuccess}
+          />
+        )}
       </div>
     </div>
   );
