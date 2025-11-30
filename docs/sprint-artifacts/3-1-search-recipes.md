@@ -176,7 +176,7 @@ As a user, I want to search for recipes, so that I can find meal ideas.
 
 ### Agent Model Used
 
-Gemini
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 ### Debug Log References
 
