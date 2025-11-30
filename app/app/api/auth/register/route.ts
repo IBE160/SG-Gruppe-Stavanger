@@ -27,7 +27,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { email, password } = await req.json();
+    let email, password;
+
+    try {
+      const body = await req.json();
+      email = body.email;
+      password = body.password;
+    } catch (jsonError) {
+      return NextResponse.json({ message: 'Invalid request body' }, { status: 400 });
+    }
 
     if (!email || !password) {
       return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });

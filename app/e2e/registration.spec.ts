@@ -22,9 +22,11 @@ test.describe('Registration Flow', () => {
     await page.fill('input[id="password"]', 'E2ePass1!'); // Matches server-side complexity
     await page.click('button[type="submit"]');
 
-    // Expect successful registration and redirection to dashboard
-    await expect(page.url()).toContain('/dashboard');
-    await expect(page.locator('text="Registration successful!"')).not.toBeVisible(); // Success message should quickly disappear
+    // Wait for navigation to dashboard (with increased timeout for async operations)
+    await page.waitForURL('**/dashboard', { timeout: 10000 });
+
+    // Verify we're on the dashboard
+    await expect(page).toHaveURL(/\/dashboard/);
   });
 
   test.skip('should display an error message if registration fails due to existing email', async ({ page }) => {

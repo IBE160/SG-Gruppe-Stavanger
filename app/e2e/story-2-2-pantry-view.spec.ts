@@ -14,6 +14,8 @@ import bcrypt from 'bcryptjs';
  * - "Farmhouse Kitchen" aesthetic
  */
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Story 2.2: View & Browse Inventory', () => {
   let testUserId: string;
   const testEmail = 'pantry-test@example.com';
@@ -111,15 +113,14 @@ test.describe('Story 2.2: View & Browse Inventory', () => {
     await page.goto('/pantry');
     await page.waitForLoadState('networkidle');
 
-    // Verify food items are displayed
-    const foodItems = page.locator('[data-testid="ingredient-icon"], .ingredient-icon, [class*="ingredient"]');
-
     // Wait for items to load
     await page.waitForTimeout(1000);
 
     // We should see at least some food items (we created 5)
-    const items = await page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice, text=Apples, text=Expired Yogurt').all();
-    expect(items.length).toBeGreaterThan(0);
+    // Check for each item individually
+    await expect(page.locator('text=Fresh Tomatoes')).toBeVisible();
+    await expect(page.locator('text=Expiring Milk')).toBeVisible();
+    await expect(page.locator('text=Rice')).toBeVisible();
   });
 
   test('AC: Food items display name, quantity, and freshness status', async ({ page }) => {
@@ -160,8 +161,8 @@ test.describe('Story 2.2: View & Browse Inventory', () => {
       await sortControl.click();
       await page.waitForTimeout(500);
 
-      // Get initial order of items
-      const initialItems = await page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice, text=Apples, text=Expired Yogurt').allTextContents();
+      // Get initial order of items by checking first visible item
+      const initialFirstItem = await page.locator('[role="region"]').first().textContent();
 
       // Try to select a different sort option if available
       const sortOptions = page.locator('[role="option"], option');
@@ -169,12 +170,12 @@ test.describe('Story 2.2: View & Browse Inventory', () => {
         await sortOptions.nth(1).click();
         await page.waitForTimeout(1000);
 
-        // Get new order of items
-        const newItems = await page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice, text=Apples, text=Expired Yogurt').allTextContents();
+        // Get new order of items by checking first visible item
+        const newFirstItem = await page.locator('[role="region"]').first().textContent();
 
         // Items should potentially be in different order (unless they happen to be the same)
-        console.log('Initial order:', initialItems);
-        console.log('New order:', newItems);
+        console.log('Initial first item:', initialFirstItem);
+        console.log('New first item:', newFirstItem);
       }
     }
   });
@@ -200,20 +201,17 @@ test.describe('Story 2.2: View & Browse Inventory', () => {
     // Test desktop view
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.waitForTimeout(500);
-    let items = page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice').first();
-    await expect(items).toBeVisible();
+    await expect(page.locator('text=Fresh Tomatoes')).toBeVisible();
 
     // Test tablet view
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.waitForTimeout(500);
-    items = page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice').first();
-    await expect(items).toBeVisible();
+    await expect(page.locator('text=Fresh Tomatoes')).toBeVisible();
 
     // Test mobile view
     await page.setViewportSize({ width: 375, height: 667 });
     await page.waitForTimeout(500);
-    items = page.locator('text=Fresh Tomatoes, text=Expiring Milk, text=Rice').first();
-    await expect(items).toBeVisible();
+    await expect(page.locator('text=Fresh Tomatoes')).toBeVisible();
   });
 
   test('AC: Empty state displays when no items in inventory', async ({ page }) => {

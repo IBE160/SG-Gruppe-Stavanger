@@ -52,15 +52,15 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
     setSuccess('');
-    setLoading(true);
 
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
     if (!isEmailValid || !isPasswordValid) {
-      setLoading(false);
       return;
     }
+
+    setLoading(true);
 
     try {
       const response = await fetch('/api/auth/register', {
@@ -109,7 +109,7 @@ export default function RegisterPage() {
               <Label htmlFor="email" className="text-charcoal">Email</Label>
               <Input
                 id="email"
-                type="email"
+                type="text"
                 placeholder="m@example.com"
                 value={email}
                 onChange={(e) => {
