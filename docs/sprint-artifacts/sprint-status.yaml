@@ -42,15 +42,15 @@ development_status:
   1-4-user-login: ready-for-dev
   1-5-user-logout: ready-for-dev
   epic-1-retrospective: optional
-    epic-2: contexted
+  epic-2: ready-for-dev
   2-1-add-food-item: ready-for-dev
   2-2-view-inventory: ready-for-dev
   2-3-edit-food-item: ready-for-dev
   2-4-delete-food-item: ready-for-dev
   epic-2-retrospective: completed
-  epic-3: contexted
+  epic-3: ready-for-dev
   3-1-search-recipes: ready-for-dev
-  3-2-view-recipe-details: backlog
+  3-2-view-recipe-details: ready-for-dev
   epic-3-retrospective: optional
   epic-4: backlog
   4-1-get-smart-recipe-suggestions: backlog
