@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { NextRequest } from 'next/server';
-import { PUT } from '../route';
+import { PUT, DELETE } from '../route';
 import { prisma } from '@/prisma-client';
 import { getServerSession } from 'next-auth';
 
@@ -12,6 +12,7 @@ jest.mock('@/prisma-client', () => ({
     foodItem: {
       findUnique: jest.fn(),
       update: jest.fn(),
+      delete: jest.fn(),
     },
   },
 }));
@@ -285,5 +286,120 @@ describe('PUT /api/inventory/[id]', () => {
     expect(response.status).toBe(400);
     expect(data.error).toBe('Validation failed');
     expect(prisma.foodItem.update).not.toHaveBeenCalled();
+  });
+});
+
+describe('DELETE /api/inventory/[id]', () => {
+  const mockUserId = 'user-123';
+  const mockItemId = 'item-456';
+  const mockSession = {
+    user: {
+      id: mockUserId,
+      email: 'test@example.com',
+    },
+  };
+
+  const mockExistingItem = {
+    id: mockItemId,
+    name: 'Tomatoes',
+    category: 'Vegetables',
+    bestBeforeDate: new Date('2025-12-31'),
+    quantity: 2,
+    unit: 'kg',
+    userId: mockUserId,
+    createdAt: new Date('2025-01-01'),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should successfully delete a food item', async () => {
+    (getServerSession as jest.Mock).mockResolvedValue(mockSession);
+    (prisma.foodItem.findUnique as jest.Mock).mockResolvedValue(mockExistingItem);
+    (prisma.foodItem.delete as jest.Mock).mockResolvedValue(mockExistingItem);
+
+    const request = new NextRequest('http://localhost:3000/api/inventory/item-456', {
+      method: 'DELETE',
+    });
+
+    const response = await DELETE(request, { params: { id: mockItemId } });
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data.message).toBe('Food item deleted successfully');
+    expect(data.foodItemId).toBe(mockItemId);
+    expect(prisma.foodItem.delete).toHaveBeenCalledWith({
+      where: { id: mockItemId },
+    });
+  });
+
+  it('should return 401 if user is not authenticated', async () => {
+    (getServerSession as jest.Mock).mockResolvedValue(null);
+
+    const request = new NextRequest('http://localhost:3000/api/inventory/item-456', {
+      method: 'DELETE',
+    });
+
+    const response = await DELETE(request, { params: { id: mockItemId } });
+    const data = await response.json();
+
+    expect(response.status).toBe(401);
+    expect(data.error).toBe('Unauthorized');
+    expect(prisma.foodItem.findUnique).not.toHaveBeenCalled();
+    expect(prisma.foodItem.delete).not.toHaveBeenCalled();
+  });
+
+  it('should return 404 if food item does not exist', async () => {
+    (getServerSession as jest.Mock).mockResolvedValue(mockSession);
+    (prisma.foodItem.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const request = new NextRequest('http://localhost:3000/api/inventory/nonexistent', {
+      method: 'DELETE',
+    });
+
+    const response = await DELETE(request, { params: { id: 'nonexistent' } });
+    const data = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(data.error).toBe('Food item not found');
+    expect(prisma.foodItem.delete).not.toHaveBeenCalled();
+  });
+
+  it('should return 403 if user tries to delete another user\'s food item', async () => {
+    const otherUsersItem = {
+      ...mockExistingItem,
+      userId: 'different-user-789',
+    };
+
+    (getServerSession as jest.Mock).mockResolvedValue(mockSession);
+    (prisma.foodItem.findUnique as jest.Mock).mockResolvedValue(otherUsersItem);
+
+    const request = new NextRequest('http://localhost:3000/api/inventory/item-456', {
+      method: 'DELETE',
+    });
+
+    const response = await DELETE(request, { params: { id: mockItemId } });
+    const data = await response.json();
+
+    expect(response.status).toBe(403);
+    expect(data.error).toBe('Access denied');
+    expect(prisma.foodItem.delete).not.toHaveBeenCalled();
+  });
+
+  it('should return 500 on database error', async () => {
+    (getServerSession as jest.Mock).mockResolvedValue(mockSession);
+    (prisma.foodItem.findUnique as jest.Mock).mockResolvedValue(mockExistingItem);
+    (prisma.foodItem.delete as jest.Mock).mockRejectedValue(new Error('Database error'));
+
+    const request = new NextRequest('http://localhost:3000/api/inventory/item-456', {
+      method: 'DELETE',
+    });
+
+    const response = await DELETE(request, { params: { id: mockItemId } });
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe('Internal server error');
   });
 });

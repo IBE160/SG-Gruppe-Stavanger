@@ -6,14 +6,20 @@ import { useState } from 'react';
 export interface PantryShelfProps {
   foodItems: FoodItem[];
   onItemSelect?: (item: FoodItem) => void;
+  onItemDelete?: (item: FoodItem) => void;
+  deletingItemId?: string | null;
 }
 
-export function PantryShelf({ foodItems, onItemSelect }: PantryShelfProps) {
+export function PantryShelf({ foodItems, onItemSelect, onItemDelete, deletingItemId }: PantryShelfProps) {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   const handleItemClick = (item: FoodItem) => {
     setSelectedItemId(item.id);
     onItemSelect?.(item);
+  };
+
+  const handleItemDelete = (item: FoodItem) => {
+    onItemDelete?.(item);
   };
 
   if (foodItems.length === 0) {
@@ -65,6 +71,8 @@ export function PantryShelf({ foodItems, onItemSelect }: PantryShelfProps) {
             item={item}
             state={selectedItemId === item.id ? 'selected' : 'normal'}
             onClick={onItemSelect ? () => handleItemClick(item) : undefined}
+            onDelete={onItemDelete ? () => handleItemDelete(item) : undefined}
+            isDeleting={deletingItemId === item.id}
           />
         ))}
       </div>

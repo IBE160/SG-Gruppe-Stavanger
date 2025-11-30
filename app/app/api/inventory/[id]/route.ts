@@ -104,3 +104,66 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    // Check authentication
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user?.id) {
+      logger.warn('Unauthorized attempt to delete food item');
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const { id } = await params;
+
+    // Check if food item exists
+    const existingItem = await prisma.foodItem.findUnique({
+      where: { id },
+    });
+
+    if (!existingItem) {
+      logger.warn(`Food item not found for deletion: ${id}`);
+      return NextResponse.json(
+        { error: 'Food item not found' },
+        { status: 404 }
+      );
+    }
+
+    // Authorization check: verify the food item belongs to the authenticated user
+    if (existingItem.userId !== session.user.id) {
+      logger.warn(`User ${session.user.id} attempted to delete food item ${id} owned by ${existingItem.userId}`);
+      return NextResponse.json(
+        { error: 'Access denied' },
+        { status: 403 }
+      );
+    }
+
+    // Delete food item from database
+    await prisma.foodItem.delete({
+      where: { id },
+    });
+
+    logger.info(`Food item deleted successfully: ${id} by user: ${session.user.id}`);
+
+    return NextResponse.json(
+      {
+        message: 'Food item deleted successfully',
+        foodItemId: id,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    logger.error(`Error deleting food item: ${error}`);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}

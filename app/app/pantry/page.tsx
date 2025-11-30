@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AddFoodItemForm } from '@/components/pantry/AddFoodItemForm';
 import { EditFoodItemForm } from '@/components/pantry/EditFoodItemForm';
+import { DeleteConfirmationDialog } from '@/components/pantry/DeleteConfirmationDialog';
 import { PantryShelf } from '@/components/pantry/PantryShelf';
 import { SortControls, SortField, SortOrder } from '@/components/pantry/SortControls';
 import { FoodItem } from '@/components/pantry/IngredientIcon';
@@ -20,6 +21,9 @@ export default function PantryPage() {
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [editingItem, setEditingItem] = useState<FoodItem | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [deletingItem, setDeletingItem] = useState<FoodItem | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -93,6 +97,52 @@ export default function PantryPage() {
     setEditingItem(null);
   };
 
+  const handleItemDelete = (item: FoodItem) => {
+    setDeletingItem(item);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async (itemId: string) => {
+    // Store previous items for rollback
+    const previousItems = [...foodItems];
+
+    try {
+      // Optimistic UI update - set deleting state for fade-out animation
+      setDeletingItemId(itemId);
+
+      // Wait for fade-out animation (300ms)
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Remove from UI
+      setFoodItems((currentItems) =>
+        currentItems.filter((item) => item.id !== itemId)
+      );
+
+      // Call API to delete from server
+      const response = await fetch(`/api/inventory/${itemId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to delete food item');
+      }
+
+      // Clear deleting state
+      setDeletingItemId(null);
+    } catch (error) {
+      // Rollback on error
+      setFoodItems(previousItems);
+      setDeletingItemId(null);
+      throw error;
+    }
+  };
+
+  const handleDeleteClose = () => {
+    setIsDeleteDialogOpen(false);
+    setDeletingItem(null);
+  };
+
   if (status === 'loading' || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-light-beige">
@@ -151,7 +201,12 @@ export default function PantryPage() {
             </div>
           </CardHeader>
           <CardContent className="pt-6">
-            <PantryShelf foodItems={foodItems} onItemSelect={handleItemSelect} />
+            <PantryShelf
+              foodItems={foodItems}
+              onItemSelect={handleItemSelect}
+              onItemDelete={handleItemDelete}
+              deletingItemId={deletingItemId}
+            />
           </CardContent>
         </Card>
 
@@ -162,6 +217,16 @@ export default function PantryPage() {
             open={isEditDialogOpen}
             onClose={handleEditClose}
             onSuccess={handleEditSuccess}
+          />
+        )}
+
+        {/* Delete Confirmation Dialog */}
+        {deletingItem && (
+          <DeleteConfirmationDialog
+            item={deletingItem}
+            isOpen={isDeleteDialogOpen}
+            onClose={handleDeleteClose}
+            onConfirm={handleDeleteConfirm}
           />
         )}
       </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Calendar, Edit3 } from 'lucide-react';
+import { AlertTriangle, Calendar, Edit3, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -19,9 +19,11 @@ export interface IngredientIconProps {
   item: FoodItem;
   state?: 'normal' | 'expiring' | 'selected';
   onClick?: () => void;
+  onDelete?: () => void;
+  isDeleting?: boolean;
 }
 
-export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIconProps) {
+export function IngredientIcon({ item, state = 'normal', onClick, onDelete, isDeleting = false }: IngredientIconProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Calculate freshness status
@@ -56,11 +58,12 @@ export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIc
   return (
     <Card
       className={cn(
-        'transition-all duration-200 border-2 relative',
+        'transition-all duration-300 border-2 relative',
         freshness.borderColor,
         state === 'selected' && 'ring-2 ring-sage-green shadow-lg',
         state === 'expiring' && freshness.status === 'expiring' && 'animate-pulse',
         isClickable && 'cursor-pointer hover:shadow-md hover:scale-105',
+        isDeleting && 'opacity-0 scale-95',
         'bg-white'
       )}
       onClick={onClick}
@@ -76,10 +79,33 @@ export function IngredientIcon({ item, state = 'normal', onClick }: IngredientIc
       }}
       aria-label={`${item.name}, ${item.quantity} ${item.unit}, ${freshness.label}${isClickable ? ', Click to edit' : ''}`}
     >
-      {/* Edit Button Overlay */}
-      {isClickable && isHovered && (
-        <div className="absolute top-2 right-2 z-10 bg-sage-green text-white rounded-full p-2 shadow-md transition-all duration-200">
-          <Edit3 className="h-4 w-4" aria-hidden="true" />
+      {/* Action Buttons Overlay */}
+      {isHovered && (
+        <div className="absolute top-2 right-2 z-10 flex gap-2">
+          {isClickable && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick?.();
+              }}
+              className="bg-sage-green text-white rounded-full p-2 shadow-md transition-all duration-200 hover:bg-sage-green/90"
+              aria-label={`Edit ${item.name}`}
+            >
+              <Edit3 className="h-4 w-4" aria-hidden="true" />
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="bg-red-600 text-white rounded-full p-2 shadow-md transition-all duration-200 hover:bg-red-700"
+              aria-label={`Delete ${item.name}`}
+            >
+              <Trash2 className="h-4 w-4" aria-hidden="true" />
+            </button>
+          )}
         </div>
       )}
 
