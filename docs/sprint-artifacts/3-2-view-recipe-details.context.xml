@@ -1,0 +1,126 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>2</storyId>
+    <title>View Recipe Details</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-2-view-recipe-details.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to view the full details of a recipe</iWant>
+    <soThat>I can decide if I want to cook it</soThat>
+    <tasks>
+        -   **Frontend Development:**
+            -   [ ] **Create Dynamic Recipe Page (AC: #2, #8, #10):**
+            -   [ ] **Implement Client-Side Data Fetching (AC: #3, #6, #7):**
+            -   [ ] **Create Recipe Detail Components (AC: #5):**
+        -   **Backend Development (Next.js API Route):**
+            -   [ ] **Create API Route for Recipe Details (AC: #4):**
+            -   [ ] **Integrate with Spoonacular API (AC: #3, #6):**
+            -   [ ] **API Response Formatting (AC: #5):**
+        -   **Testing:**
+            -   [ ] **Unit Tests:**
+            -   [ ] **Integration Tests:**
+            -   [ ] **E2E Tests:**
+            -   [ ] **Accessibility Testing (AC: #9):**
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1.  **Authentication:** The user must be logged in to access the recipe detail page.
+    2.  **Navigation:** When the user clicks on a recipe from a list (e.g., search results), they are navigated to a dynamic route like `app/(main)/recipes/{id}`.
+    3.  **Data Fetching:** The application fetches detailed recipe information for the given `{id}` from the Spoonacular API via a backend API route.
+    4.  **API Route:** A `GET /api/recipes/{id}` endpoint is implemented to handle the data fetching from Spoonacular.
+    5.  **Detailed Display:** The recipe detail page clearly displays:
+        *   Recipe Title
+        *   Image
+        *   List of Ingredients
+        *   Step-by-step Instructions
+        *   Cooking Time
+        *   Number of Servings
+    6.  **Error Handling (API):** If the Spoonacular API fails or returns an error, a user-friendly error message is displayed on the page.
+    7.  **Error Handling (Not Found):** If a recipe with the given `{id}` does not exist, a "Recipe not found" page or message is displayed.
+    8.  **Responsiveness:** The recipe detail page is fully responsive and usable on both desktop and mobile devices.
+    9.  **Accessibility:** The page and its content adhere to WCAG 2.1 AA guidelines.
+    10. **Linking:** The user can easily navigate back to the previous page (e.g., search results).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR3.3 - View Recipe Details</section>
+        <snippet>A user can view the full details of a recipe, including ingredients, instructions, cooking time, and servings.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Recipe Discovery & Browsing</title>
+        <section>APIs and Interfaces</section>
+        <snippet>GET /api/recipes/{id} - Fetches detailed information for a specific recipe from the Spoonacular API. Request: id: number. Response (200 OK): { "data": { "id": 641803, "title": "Easy & Delish! ~ Apple Crumble", ... } }</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>API Pattern</section>
+        <snippet>RESTful API using Next.js API Routes (Route Handlers). Simplifies the tech stack by integrating API directly into the Next.js project.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Recipe Detail Page</section>
+        <snippet>The page should be clean and easy to read, with clear separation between ingredients and instructions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.2: View Recipe Details</section>
+        <snippet>As a user, I want to view the full details of a recipe, so that I can decide if I want to cook it. Acceptance Criteria: Given I have a list of recipes, When I click on a recipe, Then I am taken to a detailed view of that recipe. And the view includes ingredients, instructions, cooking time, and servings.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <!-- No existing code artifacts found relevant to this story. -->
+    </code>
+    <dependencies>
+      <ecosystem type="Node.js">
+        <manifest>package.json</manifest>
+        <package name="next" reason="Core framework (Intended)"/>
+        <package name="react" reason="UI library (Intended)"/>
+        <package name="tailwindcss" reason="CSS framework (Intended)"/>
+        <package name="shadcn-ui" reason="Component library (Intended)"/>
+        <package name="next-auth" reason="Authentication (Intended)"/>
+        <package name="@supabase/supabase-js" reason="Database client (Intended)"/>
+        <package name="react-query" reason="Client-side data fetching (Intended)"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="pattern">Must use Next.js API Routes (Route Handlers) for the backend endpoint.</constraint>
+    <constraint type="architecture">Code must adhere to the project structure: API route in `app/api/recipes/[id]/route.ts`, frontend page in `app/(main)/recipes/[id]/page.tsx`, reusable components in `components/`.</constraint>
+    <constraint type="testing">Unit tests for components, integration tests for the API route, and E2E tests for the full user flow are required.</constraint>
+    <constraint type="styling">UI must be built using shadcn/ui and Tailwind CSS, following the UX Design Specification.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Recipe Detail API</name>
+      <kind>REST Endpoint</kind>
+      <signature>GET /api/recipes/{id}</signature>
+      <path>app/api/recipes/[id]/route.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>A multi-layered testing strategy is required, including Unit Tests (Jest, React Testing Library), Integration Tests (for API routes and database interactions), and End-to-End (E2E) Tests (Playwright or Cypress).</standards>
+    <locations>All test files should be located in the top-level `tests/` directory, mirroring the structure of the `app/` directory.</locations>
+    <ideas>
+      <idea for="AC #5">Unit test the IngredientList and Instructions components to ensure they render correctly.</idea>
+      <idea for="AC #4, #6">Write an integration test for the `app/api/recipes/[id]/route.ts` API route, mocking the Spoonacular API to verify request/response logic and error handling.</idea>
+      <idea for="AC #2, #5, #7">Create an E2E test for the complete recipe view flow: user clicks a recipe card, verifies the details on the recipe page, and checks error states.</idea>
+      <idea for="AC #9">Perform automated accessibility checks using tools like Axe and manual testing to ensure WCAG 2.1 AA compliance.</idea>
+    </ideas>
+  </tests>
+</story-context>
