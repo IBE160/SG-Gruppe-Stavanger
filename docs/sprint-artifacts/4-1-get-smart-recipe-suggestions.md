@@ -1,6 +1,6 @@
 # Story 4.1: Get Smart Recipe Suggestions
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -66,7 +66,7 @@ so that I can cook with ingredients I already have, especially those nearing exp
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- `docs/sprint-artifacts/4-1-get-smart-recipe-suggestions.context.xml`
 
 ### Agent Model Used
 

@@ -1,0 +1,277 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>1</storyId>
+    <title>get-smart-recipe-suggestions</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs/sprint-artifacts/4-1-get-smart-recipe-suggestions.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user,</asA>
+    <iWant>to receive recipe suggestions based on my current inventory,</iWant>
+    <soThat>I can cook with ingredients I already have, especially those nearing expiration.</soThat>
+    <tasks>
+- [ ] Task: (AC: #1, #2, #3) Implement API endpoint for smart recipe suggestions (`GET /api/recipes/suggestions`).
+    - [ ] Subtask: Integrate with Spoonacular API for recipe data.
+    - [ ] Subtask: Implement logic to prioritize suggestions based on expiring ingredients.
+    - [ ] Subtask: Ensure suggestions are 'meaningful' (>=3 ingredients) and at least 3 are returned if possible.
+    - [ ] Subtask (Test): Write unit test to verify that the suggestion logic correctly prioritizes expiring items.
+    - [ ] Subtask (Test): Write integration test for the `GET /api/recipes/suggestions` endpoint to check for correct data structure and adherence to ACs #1 and #3.
+- [ ] Task: (AC: #4) Implement UI component for displaying recipe suggestions.
+    - [ ] Subtask: Design and implement the Recipe Card component.
+    - [ ] Subtask: Add "Uses expiring" tag to recipe cards.
+    - [ ] Subtask: Integrate with the `/api/recipes/suggestions` endpoint.
+    - [ ] Subtask (Test): Write a component test using React Testing Library to verify the "Uses expiring" tag appears when the data requires it.
+- [ ] Task: (AC: #1, #2, #3, #4, E2E) Write an end-to-end test for the smart suggestions workflow.
+    - [ ] Subtask (Test): Create a test that simulates a user with expiring inventory, navigates to the suggestions page, and asserts that prioritized, meaningful suggestions are displayed correctly.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  The system generates at least 3 recipe suggestions if there are sufficient ingredients. (Source: tech-spec-epic-4.md#FR3.1-AC1)
+2.  Suggestions are prioritized based on ingredients that are nearing their expiration date. (Source: tech-spec-epic-4.md#FR3.1-AC2)
+3.  The suggestions are 'meaningful' (contain at least 3 ingredients). (Source: tech-spec-epic-4.md#FR3.1-AC3)
+4.  Each recipe card indicates if it "Uses expiring" items. (Source: tech-spec-epic-4.md#FR3.1-AC4)
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Executive Summary</title>
+        <section>Executive Summary</section>
+        <snippet>This project will create a mobile-responsive web application designed to help users reduce food waste and discover meal inspiration. It achieves this by providing intelligent kitchen inventory management, sending alerts for expiring items, and offering personalized recipe suggestions based on the user's available ingredients and dietary preferences.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Design Philosophy</title>
+        <section>The 'Intelligent Assistant' and The 'Instant Tool'</section>
+        <snippet>The core magic of this platform is turning potential waste into inspiration. Users will experience a "wow" moment when they receive personalized, actionable recipe suggestions based on the ingredients they already have, especially those nearing expiration. This transforms the problem of "what do I do with this?" into a creative and satisfying cooking experience.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Success Criteria</title>
+        <section>Success Criteria</section>
+        <snippet>Reliable Inspiration: The platform consistently delivers high-quality, relevant recipe suggestions in under 2 seconds. Actionable Nudges: A measurable percentage of expiration alerts lead to a user viewing or cooking a suggested recipe within 24 hours.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>MVP - Minimum Viable Product</title>
+        <section>MVP - Minimum Viable Product</section>
+        <snippet>The MVP focuses on delivering the core value proposition: reducing food waste and inspiring cooking through intelligent inventory management. Key features include: Smart Recipe Suggestions, Expiration Alerts & Recommendations, 'Instant Idea' Button, and Automatic Inventory Update.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>FR3.1 - Get Recipe Suggestions</title>
+        <section>3. Recipe Discovery & Interaction</section>
+        <snippet>The system suggests recipes based on the user's inventory. The system generates at least 3 recipe suggestions if there are sufficient ingredients. Suggestions are prioritized based on ingredients that are nearing their expiration date. The suggestions are 'meaningful' (contain at least 3 ingredients).</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>FR4.1 - Expiration Alerts</title>
+        <section>4. Notifications</section>
+        <snippet>The system notifies the user about items nearing expiration. An in-app notification is generated for items expiring in the next 2-3 days. The notification is 'actionable', directly linking the user to a list of recipes that use the expiring item.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>FR4.2 - Instant Idea Generation</title>
+        <section>4. Notifications</section>
+        <snippet>A user can get an immediate recipe suggestion without using their saved inventory. A prominent 'Instant Idea' button is available on the main screen. A user can input 2-3 ingredients. The system provides an immediate AI-generated recipe suggestion based on the input. This action does not modify the user's inventory.</snippet>
+      </entry>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Epic 4: Personalized Suggestions & Alerts</title>
+        <section>Implementation Epics</section>
+        <snippet>Implements the reactive "smart" features. This includes generating recipe suggestions based on the user's inventory, sending expiration alerts, and delivering the "Instant Idea" button for quick, on-the-fly recipe generation.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>API Pattern</title>
+        <section>Decision Summary</section>
+        <snippet>RESTful API using Next.js API Routes (Route Handlers): Standard, flexible, and widely supported approach. Simplifies the tech stack by integrating API directly into the Next.js project. Seamless integration with external RESTful APIs like Spoonacular.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>AI Application Integration</title>
+        <section>Decision Summary</section>
+        <snippet>Spoonacular API for core recipe data; Google Gemini for generative AI features: Leverages specialized API for recipe data and powerful LLM for creative recipe generation and ingredient substitutions, providing a robust and flexible solution.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Search</title>
+        <section>Decision Summary</section>
+        <snippet>PostgreSQL Full-Text Search (FTS): Built directly into the existing database (Supabase PostgreSQL), avoiding extra services. Efficient for relevant recipe and inventory searches. Offers a natural upgrade path to `pgvector` for AI-enhanced semantic search in the future.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Performance Optimization</title>
+        <section>Decision Summary</section>
+        <snippet>Vercel Edge Caching & Next.js caching; Supabase PostgreSQL indexing; Supabase image optimization (future): Maximizes performance by leveraging built-in optimizations of the chosen tech stack, ensuring fast page loads, rapid recipe search, and a responsive user experience.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Testing Strategy</title>
+        <section>Decision Summary</section>
+        <snippet>Multi-layered strategy including Unit Tests (`Jest`, `React Testing Library`), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (`Playwright`, `Cypress`), focusing on user-centric scenarios: Ensures the reliability and stability of the application, catches bugs early, prevents regressions, and provides confidence in the application's functionality.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>API Endpoint Overview</title>
+        <section>API Endpoint Overview</section>
+        <snippet>GET /api/recipes/suggestions: Get smart recipe suggestions based on inventory.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Project Structure</title>
+        <section>Project Structure</section>
+        <snippet>app/api/recipes/: API routes for recipe fetching and suggestions.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Project Structure</title>
+        <section>Project Structure</section>
+        <snippet>components/specific/: Components specific to features (e.g., InventoryCard, RecipeItem).</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>Core User Experience</title>
+        <section>Core User Experience</section>
+        <snippet>The core of the application revolves around effortless inventory management and immediate, actionable inspiration. The experience is guided by the principles: Speed is Magical, Intelligent Assistant, and Creative & Inspired. The app's core magic is that "It's the app that turns my leftover food into amazing meals."</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>Novel UX Patterns</title>
+        <section>Novel UX Patterns</section>
+        <snippet>The primary novel pattern is the Expiration-to-Inspiration Loop. This transforms the negative experience of seeing food expire into a positive, actionable task. The Instant Idea Button (FR4.2) is a dedicated, always-accessible primary button/modal for zero-friction recipe generation.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>Design Direction</title>
+        <section>Design Direction</section>
+        <snippet>The Dashboard direction is selected because it best supports the core objective of being an "Intelligent Assistant." The design has been updated to a mobile-first approach, aligning with the latest sketches. This ensures the most critical information is immediately accessible on the primary user device.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>Recipe Card</title>
+        <section>Component Library</section>
+        <snippet>Recipe Card: Displays a recipe image, title, and cooking time. Now includes a prominent "Uses expiring" tag with an icon to connect to the inventory.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>Expiration Color-Coded Border</title>
+        <section>UX Pattern Decisions</section>
+        <snippet>A new pattern for the inventory list. A colored left border on an item indicates its expiration status (e.g., red for today, orange for soon). This provides a quick visual cue.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/(main)/recipes/suggestions/page.tsx</path>
+        <kind>UI page</kind>
+        <symbol>page</symbol>
+        <lines></lines>
+        <reason>Primary UI for displaying smart recipe suggestions.</reason>
+      </entry>
+      <entry>
+        <path>app/api/recipes/suggestions/route.ts</path>
+        <kind>API endpoint</kind>
+        <symbol>GET /api/recipes/suggestions</symbol>
+        <lines></lines>
+        <reason>Backend endpoint for generating and returning smart recipe suggestions.</reason>
+      </entry>
+      <entry>
+        <path>components/specific/RecipeCard.tsx</path>
+        <kind>UI component</kind>
+        <symbol>RecipeCard</symbol>
+        <lines></lines>
+        <reason>Component to display individual recipe suggestions, potentially with "Uses expiring" tag.</reason>
+      </entry>
+      <entry>
+        <path>lib/api.ts</path>
+        <kind>API client utility</kind>
+        <symbol>SpoonacularApiClient</symbol>
+        <lines></lines>
+        <reason>Module for interacting with the external Spoonacular API.</reason>
+      </entry>
+      <entry>
+        <path>lib/db.ts</path>
+        <kind>database utility</kind>
+        <symbol>SupabaseDbClient</symbol>
+        <lines></lines>
+        <reason>Module for database interactions, specifically for inventory querying.</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <nodejs>
+        <package name="next" reason="Frontend/Backend framework" />
+        <package name="react" reason="UI Library" />
+        <package name="react-dom" reason="UI Library" />
+        <package name="tailwindcss" reason="Styling" />
+        <package name="next-auth" reason="Authentication" />
+        <package name="@supabase/supabase-js" reason="Supabase client" />
+        <package name="jest" reason="Unit Testing" />
+        <package name="@testing-library/react" reason="Unit Testing (React Components)" />
+        <package name="playwright" reason="E2E Testing" />
+        <package name="cypress" reason="E2E Testing" />
+      </nodejs>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <name>API Pattern</name>
+      <description>RESTful API using Next.js API Routes (Route Handlers).</description>
+    </entry>
+    <entry>
+      <name>AI Application Integration</name>
+      <description>Spoonacular API for core recipe data. Google Gemini for generative AI features.</description>
+    </entry>
+    <entry>
+      <name>Performance Optimization</name>
+      <description>Next.js caching, database indexing.</description>
+    </entry>
+    <entry>
+      <name>Search</name>
+      <description>PostgreSQL Full-Text Search (FTS) for efficient recipe search.</description>
+    </entry>
+    <entry>
+      <name>Testing Standards</name>
+      <description>Multi-layered strategy including Unit Tests (Jest, React Testing Library), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (Playwright, Cypress).</description>
+    </entry>
+    <entry>
+      <name>Project Structure Alignment</name>
+      <description>Align with unified project structure: app/(main)/recipes/ for UI, app/api/recipes/ for API, components/specific/ for custom UI, lib/ for utilities.</description>
+    </entry>
+  </constraints>
+  <interfaces>
+    <entry>
+      <name>GET /api/recipes/suggestions</name>
+      <kind>REST endpoint</kind>
+      <signature>GET /api/recipes/suggestions</signature>
+      <path>app/api/recipes/suggestions/route.ts</path>
+    </entry>
+    <entry>
+      <name>Spoonacular API</name>
+      <kind>External API</kind>
+      <signature>External API client calls to Spoonacular</signature>
+      <path>lib/api.ts</path>
+    </entry>
+  </interfaces>
+  <tests>
+    <standards>Multi-layered testing strategy including Unit Tests (Jest, React Testing Library), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (Playwright, Cypress), focusing on user-centric scenarios.</standards>
+    <locations>
+      <location>tests/</location>
+      <location>app/api/recipes/suggestions/route.test.ts</location>
+      <location>components/specific/RecipeCard.test.tsx</location>
+      <location>tests/e2e/smart-suggestions.spec.ts</location>
+    </locations>
+    <ideas>
+      <idea ac_id="#1, #2, #3">Unit test for suggestion logic to verify correct prioritization of expiring items.</idea>
+      <idea ac_id="#1, #3">Integration test for `GET /api/recipes/suggestions` endpoint to check data structure and adherence to ACs #1 and #3.</idea>
+      <idea ac_id="#4">Component test using React Testing Library to verify "Uses expiring" tag appears when data requires it.</idea>
+      <idea ac_id="#1, #2, #3, #4, E2E">End-to-end test simulating a user with expiring inventory, navigating to suggestions page, and asserting prioritized, meaningful suggestions are displayed correctly.</idea>
+    </ideas>
+  </tests>
+</story-context>

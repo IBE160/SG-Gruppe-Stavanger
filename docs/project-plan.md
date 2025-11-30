@@ -94,8 +94,8 @@
         - [x] File: sprint-artifacts/3-1-search-recipes.md
         - [x] File: sprint-artifacts/3-2-view-recipe-details.md
       - [ ] Epic 4 story
-        - [ ] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
+        - [x] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.md
+        - [ ] File: sprint-artifacts/4-2-mark-recipe-as-cooked-and-deduct-inventory.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
@@ -116,8 +116,8 @@
         - [x] File: sprint-artifacts/3-1-search-recipes.context.xml
         - [x] File: sprint-artifacts/3-2-view-recipe-details.context.xml
       - [ ] Epic 4 context
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
+        - [ ] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.context.xml
+        - [ ] File: sprint-artifacts/4-2.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
