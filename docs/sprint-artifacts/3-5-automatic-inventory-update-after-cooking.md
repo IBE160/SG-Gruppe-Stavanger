@@ -1,6 +1,6 @@
 # Story 3.5: Automatic Inventory Update after Cooking
 
-Status: pending
+Status: completed
 
 ## Story
 
@@ -163,14 +163,45 @@ This story is critical for the user experience as it automates a tedious manual 
 ### Debug Log References
 
 ### Completion Notes
-**Completed:**
+**Completed:** 2025-12-01
 **Definition of Done:** All acceptance criteria met, code reviewed, tests passing
 
 ### Completion Notes List
 
+1. **Quantity Calculator Implementation** - Created `lib/quantity-calculator.ts` with comprehensive unit conversion logic supporting volume (ml, cups, tablespoons, etc.) and weight (g, kg, oz, lb) units. Includes Levenshtein distance-based fuzzy matching and proper scaling based on servings.
+
+2. **API Route Implementation** - Created `/api/inventory/consume-recipe` POST endpoint with:
+   - NextAuth.js authentication
+   - Recipe fetching from Spoonacular with caching
+   - Ingredient matching using existing matcher
+   - Quantity calculation and deduction logic
+   - Prisma transaction-based atomic updates
+   - Warning collection for insufficient quantities
+   - Performance tracking (<1s requirement)
+
+3. **UI Components** - Created two new components:
+   - `CookingConfirmationDialog` - Farmhouse Kitchen styled confirmation dialog with loading states
+   - `UpdateSummary` - Success/warning summary showing before/after quantities and warnings
+
+4. **RecipeDetailView Integration** - Added:
+   - "I Cooked This" button next to "Start Cooking Mode"
+   - State management for confirmation and summary dialogs
+   - API integration with error handling
+   - Automatic inventory refresh after update
+   - Navigation to pantry view
+
+5. **Build Verification** - Successfully compiled with no TypeScript errors. All routes properly registered.
+
 ### File List
 *   `docs/sprint-artifacts/3-5-automatic-inventory-update-after-cooking.md` (created)
+*   `docs/sprint-artifacts/3-5-automatic-inventory-update-after-cooking.context.xml` (created)
+*   `lib/quantity-calculator.ts` (created)
+*   `app/api/inventory/consume-recipe/route.ts` (created)
+*   `components/recipes/CookingConfirmationDialog.tsx` (created)
+*   `components/recipes/UpdateSummary.tsx` (created)
+*   `components/recipes/RecipeDetailView.tsx` (modified)
 
 ### Change Log
 
 - Initialized: 2025-11-30
+- Completed: 2025-12-01 - Implemented automatic inventory update functionality with quantity calculator, API endpoint, confirmation dialog, and update summary components

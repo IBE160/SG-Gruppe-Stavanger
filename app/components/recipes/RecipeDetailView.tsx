@@ -2,26 +2,37 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Clock, Users, ChefHat, ExternalLink, AlertCircle } from 'lucide-react';
+import { Clock, Users, ChefHat, ExternalLink, AlertCircle, Utensils } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IngredientMatchIndicator } from './IngredientMatchIndicator';
 import { CookingModePanel } from './CookingModePanel';
+import { CookingConfirmationDialog } from './CookingConfirmationDialog';
+import { UpdateSummary, UpdatedItem, Warning } from './UpdateSummary';
 import { RecipeDetail } from '@/lib/spoonacular-client';
 import { matchIngredients, MatchedIngredient, FoodItem } from '@/lib/ingredient-matcher';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 export interface RecipeDetailViewProps {
   recipe: RecipeDetail;
 }
 
 export function RecipeDetailView({ recipe }: RecipeDetailViewProps) {
+  const router = useRouter();
   const [inventory, setInventory] = useState<FoodItem[]>([]);
   const [loadingInventory, setLoadingInventory] = useState(true);
   const [inventoryError, setInventoryError] = useState<string | null>(null);
   const [matchedIngredients, setMatchedIngredients] = useState<MatchedIngredient[]>([]);
   const [cookingModeActive, setCookingModeActive] = useState(false);
   const [addingToList, setAddingToList] = useState<Set<number>>(new Set());
+
+  // State for "I Cooked This" feature
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [confirmingCooking, setConfirmingCooking] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
+  const [updatedItems, setUpdatedItems] = useState<UpdatedItem[]>([]);
+  const [warnings, setWarnings] = useState<Warning[]>([]);
 
   // Fetch user's inventory
   useEffect(() => {
@@ -121,6 +132,60 @@ export function RecipeDetailView({ recipe }: RecipeDetailViewProps) {
     console.log('Cooking completed!');
   };
 
+  const handleCookedThisClick = () => {
+    setConfirmDialogOpen(true);
+  };
+
+  const handleConfirmCooking = async () => {
+    setConfirmingCooking(true);
+
+    try {
+      const response = await fetch('/api/inventory/consume-recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          recipeId: recipe.id,
+          servings: recipe.servings,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update inventory');
+      }
+
+      const data = await response.json();
+
+      // Store the results
+      setUpdatedItems(data.updatedItems || []);
+      setWarnings(data.warnings || []);
+
+      // Close confirmation dialog
+      setConfirmDialogOpen(false);
+
+      // Show summary
+      setSummaryOpen(true);
+
+      // Refresh inventory to reflect changes
+      const inventoryResponse = await fetch('/api/inventory');
+      if (inventoryResponse.ok) {
+        const inventoryData = await inventoryResponse.json();
+        setInventory(inventoryData.foodItems || []);
+      }
+    } catch (error) {
+      console.error('Error confirming cooking:', error);
+      alert(`Failed to update inventory: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setConfirmingCooking(false);
+    }
+  };
+
+  const handleViewPantry = () => {
+    router.push('/pantry');
+  };
+
   // Parse HTML summary if needed
   const cleanSummary = recipe.summary
     ? recipe.summary.replace(/<[^>]*>/g, '')
@@ -205,8 +270,8 @@ export function RecipeDetailView({ recipe }: RecipeDetailViewProps) {
                   </div>
                 )}
 
-                {/* Start Cooking Button */}
-                <div className="pt-4">
+                {/* Action Buttons */}
+                <div className="pt-4 flex flex-wrap gap-3">
                   <Button
                     size="lg"
                     onClick={handleStartCooking}
@@ -214,6 +279,15 @@ export function RecipeDetailView({ recipe }: RecipeDetailViewProps) {
                   >
                     <ChefHat className="h-5 w-5 mr-2" aria-hidden="true" />
                     Start Cooking Mode
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={handleCookedThisClick}
+                    className="border-sage-green text-sage-green hover:bg-sage-green/10"
+                  >
+                    <Utensils className="h-5 w-5 mr-2" aria-hidden="true" />
+                    I Cooked This
                   </Button>
                 </div>
               </div>
@@ -291,6 +365,25 @@ export function RecipeDetailView({ recipe }: RecipeDetailViewProps) {
           onComplete={handleCookingComplete}
         />
       )}
+
+      {/* Cooking Confirmation Dialog */}
+      <CookingConfirmationDialog
+        open={confirmDialogOpen}
+        onOpenChange={setConfirmDialogOpen}
+        recipeTitle={recipe.title}
+        recipeServings={recipe.servings}
+        onConfirm={handleConfirmCooking}
+        isLoading={confirmingCooking}
+      />
+
+      {/* Update Summary Dialog */}
+      <UpdateSummary
+        open={summaryOpen}
+        onOpenChange={setSummaryOpen}
+        updatedItems={updatedItems}
+        warnings={warnings}
+        onViewPantry={handleViewPantry}
+      />
     </>
   );
 }
