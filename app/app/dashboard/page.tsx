@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import NotificationBadge from '@/components/notifications/NotificationBadge';
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -33,12 +34,15 @@ export default function DashboardPage() {
       <div className="mx-auto max-w-4xl space-y-8">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-bold text-charcoal">Dashboard</h1>
-          <Button 
-            onClick={() => signOut({ callbackUrl: '/login' })}
-            className="bg-terracotta text-white hover:bg-terracotta/90"
-          >
-            Sign Out
-          </Button>
+          <div className="flex gap-3 items-center">
+            <NotificationBadge />
+            <Button
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              className="bg-terracotta text-white hover:bg-terracotta/90"
+            >
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         <Card className="bg-white shadow-farmhouse">

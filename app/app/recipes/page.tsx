@@ -10,6 +10,7 @@ import { RecipeCard, Recipe } from '@/components/recipes/RecipeCard';
 import { RecipePagination } from '@/components/recipes/RecipePagination';
 import { SuggestionTrigger } from '@/components/recipes/SuggestionTrigger';
 import { AlertCircle, ChefHat, Lightbulb } from 'lucide-react';
+import NotificationBadge from '@/components/notifications/NotificationBadge';
 
 const RESULTS_PER_PAGE = 12;
 
@@ -124,7 +125,8 @@ export default function RecipesPage() {
               </p>
             </div>
           </div>
-          <div className="flex gap-3 w-full sm:w-auto">
+          <div className="flex gap-3 w-full sm:w-auto items-center">
+            <NotificationBadge />
             <Button
               onClick={() => router.push('/pantry')}
               variant="outline"

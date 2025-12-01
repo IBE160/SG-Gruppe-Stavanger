@@ -11,6 +11,7 @@ import { DeleteConfirmationDialog } from '@/components/pantry/DeleteConfirmation
 import { PantryShelf } from '@/components/pantry/PantryShelf';
 import { SortControls, SortField, SortOrder } from '@/components/pantry/SortControls';
 import { FoodItem } from '@/components/pantry/IngredientIcon';
+import NotificationBadge from '@/components/notifications/NotificationBadge';
 
 export default function PantryPage() {
   const { data: session, status } = useSession();
@@ -169,7 +170,8 @@ export default function PantryPage() {
               Manage your food inventory and reduce waste
             </p>
           </div>
-          <div className="flex gap-3 w-full sm:w-auto">
+          <div className="flex gap-3 w-full sm:w-auto items-center">
+            <NotificationBadge />
             <AddFoodItemForm onSuccess={handleAddSuccess} />
             <Button
               onClick={() => signOut({ callbackUrl: '/login' })}

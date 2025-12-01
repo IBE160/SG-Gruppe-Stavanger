@@ -1,0 +1,439 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-4</epicId>
+    <storyId>4.1</storyId>
+    <title>In-App Expiration Alerts</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-1-in-app-expiration-alerts.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>receive in-app notifications for food items nearing expiration,</iWant>
+    <soThat>I can reduce food waste by using items before they expire.</soThat>
+    <tasks>
+- [ ] **Update Prisma Schema for Notifications (AC: Data model ready)**
+  - [ ] Add `Notification` model to Prisma schema
+  - [ ] Define fields: id, type, title, message, isRead, priority, relatedItemId, userId, createdAt, expiresAt
+  - [ ] Add relation to User model
+  - [ ] Add relation to FoodItem model (optional)
+  - [ ] Run Prisma migration to create database tables
+  - [ ] **Testing:** Verify schema migration successful
+- [ ] **Create Expiration Checking Cron Job (AC: Notifications generated automatically)**
+  - [ ] Create `/api/cron/check-expiration` GET endpoint
+  - [ ] Implement Vercel Cron secret authentication
+  - [ ] Query FoodItems where bestBeforeDate is within 2-3 days
+  - [ ] Check for existing notifications to avoid duplicates
+  - [ ] Create new Notification records for items nearing expiration
+  - [ ] Set appropriate type, title, message, and priority
+  - [ ] Return summary of notifications created
+  - [ ] **Testing:** Unit test expiration detection logic with various dates
+- [ ] **Configure Vercel Cron Job (AC: Background process scheduled)**
+  - [ ] Create `vercel.json` configuration for cron job
+  - [ ] Schedule cron to run daily (or twice daily)
+  - [ ] Set up cron secret in Vercel environment variables
+  - [ ] Document cron job schedule
+  - [ ] **Testing:** Manually trigger cron endpoint and verify execution
+- [ ] **Create Notification Fetch API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/notifications/expiring` GET endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Query Notifications for current user where isRead is false
+  - [ ] Include related FoodItem data in response
+  - [ ] Sort by priority and creation date
+  - [ ] Support optional query parameters (limit, includeRead)
+  - [ ] Return notifications array and unreadCount
+  - [ ] **Testing:** Unit test API route with valid/invalid requests
+- [ ] **Create Notification Dismiss API Route (AC: User can dismiss notifications)**
+  - [ ] Create `/api/notifications/[id]/dismiss` POST endpoint
+  - [ ] Implement authentication check
+  - [ ] Validate notification ownership (userId match)
+  - [ ] Update isRead field to true
+  - [ ] Return success message
+  - [ ] Handle not found and unauthorized cases
+  - [ ] **Testing:** Test dismiss functionality with various scenarios
+- [ ] **Create NotificationBadge Component (AC: Visual indicator)**
+  - [ ] Create `NotificationBadge` client component
+  - [ ] Display unread notification count
+  - [ ] Style badge according to "Farmhouse Kitchen" aesthetic
+  - [ ] Make badge clickable to open notification panel
+  - [ ] Update count in real-time when notifications dismissed
+  - [ ] Add accessibility features (aria-labels)
+  - [ ] **Testing:** Render component with various counts
+- [ ] **Create NotificationPanel Component (AC: Notification display)**
+  - [ ] Create `NotificationPanel` client component
+  - [ ] Implement dropdown or slide-out panel UI
+  - [ ] Display list of notifications with title, message, timestamp
+  - [ ] Show related item details (name, expiration date)
+  - [ ] Include dismiss button for each notification
+  - [ ] Add "View All Expiring Items" link
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design
+  - [ ] **Testing:** Test panel with various notification types and counts
+- [ ] **Create ExpiringItemsList Component (AC: User can view all expiring items)**
+  - [ ] Create `ExpiringItemsList` client component
+  - [ ] Fetch and display all food items nearing expiration
+  - [ ] Show item name, expiration date, days remaining
+  - [ ] Add visual urgency indicators (color coding by priority)
+  - [ ] Link to inventory detail or edit view
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure accessibility
+  - [ ] **Testing:** Render component with expiring items
+- [ ] **Integrate Notification System into App Layout (AC: Notifications accessible app-wide)**
+  - [ ] Add NotificationBadge to main navigation or header
+  - [ ] Set up notification data fetching on app load
+  - [ ] Implement polling or periodic refresh for new notifications
+  - [ ] Handle notification click navigation
+  - [ ] Ensure consistent placement across pages
+  - [ ] **Testing:** Navigate app and verify badge always visible
+- [ ] **Implement Notification Click Navigation (AC: Clicking notification navigates correctly)**
+  - [ ] Add click handler to notification items
+  - [ ] Navigate to ExpiringItemsList view or specific item
+  - [ ] Pass relevant context (item ID, filter parameters)
+  - [ ] Close notification panel after navigation
+  - [ ] **Testing:** Click notifications and verify navigation
+- [ ] **Optimize Performance (AC: Notifications load quickly)**
+  - [ ] Implement efficient database queries with indexes
+  - [ ] Cache notification data appropriately
+  - [ ] Optimize cron job for large inventories
+  - [ ] Measure notification fetch time (<500ms target)
+  - [ ] **Testing:** Performance test with various data volumes
+- [ ] **Ensure Accessibility (AC: UI accessible)**
+  - [ ] Test keyboard navigation for notification panel
+  - [ ] Verify screen reader compatibility
+  - [ ] Ensure sufficient color contrast for urgency indicators
+  - [ ] Add appropriate ARIA labels and roles
+  - [ ] **Testing:** Accessibility audit with automated tools and manual testing
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I have food items in my inventory with expiration dates,
+*   **When** a food item is 2-3 days away from its expiration date,
+*   **Then** I receive an in-app notification alerting me about the soon-to-expire item.
+*   **And** clicking the notification takes me to a view showing all soon-to-expire items.
+*   **And** the notification system is unintrusive but effective (e.g., badge indicator, not blocking modals).
+*   **And** notifications are generated automatically by a background process without user action.
+*   **And** I can dismiss notifications to clear them from my notification panel.
+*   **And** the notification displays relevant information (item name, days until expiration).
+*   **And** the notification UI adheres to the "Farmhouse Kitchen" aesthetic and is accessible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-005.1</section>
+        <snippet>Users receive in-app notifications for food items nearing expiration (2–3 days before).</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Backend Architecture - Cron Jobs</section>
+        <snippet>Defines scheduled job infrastructure using Vercel Cron Jobs for periodic expiration checking.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>Data Models - Notification Model</section>
+        <snippet>Defines the Notification entity with fields: id, type, title, message, isRead, priority, relatedItemId, userId, createdAt, expiresAt.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>APIs and Interfaces - GET /api/notifications/expiring</section>
+        <snippet>Defines the request/response contract for fetching expiration notifications, including filtering and sorting.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>Workflows and Sequencing - In-App Expiration Alerts Workflow</section>
+        <snippet>Details the complete flow from cron job execution to user viewing and dismissing notifications.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Notification Components</section>
+        <snippet>Guidance on notification badge and panel design with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>prisma/schema.prisma</path>
+        <kind>schema</kind>
+        <symbol>Notification</symbol>
+        <reason>Database model definition for notifications</reason>
+      </entry>
+      <entry>
+        <path>app/api/cron/check-expiration/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Scheduled cron job for expiration checking</reason>
+      </entry>
+      <entry>
+        <path>app/api/notifications/expiring/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Endpoint for fetching user notifications</reason>
+      </entry>
+      <entry>
+        <path>app/api/notifications/[id]/dismiss/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Endpoint for dismissing notifications</reason>
+      </entry>
+      <entry>
+        <path>components/notifications/NotificationBadge.tsx</path>
+        <kind>client component</kind>
+        <symbol>NotificationBadge</symbol>
+        <reason>Visual indicator for unread notifications</reason>
+      </entry>
+      <entry>
+        <path>components/notifications/NotificationPanel.tsx</path>
+        <kind>client component</kind>
+        <symbol>NotificationPanel</symbol>
+        <reason>Dropdown panel for displaying notifications</reason>
+      </entry>
+      <entry>
+        <path>components/notifications/ExpiringItemsList.tsx</path>
+        <kind>client component</kind>
+        <symbol>ExpiringItemsList</symbol>
+        <reason>View component for displaying all expiring items</reason>
+      </entry>
+      <entry>
+        <path>app/layout.tsx</path>
+        <kind>server component</kind>
+        <symbol>RootLayout</symbol>
+        <reason>Main app layout for integrating notification badge</reason>
+      </entry>
+      <entry>
+        <path>lib/expiration-checker.ts</path>
+        <kind>service</kind>
+        <symbol>ExpirationChecker</symbol>
+        <reason>Service layer for expiration checking logic</reason>
+      </entry>
+      <entry>
+        <path>vercel.json</path>
+        <kind>configuration</kind>
+        <symbol>cron configuration</symbol>
+        <reason>Vercel Cron Job configuration</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Scheduling">
+        <package name="Vercel Cron Jobs" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All notification API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Cron endpoint must be protected by Vercel Cron secret token.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Expiration checking must detect items 2-3 days from expiration date.</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Notification generation must prevent duplicate notifications for the same item.</rule>
+      <source>Epic 4 Tech Spec - Workflows</source>
+    </entry>
+    <entry>
+      <rule>Notification fetch time must be within 500ms.</rule>
+      <source>Epic 4 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Cron job must complete within 60 seconds for up to 10,000 active food items.</rule>
+      <source>Epic 4 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Notification UI must be unintrusive (badge indicator, not blocking modals).</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Interface must meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Users must only be able to access their own notifications.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>Notification Model (Prisma)</name>
+      <kind>Prisma Schema</kind>
+      <signature>
+model Notification {
+  id              String    @id @default(cuid())
+  type            String    // "EXPIRATION_WARNING", "WASTE_TIP"
+  title           String
+  message         String
+  isRead          Boolean   @default(false)
+  priority        String?   // "LOW", "MEDIUM", "HIGH"
+  relatedItemId   String?
+  relatedItem     FoodItem? @relation(fields: [relatedItemId], references: [id])
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  createdAt       DateTime  @default(now())
+  expiresAt       DateTime?
+}
+      </signature>
+      <path>prisma/schema.prisma</path>
+    </entry>
+    <entry>
+      <name>GET /api/notifications/expiring</name>
+      <kind>API Route</kind>
+      <signature>
+Query Parameters:
+{
+  "limit": "number (optional, default: 20)",
+  "includeRead": "boolean (optional, default: false)"
+}
+
+Response (200 OK):
+{
+  "notifications": [
+    {
+      "id": "string (cuid)",
+      "type": "EXPIRATION_WARNING",
+      "title": "string",
+      "message": "string",
+      "isRead": "boolean",
+      "priority": "HIGH",
+      "relatedItemId": "string (optional)",
+      "relatedItem": {
+        "id": "string",
+        "name": "string",
+        "bestBeforeDate": "string (ISO 8601)"
+      },
+      "createdAt": "string (ISO 8601)"
+    }
+  ],
+  "unreadCount": "number"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/notifications/expiring/route.ts</path>
+    </entry>
+    <entry>
+      <name>POST /api/notifications/[id]/dismiss</name>
+      <kind>API Route</kind>
+      <signature>
+Response (200 OK):
+{
+  "message": "Notification dismissed successfully",
+  "notificationId": "string (cuid)"
+}
+
+Response (404 Not Found):
+{
+  "error": "Notification not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/notifications/[id]/dismiss/route.ts</path>
+    </entry>
+    <entry>
+      <name>GET /api/cron/check-expiration</name>
+      <kind>API Route (Cron)</kind>
+      <signature>
+Authentication: Vercel Cron secret token
+
+Response (200 OK):
+{
+  "message": "Expiration check completed",
+  "notificationsCreated": "number",
+  "usersNotified": "number"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Invalid cron secret"
+}
+      </signature>
+      <path>app/api/cron/check-expiration/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on expiration detection logic, date calculations, notification creation logic, API route validation, and component rendering. Integration Tests will focus on cron job with database, API routes with authentication, and notification creation/dismissal flow. End-to-End (E2E) Tests will simulate the complete flow from cron job execution to user viewing and dismissing notifications. Performance Tests will measure notification fetch time (<500ms) and cron job execution time (<60s). UI/UX Tests will verify badge placement, panel usability, visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA). Edge Case Tests will include boundary date testing (items expiring today, tomorrow, in 2/3/4 days), empty inventory, duplicate prevention, and concurrent notification creation.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Data model ready</id>
+        <description>Verify Notification table creation in Supabase with correct fields and relations.</description>
+      </entry>
+      <entry>
+        <id>AC: Notifications generated automatically</id>
+        <description>Test cron job execution, verify notifications created for items 2-3 days from expiration, confirm duplicate prevention.</description>
+      </entry>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/notifications/expiring with authentication, filtering, and sorting.</description>
+      </entry>
+      <entry>
+        <id>AC: User can dismiss notifications</id>
+        <description>Test dismiss endpoint, verify isRead updated, confirm ownership validation.</description>
+      </entry>
+      <entry>
+        <id>AC: Visual indicator</id>
+        <description>Render NotificationBadge with various counts, verify styling and accessibility.</description>
+      </entry>
+      <entry>
+        <id>AC: Notification display</id>
+        <description>Render NotificationPanel with mock notifications, verify all information displayed correctly.</description>
+      </entry>
+      <entry>
+        <id>AC: Clicking notification navigates correctly</id>
+        <description>E2E test: Click notification, verify navigation to ExpiringItemsList with correct context.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure notification fetch time and cron job execution time with realistic data volumes.</description>
+      </entry>
+      <entry>
+        <id>Edge Case: Boundary dates</id>
+        <description>Test with items expiring exactly in 2 days, 3 days, today, tomorrow, and verify correct notification creation.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

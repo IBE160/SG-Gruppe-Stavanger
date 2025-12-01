@@ -76,6 +76,7 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test', // Set NODE_ENV to test for higher rate limits
       SPOONACULAR_API_KEY: 'df461e2c093f44c69cdebae469f8fc0a', // Spoonacular API key
+      CRON_SECRET: '034d7032da9c03998dd87447137d9160d3fa94800f2c54386d220f6aaa9d1782', // For Story 4.1 cron job testing
     },
   },
 });

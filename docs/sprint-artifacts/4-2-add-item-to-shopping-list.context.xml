@@ -1,0 +1,454 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-4</epicId>
+    <storyId>4.2</storyId>
+    <title>Add Item to Shopping List</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-2-add-item-to-shopping-list.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>add items to my shopping list either manually or from missing recipe ingredients,</iWant>
+    <soThat>I can efficiently plan my grocery shopping.</soThat>
+    <tasks>
+- [ ] **Update Prisma Schema for Shopping List (AC: Data model ready)**
+  - [ ] Add `ShoppingList` model to Prisma schema
+  - [ ] Define fields: id, userId, createdAt, updatedAt
+  - [ ] Add `ShoppingListItem` model to Prisma schema
+  - [ ] Define fields: id, name, quantity, unit, category, isPurchased, notes, addedFrom, recipeId, shoppingListId, createdAt, updatedAt
+  - [ ] Add relations between models
+  - [ ] Run Prisma migration to create database tables
+  - [ ] **Testing:** Verify schema migration successful
+- [ ] **Create Manual Add API Route (AC: Manual adding functional)**
+  - [ ] Create `/api/shopping-list/add-manual` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Validate request body (name required, other fields optional)
+  - [ ] Find or create ShoppingList for user
+  - [ ] Create new ShoppingListItem with addedFrom: "manual"
+  - [ ] Return created item with success message
+  - [ ] Handle validation errors and return appropriate error messages
+  - [ ] **Testing:** Unit test API route with valid/invalid data
+- [ ] **Create Add from Recipe API Route (AC: Recipe ingredient adding functional)**
+  - [ ] Create `/api/shopping-list/add-from-recipe` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Validate request body (recipeId and ingredients array required)
+  - [ ] Find or create ShoppingList for user
+  - [ ] Implement duplicate detection logic (check by item name)
+  - [ ] Create ShoppingListItems for each ingredient with addedFrom: "recipe"
+  - [ ] Return list of items added and duplicatesSkipped count
+  - [ ] Handle errors gracefully
+  - [ ] **Testing:** Test with various ingredient arrays and duplicate scenarios
+- [ ] **Create AddShoppingListForm Component (AC: Manual add UI complete)**
+  - [ ] Create `AddShoppingListForm` client component
+  - [ ] Implement form with input fields (name required, quantity, unit, category, notes optional)
+  - [ ] Use shadcn/ui components (Input, Select, Textarea, Button)
+  - [ ] Implement client-side validation (name not empty)
+  - [ ] Add form submit handler
+  - [ ] Connect to `/api/shopping-list/add-manual` endpoint
+  - [ ] Display success/error feedback (toast or inline message)
+  - [ ] Clear form after successful submission
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Test form with valid/invalid inputs
+- [ ] **Create QuickAddButton Component (AC: Quick add accessible)**
+  - [ ] Create `QuickAddButton` client component (floating action button)
+  - [ ] Implement button that opens AddShoppingListForm in modal or drawer
+  - [ ] Style as prominent but non-intrusive UI element
+  - [ ] Ensure accessible (aria-labels, keyboard accessible)
+  - [ ] Position appropriately for easy access
+  - [ ] **Testing:** Verify button opens form correctly
+- [ ] **Create RecipeIngredientSelector Component (AC: Recipe integration complete)**
+  - [ ] Create `RecipeIngredientSelector` client component
+  - [ ] Display missing ingredients from recipe comparison
+  - [ ] Add checkbox selection for individual ingredients
+  - [ ] Add "Add All to Shopping List" button
+  - [ ] Add "Add Selected to Shopping List" button
+  - [ ] Connect to `/api/shopping-list/add-from-recipe` endpoint
+  - [ ] Display confirmation message with items added count
+  - [ ] Show duplicate information if applicable
+  - [ ] Update button state after adding (e.g., "Added" or disable)
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Test adding all vs selected ingredients
+- [ ] **Integrate RecipeIngredientSelector into Recipe Detail View (AC: Integration seamless)**
+  - [ ] Add RecipeIngredientSelector to recipe detail page
+  - [ ] Fetch user's current inventory
+  - [ ] Compare recipe ingredients with inventory
+  - [ ] Pass missing ingredients to RecipeIngredientSelector
+  - [ ] Handle state updates after adding to shopping list
+  - [ ] **Testing:** View recipe and add missing ingredients
+- [ ] **Implement Duplicate Detection Logic (AC: Duplicates handled intelligently)**
+  - [ ] Create utility function for item name comparison
+  - [ ] Implement case-insensitive matching
+  - [ ] Handle basic variations (e.g., "tomato" vs "tomatoes")
+  - [ ] Decide on skip vs merge strategy (MVP: skip duplicates)
+  - [ ] Document duplicate handling behavior
+  - [ ] **Testing:** Test with exact matches, case variations, plural forms
+- [ ] **Add Success Feedback Mechanisms (AC: User receives clear feedback)**
+  - [ ] Implement toast notifications for successful additions
+  - [ ] Show inline success messages
+  - [ ] Update UI to reflect new items added
+  - [ ] Provide link to shopping list after adding items
+  - [ ] Handle and display error messages clearly
+  - [ ] **Testing:** Verify all feedback mechanisms work correctly
+- [ ] **Ensure Form Responsiveness and Accessibility (AC: UI accessible)**
+  - [ ] Test forms on mobile, tablet, and desktop
+  - [ ] Verify WCAG 2.1 AA compliance
+  - [ ] Test keyboard navigation for all form elements
+  - [ ] Add appropriate ARIA labels and roles
+  - [ ] Ensure sufficient color contrast
+  - [ ] Test with screen readers
+  - [ ] **Testing:** Accessibility audit with automated tools
+- [ ] **Optimize Add Item Performance (AC: Quick response)**
+  - [ ] Ensure API routes respond within 300ms (90th percentile)
+  - [ ] Implement optimistic UI updates
+  - [ ] Add rollback mechanisms for failed operations
+  - [ ] Measure and monitor API response times
+  - [ ] **Testing:** Performance test with various item counts
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in,
+*   **When** I manually input an item into my shopping list with at least a name,
+*   **Then** the item is successfully added to my shopping list.
+*   **And** I can optionally provide quantity, unit, category, and notes for the item.
+*   **And** when viewing a recipe with missing ingredients, I can add those missing ingredients to my shopping list with a single action (e.g., "Add All to Shopping List" button).
+*   **And** the system prevents or handles duplicate items intelligently (e.g., skip duplicates or merge quantities).
+*   **And** the shopping list UI is clear, intuitive, and easy to use.
+*   **And** the add item flow is responsive and accessible.
+*   **And** items added from recipes are marked with their source for context.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-006.1, FR-006.2</section>
+        <snippet>Users can add, view, and delete items from a shopping list. Items can be added manually or from missing recipe ingredients.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Backend Architecture</section>
+        <snippet>Defines API routes for shopping list operations and integration patterns.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>Data Models - ShoppingList and ShoppingListItem</section>
+        <snippet>Defines the ShoppingList and ShoppingListItem entities with all fields and relations.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>APIs and Interfaces - POST /api/shopping-list/add-manual</section>
+        <snippet>Defines the request/response contract for manually adding items to shopping list.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>APIs and Interfaces - POST /api/shopping-list/add-from-recipe</section>
+        <snippet>Defines the request/response contract for adding recipe ingredients to shopping list.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>Workflows and Sequencing - Add Item to Shopping List Workflows</section>
+        <snippet>Details the complete flows for manual addition and recipe-based addition to shopping list.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Shopping List Components</section>
+        <snippet>Guidance on shopping list form and button design with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>prisma/schema.prisma</path>
+        <kind>schema</kind>
+        <symbol>ShoppingList, ShoppingListItem</symbol>
+        <reason>Database model definitions for shopping list</reason>
+      </entry>
+      <entry>
+        <path>app/api/shopping-list/add-manual/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Endpoint for manually adding items</reason>
+      </entry>
+      <entry>
+        <path>app/api/shopping-list/add-from-recipe/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Endpoint for adding recipe ingredients</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/AddShoppingListForm.tsx</path>
+        <kind>client component</kind>
+        <symbol>AddShoppingListForm</symbol>
+        <reason>Form component for manual item addition</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/QuickAddButton.tsx</path>
+        <kind>client component</kind>
+        <symbol>QuickAddButton</symbol>
+        <reason>Floating action button for quick access</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeIngredientSelector.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeIngredientSelector</symbol>
+        <reason>Component for selecting and adding recipe ingredients</reason>
+      </entry>
+      <entry>
+        <path>app/recipes/[id]/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>RecipeDetailPage</symbol>
+        <reason>Recipe detail page with ingredient selector integration</reason>
+      </entry>
+      <entry>
+        <path>lib/duplicate-detector.ts</path>
+        <kind>service</kind>
+        <symbol>DuplicateDetector</symbol>
+        <reason>Utility for detecting duplicate shopping list items</reason>
+      </entry>
+      <entry>
+        <path>lib/ingredient-comparison.ts</path>
+        <kind>service</kind>
+        <symbol>IngredientComparison</symbol>
+        <reason>Service for comparing recipe ingredients with inventory</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Form Validation">
+        <package name="zod" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All shopping list API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Item name is required for all shopping list items.</rule>
+      <source>Epic 4 Tech Spec - Data Models</source>
+    </entry>
+    <entry>
+      <rule>Both client-side and server-side validation must be implemented.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Duplicate detection must be implemented for recipe ingredient additions.</rule>
+      <source>Epic 4 Tech Spec - Workflows</source>
+    </entry>
+    <entry>
+      <rule>Items added from recipes must be marked with addedFrom: "recipe".</rule>
+      <source>Epic 4 Tech Spec - Data Models</source>
+    </entry>
+    <entry>
+      <rule>API response time should be within 300ms (90th percentile).</rule>
+      <source>Epic 4 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Forms must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement optimistic UI updates with rollback on server failure.</rule>
+      <source>Epic 4 Tech Spec - Reliability</source>
+    </entry>
+    <entry>
+      <rule>Shopping lists must be isolated per user.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>ShoppingList Models (Prisma)</name>
+      <kind>Prisma Schema</kind>
+      <signature>
+model ShoppingList {
+  id        String              @id @default(cuid())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id])
+  items     ShoppingListItem[]
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+}
+
+model ShoppingListItem {
+  id              String        @id @default(cuid())
+  name            String
+  quantity        Float?
+  unit            String?
+  category        String?
+  isPurchased     Boolean       @default(false)
+  notes           String?
+  addedFrom       String?       // "manual" | "recipe"
+  recipeId        String?
+  shoppingListId  String
+  shoppingList    ShoppingList  @relation(fields: [shoppingListId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+      </signature>
+      <path>prisma/schema.prisma</path>
+    </entry>
+    <entry>
+      <name>POST /api/shopping-list/add-manual</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "name": "string",
+  "quantity": "number (optional)",
+  "unit": "string (optional)",
+  "category": "string (optional)",
+  "notes": "string (optional)"
+}
+
+Response (200 OK):
+{
+  "message": "Item added successfully",
+  "item": {
+    "id": "string (cuid)",
+    "name": "string",
+    "quantity": "number",
+    "unit": "string",
+    "category": "string",
+    "isPurchased": "boolean",
+    "notes": "string",
+    "addedFrom": "manual",
+    "createdAt": "string (ISO 8601)"
+  }
+}
+
+Response (400 Bad Request):
+{
+  "error": "string"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/shopping-list/add-manual/route.ts</path>
+    </entry>
+    <entry>
+      <name>POST /api/shopping-list/add-from-recipe</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "recipeId": "string | number",
+  "ingredients": [
+    {
+      "name": "string",
+      "amount": "number",
+      "unit": "string"
+    }
+  ]
+}
+
+Response (200 OK):
+{
+  "message": "Ingredients added to shopping list",
+  "itemsAdded": [
+    {
+      "id": "string (cuid)",
+      "name": "string",
+      "quantity": "number",
+      "unit": "string",
+      "addedFrom": "recipe",
+      "recipeId": "string"
+    }
+  ],
+  "duplicatesSkipped": "number"
+}
+
+Response (400 Bad Request):
+{
+  "error": "string"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/shopping-list/add-from-recipe/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation logic, duplicate detection algorithms, form validation, and component rendering. Integration Tests will focus on API routes with database interactions, authentication flow, recipe integration, and inventory comparison. End-to-End (E2E) Tests will simulate complete user flows for manual addition and recipe-based addition to shopping list. Performance Tests will measure API response time (<300ms) and form submission responsiveness. UI/UX Tests will verify form usability, button placement, feedback mechanisms, visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA). Edge Case Tests will include adding with only required fields, adding with all optional fields, duplicate items, empty ingredient list, very long item names, and special characters.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Data model ready</id>
+        <description>Verify ShoppingList and ShoppingListItem tables creation in Supabase with correct fields and relations.</description>
+      </entry>
+      <entry>
+        <id>AC: Manual adding functional</id>
+        <description>Unit test /api/shopping-list/add-manual with valid and invalid data, verify authentication and database persistence.</description>
+      </entry>
+      <entry>
+        <id>AC: Recipe ingredient adding functional</id>
+        <description>Test /api/shopping-list/add-from-recipe with various ingredient arrays, verify duplicate detection and skipping.</description>
+      </entry>
+      <entry>
+        <id>AC: Manual add UI complete</id>
+        <description>Render AddShoppingListForm and verify all fields present, validation, and successful submission.</description>
+      </entry>
+      <entry>
+        <id>AC: Recipe integration complete</id>
+        <description>Test RecipeIngredientSelector with missing ingredients, verify add all and add selected functionality.</description>
+      </entry>
+      <entry>
+        <id>AC: Duplicates handled intelligently</id>
+        <description>Test duplicate detection with exact matches, case variations, and plural forms.</description>
+      </entry>
+      <entry>
+        <id>AC: User receives clear feedback</id>
+        <description>Verify toast notifications, success messages, and error handling display correctly.</description>
+      </entry>
+      <entry>
+        <id>AC: Integration seamless</id>
+        <description>E2E test: View recipe, identify missing ingredients, add to shopping list, verify in shopping list view.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure API response times and verify <300ms target for add operations.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

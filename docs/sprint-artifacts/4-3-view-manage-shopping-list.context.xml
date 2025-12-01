@@ -1,0 +1,536 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-4</epicId>
+    <storyId>4.3</storyId>
+    <title>View & Manage Shopping List</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-3-view-manage-shopping-list.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>view and manage my shopping list with full CRUD capabilities,</iWant>
+    <soThat>I can efficiently track items I need to purchase and update the list as I shop.</soThat>
+    <tasks>
+- [ ] **Create Shopping List Get API Route (AC: Backend data retrieval)**
+  - [ ] Create `/api/shopping-list` GET endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Query user's ShoppingList with all ShoppingListItems
+  - [ ] Support query parameters (includePurchased, sortBy)
+  - [ ] Calculate statistics (totalItems, purchasedItems, pendingItems)
+  - [ ] Return shopping list data with items and stats
+  - [ ] Handle case where no shopping list exists (return empty)
+  - [ ] **Testing:** Unit test API route with various scenarios
+- [ ] **Create Shopping List Item Update API Route (AC: Edit and mark purchased functional)**
+  - [ ] Create `/api/shopping-list/item/[id]` PUT endpoint
+  - [ ] Implement authentication check
+  - [ ] Validate item ownership (belongs to user's shopping list)
+  - [ ] Support partial updates (name, quantity, unit, category, isPurchased, notes)
+  - [ ] Update item in database
+  - [ ] Return updated item
+  - [ ] Handle not found and unauthorized cases
+  - [ ] **Testing:** Test updating various fields
+- [ ] **Create Shopping List Item Delete API Route (AC: Delete functional)**
+  - [ ] Create `/api/shopping-list/item/[id]` DELETE endpoint
+  - [ ] Implement authentication check
+  - [ ] Validate item ownership
+  - [ ] Delete item from database
+  - [ ] Return success message
+  - [ ] Handle not found and unauthorized cases
+  - [ ] **Testing:** Test deletion with valid/invalid IDs
+- [ ] **Create Shopping List Clear API Route (AC: Bulk delete functional)**
+  - [ ] Create `/api/shopping-list/clear` DELETE endpoint
+  - [ ] Implement authentication check
+  - [ ] Support query parameter for mode ("purchased" or "all")
+  - [ ] Delete items based on mode (isPurchased: true or all items)
+  - [ ] Return count of items deleted
+  - [ ] Add confirmation requirement in frontend
+  - [ ] **Testing:** Test clearing purchased only vs all items
+- [ ] **Create ShoppingListPage Server Component (AC: Page accessible)**
+  - [ ] Create `/app/shopping-list/page.tsx` server component
+  - [ ] Implement authentication check and redirect if not logged in
+  - [ ] Fetch initial shopping list data server-side
+  - [ ] Pass data to client components
+  - [ ] Set up page layout with "Farmhouse Kitchen" styling
+  - [ ] **Testing:** Verify route is accessible to authenticated users
+- [ ] **Create ShoppingListView Component (AC: List display complete)**
+  - [ ] Create `ShoppingListView` client component
+  - [ ] Display all shopping list items
+  - [ ] Organize items (group by purchased status or category)
+  - [ ] Show statistics (item counts, purchase progress)
+  - [ ] Add "Add Item" button
+  - [ ] Add "Clear Purchased Items" button
+  - [ ] Implement empty state for no items
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design
+  - [ ] **Testing:** Render component with various data scenarios
+- [ ] **Create ShoppingListItem Component (AC: Item interaction complete)**
+  - [ ] Create `ShoppingListItem` client component
+  - [ ] Display item name, quantity, unit, category, notes
+  - [ ] Add checkbox for marking as purchased
+  - [ ] Add edit button with icon
+  - [ ] Add delete button with icon
+  - [ ] Implement visual styling for purchased state (strike-through, dimmed)
+  - [ ] Show item source indicator (manual vs recipe)
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure accessibility (keyboard navigation, ARIA labels)
+  - [ ] **Testing:** Test all interactions (check, edit, delete)
+- [ ] **Implement Mark as Purchased Functionality (AC: Purchase tracking works)**
+  - [ ] Add checkbox change handler to ShoppingListItem
+  - [ ] Send PUT request to `/api/shopping-list/item/[id]` with isPurchased
+  - [ ] Update UI optimistically
+  - [ ] Implement rollback on error
+  - [ ] Move item to purchased section or update visual state
+  - [ ] Update statistics
+  - [ ] **Testing:** Mark items as purchased and verify state changes
+- [ ] **Implement Edit Item Functionality (AC: Edit works)**
+  - [ ] Create edit modal or inline edit form
+  - [ ] Pre-populate form with current item data
+  - [ ] Allow editing name, quantity, unit, category, notes
+  - [ ] Send PUT request to `/api/shopping-list/item/[id]` on save
+  - [ ] Update UI with edited data
+  - [ ] Handle validation errors
+  - [ ] Close form after successful save
+  - [ ] **Testing:** Edit various fields and verify updates
+- [ ] **Implement Delete Item Functionality (AC: Delete works)**
+  - [ ] Add delete button click handler
+  - [ ] Show confirmation dialog (optional but recommended)
+  - [ ] Send DELETE request to `/api/shopping-list/item/[id]`
+  - [ ] Remove item from UI optimistically
+  - [ ] Implement rollback on error
+  - [ ] Update statistics
+  - [ ] **Testing:** Delete items and verify removal
+- [ ] **Implement Clear Purchased Items Functionality (AC: Bulk clear works)**
+  - [ ] Add "Clear Purchased Items" button click handler
+  - [ ] Show confirmation dialog with item count
+  - [ ] Send DELETE request to `/api/shopping-list/clear?mode=purchased`
+  - [ ] Remove purchased items from UI
+  - [ ] Update statistics
+  - [ ] Show success message with count deleted
+  - [ ] **Testing:** Clear purchased items and verify behavior
+- [ ] **Implement Shopping List Statistics Display (AC: Stats visible)**
+  - [ ] Create statistics component or section
+  - [ ] Display total items, purchased count, pending count
+  - [ ] Show progress indicator (e.g., "3 of 10 items purchased")
+  - [ ] Update statistics in real-time as items change
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Verify stats accuracy with various item states
+- [ ] **Implement Sorting and Organization (AC: List organized)**
+  - [ ] Group items by purchase status (pending vs purchased)
+  - [ ] Optional: Group items by category
+  - [ ] Implement sorting options (by name, date added, category)
+  - [ ] Add UI controls for sort/filter preferences
+  - [ ] Maintain organization with many items
+  - [ ] **Testing:** Test with varying numbers of items and categories
+- [ ] **Optimize Shopping List Performance (AC: Fast load and updates)**
+  - [ ] Ensure shopping list loads within 1.5 seconds
+  - [ ] Optimize database queries with proper indexes
+  - [ ] Implement efficient re-rendering strategies
+  - [ ] Use optimistic updates for immediate feedback
+  - [ ] Measure update/delete response times (<200ms target)
+  - [ ] **Testing:** Performance test with 100+ items
+- [ ] **Ensure Responsive Design and Accessibility (AC: UI responsive and accessible)**
+  - [ ] Test layout on mobile, tablet, and desktop
+  - [ ] Verify WCAG 2.1 AA compliance
+  - [ ] Test keyboard navigation for all actions
+  - [ ] Test with screen readers
+  - [ ] Ensure sufficient color contrast
+  - [ ] Add appropriate ARIA labels and roles
+  - [ ] **Testing:** Accessibility audit with automated tools and manual testing
+- [ ] **Implement Error Handling and Edge Cases (AC: Robust functionality)**
+  - [ ] Handle empty shopping list gracefully
+  - [ ] Handle network errors during operations
+  - [ ] Implement retry mechanisms for failed requests
+  - [ ] Show user-friendly error messages
+  - [ ] Test concurrent edits and race conditions
+  - [ ] **Testing:** Simulate various error scenarios
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in,
+*   **When** I navigate to my shopping list,
+*   **Then** I see all items currently on my list organized in a clear format.
+*   **And** I can mark items as purchased using a checkbox or similar interaction.
+*   **And** purchased items are visually distinguished (e.g., strike-through, moved to separate section).
+*   **And** I can edit individual items (name, quantity, unit, category, notes).
+*   **And** I can delete individual items from the list.
+*   **And** I can clear all purchased items at once with a confirmation.
+*   **And** the shopping list displays useful statistics (e.g., "3 of 10 items purchased").
+*   **And** the shopping list remains organized and easy to read even with many items.
+*   **And** the shopping list view is responsive across devices and accessible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-006.1</section>
+        <snippet>Users can add, view, and delete items from a shopping list.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Frontend Architecture</section>
+        <snippet>Defines component architecture and client-server patterns for shopping list management.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>APIs and Interfaces - GET /api/shopping-list</section>
+        <snippet>Defines the request/response contract for fetching shopping list with items and statistics.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>APIs and Interfaces - PUT/DELETE /api/shopping-list/item/[id]</section>
+        <snippet>Defines the request/response contracts for updating and deleting shopping list items.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic 4 Technical Specification</title>
+        <section>Workflows and Sequencing - View & Manage Shopping List Workflow</section>
+        <snippet>Details the complete user flow for viewing, editing, deleting, and managing shopping list items.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Shopping List Components</section>
+        <snippet>Guidance on shopping list layout, item components, and interaction design with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/shopping-list/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>ShoppingListPage</symbol>
+        <reason>Shopping list page server component</reason>
+      </entry>
+      <entry>
+        <path>app/api/shopping-list/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Endpoint for fetching shopping list</reason>
+      </entry>
+      <entry>
+        <path>app/api/shopping-list/item/[id]/route.ts</path>
+        <kind>api route</kind>
+        <symbol>PUT, DELETE handlers</symbol>
+        <reason>Endpoints for updating and deleting items</reason>
+      </entry>
+      <entry>
+        <path>app/api/shopping-list/clear/route.ts</path>
+        <kind>api route</kind>
+        <symbol>DELETE handler</symbol>
+        <reason>Endpoint for clearing purchased items</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/ShoppingListView.tsx</path>
+        <kind>client component</kind>
+        <symbol>ShoppingListView</symbol>
+        <reason>Main shopping list display component</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/ShoppingListItem.tsx</path>
+        <kind>client component</kind>
+        <symbol>ShoppingListItem</symbol>
+        <reason>Individual item component with interactions</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/ShoppingListStats.tsx</path>
+        <kind>client component</kind>
+        <symbol>ShoppingListStats</symbol>
+        <reason>Statistics display component</reason>
+      </entry>
+      <entry>
+        <path>components/shopping-list/EditItemModal.tsx</path>
+        <kind>client component</kind>
+        <symbol>EditItemModal</symbol>
+        <reason>Modal form for editing items</reason>
+      </entry>
+      <entry>
+        <path>components/ui/ConfirmDialog.tsx</path>
+        <kind>client component</kind>
+        <symbol>ConfirmDialog</symbol>
+        <reason>Confirmation dialog for deletions</reason>
+      </entry>
+      <entry>
+        <path>lib/shopping-list-utils.ts</path>
+        <kind>service</kind>
+        <symbol>ShoppingListUtils</symbol>
+        <reason>Utility functions for shopping list operations</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Form Validation">
+        <package name="zod" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All shopping list API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Users can only access and modify their own shopping list items.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Item ownership must be validated for all update and delete operations.</rule>
+      <source>Epic 4 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Shopping list view must load within 1.5 seconds.</rule>
+      <source>Epic 4 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Update and delete operations must respond within 200ms.</rule>
+      <source>Epic 4 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Implement optimistic UI updates with rollback mechanisms.</rule>
+      <source>Epic 4 Tech Spec - Reliability</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Shopping list view must be responsive across devices.</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Interface must meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 4 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Clear purchased items operation must require user confirmation.</rule>
+      <source>Epic 4 Tech Spec - Workflows</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>GET /api/shopping-list</name>
+      <kind>API Route</kind>
+      <signature>
+Query Parameters:
+{
+  "includePurchased": "boolean (optional, default: true)",
+  "sortBy": "string (optional: createdAt | name | category, default: createdAt)"
+}
+
+Response (200 OK):
+{
+  "shoppingList": {
+    "id": "string (cuid)",
+    "items": [
+      {
+        "id": "string (cuid)",
+        "name": "string",
+        "quantity": "number",
+        "unit": "string",
+        "category": "string",
+        "isPurchased": "boolean",
+        "notes": "string",
+        "addedFrom": "manual | recipe",
+        "recipeId": "string (optional)",
+        "createdAt": "string (ISO 8601)"
+      }
+    ],
+    "createdAt": "string (ISO 8601)",
+    "updatedAt": "string (ISO 8601)"
+  },
+  "stats": {
+    "totalItems": "number",
+    "purchasedItems": "number",
+    "pendingItems": "number"
+  }
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/shopping-list/route.ts</path>
+    </entry>
+    <entry>
+      <name>PUT /api/shopping-list/item/[id]</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "name": "string (optional)",
+  "quantity": "number (optional)",
+  "unit": "string (optional)",
+  "category": "string (optional)",
+  "isPurchased": "boolean (optional)",
+  "notes": "string (optional)"
+}
+
+Response (200 OK):
+{
+  "message": "Item updated successfully",
+  "item": {
+    "id": "string (cuid)",
+    "name": "string",
+    "quantity": "number",
+    "unit": "string",
+    "category": "string",
+    "isPurchased": "boolean",
+    "notes": "string",
+    "updatedAt": "string (ISO 8601)"
+  }
+}
+
+Response (404 Not Found):
+{
+  "error": "Shopping list item not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (403 Forbidden):
+{
+  "error": "Access denied"
+}
+      </signature>
+      <path>app/api/shopping-list/item/[id]/route.ts</path>
+    </entry>
+    <entry>
+      <name>DELETE /api/shopping-list/item/[id]</name>
+      <kind>API Route</kind>
+      <signature>
+Response (200 OK):
+{
+  "message": "Item deleted successfully",
+  "itemId": "string (cuid)"
+}
+
+Response (404 Not Found):
+{
+  "error": "Shopping list item not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (403 Forbidden):
+{
+  "error": "Access denied"
+}
+      </signature>
+      <path>app/api/shopping-list/item/[id]/route.ts</path>
+    </entry>
+    <entry>
+      <name>DELETE /api/shopping-list/clear</name>
+      <kind>API Route</kind>
+      <signature>
+Query Parameters:
+{
+  "mode": "string (optional: purchased | all, default: purchased)"
+}
+
+Response (200 OK):
+{
+  "message": "Shopping list cleared successfully",
+  "itemsDeleted": "number"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/shopping-list/clear/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation logic, statistics calculation, sorting logic, component rendering, and optimistic update/rollback mechanisms. Integration Tests will focus on API routes with database interactions, authentication flow, and complete CRUD operations. End-to-End (E2E) Tests will simulate complete user flows (view list, mark purchased, edit, delete, clear). Performance Tests will measure shopping list load time (<1.5s) and update/delete response time (<200ms), including performance with large lists (100+ items). UI/UX Tests will verify list organization, interaction responsiveness, feedback mechanisms, visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA). Edge Case Tests will include empty list, single item, 100+ items, all items purchased, no items purchased, concurrent edits, and network failures.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend data retrieval</id>
+        <description>Unit test /api/shopping-list with various query parameters, verify statistics calculation accuracy.</description>
+      </entry>
+      <entry>
+        <id>AC: Edit and mark purchased functional</id>
+        <description>Test PUT /api/shopping-list/item/[id] with various field updates, verify ownership validation.</description>
+      </entry>
+      <entry>
+        <id>AC: Delete functional</id>
+        <description>Test DELETE /api/shopping-list/item/[id], verify item removal and ownership validation.</description>
+      </entry>
+      <entry>
+        <id>AC: Bulk delete functional</id>
+        <description>Test /api/shopping-list/clear with purchased mode and all mode, verify correct items deleted.</description>
+      </entry>
+      <entry>
+        <id>AC: List display complete</id>
+        <description>Render ShoppingListView with various data scenarios (empty, few items, many items), verify organization.</description>
+      </entry>
+      <entry>
+        <id>AC: Item interaction complete</id>
+        <description>Test ShoppingListItem component with all interactions (checkbox, edit, delete), verify accessibility.</description>
+      </entry>
+      <entry>
+        <id>AC: Purchase tracking works</id>
+        <description>E2E test: Mark items as purchased, verify visual changes, statistics update, and optimistic UI behavior.</description>
+      </entry>
+      <entry>
+        <id>AC: Edit works</id>
+        <description>E2E test: Edit item fields, save, verify updates persist and display correctly.</description>
+      </entry>
+      <entry>
+        <id>AC: Delete works</id>
+        <description>E2E test: Delete item with confirmation, verify removal from UI and database.</description>
+      </entry>
+      <entry>
+        <id>AC: Bulk clear works</id>
+        <description>E2E test: Clear purchased items with confirmation, verify only purchased items removed.</description>
+      </entry>
+      <entry>
+        <id>AC: Stats visible</id>
+        <description>Verify statistics display accuracy and real-time updates as items change state.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure load time with 100+ items and update/delete response times, verify targets met.</description>
+      </entry>
+      <entry>
+        <id>Edge Case: Concurrent edits</id>
+        <description>Test race conditions with multiple simultaneous edits, verify data consistency.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>
