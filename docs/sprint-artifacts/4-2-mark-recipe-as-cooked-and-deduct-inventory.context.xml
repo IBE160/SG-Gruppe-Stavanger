@@ -1,0 +1,149 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>2</storyId>
+    <title>Mark Recipe as Cooked and Deduct Inventory</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-2-mark-recipe-as-cooked-and-deduct-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to mark a recipe as cooked</iWant>
+    <soThat>the used ingredients are automatically removed from my inventory.</soThat>
+    <tasks>
+- [ ] Task: (AC: #1, #2, #3) Implement the "Mark as Cooked" functionality.
+    - [ ] Subtask: Create the API endpoint `POST /api/recipes/{id}/cook` to handle the logic for deducting ingredients from the inventory.
+    - [ ] Subtask: Develop the "Inventory Deduction Modal" component as specified in the UX design. This modal should list the ingredients of the recipe and allow the user to confirm their usage.
+    - [ ] Subtask: Integrate the modal with the recipe details page, triggering it when the user clicks the "I Cooked This" button.
+    - [ ] Subtask (Test): Write an integration test for the `POST /api/recipes/{id}/cook` endpoint to ensure it correctly updates inventory quantities in the database.
+    - [ ] Subtask (Test): Write a component test for the "Inventory Deduction Modal" to verify its state management and user interactions.
+- [ ] Task: (AC: #1, #2, #3, E2E) Write an end-to-end test for the "Mark as Cooked" workflow.
+    - [ ] Subtask (Test): The test should simulate a user viewing a recipe, marking it as cooked, confirming the ingredients in the modal, and then verifying that the inventory is correctly updated.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  When a user indicates they have cooked a recipe, the system prompts for confirmation of the ingredients used. (Source: epics.md#Story-4.2)
+2.  Upon confirmation, the quantities of the used ingredients are deducted from the user's inventory. (Source: epics.md#Story-4.2)
+3.  The inventory deduction is a deliberate, confirmed action, involving a modal confirmation step. (Source: epics.md#Story-4.2, ux-design-specification.md#Inventory-Deduction-Modal)
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR3.4 - Mark Recipe as Cooked</section>
+        <snippet>A user can indicate they have cooked a recipe. The system prompts the user to confirm which ingredients from their inventory were used. Upon confirmation, the quantities of the used ingredients are automatically deducted from the user's inventory. This action is 'deliberate' to ensure data quality.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 4.2: Mark Recipe as Cooked and Deduct Inventory</section>
+        <snippet>As a user, I want to mark a recipe as cooked, so that the used ingredients are automatically removed from my inventory. Acceptance Criteria: Prompts for confirmation, deducts quantities upon confirmation, deduction is a deliberate, confirmed action.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>API Contracts</section>
+        <snippet>API Style: RESTful API. Implementation: Next.js API Routes (Route Handlers). The endpoint for this story is POST /api/recipes/{id}/cook.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Inventory Deduction Modal</section>
+        <snippet>A custom modal is required to confirm ingredient deduction after cooking. This is a blocking action and should be a medium (600px) modal that can be dismissed.</snippet>
+      </doc>
+      <doc>
+        <path>README.md</path>
+        <title>Project README</title>
+        <section>General Project Information</section>
+        <snippet># SG-Gruppe-Stavanger
+Repository for SG-Gruppe-Stavanger - IBE160 Programmering med KI.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>app/api/recipes/[id]/cook/route.ts</path>
+        <kind>api-route</kind>
+        <symbol>POST</symbol>
+        <lines>new</lines>
+        <reason>New API endpoint to handle the logic for deducting ingredients from the inventory.</reason>
+      </file>
+      <file>
+        <path>components/specific/InventoryDeductionModal.tsx</path>
+        <kind>component</kind>
+        <symbol>InventoryDeductionModal</symbol>
+        <lines>new</lines>
+        <reason>New modal component to confirm ingredient usage before deduction.</reason>
+      </file>
+      <file>
+        <path>app/(main)/recipes/[id]/page.tsx</path>
+        <kind>page</kind>
+        <symbol>RecipePage</symbol>
+        <lines>modification</lines>
+        <reason>Add the "I Cooked This" button to trigger the inventory deduction modal.</reason>
+      </file>
+      <file>
+        <path>lib/supabaseClient.ts</path>
+        <kind>utility</kind>
+        <symbol>updateInventory</symbol>
+        <lines>modification</lines>
+        <reason>Add or modify a function to handle the database transaction for deducting ingredients.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>next</name>
+        <version>16</version>
+        <reason>Core framework for the application.</reason>
+      </dependency>
+      <dependency>
+        <name>react</name>
+        <version>latest</version>
+        <reason>UI library for building components.</reason>
+      </dependency>
+      <dependency>
+        <name>tailwindcss</name>
+        <version>latest</version>
+        <reason>CSS framework for styling.</reason>
+      </dependency>
+      <dependency>
+        <name>@supabase/supabase-js</name>
+        <version>latest</version>
+        <reason>Client library for interacting with Supabase.</reason>
+      </dependency>
+      <dependency>
+        <name>next-auth</name>
+        <version>4.24.13</version>
+        <reason>Authentication library for Next.js.</reason>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>API Pattern: RESTful API using Next.js API Routes (Route Handlers).</constraint>
+    <constraint>Data Persistence: Supabase PostgreSQL will be updated.</constraint>
+    <constraint>Security: The API endpoint must be secured to ensure users can only modify their own inventory using RLS.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Mark Recipe as Cooked</name>
+      <kind>REST endpoint</kind>
+      <signature>POST /api/recipes/{id}/cook</signature>
+      <path>app/api/recipes/[id]/cook/route.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>Follow the multi-layered testing strategy (Unit, Integration, E2E) outlined in the architecture. Use Jest and React Testing Library for unit and component tests, and Playwright or Cypress for E2E tests.</standards>
+    <locations>tests/</locations>
+    <ideas>
+      <idea for="AC#1,AC#2,AC#3">Write an integration test for the `POST /api/recipes/{id}/cook` endpoint to ensure it correctly updates inventory quantities in the database.</idea>
+      <idea for="AC#3">Write a component test for the "Inventory Deduction Modal" to verify its state management and user interactions.</idea>
+      <idea for="E2E">Write an end-to-end test for the "Mark as Cooked" workflow, from clicking the button to verifying the inventory update.</idea>
+    </ideas>
+  </tests>
+</story-context>

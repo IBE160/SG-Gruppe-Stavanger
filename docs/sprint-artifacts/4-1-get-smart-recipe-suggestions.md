@@ -70,6 +70,8 @@ so that I can cook with ingredients I already have, especially those nearing exp
 
 ### Agent Model Used
 
+Gemini 2.5 Pro and Flesh (in #yolo mode)
+
 sm
 
 ### Debug Log References

@@ -1,6 +1,6 @@
 # Story 4.2: Mark Recipe as Cooked and Deduct Inventory
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -53,9 +53,11 @@ so that the used ingredients are automatically removed from my inventory.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/4-2-mark-recipe-as-cooked-and-deduct-inventory.context.xml
 
 ### Agent Model Used
+
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 sm
 
