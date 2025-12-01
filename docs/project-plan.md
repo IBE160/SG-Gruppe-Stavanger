@@ -96,8 +96,8 @@
       - [ ] Epic 4 story
         - [x] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.md
         - [x] File: sprint-artifacts/4-2-mark-recipe-as-cooked-and-deduct-inventory.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
-        - [ ] File: sprint-artifacts/{{story_key}}.md
+        - [ ] File: sprint-artifacts/4-3-expiration-alerts.md
+        - [ ] File: sprint-artifacts/4-4-instant-idea-generation.md
         - [ ] File: sprint-artifacts/{{story_key}}.md
       - [ ] /run-agent-task sm *validate-create-story {prompt / user-input-file}
       - [ ] /run-agent-task sm *create-story-context {prompt / user-input-file}
@@ -118,8 +118,8 @@
       - [ ] Epic 4 context
         - [x] File: sprint-artifacts/4-1-get-smart-recipe-suggestions.context.xml
         - [x] File: sprint-artifacts/4-2-mark-recipe-as-cooked-and-deduct-inventory.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
-        - [ ] File: sprint-artifacts/{{story_key}}.context.xml
+        - [ ] File: sprint-artifacts/4-3-expiration-alert.context.xml
+        - [ ] File: sprint-artifacts/4-4-instant-idea-generation.context.xml
         - [ ] File: sprint-artifacts/{{story_key}}.context.xml
       - [ ] /run-agent-task sm *validate-story-context {prompt / user-input-file}
       - [ ] /run-agent-task sm *story-ready-for-dev {prompt / user-input-file}
