@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { RecipeSearchBar } from '@/components/recipes/RecipeSearchBar';
 import { RecipeCard, Recipe } from '@/components/recipes/RecipeCard';
 import { RecipePagination } from '@/components/recipes/RecipePagination';
+import { SuggestionTrigger } from '@/components/recipes/SuggestionTrigger';
 import { AlertCircle, ChefHat } from 'lucide-react';
 
 const RESULTS_PER_PAGE = 12;
@@ -153,6 +154,9 @@ export default function RecipesPage() {
             <RecipeSearchBar onSearch={handleSearch} />
           </CardContent>
         </Card>
+
+        {/* Recipe Suggestions */}
+        <SuggestionTrigger />
 
         {/* Main Content */}
         <Card className="bg-white shadow-farmhouse border-sage-green/20">

@@ -68,6 +68,38 @@ export interface RecipeDetail {
 }
 
 /**
+ * Recipe suggestion from "Find by Ingredients" endpoint
+ */
+export interface RecipeSuggestion {
+  id: number;
+  title: string;
+  image: string;
+  usedIngredientCount: number;
+  missedIngredientCount: number;
+  missedIngredients: {
+    id: number;
+    name: string;
+    amount: number;
+    unit: string;
+  }[];
+  usedIngredients: {
+    id: number;
+    name: string;
+    amount: number;
+    unit: string;
+  }[];
+  likes: number;
+}
+
+/**
+ * Recipe suggestion response
+ */
+export interface RecipeSuggestionResponse {
+  suggestions: RecipeSuggestion[];
+  totalResults: number;
+}
+
+/**
  * Spoonacular API Client
  */
 export class SpoonacularClient {
@@ -234,6 +266,108 @@ export class SpoonacularClient {
       }
       logger.error(`Error fetching recipe detail: ${error}`);
       throw new Error('Failed to fetch recipe details');
+    }
+  }
+
+  /**
+   * Find recipes by ingredients
+   */
+  async findByIngredients(
+    ingredients: string[],
+    number: number = 10
+  ): Promise<RecipeSuggestionResponse> {
+    if (!SPOONACULAR_API_KEY) {
+      logger.error('Spoonacular API key is not configured');
+      throw new Error('Spoonacular API key is not configured');
+    }
+
+    if (ingredients.length === 0) {
+      logger.warn('No ingredients provided for recipe suggestions');
+      return { suggestions: [], totalResults: 0 };
+    }
+
+    // Create cache key
+    const ingredientsList = ingredients.sort().join(',');
+    const cacheKey = `findByIngredients:${ingredientsList}:${number}`;
+
+    // Check cache first
+    const cachedResult = cache.get<RecipeSuggestionResponse>(cacheKey);
+    if (cachedResult) {
+      logger.info(`Cache hit for findByIngredients: ${cacheKey}`);
+      return cachedResult;
+    }
+
+    // Apply rate limiting
+    await rateLimit();
+
+    try {
+      const params = new URLSearchParams({
+        apiKey: SPOONACULAR_API_KEY,
+        ingredients: ingredients.join(','),
+        number: number.toString(),
+        ranking: '2', // Maximize used ingredients
+        ignorePantry: 'true',
+      });
+
+      const url = `${SPOONACULAR_BASE_URL}/recipes/findByIngredients?${params}`;
+
+      logger.info(`Finding recipes by ingredients: ${ingredients.join(', ')}`);
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        if (response.status === 402) {
+          logger.error('Spoonacular API rate limit exceeded');
+          throw new Error('Recipe suggestion rate limit exceeded. Please try again later.');
+        } else if (response.status === 401) {
+          logger.error('Spoonacular API authentication failed');
+          throw new Error('Recipe API authentication failed');
+        } else {
+          logger.error(`Spoonacular API error: ${response.status} ${response.statusText}`);
+          throw new Error('Recipe suggestion service unavailable');
+        }
+      }
+
+      const data = await response.json();
+
+      // Transform the response to match our interface
+      const suggestions: RecipeSuggestion[] = data.map((recipe: any) => ({
+        id: recipe.id,
+        title: recipe.title,
+        image: recipe.image || '',
+        usedIngredientCount: recipe.usedIngredientCount || 0,
+        missedIngredientCount: recipe.missedIngredientCount || 0,
+        missedIngredients: (recipe.missedIngredients || []).map((ing: any) => ({
+          id: ing.id,
+          name: ing.name,
+          amount: ing.amount,
+          unit: ing.unit,
+        })),
+        usedIngredients: (recipe.usedIngredients || []).map((ing: any) => ({
+          id: ing.id,
+          name: ing.name,
+          amount: ing.amount,
+          unit: ing.unit,
+        })),
+        likes: recipe.likes || 0,
+      }));
+
+      const result: RecipeSuggestionResponse = {
+        suggestions,
+        totalResults: suggestions.length,
+      };
+
+      // Cache the result
+      cache.set(cacheKey, result);
+      logger.info(`Cached findByIngredients result: ${cacheKey}`);
+
+      return result;
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('rate limit')) {
+        throw error;
+      }
+      logger.error(`Error finding recipes by ingredients: ${error}`);
+      throw new Error('Failed to find recipes by ingredients');
     }
   }
 
