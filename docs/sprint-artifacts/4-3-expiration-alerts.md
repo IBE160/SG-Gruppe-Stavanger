@@ -171,7 +171,7 @@ so that I can use them before they go to waste.
 
 ### Agent Model Used
 
-Gemini-CLI
+Gemini 2.5 Pro and Flesh (in #yolo mode)
 
 ### Debug Log References
 

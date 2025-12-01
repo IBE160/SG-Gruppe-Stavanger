@@ -76,6 +76,8 @@ so that I can get an instant meal idea.
 
 ### Agent Model Used
 
+Gemini 2.5 Pro and Flesh (in #yolo mode)
+
 {{agent_model_name_version}}
 
 ### Debug Log References
