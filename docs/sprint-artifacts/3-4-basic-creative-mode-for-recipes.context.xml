@@ -1,0 +1,288 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-3</epicId>
+    <storyId>3.4</storyId>
+    <title>Basic Creative Mode for Recipes</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-4-basic-creative-mode-for-recipes.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>manually enter a few ingredients to get recipe suggestions,</iWant>
+    <soThat>I can explore creative cooking possibilities with specific items I want to use.</soThat>
+    <tasks>
+- [ ] **Create Creative Mode API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/recipes/creative-mode` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Implement request body validation (minimum 2 ingredients)
+  - [ ] Construct ingredient list for Spoonacular API
+  - [ ] Query Spoonacular "Find by Ingredients" endpoint
+  - [ ] Return recipe suggestions
+  - [ ] Handle validation errors (400 Bad Request)
+  - [ ] Handle Spoonacular API errors
+  - [ ] **Testing:** Unit test API route with valid/invalid ingredient lists
+- [ ] **Create CreativeModeForm Component (AC: Input UI complete)**
+  - [ ] Create `CreativeModeForm` client component
+  - [ ] Implement input fields for 2-3 ingredients
+  - [ ] Use shadcn/ui Input components
+  - [ ] Add dynamic field addition (up to 3 ingredients initially)
+  - [ ] Implement client-side validation (minimum 2 ingredients)
+  - [ ] Add submit button
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design
+  - [ ] Add accessibility features
+  - [ ] **Testing:** Render form and verify all fields work
+- [ ] **Implement Form Validation (AC: Validates minimum 2 ingredients)**
+  - [ ] Add client-side validation on submit
+  - [ ] Display error message if <2 ingredients entered
+  - [ ] Prevent empty ingredient submissions
+  - [ ] Trim whitespace from inputs
+  - [ ] **Testing:** Test validation with various input combinations
+- [ ] **Create Creative Mode Page/Section (AC: Feature accessible)**
+  - [ ] Create `/app/recipes/creative-mode/page.tsx` or add section to recipes page
+  - [ ] Implement authentication check
+  - [ ] Render CreativeModeForm component
+  - [ ] Set up page layout with "Farmhouse Kitchen" styling
+  - [ ] Add explanatory text for users
+  - [ ] **Testing:** Verify page is accessible to authenticated users
+- [ ] **Integrate Form with API (AC: Form submits and receives results)**
+  - [ ] Connect form submit to `/api/recipes/creative-mode` endpoint
+  - [ ] Handle loading state during API call
+  - [ ] Display recipe results when received
+  - [ ] Handle API errors and display error messages
+  - [ ] Handle empty results scenario
+  - [ ] **Testing:** E2E test submitting ingredients and receiving results
+- [ ] **Display Creative Mode Results (AC: Results user-friendly)**
+  - [ ] Reuse RecipeCard component for displaying results
+  - [ ] Display recipes in grid or list format
+  - [ ] Show which of user's specified ingredients are used
+  - [ ] Show how many additional ingredients are needed
+  - [ ] Add "Try Another Combination" or "Reset" button
+  - [ ] **Testing:** Verify results display correctly
+- [ ] **Add Navigation to Creative Mode (AC: Feature discoverable)**
+  - [ ] Add navigation link/button in recipes section
+  - [ ] Add icon or visual cue (e.g., "Creative Mode" badge)
+  - [ ] Ensure navigation is intuitive
+  - [ ] **Testing:** Verify users can easily find and access Creative Mode
+- [ ] **Implement Simple and Intuitive UX (AC: UI simple and intuitive)**
+  - [ ] Add helpful placeholder text in input fields
+  - [ ] Add tooltip or help text explaining the feature
+  - [ ] Ensure clear visual feedback during interaction
+  - [ ] Test with potential users for usability
+  - [ ] **Testing:** Manual UX review and user testing
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in and access the "Creative Mode",
+*   **When** I manually input 2-3 ingredients,
+*   **And** I submit my selection,
+*   **Then** the system returns recipe suggestions from the Spoonacular API that use those ingredients.
+*   **And** the UI for inputting ingredients is simple and intuitive.
+*   **And** results are displayed in a user-friendly format.
+*   **And** the form validates that at least 2 ingredients are entered.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-003.4</section>
+        <snippet>Users can manually enter ingredients to get creative recipe suggestions.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Frontend Architecture</section>
+        <snippet>Defines component structure for creative mode forms and results.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>Story 3.4</section>
+        <snippet>Details the implementation of creative mode with manual ingredient input.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Creative Mode</section>
+        <snippet>Guidance on creative mode form design and user experience.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/api/recipes/creative-mode/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Creative mode endpoint</reason>
+      </entry>
+      <entry>
+        <path>app/recipes/creative-mode/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>CreativeModePage</symbol>
+        <reason>Creative mode page</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/CreativeModeForm.tsx</path>
+        <kind>client component</kind>
+        <symbol>CreativeModeForm</symbol>
+        <reason>Input form component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/CreativeModeResults.tsx</path>
+        <kind>client component</kind>
+        <symbol>CreativeModeResults</symbol>
+        <reason>Results display component</reason>
+      </entry>
+      <entry>
+        <path>lib/spoonacular-client.ts</path>
+        <kind>service</kind>
+        <symbol>findByIngredients</symbol>
+        <reason>Spoonacular API client (reuse "Find by Ingredients")</reason>
+      </entry>
+      <entry>
+        <path>app/recipes/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>RecipesPage</symbol>
+        <reason>Add navigation to Creative Mode</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="External APIs">
+        <package name="Spoonacular API" />
+      </ecosystem>
+      <ecosystem name="Form Validation">
+        <package name="zod" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Creative mode API must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Form must validate minimum 2 ingredients client-side and server-side.</rule>
+      <source>Epic 3 Tech Spec - Validation</source>
+    </entry>
+    <entry>
+      <rule>UI must be simple and intuitive for easy discovery and use.</rule>
+      <source>Epic 3 Tech Spec - UX</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Interface must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 3 Tech Spec - Accessibility</source>
+    </entry>
+    <entry>
+      <rule>Handle validation errors with clear, user-friendly messages.</rule>
+      <source>Epic 3 Tech Spec - Error Handling</source>
+    </entry>
+    <entry>
+      <rule>Reuse RecipeCard component for consistent UI across features.</rule>
+      <source>Epic 3 Tech Spec - Component Reuse</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>POST /api/recipes/creative-mode</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "ingredients": ["string", "string", ...]
+}
+
+Response (200 OK):
+{
+  "results": [
+    {
+      "id": "number",
+      "title": "string",
+      "image": "string",
+      "usedIngredientCount": "number",
+      "missedIngredientCount": "number",
+      "readyInMinutes": "number",
+      "servings": "number"
+    }
+  ],
+  "totalResults": "number"
+}
+
+Response (400 Bad Request):
+{
+  "error": "At least 2 ingredients are required"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (500 Internal Server Error):
+{
+  "error": "string"
+}
+      </signature>
+      <path>app/api/recipes/creative-mode/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation logic, form validation functions, and ingredient parsing. Integration Tests will focus on API route with Spoonacular API and form submission flow. End-to-End (E2E) Tests will simulate the complete user flow from entering ingredients to viewing results. UI/UX Tests will verify visual aesthetic, form usability, responsiveness, and accessibility (WCAG 2.1 AA). Edge Case Tests will handle single ingredient (should fail), empty ingredients, special characters, and very long ingredient names.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/recipes/creative-mode with valid and invalid ingredient lists, verify validation.</description>
+      </entry>
+      <entry>
+        <id>AC: Input UI complete</id>
+        <description>Render CreativeModeForm and verify all fields work, styled correctly, responsive, accessible.</description>
+      </entry>
+      <entry>
+        <id>AC: Validates minimum 2 ingredients</id>
+        <description>Test validation with various input combinations, verify error messages displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: Feature accessible</id>
+        <description>Verify page is accessible to authenticated users, explanatory text is clear.</description>
+      </entry>
+      <entry>
+        <id>AC: Form submits and receives results</id>
+        <description>E2E test: Enter ingredients, submit, verify results displayed, test error handling.</description>
+      </entry>
+      <entry>
+        <id>AC: Results user-friendly</id>
+        <description>Verify results display correctly, ingredient match info shown, reset button works.</description>
+      </entry>
+      <entry>
+        <id>AC: UI simple and intuitive</id>
+        <description>Manual UX review, verify placeholder text, tooltips, and visual feedback are clear.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

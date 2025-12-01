@@ -1,0 +1,311 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-3</epicId>
+    <storyId>3.3</storyId>
+    <title>Smart Recipe Suggestions from Inventory</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-3-smart-recipe-suggestions-from-inventory.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>receive personalized recipe suggestions based on my current inventory,</iWant>
+    <soThat>I can make the most of my available ingredients and reduce food waste.</soThat>
+    <tasks>
+- [ ] **Create Recipe Suggestion API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/recipes/suggest` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js to extract userId
+  - [ ] Query user's FoodItem inventory via Prisma
+  - [ ] Identify ingredients, prioritizing those nearing expiration
+  - [ ] Construct ingredient list for Spoonacular API
+  - [ ] Query Spoonacular "Find by Ingredients" endpoint
+  - [ ] Implement ranking logic for suggestions
+  - [ ] Return at least 3 recipe suggestions
+  - [ ] Handle edge cases (empty inventory, no matching recipes)
+  - [ ] **Testing:** Unit test API route with various inventory scenarios
+- [ ] **Implement Expiration Prioritization Logic (AC: Expiring ingredients prioritized)**
+  - [ ] Define expiration threshold (e.g., items expiring within 3-5 days)
+  - [ ] Query FoodItem table for items with bestBeforeDate within threshold
+  - [ ] Weight suggestions to favor recipes using expiring ingredients
+  - [ ] Test prioritization algorithm
+  - [ ] **Testing:** Verify expiring items are prioritized in suggestions
+- [ ] **Implement Recipe Ranking Algorithm (AC: Best matches ranked higher)**
+  - [ ] Rank by number of used ingredients (higher is better)
+  - [ ] Rank by number of missing ingredients (lower is better)
+  - [ ] Apply bonus for recipes using expiring ingredients
+  - [ ] Return top-ranked suggestions
+  - [ ] **Testing:** Test ranking with various recipe sets
+- [ ] **Create RecipeSuggestionList Component (AC: Suggestions display)**
+  - [ ] Create `RecipeSuggestionList` client component
+  - [ ] Display suggested recipes in grid or list format
+  - [ ] Show ingredient match indicators (e.g., "Uses 8 of your ingredients")
+  - [ ] Highlight if recipe helps use expiring items
+  - [ ] Use RecipeCard component for consistent styling
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Render component with mock suggestion data
+- [ ] **Create Suggestion Trigger UI (AC: User can request suggestions)**
+  - [ ] Add "Recipes from My Pantry" button or section
+  - [ ] Place trigger in prominent location (recipes page or dashboard)
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Verify trigger is visible and accessible
+- [ ] **Integrate Suggestion Functionality (AC: Suggestions work end-to-end)**
+  - [ ] Connect trigger to `/api/recipes/suggest` endpoint
+  - [ ] Handle loading state during suggestion generation
+  - [ ] Display suggestions when received
+  - [ ] Handle empty results (e.g., "No recipes found for your inventory")
+  - [ ] Handle errors gracefully
+  - [ ] Ensure suggestions load within 3 seconds
+  - [ ] **Testing:** E2E test requesting and displaying suggestions
+- [ ] **Implement Ingredient Match Count Display (AC: Match info shown)**
+  - [ ] Display "Used Ingredients" count for each suggestion
+  - [ ] Display "Missing Ingredients" count for each suggestion
+  - [ ] Show visual indicator (e.g., badge, progress bar)
+  - [ ] Ensure clarity and accessibility
+  - [ ] **Testing:** Verify counts are accurate and displayed
+- [ ] **Add Expiring Ingredient Highlight (AC: Expiring items highlighted)**
+  - [ ] Add visual indicator for recipes using expiring ingredients
+  - [ ] Use color coding or badge (e.g., "Helps use expiring items")
+  - [ ] Ensure indicator is noticeable but not intrusive
+  - [ ] **Testing:** Verify indicator appears for relevant recipes
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in and navigate to the "Recipes" section or a dedicated suggestion area,
+*   **When** I request recipe suggestions from my inventory,
+*   **Then** the system presents at least 3 recipes that can be made with my available ingredients.
+*   **And** the suggestions prioritize recipes that use ingredients nearing expiration (if any).
+*   **And** the suggestions are visually appealing and easy to understand.
+*   **And** each suggestion shows how many of my ingredients are used and how many are missing.
+*   **And** suggestions load within 3 seconds.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-003.2, FR-003.3</section>
+        <snippet>Users receive personalized recipe suggestions based on inventory with expiration prioritization.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Backend Architecture, External APIs</section>
+        <snippet>Defines suggestion engine architecture and Spoonacular API integration.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>Story 3.3</section>
+        <snippet>Details the implementation of smart recipe suggestions with ranking algorithm.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Recipe Suggestions</section>
+        <snippet>Guidance on suggestion display, match indicators, and expiration highlights.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/api/recipes/suggest/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Recipe suggestion endpoint</reason>
+      </entry>
+      <entry>
+        <path>lib/recipe-suggestion-engine.ts</path>
+        <kind>service</kind>
+        <symbol>SuggestionEngine</symbol>
+        <reason>Ranking and prioritization logic</reason>
+      </entry>
+      <entry>
+        <path>lib/spoonacular-client.ts</path>
+        <kind>service</kind>
+        <symbol>findByIngredients</symbol>
+        <reason>Spoonacular API client for "Find by Ingredients"</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeSuggestionList.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeSuggestionList</symbol>
+        <reason>Suggestion display component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/SuggestionTrigger.tsx</path>
+        <kind>client component</kind>
+        <symbol>SuggestionTrigger</symbol>
+        <reason>Trigger button/section</reason>
+      </entry>
+      <entry>
+        <path>app/recipes/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>RecipesPage</symbol>
+        <reason>Integrate suggestion section</reason>
+      </entry>
+      <entry>
+        <path>app/dashboard/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>DashboardPage</symbol>
+        <reason>Optional: Add suggestions to dashboard</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="External APIs">
+        <package name="Spoonacular API" />
+      </ecosystem>
+      <ecosystem name="Caching">
+        <package name="node-cache or similar" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Recipe suggestion API must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Ranking algorithm must prioritize recipes using expiring ingredients.</rule>
+      <source>Epic 3 Tech Spec - Business Logic</source>
+    </entry>
+    <entry>
+      <rule>Suggestions must load within 3 seconds.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>System must return at least 3 suggestions when possible.</rule>
+      <source>Epic 3 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Handle edge cases gracefully (empty inventory, no matches).</rule>
+      <source>Epic 3 Tech Spec - Error Handling</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Implement caching to reduce API calls and improve performance.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Visual indicators must be accessible to screen readers.</rule>
+      <source>Epic 3 Tech Spec - Accessibility</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>POST /api/recipes/suggest</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  // Optional: can be empty to use all inventory
+}
+
+Response (200 OK):
+{
+  "suggestions": [
+    {
+      "id": "number",
+      "title": "string",
+      "image": "string",
+      "usedIngredientCount": "number",
+      "missedIngredientCount": "number",
+      "usesExpiringIngredients": "boolean",
+      "readyInMinutes": "number",
+      "servings": "number"
+    }
+  ],
+  "totalResults": "number"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (500 Internal Server Error):
+{
+  "error": "string"
+}
+      </signature>
+      <path>app/api/recipes/suggest/route.ts</path>
+    </entry>
+    <entry>
+      <name>Suggestion Ranking Function</name>
+      <kind>Service Function</kind>
+      <signature>
+function rankSuggestions(
+  recipes: SpoonacularRecipe[],
+  expiringIngredients: string[]
+): RankedRecipe[]
+
+interface RankedRecipe {
+  recipe: SpoonacularRecipe;
+  score: number;
+  usesExpiringIngredients: boolean;
+}
+      </signature>
+      <path>lib/recipe-suggestion-engine.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on ranking algorithm, expiration prioritization logic, ingredient list construction, and API route logic. Integration Tests will focus on API route with Prisma and Spoonacular API integration, and suggestion generation flow. End-to-End (E2E) Tests will simulate requesting suggestions from UI, verifying results displayed, and testing with different inventory states. Performance Tests will measure suggestion generation time (<3s) and test with large inventories. Edge Case Tests will handle empty inventory, no matches, all ingredients expiring, and very large inventory. UI/UX Tests will verify visual aesthetic, responsiveness, accessibility, and clarity of match indicators.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/recipes/suggest with various inventory scenarios, verify ranking and prioritization.</description>
+      </entry>
+      <entry>
+        <id>AC: Expiring ingredients prioritized</id>
+        <description>Test prioritization algorithm with expiring and non-expiring ingredients, verify correct weighting.</description>
+      </entry>
+      <entry>
+        <id>AC: Best matches ranked higher</id>
+        <description>Test ranking algorithm with various recipe sets, verify correct ordering.</description>
+      </entry>
+      <entry>
+        <id>AC: Suggestions display</id>
+        <description>Render RecipeSuggestionList and verify all fields displayed correctly, responsive, accessible.</description>
+      </entry>
+      <entry>
+        <id>AC: Suggestions work end-to-end</id>
+        <description>E2E test: Request suggestions, verify results displayed, test empty inventory scenario, verify load time <3s.</description>
+      </entry>
+      <entry>
+        <id>AC: Match info shown</id>
+        <description>Verify ingredient match counts are accurate and displayed clearly.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure suggestion generation time with various inventory sizes, verify caching effectiveness.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

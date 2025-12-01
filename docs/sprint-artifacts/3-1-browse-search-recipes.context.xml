@@ -1,0 +1,330 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-3</epicId>
+    <storyId>3.1</storyId>
+    <title>Browse & Search Recipes</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-1-browse-search-recipes.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>browse and search recipes from a recipe database,</iWant>
+    <soThat>I can discover new dishes to cook with my available ingredients.</soThat>
+    <tasks>
+- [ ] **Create Recipe Search API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/recipes/search` GET endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Integrate Spoonacular API client for recipe search
+  - [ ] Implement query parameter handling (query, number, offset)
+  - [ ] Implement response caching for better performance
+  - [ ] Handle Spoonacular API errors (rate limits, timeouts, service unavailable)
+  - [ ] Return appropriate success/error responses
+  - [ ] **Testing:** Unit test API route with valid/invalid queries
+- [ ] **Create Recipe Detail Fetch API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/recipes/[id]` GET endpoint
+  - [ ] Implement authentication check using NextAuth.js
+  - [ ] Integrate Spoonacular API for detailed recipe fetch
+  - [ ] Implement response caching with appropriate TTL
+  - [ ] Handle recipe not found scenarios
+  - [ ] **Testing:** Unit test API route with valid/invalid recipe IDs
+- [ ] **Create Spoonacular API Client Service (AC: External API integration)**
+  - [ ] Create Spoonacular API client service layer
+  - [ ] Implement authentication with API key from environment variables
+  - [ ] Implement rate limiting logic
+  - [ ] Implement caching mechanism with TTL
+  - [ ] Create error handling for API failures
+  - [ ] **Testing:** Test API client with various scenarios
+- [ ] **Create RecipeCard Component (AC: Recipe visualization)**
+  - [ ] Create `RecipeCard` client component
+  - [ ] Display recipe thumbnail, title, readyInMinutes, and servings
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic using shadcn/ui
+  - [ ] Implement click handler for navigation to recipe detail
+  - [ ] Ensure responsive design
+  - [ ] Add accessibility features (aria-labels, keyboard navigation)
+  - [ ] **Testing:** Render component with mock recipe data
+- [ ] **Create RecipeSearchBar Component (AC: Search UI complete)**
+  - [ ] Create `RecipeSearchBar` client component
+  - [ ] Implement search input with shadcn/ui Input component
+  - [ ] Add search button or enter-to-search functionality
+  - [ ] Implement debouncing for search queries
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure accessibility
+  - [ ] **Testing:** Verify search triggers correctly
+- [ ] **Create RecipeBrowseView Server Component (AC: Recipe library page)**
+  - [ ] Create `/app/recipes/page.tsx` server component
+  - [ ] Implement authentication check and redirect if not logged in
+  - [ ] Fetch initial popular/trending recipes
+  - [ ] Pass data to client components
+  - [ ] Set up page layout with "Farmhouse Kitchen" styling
+  - [ ] **Testing:** Verify route is accessible to authenticated users
+- [ ] **Integrate Search Functionality (AC: Search works end-to-end)**
+  - [ ] Connect RecipeSearchBar to `/api/recipes/search` endpoint
+  - [ ] Handle search results and update display
+  - [ ] Implement loading states during search
+  - [ ] Handle empty search results
+  - [ ] Display error messages for failed searches
+  - [ ] Ensure search results load within 2 seconds
+  - [ ] **Testing:** E2E test searching recipes through the UI
+- [ ] **Implement Pagination for Search Results (AC: User can browse results)**
+  - [ ] Add pagination UI controls
+  - [ ] Implement offset-based pagination
+  - [ ] Update API calls with offset parameter
+  - [ ] Handle navigation between pages
+  - [ ] **Testing:** Verify pagination works correctly
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am logged in and navigate to the "Recipes" section,
+*   **When** I view the recipe library,
+*   **Then** I see a collection of recipes displayed as charming recipe cards (UX Ref: `ux-design-specification.md` section 6.1, "RecipeCard").
+*   **And** I can search for recipes by keywords (e.g., "chicken," "pasta").
+*   **And** the search results load within 2 seconds.
+*   **And** each recipe card shows key information (e.g., title, main image, ready in minutes, servings).
+*   **And** the UI adheres to the "Farmhouse Kitchen" aesthetic and is responsive.
+*   **And** the interface is accessible (WCAG 2.1 AA).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-003.1</section>
+        <snippet>Users can browse and search recipes from an external recipe database.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>External APIs - Spoonacular</section>
+        <snippet>Defines integration with Spoonacular API for recipe search and retrieval.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>APIs and Interfaces - GET /api/recipes/search</section>
+        <snippet>Defines the request/response contract for recipe search, including caching and error handling.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>Workflows and Sequencing - Recipe Browse & Search Workflow</section>
+        <snippet>Details the complete user flow and system interactions for browsing and searching recipes.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Recipe Components - RecipeCard</section>
+        <snippet>Guidance on using shadcn/ui components for recipe cards with "Farmhouse Kitchen" styling.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/recipes/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>RecipeBrowseView</symbol>
+        <reason>Recipe browse view server component</reason>
+      </entry>
+      <entry>
+        <path>app/api/recipes/search/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Recipe search endpoint</reason>
+      </entry>
+      <entry>
+        <path>app/api/recipes/[id]/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Recipe detail endpoint</reason>
+      </entry>
+      <entry>
+        <path>lib/spoonacular-client.ts</path>
+        <kind>service</kind>
+        <symbol>SpoonacularClient</symbol>
+        <reason>Spoonacular API client service</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeCard.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeCard</symbol>
+        <reason>Recipe card visualization component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeSearchBar.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeSearchBar</symbol>
+        <reason>Search bar component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipePagination.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipePagination</symbol>
+        <reason>Pagination controls component</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="External APIs">
+        <package name="Spoonacular API" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="Caching">
+        <package name="node-cache or similar" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>All recipe API routes must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Spoonacular API key must be stored in environment variables.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Implement response caching with appropriate TTL to reduce API costs.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Search results must load within 2 seconds.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Interface must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 3 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement rate limiting to prevent API abuse and manage costs.</rule>
+      <source>Epic 3 Tech Spec - Reliability</source>
+    </entry>
+    <entry>
+      <rule>Handle Spoonacular API errors gracefully (rate limits, timeouts, service unavailable).</rule>
+      <source>Epic 3 Tech Spec - Error Handling</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>GET /api/recipes/search</name>
+      <kind>API Route</kind>
+      <signature>
+Query Parameters:
+{
+  "query": "string (optional)",
+  "number": "number (optional, default: 10)",
+  "offset": "number (optional, default: 0)"
+}
+
+Response (200 OK):
+{
+  "results": [
+    {
+      "id": "number",
+      "title": "string",
+      "image": "string",
+      "readyInMinutes": "number",
+      "servings": "number"
+    }
+  ],
+  "totalResults": "number"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (500 Internal Server Error):
+{
+  "error": "string"
+}
+      </signature>
+      <path>app/api/recipes/search/route.ts</path>
+    </entry>
+    <entry>
+      <name>GET /api/recipes/[id]</name>
+      <kind>API Route</kind>
+      <signature>
+Path Parameters:
+{
+  "id": "number"
+}
+
+Response (200 OK):
+{
+  "id": "number",
+  "title": "string",
+  "image": "string",
+  "readyInMinutes": "number",
+  "servings": "number",
+  "extendedIngredients": [...],
+  "instructions": "string",
+  "sourceUrl": "string"
+}
+
+Response (404 Not Found):
+{
+  "error": "Recipe not found"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+      </signature>
+      <path>app/api/recipes/[id]/route.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on API route validation logic, Spoonacular client methods, caching logic, and component rendering. Integration Tests will focus on API routes with Spoonacular API integration, authentication flow, and caching behavior. End-to-End (E2E) Tests will simulate the complete user flow from browsing to searching recipes. Performance Tests will measure search response time (<2s), page load time, and cache effectiveness. UI/UX Tests will verify visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA). External API Tests will verify Spoonacular API integration, error handling, and rate limiting.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/recipes/search with valid and invalid queries, verify authentication, caching, and error handling.</description>
+      </entry>
+      <entry>
+        <id>AC: External API integration</id>
+        <description>Test Spoonacular API client with various scenarios including rate limits, timeouts, and service unavailable.</description>
+      </entry>
+      <entry>
+        <id>AC: Recipe visualization</id>
+        <description>Render RecipeCard component and verify all fields displayed correctly, responsive, and accessible.</description>
+      </entry>
+      <entry>
+        <id>AC: Search UI complete</id>
+        <description>Test RecipeSearchBar with debouncing, search triggers, and accessibility features.</description>
+      </entry>
+      <entry>
+        <id>AC: Search works end-to-end</id>
+        <description>E2E test: Enter search query, verify results displayed, test pagination, verify load time <2s.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure search response time and verify caching reduces API calls.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

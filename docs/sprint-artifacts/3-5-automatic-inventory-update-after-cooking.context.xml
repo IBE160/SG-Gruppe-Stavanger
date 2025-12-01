@@ -1,0 +1,367 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-3</epicId>
+    <storyId>3.5</storyId>
+    <title>Automatic Inventory Update after Cooking</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-5-automatic-inventory-update-after-cooking.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>my inventory to be automatically updated when I cook a recipe,</iWant>
+    <soThat>I don't have to manually track what ingredients I've used.</soThat>
+    <tasks>
+- [ ] **Create Inventory Consumption API Route (AC: Backend endpoint functional)**
+  - [ ] Create `/api/inventory/consume-recipe` POST endpoint
+  - [ ] Implement authentication check using NextAuth.js to extract userId
+  - [ ] Validate request body (recipeId, optional servings)
+  - [ ] Fetch recipe details from Spoonacular API or cache
+  - [ ] Parse extendedIngredients to extract names and quantities
+  - [ ] Query user's FoodItem inventory via Prisma
+  - [ ] Match recipe ingredients with inventory items
+  - [ ] Calculate quantities to deduct based on servings
+  - [ ] Update FoodItem quantities in Supabase via Prisma
+  - [ ] Handle items with zero or negative quantities
+  - [ ] Collect warnings for insufficient quantities
+  - [ ] Return updated items list and warnings
+  - [ ] **Testing:** Unit test API route with various scenarios
+- [ ] **Implement Ingredient Matching Logic (AC: Ingredients matched correctly)**
+  - [ ] Create matching algorithm (fuzzy matching or exact)
+  - [ ] Handle variations in ingredient names
+  - [ ] Map recipe ingredients to inventory FoodItem records
+  - [ ] Handle unmatched ingredients gracefully
+  - [ ] Log unmatched ingredients for debugging
+  - [ ] **Testing:** Test matching with various ingredient name variations
+- [ ] **Implement Quantity Calculation Logic (AC: Quantities deducted correctly)**
+  - [ ] Parse recipe ingredient quantities and units
+  - [ ] Convert units if necessary (or handle approximate matching)
+  - [ ] Calculate deduction amount based on servings
+  - [ ] Handle fractional quantities
+  - [ ] Round to appropriate precision
+  - [ ] **Testing:** Test calculation with various quantities and units
+- [ ] **Implement Inventory Update Transaction (AC: Updates atomic and reliable)**
+  - [ ] Use Prisma transaction for updating multiple FoodItems
+  - [ ] Ensure atomicity (all-or-nothing update)
+  - [ ] Handle database errors and rollback
+  - [ ] Update quantities for matched items
+  - [ ] Delete items with zero quantity or set to 0 (based on design decision)
+  - [ ] **Testing:** Test transaction rollback on error
+- [ ] **Handle Insufficient Quantities (AC: Warnings displayed)**
+  - [ ] Check if inventory quantity is sufficient before deduction
+  - [ ] If insufficient, deduct available amount and set to 0
+  - [ ] Collect warning messages for insufficient items
+  - [ ] Return warnings in API response
+  - [ ] **Testing:** Test with inventory that has insufficient quantities
+- [ ] **Create Cooking Confirmation Dialog (AC: User confirms cooking)**
+  - [ ] Create confirmation dialog component
+  - [ ] Display recipe title and confirmation message
+  - [ ] Add "Confirm" and "Cancel" buttons
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure accessibility
+  - [ ] **Testing:** Render dialog and verify interaction
+- [ ] **Add "I Cooked This" Button to Recipe Detail (AC: User can trigger update)**
+  - [ ] Add button to RecipeDetailView component
+  - [ ] Position button prominently (e.g., near "Start Cooking")
+  - [ ] Connect button to confirmation dialog
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] **Testing:** Verify button appears and triggers dialog
+- [ ] **Integrate Confirmation with API (AC: Cooking triggers update)**
+  - [ ] Connect confirmation dialog to `/api/inventory/consume-recipe` endpoint
+  - [ ] Send recipeId and servings in request body
+  - [ ] Handle loading state during API call
+  - [ ] Display confirmation message on success
+  - [ ] Display warnings if any
+  - [ ] Handle errors and display error messages
+  - [ ] **Testing:** E2E test cooking a recipe and updating inventory
+- [ ] **Display Update Confirmation and Summary (AC: Confirmation displayed)**
+  - [ ] Create confirmation message component
+  - [ ] Display success message (e.g., "Great job! Your inventory has been updated.")
+  - [ ] Show summary of updated items with before/after quantities
+  - [ ] Display warnings for insufficient quantities
+  - [ ] Style as toast notification or dialog
+  - [ ] **Testing:** Verify confirmation appears with correct data
+- [ ] **Implement Optional Undo Feature (AC: User can undo if needed)**
+  - [ ] Add "Undo" button to confirmation message
+  - [ ] Create `/api/inventory/undo-consumption` endpoint (optional)
+  - [ ] Store transaction data for undo (time-limited)
+  - [ ] Implement undo logic to reverse inventory changes
+  - [ ] Set undo window (e.g., 30 seconds)
+  - [ ] **Testing:** Test undo functionality
+- [ ] **Update Frontend Inventory State (AC: Pantry View reflects changes)**
+  - [ ] Trigger inventory data refresh after cooking confirmation
+  - [ ] Implement optimistic UI update (optional)
+  - [ ] Update local state or re-fetch inventory data
+  - [ ] Ensure Pantry View shows updated quantities
+  - [ ] **Testing:** Navigate to Pantry after cooking, verify changes
+- [ ] **Optimize Performance (AC: Update completes within 1 second)**
+  - [ ] Optimize database queries for inventory updates
+  - [ ] Use Prisma batch updates where possible
+  - [ ] Minimize API calls to Spoonacular (use cache)
+  - [ ] Test with recipes containing many ingredients (up to 20)
+  - [ ] **Testing:** Measure update execution time
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I have viewed a recipe and decided to cook it,
+*   **When** I confirm that I have cooked the recipe,
+*   **Then** the ingredients used in the recipe are automatically deducted from my inventory.
+*   **And** a confirmation message is displayed showing which items were updated.
+*   **And** if there are insufficient quantities, warnings are shown.
+*   **And** the inventory update completes within 1 second.
+*   **And** the updated inventory is immediately reflected in the Pantry View.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-004.1</section>
+        <snippet>Inventory is automatically updated when users cook a recipe.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Backend Architecture, Data Model</section>
+        <snippet>Defines transactional updates for inventory consumption and data integrity.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>Story 3.5</section>
+        <snippet>Details the implementation of automatic inventory updates with matching and calculation logic.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Cooking Confirmation</section>
+        <snippet>Guidance on cooking confirmation dialog and update summary display.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/api/inventory/consume-recipe/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Inventory consumption endpoint</reason>
+      </entry>
+      <entry>
+        <path>app/api/inventory/undo-consumption/route.ts</path>
+        <kind>api route</kind>
+        <symbol>POST handler</symbol>
+        <reason>Undo endpoint (optional)</reason>
+      </entry>
+      <entry>
+        <path>lib/ingredient-matcher.ts</path>
+        <kind>service</kind>
+        <symbol>matchIngredients</symbol>
+        <reason>Matching logic (shared with Story 3.2)</reason>
+      </entry>
+      <entry>
+        <path>lib/quantity-calculator.ts</path>
+        <kind>service</kind>
+        <symbol>calculateDeduction</symbol>
+        <reason>Quantity calculation logic</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/CookingConfirmationDialog.tsx</path>
+        <kind>client component</kind>
+        <symbol>CookingConfirmationDialog</symbol>
+        <reason>Confirmation dialog</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/UpdateSummary.tsx</path>
+        <kind>client component</kind>
+        <symbol>UpdateSummary</symbol>
+        <reason>Update summary display</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeDetailView.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeDetailView</symbol>
+        <reason>Add "I Cooked This" button</reason>
+      </entry>
+      <entry>
+        <path>app/pantry/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>PantryPage</symbol>
+        <reason>Ensure inventory refresh works</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="External APIs">
+        <package name="Spoonacular API" />
+      </ecosystem>
+      <ecosystem name="Caching">
+        <package name="node-cache or similar" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Inventory consumption API must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Inventory updates must be atomic using Prisma transactions.</rule>
+      <source>Epic 3 Tech Spec - Data Integrity</source>
+    </entry>
+    <entry>
+      <rule>Update must complete within 1 second.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Handle insufficient quantities gracefully with warnings.</rule>
+      <source>Epic 3 Tech Spec - Error Handling</source>
+    </entry>
+    <entry>
+      <rule>Implement rollback on database errors to prevent partial updates.</rule>
+      <source>Epic 3 Tech Spec - Data Integrity</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Confirmation and warning messages must be clear and user-friendly.</rule>
+      <source>Epic 3 Tech Spec - UX</source>
+    </entry>
+    <entry>
+      <rule>Optimistic UI updates should be implemented with rollback on failure.</rule>
+      <source>Epic 3 Tech Spec - Reliability</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>POST /api/inventory/consume-recipe</name>
+      <kind>API Route</kind>
+      <signature>
+Request Body:
+{
+  "recipeId": "number",
+  "servings": "number (optional)"
+}
+
+Response (200 OK):
+{
+  "message": "Inventory updated successfully",
+  "updatedItems": [
+    {
+      "id": "string",
+      "name": "string",
+      "previousQuantity": "number",
+      "newQuantity": "number",
+      "unit": "string"
+    }
+  ],
+  "warnings": [
+    {
+      "item": "string",
+      "message": "string"
+    }
+  ]
+}
+
+Response (400 Bad Request):
+{
+  "error": "string"
+}
+
+Response (401 Unauthorized):
+{
+  "error": "Unauthorized"
+}
+
+Response (500 Internal Server Error):
+{
+  "error": "string"
+}
+      </signature>
+      <path>app/api/inventory/consume-recipe/route.ts</path>
+    </entry>
+    <entry>
+      <name>Quantity Calculation Function</name>
+      <kind>Service Function</kind>
+      <signature>
+function calculateDeduction(
+  recipeQuantity: number,
+  recipeUnit: string,
+  inventoryQuantity: number,
+  inventoryUnit: string,
+  servings: number
+): {
+  deductAmount: number;
+  sufficient: boolean;
+}
+      </signature>
+      <path>lib/quantity-calculator.ts</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on ingredient matching, quantity calculation logic, transaction logic, and API route validation. Integration Tests will focus on API route with Prisma transactions, inventory update flow, and cache integration. End-to-End (E2E) Tests will simulate the complete user flow from cooking confirmation to inventory update. Performance Tests will measure update execution time (<1s) and test with large recipes. Edge Case Tests will handle insufficient quantities, unmatched ingredients, zero quantities, and unit mismatches. Data Integrity Tests will verify transactional updates, rollback on errors, and no partial updates. UI/UX Tests will verify visual aesthetic, confirmation message clarity, warning display, and accessibility.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Backend endpoint functional</id>
+        <description>Unit test /api/inventory/consume-recipe with various scenarios, verify matching and calculation.</description>
+      </entry>
+      <entry>
+        <id>AC: Ingredients matched correctly</id>
+        <description>Test ingredient matching with various name variations, verify fuzzy matching works.</description>
+      </entry>
+      <entry>
+        <id>AC: Quantities deducted correctly</id>
+        <description>Test quantity calculation with various units and servings, verify precision.</description>
+      </entry>
+      <entry>
+        <id>AC: Updates atomic and reliable</id>
+        <description>Test Prisma transaction, verify rollback on errors, no partial updates.</description>
+      </entry>
+      <entry>
+        <id>AC: Warnings displayed</id>
+        <description>Test with insufficient inventory quantities, verify warnings returned and displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: User confirms cooking</id>
+        <description>Render confirmation dialog, verify interaction, verify data passed to API.</description>
+      </entry>
+      <entry>
+        <id>AC: Cooking triggers update</id>
+        <description>E2E test: Confirm cooking, verify inventory updated, verify confirmation displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: Pantry View reflects changes</id>
+        <description>Navigate to Pantry after cooking, verify updated quantities displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure update execution time with various recipe sizes, verify <1s.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>

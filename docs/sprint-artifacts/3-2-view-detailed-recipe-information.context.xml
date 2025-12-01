@@ -1,0 +1,285 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>epic-3</epicId>
+    <storyId>3.2</storyId>
+    <title>View Detailed Recipe Information</title>
+    <status>Pending</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-2-view-detailed-recipe-information.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>User</asA>
+    <iWant>view detailed information about a recipe including ingredients and instructions,</iWant>
+    <soThat>I can understand what I need and how to cook the dish.</soThat>
+    <tasks>
+- [ ] **Create Recipe Detail Page Route (AC: Detail page accessible)**
+  - [ ] Create `/app/recipes/[id]/page.tsx` server component
+  - [ ] Implement authentication check and redirect if not logged in
+  - [ ] Fetch recipe data using server-side data fetching
+  - [ ] Pass recipe data to client components
+  - [ ] Set up page layout with "Farmhouse Kitchen" styling
+  - [ ] **Testing:** Verify route is accessible with valid recipe ID
+- [ ] **Create RecipeDetailView Component (AC: Recipe display complete)**
+  - [ ] Create `RecipeDetailView` client component
+  - [ ] Display recipe title, image, metadata (time, servings, etc.)
+  - [ ] Display ingredients list with quantities and units
+  - [ ] Display cooking instructions (parse HTML from Spoonacular)
+  - [ ] Display source URL and attribution
+  - [ ] Style according to "Farmhouse Kitchen" aesthetic
+  - [ ] Ensure responsive design
+  - [ ] **Testing:** Render component with mock recipe data
+- [ ] **Create IngredientMatchIndicator Component (AC: Inventory matching)**
+  - [ ] Create `IngredientMatchIndicator` component
+  - [ ] Fetch user's current inventory data
+  - [ ] Implement matching logic between recipe ingredients and inventory
+  - [ ] Highlight available ingredients (e.g., checkmark, green color)
+  - [ ] Display missing ingredients differently (e.g., unchecked, red color)
+  - [ ] Handle fuzzy matching for ingredient names
+  - [ ] Add accessibility features for visual indicators
+  - [ ] **Testing:** Test matching logic with various inventory scenarios
+- [ ] **Implement Add to Shopping List Functionality (AC: Missing ingredients can be added)**
+  - [ ] Add "Add to Shopping List" button/link for missing ingredients
+  - [ ] Integrate with shopping list API (if available) or prepare for future integration
+  - [ ] Show confirmation when ingredients added
+  - [ ] Handle errors gracefully
+  - [ ] **Testing:** Verify ingredients are added to shopping list
+- [ ] **Create CookingModePanel Component (AC: Cooking mode accessible)**
+  - [ ] Create `CookingModePanel` component
+  - [ ] Implement step-by-step instruction view
+  - [ ] Add progress tracking for cooking steps
+  - [ ] Style as an interactive panel or dialog
+  - [ ] Add "Start Cooking" button to activate mode
+  - [ ] Ensure accessibility (keyboard navigation, screen reader support)
+  - [ ] **Testing:** Verify cooking mode activates and displays correctly
+- [ ] **Implement Cooking Mode Toggle (AC: User can activate cooking mode)**
+  - [ ] Add "Start Cooking" button in RecipeDetailView
+  - [ ] Connect button to CookingModePanel
+  - [ ] Implement state management for cooking mode active/inactive
+  - [ ] Add "I Cooked This" or similar completion action
+  - [ ] **Testing:** Toggle cooking mode on and off
+- [ ] **Optimize Performance for Detail View (AC: Loads within 2 seconds)**
+  - [ ] Implement server-side caching for recipe data
+  - [ ] Optimize image loading (use Next.js Image component)
+  - [ ] Implement loading states
+  - [ ] Test load time with various recipe sizes
+  - [ ] **Testing:** Measure page load time with Lighthouse
+- [ ] **Ensure Responsive Design and Accessibility (AC: UI responsive and accessible)**
+  - [ ] Test layout on mobile, tablet, and desktop
+  - [ ] Verify WCAG 2.1 AA compliance
+  - [ ] Test keyboard navigation
+  - [ ] Test with screen readers
+  - [ ] **Testing:** Accessibility audit with automated tools
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+*   **Given** I am browsing recipes and select a recipe card,
+*   **When** I click on a recipe card,
+*   **Then** I am navigated to a "Detailed Recipe View" showing the full recipe, ingredients list, and instructions.
+*   **And** available ingredients from my inventory are highlighted or checked off.
+*   **And** missing ingredients can be easily added to my shopping list.
+*   **And** an option to activate "Cooking Mode" is presented (UX Ref: `ux-design-specification.md` section 2.2, "Detailed Recipe View").
+*   **And** the detailed view loads within 2 seconds.
+*   **And** the UI is responsive and accessible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <entry>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR-003.1</section>
+        <snippet>Users can view detailed recipe information including ingredients and instructions.</snippet>
+      </entry>
+      <entry>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Frontend Architecture</section>
+        <snippet>Defines component structure for recipe detail views and ingredient matching.</snippet>
+      </entry>
+      <entry>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>Story 3.2</section>
+        <snippet>Details the implementation of detailed recipe view with ingredient matching and cooking mode.</snippet>
+      </entry>
+      <entry>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Detailed Recipe View</section>
+        <snippet>Guidance on recipe detail layout, ingredient indicators, and cooking mode UI.</snippet>
+      </entry>
+    </docs>
+    <code>
+      <entry>
+        <path>app/recipes/[id]/page.tsx</path>
+        <kind>server component</kind>
+        <symbol>RecipeDetailPage</symbol>
+        <reason>Recipe detail page server component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/RecipeDetailView.tsx</path>
+        <kind>client component</kind>
+        <symbol>RecipeDetailView</symbol>
+        <reason>Main detail view component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/IngredientMatchIndicator.tsx</path>
+        <kind>client component</kind>
+        <symbol>IngredientMatchIndicator</symbol>
+        <reason>Ingredient matching component</reason>
+      </entry>
+      <entry>
+        <path>components/recipes/CookingModePanel.tsx</path>
+        <kind>client component</kind>
+        <symbol>CookingModePanel</symbol>
+        <reason>Cooking mode interface</reason>
+      </entry>
+      <entry>
+        <path>lib/ingredient-matcher.ts</path>
+        <kind>service</kind>
+        <symbol>matchIngredients</symbol>
+        <reason>Ingredient matching logic</reason>
+      </entry>
+      <entry>
+        <path>app/api/inventory/route.ts</path>
+        <kind>api route</kind>
+        <symbol>GET handler</symbol>
+        <reason>Fetch inventory data for matching</reason>
+      </entry>
+    </code>
+    <dependencies>
+      <ecosystem name="Next.js">
+        <package name="Next.js" version="14" />
+      </ecosystem>
+      <ecosystem name="UI Components">
+        <package name="shadcn/ui" />
+        <package name="Radix UI" />
+      </ecosystem>
+      <ecosystem name="ORM/Database">
+        <package name="Prisma ORM" />
+        <package name="Supabase PostgreSQL" />
+      </ecosystem>
+      <ecosystem name="Authentication">
+        <package name="NextAuth.js" />
+      </ecosystem>
+      <ecosystem name="External APIs">
+        <package name="Spoonacular API" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <entry>
+      <rule>Recipe detail page must be protected by NextAuth.js authentication.</rule>
+      <source>Epic 3 Tech Spec - Security</source>
+    </entry>
+    <entry>
+      <rule>Ingredient matching logic must handle fuzzy matching for name variations.</rule>
+      <source>Epic 3 Tech Spec - Data Processing</source>
+    </entry>
+    <entry>
+      <rule>Detail view must load within 2 seconds.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>UI must reflect "Farmhouse Kitchen" aesthetic using Tailwind CSS and shadcn/ui.</rule>
+      <source>UX Design Specification</source>
+    </entry>
+    <entry>
+      <rule>Interface must be responsive and meet WCAG 2.1 AA accessibility standards.</rule>
+      <source>Epic 3 Tech Spec - Acceptance Criteria</source>
+    </entry>
+    <entry>
+      <rule>Implement server-side caching for recipe data to improve performance.</rule>
+      <source>Epic 3 Tech Spec - Performance</source>
+    </entry>
+    <entry>
+      <rule>Visual indicators for ingredient matching must be accessible to screen readers.</rule>
+      <source>Epic 3 Tech Spec - Accessibility</source>
+    </entry>
+  </constraints>
+
+  <interfaces>
+    <entry>
+      <name>Ingredient Matching Function</name>
+      <kind>Service Function</kind>
+      <signature>
+function matchIngredients(
+  recipeIngredients: RecipeIngredient[],
+  inventoryItems: FoodItem[]
+): {
+  matched: MatchedIngredient[];
+  missing: RecipeIngredient[];
+}
+
+interface RecipeIngredient {
+  id: number;
+  name: string;
+  amount: number;
+  unit: string;
+}
+
+interface MatchedIngredient extends RecipeIngredient {
+  inventoryItemId: string;
+  available: boolean;
+}
+      </signature>
+      <path>lib/ingredient-matcher.ts</path>
+    </entry>
+    <entry>
+      <name>Recipe Detail Data Structure</name>
+      <kind>Type Definition</kind>
+      <signature>
+interface RecipeDetail {
+  id: number;
+  title: string;
+  image: string;
+  readyInMinutes: number;
+  servings: number;
+  extendedIngredients: RecipeIngredient[];
+  instructions: string;
+  sourceUrl: string;
+}
+      </signature>
+      <path>app/recipes/[id]/page.tsx</path>
+    </entry>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Tests will focus on ingredient matching logic, component rendering, and state management. Integration Tests will focus on recipe detail page with inventory data integration and shopping list integration. End-to-End (E2E) Tests will simulate navigating from recipe card to detail view, activating cooking mode, and adding to shopping list. Performance Tests will measure detail view load time (<2s). UI/UX Tests will verify visual aesthetic, responsiveness, and accessibility (WCAG 2.1 AA). Edge Case Tests will handle recipes with many ingredients, unusual units, and missing inventory items.
+    </standards>
+    <locations>
+      Standard project test directories (e.g., `__tests__`, `components/__tests__`, `app/api/__tests__`).
+    </locations>
+    <ideas>
+      <entry>
+        <id>AC: Detail page accessible</id>
+        <description>Verify route accessible with valid recipe ID, authentication enforced, recipe data loaded.</description>
+      </entry>
+      <entry>
+        <id>AC: Recipe display complete</id>
+        <description>Render RecipeDetailView and verify all fields displayed correctly, responsive, accessible.</description>
+      </entry>
+      <entry>
+        <id>AC: Inventory matching</id>
+        <description>Test ingredient matching logic with various inventory scenarios, verify visual indicators.</description>
+      </entry>
+      <entry>
+        <id>AC: Missing ingredients can be added</id>
+        <description>Test adding missing ingredients to shopping list, verify confirmation displayed.</description>
+      </entry>
+      <entry>
+        <id>AC: Cooking mode accessible</id>
+        <description>Test cooking mode activation, step-by-step display, progress tracking.</description>
+      </entry>
+      <entry>
+        <id>AC: Performance</id>
+        <description>Measure page load time with Lighthouse, verify caching effectiveness.</description>
+      </entry>
+    </ideas>
+  </tests>
+</story-context>
