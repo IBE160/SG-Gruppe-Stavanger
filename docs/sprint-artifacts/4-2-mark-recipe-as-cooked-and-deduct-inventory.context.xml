@@ -48,6 +48,18 @@
             <section>API Contracts</section>
             <snippet>API Style: RESTful API. Implementation: Next.js API Routes (Route Handlers) for internal APIs.</snippet>
         </doc>
+        <doc>
+            <path>docs/ux-design-specification.md</path>
+            <title>UX Design Specification</title>
+            <section>Component Library / Custom/Key Components</section>
+            <snippet>Inventory Deduction Modal: A custom modal to confirm ingredient deduction after cooking.</snippet>
+        </doc>
+        <doc>
+            <path>docs/epics.md</path>
+            <title>Epic Breakdown</title>
+            <section>Epic 4: Personalized Suggestions &amp; Alerts / Story 4.2</section>
+            <snippet>As a user, I want to mark a recipe as cooked, so that the used ingredients are automatically removed from my inventory. Technical Notes: Use POST /api/recipes/{id}/cook. Implement "Inventory Deduction Modal" custom component (per UX).</snippet>
+        </doc>
     </docs>
     <code>
         <artifact>
