@@ -7,40 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
-
-  // Relations (placeholders for future stories)
-  foodItems     FoodItem[]
-  preferences   UserPreference?
-  shoppingList  ShoppingList?
-}
-
 model FoodItem {
-  id              String   @id @default(cuid())
-  name            String
-  category        String
-  bestBeforeDate  DateTime
-  quantity        Float
-  unit            String
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  name           String
+  bestBeforeDate DateTime
+  category       String
+  createdAt      DateTime @default(now())
+  quantity       Float
+  unit           String
+  userId         String
+  User           User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
 
-model UserPreference {
-  id        String @id @default(cuid())
-  userId    String @unique
-  user      User   @relation(fields: [userId], references: [id])
+model ShoppingList {
+  id     String             @id @default(cuid())
+  userId String             @unique
+  User   User               @relation(fields: [userId], references: [id])
+  items  ShoppingListItem[]
 }
 
-model ShoppingList {
-  id        String @id @default(cuid())
-  userId    String @unique
-  user      User   @relation(fields: [userId], references: [id])
+model ShoppingListItem {
+  id             String       @id @default(cuid())
+  name           String
+  amount         Float
+  unit           String
+  recipeId       Int?
+  recipeName     String?
+  shoppingListId String
+  addedAt        DateTime     @default(now())
+  purchased      Boolean      @default(false)
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+
+  @@index([shoppingListId])
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  createdAt      DateTime        @default(now())
+  FoodItem       FoodItem[]
+  ShoppingList   ShoppingList?
+  UserPreference UserPreference?
+}
+
+model UserPreference {
+  id     String @id @default(cuid())
+  userId String @unique
+  User   User   @relation(fields: [userId], references: [id])
 }

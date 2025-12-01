@@ -90,10 +90,8 @@ export default function RecipesPage() {
 
   // Handle recipe click
   const handleRecipeClick = useCallback((recipe: Recipe) => {
-    // TODO: Navigate to recipe detail page when implemented
-    console.log('Recipe clicked:', recipe);
-    // For now, just log it. In Story 3.2, we'll implement navigation to detail page
-  }, []);
+    router.push(`/recipes/${recipe.id}`);
+  }, [router]);
 
   // Loading state
   if (status === 'loading') {
