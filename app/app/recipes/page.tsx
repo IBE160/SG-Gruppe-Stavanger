@@ -9,7 +9,7 @@ import { RecipeSearchBar } from '@/components/recipes/RecipeSearchBar';
 import { RecipeCard, Recipe } from '@/components/recipes/RecipeCard';
 import { RecipePagination } from '@/components/recipes/RecipePagination';
 import { SuggestionTrigger } from '@/components/recipes/SuggestionTrigger';
-import { AlertCircle, ChefHat } from 'lucide-react';
+import { AlertCircle, ChefHat, Lightbulb } from 'lucide-react';
 
 const RESULTS_PER_PAGE = 12;
 
@@ -157,6 +157,27 @@ export default function RecipesPage() {
 
         {/* Recipe Suggestions */}
         <SuggestionTrigger />
+
+        {/* Creative Mode */}
+        <Card className="bg-white shadow-farmhouse border-sage-green/20">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <Lightbulb className="h-6 w-6 text-sage-green" aria-hidden="true" />
+              <div className="flex-1">
+                <CardTitle className="text-xl text-charcoal">Creative Mode</CardTitle>
+                <CardDescription className="text-sage-green">
+                  Manually enter ingredients and discover creative recipe ideas
+                </CardDescription>
+              </div>
+              <Button
+                onClick={() => router.push('/recipes/creative-mode')}
+                className="bg-sage-green hover:bg-sage-green/90 text-white"
+              >
+                Try Creative Mode
+              </Button>
+            </div>
+          </CardHeader>
+        </Card>
 
         {/* Main Content */}
         <Card className="bg-white shadow-farmhouse border-sage-green/20">
