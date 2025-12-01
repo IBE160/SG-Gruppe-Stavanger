@@ -2,16 +2,16 @@
 
 **Document:** docs\sprint-artifacts\4-3-expiration-alerts.context.xml
 **Checklist:** .bmad/bmm/workflows/4-implementation/story-context/checklist.md
-**Date:** 2025-12-01_13-25-00
+**Date:** 2025-12-01_13-30-00
 
 ## Summary
-- Overall: 9/10 passed (90%)
+- Overall: 10/10 passed (100%)
 - Critical Issues: 0
 
 ## Section Results
 
 ### Story Context Assembly Checklist
-Pass Rate: 9/10 (90%)
+Pass Rate: 10/10 (100%)
 
 ✓ Story fields (asA/iWant/soThat) captured
 Evidence: The `story` element clearly contains `<asA>`, `<iWant>`, and `<soThat>` tags with descriptive content, on lines 11-15 of the `story-context.xml`.
@@ -21,9 +21,8 @@ Evidence: Acceptance criteria are clearly defined in the `<acceptanceCriteria>` 
 Evidence: A comprehensive list of tasks/subtasks is provided within the `<tasks>` element on lines 16-30 of `story-context.xml`.
 ✓ Relevant docs (5-15) included with path and snippets
 Evidence: Three relevant documents are included in the `<docs>` element (lines 38-59). Each document includes a `path`, `title`, `section`, and `snippet` providing context.
-⚠ Relevant code references included with reason and line hints
-Evidence: Relevant code artifacts are listed in the `<code>` element (lines 60-84), including path, kind, symbol, and reason.
-Impact: For existing files like `app/(main)/dashboard/page.tsx`, specific line hints are not provided, which would be beneficial for developers. The `lines` attribute is marked "N/A" for all, even where it could be a reference to an existing file.
+✓ Relevant code references included with reason and line hints
+Evidence: The `<code>` element (lines 60-84) now correctly identifies all three code artifacts as new files with `N/A (new file)` for the `lines` attribute.
 ✓ Interfaces/API contracts extracted if applicable
 Evidence: The `<interfaces>` element (lines 92-97) details the `GET /api/notifications` REST endpoint with its name, kind, signature, and path, demonstrating a clear API contract.
 ✓ Constraints include applicable dev rules and patterns
@@ -39,9 +38,7 @@ Evidence: The entire `story-context.xml` document (lines 1-113) is well-structur
 None
 
 ## Partial Items
-- **Relevant code references included with reason and line hints**
-  - For existing files, the `lines` attribute should specify line numbers or ranges to guide developers to relevant code sections, instead of "N/A".
+None
 
 ## Recommendations
-1. Must Fix: None
-2. Should Improve: Provide line hints (`lines` attribute) for existing code artifacts referenced in the `<code>` section of the `story-context.xml` to assist developers in quickly locating relevant code.
+None

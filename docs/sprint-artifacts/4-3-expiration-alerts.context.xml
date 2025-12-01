@@ -74,7 +74,7 @@
             <path>app/(main)/dashboard/page.tsx</path>
             <kind>ui-page</kind>
             <symbol>DashboardPage</symbol>
-            <lines>N/A</lines>
+            <lines>N/A (new file)</lines>
             <reason>This page will display the in-app notifications.</reason>
         </artifact>
         <artifact>
