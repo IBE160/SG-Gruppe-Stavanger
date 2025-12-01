@@ -1,6 +1,6 @@
 # Story 4.4: Instant Idea Generation
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -72,7 +72,7 @@ so that I can get an instant meal idea.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- `C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts\4-4-instant-idea-generation.context.xml`
 
 ### Agent Model Used
 
@@ -86,3 +86,4 @@ so that I can get an instant meal idea.
 
 ## Change Log
 - 2025-12-01: Initial draft validated and corrected.
+- 2025-12-01: Story context generated and story marked ready for dev.

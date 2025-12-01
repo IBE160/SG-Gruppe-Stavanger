@@ -56,5 +56,5 @@ development_status:
   4-1-get-smart-recipe-suggestions: ready-for-dev
   4-2-mark-recipe-as-cooked-and-deduct-inventory: ready-for-dev
   4-3-expiration-alerts: ready-for-dev
-  4-4-instant-idea-generation: drafted
+  4-4-instant-idea-generation: ready-for-dev
   epic-4-retrospective: optional

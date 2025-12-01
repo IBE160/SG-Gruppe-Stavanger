@@ -1,0 +1,377 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>4</storyId>
+    <title>Instant Idea Generation</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>C:\ibe160\SmartMat\SG-Gruppe-Stavanger\docs\sprint-artifacts</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>As a user,</asA>
+    <iWant>I want to quickly get a recipe suggestion by typing a few ingredients, without affecting my persistent inventory,</iWant>
+    <soThat>so that I can get an instant meal idea.</soThat>
+    <tasks>
+- [ ] **Task 1: Ensure Main Screen UI is Ready** (AC: #1)
+  - [ ] Verify that the main screen is available and ready for the "Instant Idea" button placement.
+- [ ] **Task 2: Create "Instant Idea" Button Component** (AC: #2)
+  - [ ] Create a new reusable component for the "Instant Idea" button.
+  - [ ] Style the button as a primary call-to-action as per the UX specification.
+  - [ ] Place the button on the main dashboard screen.
+  - [ ] Add unit tests for the button component.
+- [ ] **Task 3: Implement Ingredient Input Modal** (AC: #3)
+  - [ ] Create a modal that opens when the "Instant Idea" button is clicked.
+  - [ ] The modal should contain a text input field for ingredients and a "Get Idea" button.
+  - [ ] Implement a "Live Search" pattern for ingredient input if possible.
+  - [ ] Add unit tests for the modal component.
+- [ ] **Task 4: Integrate with Gemini API** (AC: #4)
+  - [ ] Create a new API route (`/api/recipes/instant-idea`) to handle the request.
+  - [ ] This route will call the Google Gemini API with the user-provided ingredients.
+  - [ ] The prompt to Gemini should be engineered to return a simple, clear recipe.
+  - [ ] Add integration tests for the API route, mocking the Gemini API call.
+- [ ] **Task 5: Display AI-Generated Recipe** (AC: #4)
+  - [ ] Create a component to display the recipe returned by the Gemini API.
+  - [ ] This could be a new modal or a dedicated section on the page.
+  - [ ] The display should be clean and easy to read, showing ingredients and instructions.
+  - [ ] Add unit tests for the recipe display component.
+- [ ] **Task 6: Ensure No Inventory Modification** (AC: #5)
+  - [ ] Verify that the "Instant Idea" flow does not interact with the user's inventory data.
+  - [ ] Add a test to confirm that no inventory deduction occurs.
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+**Source:** [PRD - FR4.2: Instant Idea Generation](docs/PRD.md#fr42-instant-idea-generation), [Epics - Story 4.4](docs/epics.md#story-44-instant-idea-generation)
+1. **Given** I am on the main screen
+2. **When** I click the "Instant Idea" button
+3. **Then** a prompt appears to enter 2-3 ingredients.
+4. **And** an immediate AI-generated recipe suggestion is provided based on my input.
+5. **And** this action does not modify my inventory.
+</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>ibe160 - Product Requirements Document</title>
+        <section>Design Philosophy - The 'Intelligent Assistant' and The 'Instant Tool'</section>
+        <snippet>Our strategy is to embrace both. The core of our application remains the 'Intelligent Assistant'—a robust system for inventory management that provides proactive, intelligent recommendations. However, we will also include an 'Instant Tool' as a key feature of the MVP. An 'Instant Idea' button will always be available, allowing any user to get an immediate recipe suggestion with zero friction.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>ibe160 - Product Requirements Document</title>
+        <section>Functional Requirements - FR4.2 - Instant Idea Generation</section>
+        <snippet>A user can get an immediate recipe suggestion without using their saved inventory. A prominent 'Instant Idea' button is available on the main screen. A user can input 2-3 ingredients. The system provides an immediate AI-generated recipe suggestion based on the input. This action does not affect the user's persistent inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>ibe160 - Product Requirements Document</title>
+        <section>Implementation Epics - Epic 4</section>
+        <snippet>Implements the reactive "smart" features. This includes generating recipe suggestions based on the user's inventory, sending expiration alerts, and delivering the "Instant Idea" button for quick, on-the-fly recipe generation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/product-brief-ibe160-2025-11-14.md</path>
+        <title>Product Brief: Smart Food & Recipe Platform</title>
+        <section>Core Vision - Proposed Solution</section>
+        <snippet>Develop a mobile-responsive web application that helps users reduce food waste and discover meal inspiration by intelligently managing their kitchen inventory. Users can register food items (with expiration dates), receive alerts when items are nearing expiration, and get personalized recipe suggestions using available ingredients and dietary preferences.</snippet>
+      </doc>
+      <doc>
+        <path>docs/product-brief-ibe160-2025-11-14.md</path>
+        <title>Product Brief: Smart Food & Recipe Platform</title>
+        <section>MVP Scope - Core Features - 'Instant Idea' Button</section>
+        <snippet>A prominent button on the main screen that allows a user to type in 2-3 ingredients and get an instant AI-generated recipe, without touching their persistent inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/product-brief-ibe160-2025-11-14.md</path>
+        <title>Product Brief: Smart Food & Recipe Platform</title>
+        <section>Technical Preferences - AI Integration (Phase 2)</section>
+        <snippet>GPT-powered ingredient substitution, AI recipe suggestions, and OpenAI embeddings for semantic search.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Overview</section>
+        <snippet>This epic, "Personalized Suggestions & Alerts," focuses on implementing the reactive "smart" features of the ibe160 application. It aims to reduce food waste and inspire cooking by intelligently leveraging user inventory data to provide timely and relevant recipe suggestions, expiration alerts, and a frictionless "Instant Idea" generation capability.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Objectives and Scope</section>
+        <snippet>To enable quick, on-the-fly recipe ideas without impacting the user's persistent inventory. FR4.2 - Instant Idea Generation: Provide a prominent "Instant Idea" button for quick, AI-generated recipe suggestions based on user input, without affecting inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>System Architecture Alignment</section>
+        <snippet>Leverage the Google Gemini API for the generative AI features within the "Instant Idea" button.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Services and Modules - Instant Idea Service</section>
+        <snippet>Receives a list of 2-3 ingredients from the user. Calls the Google Gemini API to generate a creative recipe. Formats and returns the generated recipe.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>APIs and Interfaces - 4. Instant Idea Generation</section>
+        <snippet>Endpoint: POST /api/instant-idea. Request Body: {"ingredients": ["chicken breast", "rice", "broccoli"]}. Response: Generated Recipe object with title, ingredients, instructions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Workflows and Sequencing - 3. Instant Idea Workflow</section>
+        <snippet>User clicks the "Instant Idea" button. Frontend: A modal appears with a text input. User types ingredients. Frontend calls POST /api/instant-idea. Backend: Constructs a prompt for the Google Gemini API. Backend parses Gemini API's response. Frontend displays the generated recipe. This state is temporary and does not affect the user's persistent inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Acceptance Criteria (Authoritative) - FR4.2 - Instant Idea Generation</section>
+        <snippet>A prominent "Instant Idea" button is available on the main screen. Upon clicking the button, a user can input 2-3 ingredients. The system provides an immediate AI-generated recipe suggestion based on the input. This "Instant Idea" action does not modify the user's persistent inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Dependencies and Integrations - External API Dependencies - Google Gemini API</section>
+        <snippet>Purpose: Generative AI for creative recipe suggestions. Integration Point: Used by the Instant Idea Service (`POST /api/instant-idea`) to generate recipes from user-provided ingredients.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Risks, Assumptions, Open Questions - R3: AI Response Quality for "Instant Idea"</section>
+        <snippet>The quality and relevance of recipes generated by the Google Gemini API might not consistently meet user expectations. Mitigation: Craft clear and concise prompts, implement post-processing, provide feedback mechanism, clearly set user expectations.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Risks, Assumptions, Open Questions - Q4: Scalability of Gemini API</section>
+        <snippet>What are the expected costs and rate limits for the Google Gemini API when scaling to a large user base, and what strategies are in place to manage these?</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+        <title>Epic Technical Specification: Personalized Suggestions & Alerts</title>
+        <section>Test Strategy Summary - E2E Tests - Instant Idea Generation</section>
+        <snippet>User clicks the button, inputs ingredients, and verifies an AI-generated recipe is displayed without altering inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Decision Summary - AI Application Integration</section>
+        <snippet>Spoonacular API for core recipe data; Google Gemini for generative AI features. Leverages specialized API for recipe data and powerful LLM for creative recipe generation and ingredient substitutions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>FR Category to Architecture Mapping - Recipe Discovery & Interaction</section>
+        <snippet>API routes in `app/api/recipes/` for Spoonacular and Gemini integrations, Spoonacular API, Google Gemini API.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Technology Stack Details - Generative AI</section>
+        <snippet>Google Gemini API</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Integration Points</section>
+        <snippet>Next.js API Routes &lt;-> Google Gemini API: HTTP requests to external APIs.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>2.2 Novel UX Patterns - Instant Idea Button (FR4.2)</section>
+        <snippet>A dedicated, always-accessible primary button/modal for zero-friction recipe generation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>4.1 Chosen Design Approach - Layout Pattern (Mobile)</section>
+        <snippet>A main content area that aggregates critical, actionable cards. Navigation is handled by a fixed bottom bar.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>6.1 Component Strategy - Custom/Key Components - Recipe Card</section>
+        <snippet>Displays a recipe image, title, and cooking time. Now includes a prominent "Uses expiring" tag with an icon to connect to the inventory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>7.1 Consistency Rules - Search Patterns</section>
+        <snippet>Use Live Search with immediate results.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-directions.html</path>
+        <title>Design Direction Mockups</title>
+        <section>Direction 1: The Dashboard</section>
+        <snippet>Visual representation of the "Instant Idea" feature within the dashboard layout, showing input field and button for generating ideas.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Epic 4: Personalized Suggestions & Alerts - Story 4.4: Instant Idea Generation</section>
+        <snippet>As a user, I want to quickly get a recipe suggestion by typing a few ingredients, without affecting my persistent inventory, so that I can get an instant meal idea.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <code_artifact>
+        <path>app/api/instant-idea/route.ts</path>
+        <kind>API Route</kind>
+        <symbol>POST handler</symbol>
+        <reason>New API route for handling instant idea generation requests.</reason>
+      </code_artifact>
+      <code_artifact>
+        <path>components/specific/InstantIdeaButton.tsx</path>
+        <kind>React Component</kind>
+        <reason>New UI component for the "Instant Idea" button.</reason>
+      </code_artifact>
+      <code_artifact>
+        <path>components/specific/InstantIdeaModal.tsx</path>
+        <kind>React Component</kind>
+        <reason>New UI component for the ingredient input modal and displaying generated recipe.</reason>
+      </code_artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>@supabase/supabase-js</name>
+        <version>^2.0.0</version>
+        <ecosystem>npm</ecosystem>
+      </dependency>
+      <dependency>
+        <name>next</name>
+        <version>^14.0.0</version>
+        <ecosystem>npm</ecosystem>
+      </dependency>
+      <dependency>
+        <name>next-auth</name>
+        <version>4.24.13</version>
+        <ecosystem>npm</ecosystem>
+      </dependency>
+      <dependency>
+        <name>react</name>
+        <version>^18.0.0</version>
+        <ecosystem>npm</ecosystem>
+      </dependency>
+      <dependency>
+        <name>tailwindcss</name>
+        <version>^3.0.0</version>
+        <ecosystem>npm</ecosystem>
+      </dependency>
+      <dependency>
+        <name>Google Gemini API</name>
+        <version>latest</version>
+        <ecosystem>external</ecosystem>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architectural Pattern</type>
+      <description>RESTful API using Next.js API Routes (Route Handlers).</description>
+    </constraint>
+    <constraint>
+      <type>API Response Format</type>
+      <description>Consistent JSON structure with 'data' for success, 'error' for errors; standard HTTP status codes; 'camelCase' for JSON keys.</description>
+    </constraint>
+    <constraint>
+      <type>Naming Pattern</type>
+      <description>kebab-case for files/folders; PascalCase for React components; camelCase for variables/functions.</description>
+    </constraint>
+    <constraint>
+      <type>Structure Pattern</type>
+      <description>API routes in app/api/, feature-specific components in components/specific/.</description>
+    </constraint>
+    <constraint>
+      <type>Communication Pattern</type>
+      <description>React Query for client-side data fetching; standard fetch API for external APIs (Google Gemini).</description>
+    </constraint>
+    <constraint>
+      <type>UI/UX Consistency</type>
+      <description>Adherence to shadcn/ui and Tailwind CSS guidelines from UX Design Specification.</description>
+    </constraint>
+    <constraint>
+      <type>Input Validation</type>
+      <description>Zod schemas should be used for validating API request payloads.</description>
+    </constraint>
+    <constraint>
+      <type>API Key Security</type>
+      <description>API keys for Google Gemini must be stored securely as environment variables on the server and never exposed to the client.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Instant Idea Generation Endpoint</name>
+      <kind>REST API Endpoint</kind>
+      <signature>POST /api/instant-idea</signature>
+      <path>app/api/instant-idea/route.ts</path>
+    </interface>
+    <interface>
+      <name>Google Gemini API</name>
+      <kind>External API</kind>
+      <signature>Generative AI for creative recipe suggestions based on input ingredients.</signature>
+      <path>External (accessed via server-side)</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>
+        <type>Unit Tests</type>
+        <frameworks>Jest, React Testing Library</frameworks>
+        <focus>Individual functions, components, utility modules (e.g., Instant Idea button, modal components, API response parsing).</focus>
+      </standard>
+      <standard>
+        <type>Integration Tests</type>
+        <frameworks>Jest, Supertest</frameworks>
+        <focus>Interaction between services, API routes, and database. Specifically for `/api/recipes/instant-idea` route, mocking Gemini API calls.</focus>
+      </standard>
+      <standard>
+        <type>End-to-End (E2E) Tests</type>
+        <frameworks>Playwright or Cypress</frameworks>
+        <focus>User-centric scenarios covering entire workflows: clicking the "Instant Idea" button, inputting ingredients, and verifying an AI-generated recipe is displayed without altering inventory.</focus>
+      </standard>
+      <standard>
+        <type>Acceptance Criteria Verification</type>
+        <focus>Each Acceptance Criterion will have at least one corresponding test case, primarily at the E2E or Integration level.</focus>
+      </standard>
+      <standard>
+        <type>Edge Cases and Error Handling</type>
+        <focus>Tests will cover edge cases, API failures, network interruptions, and invalid user input. Error messages and graceful degradation will be explicitly tested.</focus>
+      </standard>
+    </standards>
+    <locations>
+      <location>tests/</location>
+      <location>tests/app/api/instant-idea/</location>
+      <location>tests/components/specific/</location>
+    </locations>
+    <ideas>
+      <idea>
+        <acceptance_criteria_id>AC #1</acceptance_criteria_id>
+        <description>Verify the "Instant Idea" button is present on the main screen and clickable.</description>
+      </idea>
+      <idea>
+        <acceptance_criteria_id>AC #2</acceptance_criteria_id>
+        <description>Test that a modal appears when the "Instant Idea" button is clicked, allowing input of 2-3 ingredients.</description>
+      </idea>
+      <idea>
+        <acceptance_criteria_id>AC #3</acceptance_criteria_id>
+        <description>Verify that an AI-generated recipe suggestion is provided in the modal after submitting ingredients.</description>
+      </idea>
+      <idea>
+        <acceptance_criteria_id>AC #4</acceptance_criteria_id>
+        <description>Confirm that using the "Instant Idea" feature does not modify the user's inventory.</description>
+      </idea>
+      <idea>
+        <acceptance_criteria_id>FR4.2 - AC3 (from tech-spec)</acceptance_criteria_id>
+        <description>Test various ingredient inputs for the Instant Idea service to verify a valid recipe response, and handle edge cases for AI response quality.</description>
+      </idea>
+      <idea>
+        <acceptance_criteria_id>FR4.2 - AC4 (from tech-spec)</acceptance_criteria_id>
+        <description>Confirm that inventory remains unchanged after using "Instant Idea" (integration/E2E test).</description>
+      </idea>
+    </ideas>
+  </tests>
+</story-context>
