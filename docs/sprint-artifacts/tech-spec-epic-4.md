@@ -1,6 +1,6 @@
-# Epic Technical Specification: 
+# Epic Technical Specification: Personalized Suggestions & Alerts
 
-Date: 2025-11-30
+Date: 2025-12-01
 Author: BIP
 Epic ID: 4
 Status: Draft
@@ -9,67 +9,62 @@ Status: Draft
 
 ## Overview
 
-This epic, "Personalized Suggestions & Alerts," focuses on implementing the reactive "smart" features of the ibe160 application. It aims to reduce food waste and inspire cooking by intelligently leveraging user inventory data to provide timely and relevant recipe suggestions, expiration alerts, and a frictionless "Instant Idea" generation capability. This directly supports the core value proposition of transforming potential waste into culinary inspiration.
+This epic, "Personalized Suggestions & Alerts," is the core "smart" component of the application. It moves beyond passive inventory tracking and proactive user-driven recipe searches to a reactive, intelligent system. It delivers on the key value proposition of turning potential food waste into inspiration by automatically generating recipe suggestions from the user's existing inventory, sending timely alerts for expiring items, and providing an "Instant Idea" feature for immediate meal solutions. This epic is responsible for the "wow" moments that drive user engagement and demonstrate the platform's intelligence.
 
 ## Objectives and Scope
 
-**Objectives:**
-- To provide users with intelligent recipe suggestions based on their current inventory, prioritizing items nearing expiration.
-- To notify users proactively about expiring food items, offering actionable solutions.
-- To enable quick, on-the-fly recipe ideas without impacting the user's persistent inventory.
-- To automatically deduct used ingredients from inventory upon marking a recipe as cooked.
+### In Scope
 
-**In-Scope:**
-- **FR3.1 - Get Smart Recipe Suggestions:** Generate recipe suggestions based on current inventory, prioritizing expiring items.
-- **FR3.4 - Mark Recipe as Cooked and Deduct Inventory:** Allow users to mark recipes as cooked, prompting for ingredient deduction.
-- **FR4.1 - Expiration Alerts:** Implement in-app notifications for items nearing expiration, linked to relevant recipes.
-- **FR4.2 - Instant Idea Generation:** Provide a prominent "Instant Idea" button for quick, AI-generated recipe suggestions based on user input, without affecting inventory.
-- UI components for displaying suggestions, alerts, and the instant idea input.
-- Backend logic for inventory-based recipe matching and expiration tracking.
+*   **FR3.1 - Get Recipe Suggestions:** Implement the backend logic and API endpoint (`GET /api/recipes/suggestions`) to generate meaningful recipe suggestions based on a user's inventory, prioritizing items nearing their expiration date.
+*   **FR3.4 - Mark Recipe as Cooked:** Create the backend logic and API endpoint (`POST /api/recipes/{id}/cook`) to allow users to mark a recipe as cooked and have the system automatically deduct the corresponding ingredients from their inventory after confirmation.
+*   **FR4.1 - Expiration Alerts:** Develop the mechanism for identifying items nearing expiration (2-3 days out) and generating actionable in-app notifications. This includes a background job (`PG Cron`) to check for expiring items and a real-time channel (`Supabase Realtime`) to deliver the alert to the user. The notification must link directly to recipe suggestions using the expiring items.
+*   **FR4.2 - Instant Idea Generation:** Implement the "Instant Idea" feature, which allows users to get a quick AI-generated recipe by inputting a few ingredients. This involves creating a frontend component and an API endpoint that integrates with the Google Gemini API. This feature explicitly does **not** interact with the user's persistent inventory.
 
-**Out-of-Scope:**
-- User preferences for dietary restrictions or cuisine types for recipe generation (to be addressed in Growth Features).
-- Complex AI-driven ingredient substitution beyond basic suggestions for "Instant Idea."
-- External communication channels for alerts (e.g., SMS, email) beyond in-app notifications.
+### Out of Scope
+
+*   **User Preferences & Dietary Profiles:** Recipe suggestions in this epic will be based solely on inventory, not on user-saved dietary restrictions, allergies, or cuisine preferences. This is a post-MVP feature.
+*   **AI-Enhanced Search/Semantic Search:** Recipe suggestion matching will be based on ingredient names, not on advanced semantic understanding.
+*   **Proactive Meal Planning:** This epic is reactive (suggesting what to cook *now*). Proactive, long-term meal planning is a future vision.
+*   **Push Notifications:** Alerts are limited to in-app notifications. Email or mobile push notifications are not part of this epic.
 
 ## System Architecture Alignment
 
-Epic 4's implementation will align with the established architectural decisions:
-- **API Pattern:** Utilize Next.js API Routes (Route Handlers) for `/api/recipes/suggestions`, `/api/recipes/{id}/cook`, `/api/notifications`, and the "Instant Idea" endpoint.
-- **AI Application Integration:** Leverage the Spoonacular API for recipe data and the Google Gemini API for the generative AI features within the "Instant Idea" button.
-- **Deployment Target:** Frontend and API routes will be deployed on Vercel, with backend services managed by Supabase.
-- **Real-time Features:** Supabase Realtime will be used to push in-app expiration alerts.
-- **Search:** PostgreSQL Full-Text Search (FTS) will facilitate efficient inventory-based recipe matching.
-- **Background Jobs:** PG Cron in Supabase will be instrumental for scheduled tasks, such as regularly checking for expiring items to trigger alerts.
-- **Communication Patterns:** `React Query` for client-side data fetching of suggestions and alerts, `Supabase Realtime` client SDK for live updates.
-- **Consistency Patterns:** Adherence to defined naming, structure, format, and consistency rules for maintainability and quality.
+This epic aligns perfectly with the chosen architecture and leverages several key decisions:
+
+*   **API Pattern:** All features are exposed via RESTful API endpoints (`/api/recipes/suggestions`, `/api/recipes/{id}/cook`, and a new endpoint for the Gemini integration) built with Next.js API Routes, as defined in the architecture.
+*   **AI Integration:** It directly implements the dual-AI strategy, using the **Spoonacular API** for inventory-based suggestions and the **Google Gemini API** for the "Instant Idea" generative feature.
+*   **Background Jobs & Real-time Features:** The expiration alert system is a prime example of using **PG Cron** for the scheduled database check and **Supabase Realtime** to push the notification to the client, validating the choice of these technologies for building asynchronous, real-time features.
+*   **Database:** The logic heavily relies on querying the **Supabase PostgreSQL** database for user inventory and expiration dates.
+*   **Security:** All API endpoints will be secured using **NextAuth.js** and data access will be restricted via **Supabase RLS**, ensuring a user can only get suggestions or alerts for their own inventory.
+*   **Communication Patterns:** The frontend will use `React Query` or `SWR` to fetch suggestions from the API endpoints, and the `Supabase Realtime` client SDK will listen for incoming expiration alerts.
 
 ## Detailed Design
 
 ### Services and Modules
 
-| Service/Module | Responsibilities | Inputs/Outputs | Owner |
+| Service / Module | Responsibilities | Inputs / Outputs | Owner |
 |---|---|---|---|
-| **Smart Recipe Suggestions** | - Fetches inventory items nearing expiration. <br> - Queries the Spoonacular API with these ingredients. <br> - Returns a prioritized list of recipe suggestions. | **In:** User ID. <br> **Out:** Array of Recipe objects. | Backend |
-| **Inventory Deduction Service** | - Receives confirmation of a cooked recipe. <br> - Updates the quantities of specified inventory items. | **In:** User ID, list of ingredients and quantities to deduct. <br> **Out:** Updated inventory state. | Backend |
-| **Expiration Alert Service** | - A scheduled job (PG Cron) identifies expiring items daily. <br> - Creates `notification` records in the database. <br> - Triggers real-time events via Supabase Realtime to notify the frontend. | **In:** (Scheduled) <br> **Out:** Notification events. | Backend (PG Cron, Supabase) |
-| **Instant Idea Service** | - Receives a list of 2-3 ingredients from the user. <br> - Calls the Google Gemini API to generate a creative recipe. <br> - Formats and returns the generated recipe. | **In:** Array of ingredient strings. <br> **Out:** Generated Recipe object. | Backend |
+| **Recipe Suggestion Service** | - Generates recipe suggestions from user's inventory. <br>- Prioritizes recipes using ingredients nearing expiration. <br>- Interfaces with the Spoonacular API. | **Input:** User ID. <br> **Output:** List of recipe objects. | Backend |
+| **Inventory Deduction Service** | - Deducts specified quantities of ingredients from a user's inventory upon confirmation. | **Input:** User ID, Recipe ID, List of ingredients to deduct. <br> **Output:** Updated inventory state. | Backend |
+| **Expiration Alert Service** | - Identifies inventory items expiring within the notification window (2-3 days). <br>- Creates notification records in the database. <br>- Triggers real-time events. | **Input:** (Scheduled, no direct input). <br> **Output:** Notification records, Real-time events. | Backend (PG Cron) |
+| **Instant Idea Service** | - Takes user-input ingredients and generates a recipe using the Google Gemini API. | **Input:** String of ingredients. <br> **Output:** A single, AI-generated recipe object. | Backend |
+| **Notification Client** | - Listens for real-time notification events via Supabase Realtime. <br>- Displays in-app notifications to the user in a non-intrusive way. | **Input:** Real-time notification payload. <br> **Output:** UI notification component. | Frontend |
+| **Inventory Deduction Modal** | - Presents the user with a list of ingredients from a cooked recipe. <br>- Allows the user to confirm or adjust which ingredients should be deducted from their inventory. | **Input:** Recipe ingredients. <br> **Output:** Confirmed list of ingredients to deduct. | Frontend |
 
 ### Data Models and Contracts
 
-The following data models will be implemented in the Supabase PostgreSQL database, following `snake_case` conventions.
+This epic primarily relies on the existing `inventory_items` and `users` tables. It introduces a new `notifications` table.
 
-**`notifications` table:**
+**`notifications` Table Schema (PostgreSQL)**
+
 ```sql
 CREATE TABLE notifications (
-  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
-  item_id BIGINT REFERENCES inventory(id) ON DELETE CASCADE,
-  title TEXT NOT NULL,
   message TEXT NOT NULL,
-  type TEXT NOT NULL DEFAULT 'expiration', -- e.g., 'expiration', 'suggestion'
+  link_url TEXT, -- Link to a page, e.g., recipe suggestions for an expiring item
   is_read BOOLEAN DEFAULT false,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
 -- Enable RLS
@@ -83,413 +78,223 @@ USING (auth.uid() = user_id);
 
 ### APIs and Interfaces
 
-API endpoints will follow the RESTful patterns defined in the architecture.
+This epic introduces one new API endpoint and makes use of two existing ones defined in the PRD and Architecture.
 
 **1. Get Smart Recipe Suggestions**
-- **Endpoint:** `GET /api/recipes/suggestions`
-- **Request:** (Authenticated User)
-- **Response (200 OK):**
-```json
-{
-  "data": [
+*   **Endpoint:** `GET /api/recipes/suggestions`
+*   **Description:** Fetches recipe suggestions based on the authenticated user's inventory.
+*   **Request:**
+    *   Auth: Bearer Token (handled by NextAuth.js)
+*   **Response (200 OK):**
+    ```json
     {
-      "id": 660306,
-      "title": "Slow Cooker Chicken Tortilla Soup",
-      "image": "https://spoonacular.com/recipeImages/660306-312x231.jpg",
-      "usedIngredientCount": 3,
-      "missedIngredientCount": 2,
-      "usesExpiringItems": true
+      "data": [
+        {
+          "id": 716429,
+          "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+          "image": "https://spoonacular.com/recipeImages/716429-312x231.jpg",
+          "usedIngredientCount": 3,
+          "missedIngredientCount": 2,
+          "missedIngredients": [ /* ... */ ],
+          "usedIngredients": [ /* ... */ ],
+          "likes": 1,
+          "usesExpiringItems": true // Custom flag added by our backend
+        }
+      ]
     }
-  ]
-}
-```
+    ```
+*   **Error Codes:** `401` (Unauthorized), `500` (Server Error).
 
-**2. Mark Recipe as Cooked & Deduct Ingredients**
-- **Endpoint:** `POST /api/recipes/{id}/cook`
-- **Request Body:**
-```json
-{
-  "ingredientsToDeduct": [
-    { "inventoryItemId": 123, "quantity": 1 },
-    { "inventoryItemId": 456, "quantity": 0.5 }
-  ]
-}
-```
-- **Response (200 OK):**
-```json
-{
-  "data": { "message": "Inventory updated successfully." }
-}
-```
-
-**3. Get Notifications**
-- **Endpoint:** `GET /api/notifications`
-- **Request:** (Authenticated User)
-- **Response (200 OK):**
-```json
-{
-  "data": [
+**2. Mark Recipe as Cooked**
+*   **Endpoint:** `POST /api/recipes/{id}/cook`
+*   **Description:** Marks a recipe as cooked and deducts the used ingredients from the user's inventory.
+*   **Request Body:**
+    ```json
     {
-      "id": 1,
-      "title": "Expiring Soon: Tomatoes",
-      "message": "Your tomatoes are expiring in 2 days. Find recipes to use them!",
-      "type": "expiration",
-      "isRead": false,
-      "createdAt": "2025-12-01T10:00:00Z"
+      "ingredients": [
+        { "id": "uuid-of-inv-item-1", "amount": 100, "unit": "g" },
+        { "id": "uuid-of-inv-item-2", "amount": 1, "unit": "item" }
+      ]
     }
-  ]
-}
-```
+    ```
+*   **Response (200 OK):**
+    ```json
+    {
+      "data": {
+        "message": "Inventory updated successfully."
+      }
+    }
+    ```
+*   **Error Codes:** `400` (Bad Request - invalid ingredients), `401` (Unauthorized), `404` (Recipe not found), `500` (Server Error).
 
-**4. Instant Idea Generation**
-- **Endpoint:** `POST /api/instant-idea`
-- **Request Body:**
-```json
-{
-  "ingredients": ["chicken breast", "rice", "broccoli"]
-}
-```
-- **Response (200 OK):**
-```json
-{
-  "data": {
-    "title": "Garlic Herb Chicken with Rice and Broccoli",
-    "ingredients": [
-      "1 lb chicken breast, diced",
-      "1 cup white rice",
-      "2 cups broccoli florets",
-      "..."
-    ],
-    "instructions": [
-      "1. Sauté chicken in a pan until browned.",
-      "2. Cook rice according to package directions.",
-      "..."
-    ]
-  }
-}
-```
+**3. Get Instant Idea**
+*   **Endpoint:** `POST /api/instant-idea`
+*   **Description:** Generates a recipe from a string of ingredients using the Google Gemini API.
+*   **Request Body:**
+    ```json
+    {
+      "ingredients": "3 eggs, 1 tomato, some cheese"
+    }
+    ```
+*   **Response (200 OK):**
+    ```json
+    {
+      "data": {
+        "title": "Simple Cheesy Tomato Omelette",
+        "ingredients": [
+          "3 large eggs",
+          "1 ripe tomato, diced",
+          "1/4 cup shredded cheese (cheddar or mozzarella recommended)",
+          "Salt and pepper to taste",
+          "1 tsp butter or oil"
+        ],
+        "instructions": [
+          "1. Whisk eggs in a bowl with a pinch of salt and pepper.",
+          "2. Heat butter or oil in a non-stick skillet over medium heat.",
+          "3. Pour in the eggs and let them cook for a minute until the edges start to set.",
+          "4. Sprinkle the diced tomato and shredded cheese over one half of the omelette.",
+          "5. Fold the other half over and cook for another 1-2 minutes until the cheese is melted and the eggs are fully cooked.",
+          "6. Serve immediately."
+        ]
+      }
+    }
+    ```
+*   **Error Codes:** `400` (Bad Request - no ingredients provided), `401` (Unauthorized), `500` (Server/Gemini API Error).
 
 ### Workflows and Sequencing
 
-**1. Expiration Alert Workflow (FR4.1)**
-1.  **Nightly (e.g., 2 AM UTC):** A `PG Cron` job runs a SQL function `check_expiring_items()`.
-2.  The function scans the `inventory` table for items expiring in the next 2-3 days.
-3.  For each found item, a new record is inserted into the `notifications` table.
-4.  **On Frontend:** The `Supabase Realtime` client is subscribed to inserts on the `notifications` table for the current `user_id`.
-5.  When a new notification is inserted, Supabase pushes the event to the client.
-6.  The frontend displays an in-app alert (e.g., a Toast or a badge on a bell icon) based on the received data.
-7.  Clicking the alert navigates the user to a recipe list pre-filtered with the expiring item.
+**1. Expiration Alert Workflow**
+1.  **[Scheduled]** `PG Cron` job runs once daily (e.g., at 01:00 UTC).
+2.  **[Backend]** The job executes a SQL function `check_expiring_items()`.
+3.  **[Database]** The function queries the `inventory_items` table for items expiring in the next `N` days (configurable, default 3) that have not already been notified about.
+4.  **[Database]** For each expiring item found, it inserts a new row into the `notifications` table (e.g., message: "Your tomatoes are expiring soon!").
+5.  **[Database]** The `notifications` table has a trigger that sends a payload to a `Supabase Realtime` channel (e.g., `user-notifications:<user_id>`).
+6.  **[Frontend]** The logged-in user's client, subscribed to this channel, receives the real-time event.
+7.  **[Frontend]** A notification component appears, displaying the message and a link to view recipe suggestions for that item.
 
-**2. Smart Suggestion Workflow (FR3.1)**
-1.  **User Action:** User navigates to the Dashboard.
-2.  **Frontend:** A `useQuery` hook triggers a call to `GET /api/recipes/suggestions`.
-3.  **Backend:** The API route authenticates the user, fetches their inventory (prioritizing items with `expiration_date` in the next 3-5 days), and compiles a list of ingredients.
-4.  The backend makes a request to the Spoonacular API's "Search Recipes by Ingredients" endpoint.
-5.  **Frontend:** The UI displays the returned recipes in "Recipe Card" components, highlighting those that use expiring ingredients.
-
-**3. Instant Idea Workflow (FR4.2)**
-1.  **User Action:** User clicks the "Instant Idea" button.
-2.  **Frontend:** A modal appears with a text input. User types ingredients (e.g., "eggs, cheese, spinach").
-3.  On submission, the frontend calls `POST /api/instant-idea` with the ingredients list.
-4.  **Backend:** The API route constructs a prompt for the Google Gemini API (e.g., "Create a simple recipe using only eggs, cheese, and spinach. Provide a title, ingredients list, and instructions.").
-5.  The backend parses the Gemini API's response into a structured JSON object.
-6.  **Frontend:** The modal updates to display the generated recipe details. This state is temporary and does not affect the user's persistent inventory.
-
-**4. Inventory Deduction Workflow (FR3.4)**
-1.  **User Action:** User clicks the "I Cooked This" button on a recipe details page.
-2.  **Frontend:** The "Inventory Deduction Modal" appears, pre-populated with ingredients from the recipe that are also in the user's inventory.
-3.  User confirms or adjusts the quantities to be deducted.
-4.  On confirmation, the frontend calls `POST /api/recipes/{id}/cook` with the list of inventory item IDs and quantities to deduct.
-5.  **Backend:** The API route validates the request, authenticates the user, and runs an `UPDATE` query on the `inventory` table for each item, decrementing the `quantity`.
-6.  **Frontend:** The modal closes, a confirmation "Toast" notification is shown, and the inventory view is automatically refreshed via `React Query`'s cache invalidation.
-
-
+**2. "Mark as Cooked" Workflow**
+1.  **[Frontend]** User clicks the "I Cooked This" button on a recipe details page.
+2.  **[Frontend]** The "Inventory Deduction Modal" appears, pre-populated with the ingredients from the recipe.
+3.  **[Frontend]** User confirms the ingredients and quantities to be deducted.
+4.  **[Frontend]** Client sends a `POST` request to `/api/recipes/{id}/cook` with the confirmed ingredient list.
+5.  **[Backend]** The API route authenticates the user.
+6.  **[Backend]** It validates that the user owns the inventory items being deducted.
+7.  **[Backend]** It runs a transaction to update the quantities or delete the items from the user's inventory in the `inventory_items` table.
+8.  **[Backend]** Returns a success message.
+9.  **[Frontend]** The UI updates to reflect the change, possibly by invalidating the `inventory` query cache (`React Query`/`SWR`).
 
 ## Non-Functional Requirements
 
 ### Performance
 
-- **API Response Time:** All API endpoints for this epic (`/api/recipes/suggestions`, `/api/recipes/{id}/cook`, `/api/notifications`, `/api/instant-idea`) must respond within **200ms** under normal load, excluding external API latencies (Spoonacular, Gemini).
-- **Suggestion Latency:** The perceived time for `GET /api/recipes/suggestions` should be under **1 second**. This will be achieved by optimizing the inventory query and potentially caching Spoonacular responses.
-- **Client-Side Performance:** Frontend components rendering suggestions and alerts must not degrade the overall application's Lighthouse score, maintaining a score of over 90.
+*   **Recipe Suggestion Latency:** The `GET /api/recipes/suggestions` endpoint must return a response in **< 1500ms**, including the external call to the Spoonacular API. A caching layer (e.g., Vercel Data Cache) should be implemented to cache Spoonacular responses for common ingredient combinations for a short period (e.g., 1 hour) to improve performance and reduce API costs.
+*   **Instant Idea Latency:** The `POST /api/instant-idea` endpoint must return a response in **< 3000ms**, accounting for the generative nature of the Google Gemini API call. The UI must show a clear loading state during this process.
+*   **Real-time Delivery:** Expiration alert notifications should be delivered to the client via Supabase Realtime in **< 500ms** after the database event is triggered.
 
 ### Security
 
-- **Authentication & Authorization:** All API endpoints in this epic must be protected and require a valid, authenticated user session managed by NextAuth.js.
-- **Data Access Control:** Database queries for suggestions and notifications must be scoped to the authenticated user's `user_id`, enforced by Supabase Row Level Security (RLS) policies. Direct access to other users' data is forbidden.
-- **Input Validation:** The `POST /api/instant-idea` and `POST /api/recipes/{id}/cook` endpoints must validate and sanitize all incoming data to prevent injection attacks or malformed requests. Zod schemas should be used for validation.
-- **API Key Security:** API keys for Spoonacular and Google Gemini must be stored securely as environment variables on the server and never exposed to the client.
+*   **Authorization:** All endpoints (`/api/recipes/suggestions`, `/api/recipes/{id}/cook`, `/api/instant-idea`) MUST be protected and require a valid NextAuth.js session.
+*   **Data Access:** All database queries related to inventory MUST be subject to Supabase Row Level Security (RLS) policies to ensure a user can only access their own data. The `check_expiring_items()` background job must run with elevated privileges (`security_invoker`) to access all users' data, but its logic must be strictly confined to its purpose.
+*   **Input Validation:** All API endpoints must validate their inputs. For example, the `/api/recipes/{id}/cook` endpoint must validate that the ingredient IDs in the payload belong to the authenticated user. The `/api/instant-idea` endpoint should sanitize the free-text input to prevent injection attacks against the LLM.
 
 ### Reliability/Availability
 
-- **Service Uptime:** The services underpinning this epic are expected to meet the overall system uptime goal of **>=99%**, as provided by Vercel and Supabase.
-- **Graceful Degradation:**
-    - If the Spoonacular API is down or slow, the recipe suggestion feature should time out gracefully and return a user-friendly message, rather than a system error.
-    - If the Gemini API fails, the "Instant Idea" feature should immediately inform the user of the issue.
-- **Transactional Integrity:** The inventory deduction process (`POST /api/recipes/{id}/cook`) must be atomic. If any part of the deduction fails, the entire transaction should be rolled back to prevent data inconsistency.
+*   **External API Failures:** The application must be resilient to failures from the Spoonacular and Google Gemini APIs.
+    *   If Spoonacular fails, the recipe suggestion endpoint should return a `503 Service Unavailable` error with a user-friendly message. The frontend should gracefully handle this state.
+    *   If Gemini fails, the "Instant Idea" feature should return a `503` error and display a message like "The AI chef is busy right now, please try again in a moment."
+*   **Background Job Failures:** The `check_expiring_items()` cron job should include robust error handling and logging. If the job fails, it should not prevent subsequent runs. A monitoring mechanism should be considered post-MVP to alert developers of repeated job failures.
 
 ### Observability
 
-- **Structured Logging:** All backend API routes for this epic must implement structured logging (e.g., using `Pino`). Logs should include the `userId`, the specific API route, and the outcome of the operation (success or error).
-- **Error Monitoring:** Critical errors, such as failures in fetching suggestions, deducting inventory, or generating instant ideas, must be captured. For production environments, these errors should be sent to a monitoring service like Sentry.
-- **Performance Monitoring:** The response times for all API endpoints in this epic should be monitored to ensure they remain within the defined performance targets.
-
+*   **Logging:**
+    *   Structured logs (using Pino or Winston) must be generated for all key events within the API routes for this epic.
+    *   Log successful recipe suggestion generations, including the number of suggestions returned.
+    *   Log all "recipe cooked" events, including the user ID and recipe ID.
+    *   Log all successful "Instant Idea" generations.
+    *   Critically, log any errors from the Spoonacular or Gemini APIs, including the error message and status code from the external provider.
+*   **Metrics:**
+    *   Track the response latency for all three API endpoints.
+    *   Count the number of `200 OK` vs `5xx` responses for the external API calls to monitor their health.
+*   **Tracing:** (Post-MVP) Implement distributed tracing to follow a request from the frontend through the Next.js API route to the external API and back, to easily pinpoint performance bottlenecks.
 
 ## Dependencies and Integrations
 
-The implementation of Epic 4 relies heavily on seamless integration with various internal and external services.
-
-### External API Dependencies
-
--   **Spoonacular API:**
-    -   **Purpose:** Primary source for recipe data.
-    -   **Integration Point:** Used by the Smart Recipe Suggestions service (`GET /api/recipes/suggestions`) to find recipes based on available ingredients.
-    -   **Constraint:** API key required; rate limits must be respected.
--   **Google Gemini API:**
-    -   **Purpose:** Generative AI for creative recipe suggestions.
-    -   **Integration Point:** Used by the Instant Idea Service (`POST /api/instant-idea`) to generate recipes from user-provided ingredients.
-    -   **Constraint:** API key required; content filtering and response parsing must be handled.
-
-### Internal Service Integrations
-
--   **Supabase PostgreSQL Database:**
-    -   **Purpose:** Stores user inventory data, user profiles, and generated notifications.
-    -   **Integration Point:** `inventory` table for recipe suggestions and deductions; `notifications` table for expiration alerts.
-    -   **Constraint:** Row Level Security (RLS) must be correctly configured for `inventory` and `notifications` tables.
--   **Supabase Auth:**
-    -   **Purpose:** Manages user authentication and authorization.
-    -   **Integration Point:** All API routes for Epic 4 features (`/api/recipes/*`, `/api/notifications`, `/api/instant-idea`) require authenticated user sessions.
-    -   **Constraint:** Ensures only the authenticated user can access/modify their own data.
--   **Supabase Realtime:**
-    -   **Purpose:** Real-time push notifications for expiration alerts.
-    -   **Integration Point:** Frontend subscribes to changes in the `notifications` table to display live alerts.
-    -   **Constraint:** Efficient handling of subscriptions and payload delivery.
--   **Supabase PG Cron:**
-    -   **Purpose:** Scheduled background tasks for expiration checks.
-    -   **Integration Point:** Executes a daily SQL function to identify expiring items and generate notifications.
-    -   **Constraint:** Correct scheduling and robust SQL function implementation.
--   **NextAuth.js:**
-    -   **Purpose:** Frontend authentication layer and session management.
-    -   **Integration Point:** Provides session data (`userId`) to client-side components and server-side API routes for all Epic 4 features.
-    -   **Constraint:** Secure session handling and integration with Supabase Auth.
-
-### Frameworks & Libraries
-
--   **Next.js (App Router, Server Components/Actions):** The foundational web framework for building both the frontend UI and backend API routes.
--   **React Query (or SWR):** Used for efficient client-side data fetching, caching, and state management for recipe suggestions and notifications.
--   **Tailwind CSS & shadcn/ui:** Provides the styling and UI component foundation for displaying all Epic 4 features.
--   **Zod:** Used for schema validation of API request and response payloads, ensuring data integrity.
-
-### Dependencies from Other Epics
-
--   **Epic 2 (Inventory Management):** Full functionality of Epic 4's suggestions, alerts, and deductions are directly dependent on a complete and functional inventory system (FR2.1 - FR2.4).
--   **Epic 3 (Recipe Discovery & Browsing):** The "Mark Recipe as Cooked" (FR3.4) feature relies on the ability to view recipe details, which is part of Epic 3 (FR3.3). The Smart Recipe Suggestions (FR3.1) also leverages the recipe display components.
+| Type | Dependency / Integration Point | Version / Constraint | Purpose |
+|---|---|---|---|
+| **External API** | Spoonacular API | Latest Stable | Source for inventory-based recipe suggestions. |
+| **External API** | Google Gemini API | Latest Stable | Powers the "Instant Idea" generative recipe feature. |
+| **Internal Service** | Supabase PostgreSQL | v17 (Managed) | Data persistence for inventory items and notifications. |
+| **Internal Service** | Supabase Auth | Latest Stable | User authentication and session management via NextAuth.js. |
+| **Internal Service** | Supabase Realtime | Latest Stable | Pushing live expiration alert notifications to the client. |
+| **Internal Service** | Supabase (PG Cron) | Latest Stable | Scheduled execution of the `check_expiring_items` background job. |
+| **NPM Package** | `next` | v16+ | Core application framework. |
+| **NPM Package** | `next-auth` | v4.24.13+ | Handling authentication sessions. |
+| **NPM Package** | `@supabase/supabase-js` | Latest Stable | Client library for interacting with Supabase services (DB, Realtime). |
+| **NPM Package** | `@google/generative-ai` | Latest Stable | Official client library for interacting with the Google Gemini API. |
+| **Epic Dependency** | Epic 2: Inventory Management | Must be `done` | The entire suggestion and alert system is dependent on a functional inventory system. |
+| **Epic Dependency** | Epic 3: Recipe Discovery & Browsing | `Recipe Card` component must be available | The UI for displaying recipe suggestions will reuse the `Recipe Card` component developed in Epic 3. |
 
 ## Acceptance Criteria (Authoritative)
 
-The following are the authoritative acceptance criteria for Epic 4, derived directly from the Product Requirements Document (PRD) and refined in the Epic Breakdown.
+**For Story 4.1: Get Smart Recipe Suggestions**
+*   **AC 4.1.1:** Given a user is logged in and has at least 3 distinct items in their inventory, when they navigate to the dashboard, the system MUST generate at least 3 meaningful recipe suggestions.
+*   **AC 4.1.2:** Given the user has an item expiring in 2 days and another expiring in 10 days, the recipe suggestions MUST prioritize using the item expiring in 2 days.
+*   **AC 4.1.3:** Each suggested recipe card MUST indicate if it "Uses expiring" items, as per the UX specification.
+*   **AC 4.1.4:** The `GET /api/recipes/suggestions` endpoint MUST only return suggestions for the authenticated user's inventory.
 
-**FR3.1 - Get Smart Recipe Suggestions:**
-- **AC1:** The system generates at least 3 recipe suggestions if there are sufficient ingredients in the user's inventory.
-- **AC2:** Suggestions are prioritized based on ingredients that are nearing their expiration date.
-- **AC3:** The suggestions are 'meaningful' (contain at least 3 ingredients).
-- **AC4:** Each recipe card displays an indicator if it uses expiring ingredients (per UX).
+**For Story 4.2: Mark Recipe as Cooked and Deduct Inventory**
+*   **AC 4.2.1:** Given a user is viewing a recipe, when they click the "I Cooked This" button, a confirmation modal ("Inventory Deduction Modal") MUST appear.
+*   **AC 4.2.2:** Upon confirmation in the modal, the `POST /api/recipes/{id}/cook` endpoint MUST be called, and the specified ingredient quantities MUST be deducted from the user's inventory.
+*   **AC 4.2.3:** The deduction action MUST be a deliberate, confirmed action to ensure data quality, as per the PRD's Metric Integrity principle.
 
-**FR3.4 - Mark Recipe as Cooked and Deduct Inventory:**
-- **AC1:** When a user marks a recipe as cooked, the system prompts the user to confirm which ingredients from their inventory were used.
-- **AC2:** Upon user confirmation, the quantities of the used ingredients are automatically deducted from the user's inventory.
-- **AC3:** The deduction process is a deliberate, confirmed action through a modal (per UX).
+**For Story 4.3: Expiration Alerts**
+*   **AC 4.3.1:** Given a user has an item in their inventory with an expiration date 2 days from now, the system MUST generate an in-app notification for that user.
+*   **AC 4.3.2:** The in-app notification MUST be "actionable," containing a direct link to a view showing recipe suggestions that use the expiring item.
+*   **AC 4.3.3:** Notifications MUST be bundled if multiple items are expiring on the same day to avoid notification fatigue (e.g., "Your tomatoes and 2 other items are expiring soon").
 
-**FR4.1 - Expiration Alerts:**
-- **AC1:** An in-app notification is generated for inventory items expiring in the next 2-3 days.
-- **AC2:** The notification directly links the user to a list of recipes that can use the expiring item.
-- **AC3:** Notifications are bundled to avoid 'notification fatigue' and are actionable (per UX and PRD).
-
-**FR4.2 - Instant Idea Generation:**
-- **AC1:** A prominent "Instant Idea" button is available on the main screen.
-- **AC2:** Upon clicking the button, a user can input 2-3 ingredients.
-- **AC3:** The system provides an immediate AI-generated recipe suggestion based on the input.
-- **AC4:** This "Instant Idea" action does not modify the user's persistent inventory.
+**For Story 4.4: Instant Idea Generation**
+*   **AC 4.4.1:** Given a user is on the main screen, when they click the "Instant Idea" button, a prompt MUST appear allowing them to enter ingredients.
+*   **AC 4.4.2:** After entering at least two ingredients and submitting, the system MUST display an immediate, AI-generated recipe suggestion from the Gemini API.
+*   **AC 4.4.3:** This action MUST NOT make any changes to the user's persistent inventory data.
 
 ## Traceability Mapping
 
-| Acceptance Criterion | Spec Section(s) | Component(s)/API(s) | Test Idea |
+| Acceptance Criterion | Spec Section(s) | Component(s) / API(s) | Test Idea |
 |---|---|---|---|
-| FR3.1-AC1: At least 3 suggestions | Detailed Design: Smart Recipe Suggestions, APIs: GET /api/recipes/suggestions | Backend: `Smart Recipe Suggestions` service, Frontend: `Recipe Card` component | Verify 3+ suggestions are returned when inventory supports it. |
-| FR3.1-AC2: Prioritize expiring | Detailed Design: Smart Recipe Suggestions | Backend: `Smart Recipe Suggestions` service (DB query logic) | Test with expiring vs. non-expiring items; verify priority. |
-| FR3.1-AC3: Meaningful suggestions | Detailed Design: Smart Recipe Suggestions | Backend: `Smart Recipe Suggestions` service (Spoonacular parsing) | Check generated recipes have >=3 ingredients. |
-| FR3.1-AC4: "Uses expiring" tag | Detailed Design: Smart Recipe Suggestions, UX: Recipe Card | Frontend: `Recipe Card` component | Verify UI tag appears when applicable. |
-| FR3.4-AC1: Confirm ingredients | Detailed Design: Inventory Deduction Workflow, UX: Inventory Deduction Modal | Frontend: `Inventory Deduction Modal` | Verify modal appears with pre-filled ingredients. |
-| FR3.4-AC2: Deduct quantities | Detailed Design: Inventory Deduction Service, APIs: POST /api/recipes/{id}/cook | Backend: `Inventory Deduction Service` | Confirm inventory quantities are reduced correctly post-cook. |
-| FR3.4-AC3: Deliberate action | Detailed Design: Inventory Deduction Workflow | Frontend: `Inventory Deduction Modal` | Test cancellation/confirmation flow of the modal. |
-| FR4.1-AC1: In-app notification | Detailed Design: Expiration Alert Workflow, APIs: GET /api/notifications | Backend: `Expiration Alert Service` (PG Cron, Supabase Realtime), Frontend: `Notification Component` | Verify notification appears when items are 2-3 days from expiring. |
-| FR4.1-AC2: Links to recipes | Detailed Design: Expiration Alert Workflow | Frontend: `Notification Component` (navigation logic) | Click notification, verify correct recipe list loads. |
-| FR4.1-AC3: Bundled, actionable | UX: Notification Patterns | Frontend: `Notification Component` | Test multiple expiring items, verify bundled alert; verify actionable link. |
-| FR4.2-AC1: "Instant Idea" button | UX: Design Direction (Dashboard), Component Library | Frontend: `Instant Idea Button` component | Verify button presence on main screen. |
-| FR4.2-AC2: Input 2-3 ingredients | Detailed Design: Instant Idea Workflow | Frontend: `Instant Idea Button` modal | Verify modal allows ingredient input. |
-| FR4.2-AC3: AI-generated recipe | Detailed Design: Instant Idea Service, APIs: POST /api/instant-idea | Backend: `Instant Idea Service` (Gemini API) | Test various ingredient inputs, verify valid recipe response. |
-| FR4.2-AC4: No inventory modification | Detailed Design: Instant Idea Workflow | Backend: `Instant Idea Service` | Confirm inventory remains unchanged after using "Instant Idea". |
-
-
+| **AC 4.1.1** | Detailed Design > APIs | `GET /api/recipes/suggestions` | Integration test: Seed inventory with 5 items, call endpoint, assert > 3 recipes returned. |
+| **AC 4.1.2** | Detailed Design > Services | Recipe Suggestion Service | Unit test: Mock inventory with items at different expiration dates, assert correct prioritization. |
+| **AC 4.1.3** | N/A (UX Spec) | `RecipeCard` Component | E2E test (Playwright): Log in, view dashboard, assert "Uses expiring" badge is visible on correct card. |
+| **AC 4.2.1** | Detailed Design > Workflows | Inventory Deduction Modal | E2E test: Click "I Cooked This" button, assert modal appears. |
+| **AC 4.2.2** | Detailed Design > APIs | `POST /api/recipes/{id}/cook` | Integration test: Seed inventory, call endpoint with ingredients, then fetch inventory and assert quantities are reduced. |
+| **AC 4.3.1** | Detailed Design > Workflows | Expiration Alert Service (PG Cron) | Integration test: Manually run `check_expiring_items()` function, query `notifications` table for new entry. |
+| **AC 4.3.2** | N/A (UX Spec) | Notification UI Component | E2E test: Trigger a notification, click it, assert the user is navigated to the correct page. |
+| **AC 4.4.1** | Detailed Design > Services | Instant Idea Service | E2E test: Click "Instant Idea" button, assert input prompt is visible. |
+| **AC 4.4.2** | Detailed Design > APIs | `POST /api/instant-idea` | Integration test: Call endpoint with ingredients, assert a valid recipe structure is returned. |
+| **AC 4.4.3** | Detailed Design > Services | Instant Idea Service | Integration test: Call `POST /api/instant-idea`, then `GET /api/inventory` and assert inventory remains unchanged. |
 
 ## Risks, Assumptions, Open Questions
 
-### Risks
-
--   **R1: External API Dependency (Spoonacular/Gemini) Reliability:**
-    -   **Description:** Downtime or performance degradation of Spoonacular or Google Gemini APIs could directly impact the core functionality of recipe suggestions and instant idea generation.
-    -   **Mitigation:**
-        -   Implement robust error handling and retry mechanisms for API calls.
-        -   Display user-friendly messages during API outages/latency.
-        -   Consider caching frequently requested Spoonacular recipes.
-        -   Explore fallback mechanisms for "Instant Idea" (e.g., a simplified local dataset or template-based suggestions if Gemini fails consistently).
--   **R2: Notification Fatigue:**
-    -   **Description:** Over-notifying users about expiring items could lead to them disabling notifications or ignoring alerts, negating the feature's value.
-    -   **Mitigation:**
-        -   Adhere strictly to the bundling of alerts (e.g., "3 items are expiring soon" rather than individual alerts).
-        -   Ensure notifications are highly actionable and link directly to solutions (recipes).
-        -   Monitor notification disable rates as a key metric.
--   **R3: AI Response Quality for "Instant Idea":**
-    -   **Description:** The quality and relevance of recipes generated by the Google Gemini API might not consistently meet user expectations, especially for unusual ingredient combinations.
-    -   **Mitigation:**
-        -   Craft clear and concise prompts for Gemini.
-        -   Implement post-processing/filtering of Gemini's output to ensure basic recipe structure.
-        -   Provide a feedback mechanism for users to rate generated ideas.
-        -   Clearly set user expectations that these are "ideas" and may require adjustment.
-
-### Assumptions
-
--   **A1: User Willingness to Interact with Alerts:** Users will be motivated by actionable expiration alerts to view and utilize recipe suggestions, thereby reducing food waste.
--   **A2: API Stability:** The external Spoonacular and Google Gemini APIs will maintain sufficient uptime and performance to support the application's real-time needs.
--   **A3: Data Integrity of Inventory:** The inventory data (quantity, expiration dates) provided by the user (from Epic 2) is sufficiently accurate to generate meaningful recipe suggestions.
--   **A4: Network Connectivity:** Users will have sufficient network connectivity to receive real-time updates and interact with API-dependent features.
-
-### Open Questions
-
--   **Q1: Recipe Filtering Enhancements:** Should the "Smart Recipe Suggestions" feature eventually incorporate user dietary preferences (e.g., vegetarian, gluten-free) or cuisine types, which are currently out-of-scope (Growth Features)?
--   **Q2: Advanced Inventory Deduction:** Beyond simple quantity deduction, are there requirements for handling partial usage or suggesting alternative uses for remaining ingredients after cooking?
--   **Q3: User Feedback Loop for AI:** What specific mechanisms (e.g., thumbs up/down, brief text input) will be implemented to gather user feedback on the quality of AI-generated recipes from the "Instant Idea" feature?
--   **Q4: Scalability of Gemini API:** What are the expected costs and rate limits for the Google Gemini API when scaling to a large user base, and what strategies are in place to manage these?
-
+*   **Risk:** The quality of Spoonacular's recipe suggestions for limited ingredients might be low.
+    *   **Mitigation:** The suggestion logic will include a filter to ensure a minimum number of the user's ingredients are used. The UI will clearly show "used" vs. "missed" ingredients to manage expectations.
+*   **Risk:** The Google Gemini API may return inconsistent or poorly formatted recipe structures.
+    *   **Mitigation:** The backend service will have a robust parsing and validation layer. A prompt engineering strategy will be developed with few-shot examples to guide the LLM into providing a consistent JSON output. If parsing fails, a user-friendly error is returned.
+*   **Risk:** The `PG Cron` job for expiration alerts could be resource-intensive as the user base grows.
+    *   **Mitigation:** The SQL function will be optimized to query only active users and items close to expiration. The job frequency will be monitored and adjusted if necessary. For massive scale, this would be re-evaluated, but it is sufficient for the target scale.
+*   **Assumption:** Users will understand the distinction between the inventory-based suggestions and the "Instant Idea" feature.
+    *   **Mitigation:** The UI will use clear and distinct labeling for each feature. The "Instant Idea" button will be visually prominent and have a tooltip explaining its purpose.
+*   **Question:** What is the optimal notification window for expiration alerts (currently set to 2-3 days)?
+    *   **Next Step:** This will be launched with the 3-day default. We will gather user feedback and monitor the "Actionable Nudges" metric post-launch to see if this window should be adjusted or made user-configurable.
 
 ## Test Strategy Summary
 
-
-
-
-
-The test strategy for Epic 4 will follow the multi-layered approach outlined in the architecture, encompassing Unit, Integration, and End-to-End (E2E) tests to ensure the reliability, functionality, and user experience of the personalized suggestions and alerts features.
-
-
-
-
-
-### Unit Tests
-
-
-
-
-
--   **Focus:** Individual functions, components, and utility modules.
-
-
--   **Tools:** Jest, React Testing Library.
-
-
--   **Coverage:**
-
-
-    -   Backend logic for querying expiring items, parsing Spoonacular/Gemini API responses, and updating inventory quantities.
-
-
-    -   Frontend components such as `Recipe Card`, `Instant Idea Button`, `Notification Component`, and `Inventory Deduction Modal` for correct rendering and state changes.
-
-
-    -   Zod schemas for API payload validation.
-
-
-
-
-
-### Integration Tests
-
-
-
-
-
--   **Focus:** Interaction between services, API routes, and database.
-
-
--   **Tools:** Jest, Supertest (for API routes), direct database client (for Supabase interactions).
-
-
--   **Coverage:**
-
-
-    -   **API Endpoints:** Verify that `GET /api/recipes/suggestions`, `POST /api/recipes/{id}/cook`, `GET /api/notifications`, and `POST /api/instant-idea` behave as expected, handling various inputs (e.g., empty inventory, no expiring items, invalid ingredients).
-
-
-    -   **Database Interactions:** Ensure that inventory deductions are correctly persisted, and notifications are accurately created.
-
-
-    -   **External API Mocks:** Mock Spoonacular and Google Gemini API responses to test integration logic in isolation.
-
-
-
-
-
-### End-to-End (E2E) Tests
-
-
-
-
-
--   **Focus:** User-centric scenarios covering entire workflows as defined by Acceptance Criteria.
-
-
--   **Tools:** Playwright or Cypress.
-
-
--   **Coverage:**
-
-
-    -   **Smart Recipe Suggestions:** User logs in, adds items to inventory (including expiring ones), navigates to the dashboard/suggestions, and verifies that appropriate recipe suggestions are displayed.
-
-
-    -   **Mark Recipe as Cooked:** User views a recipe, clicks "Cooked," confirms deductions, and verifies inventory update.
-
-
-    -   **Expiration Alerts:** Simulate expiring items, verify in-app notification appears, and clicking it leads to relevant recipes.
-
-
-    -   **Instant Idea Generation:** User clicks the button, inputs ingredients, and verifies an AI-generated recipe is displayed without altering inventory.
-
-
-    -   **Security and Authentication:** Ensure all features are only accessible to authenticated users and that data separation between users is maintained.
-
-
-
-
-
-### Acceptance Criteria Verification
-
-
-
-
-
-Each Acceptance Criterion (AC) will have at least one corresponding test case, primarily at the E2E or Integration level, to ensure direct traceability and validation of the specified requirements.
-
-
-
-
-
-### Edge Cases and Error Handling
-
-
-
-
-
--   Tests will be designed to cover edge cases such as empty inventory, no matching recipes, API failures, network interruptions, and invalid user input.
-
-
--   Error messages and graceful degradation (as defined in NFRs) will be explicitly tested.
+*   **Unit Tests:**
+    *   Test the `Recipe Suggestion Service` logic for prioritizing expiring items.
+    *   Test the `Instant Idea Service`'s ability to correctly parse a valid response from a mocked Gemini API.
+    *   Test utility functions for date calculations.
+*   **Integration Tests:**
+    *   Write tests for all three API endpoints (`/suggestions`, `/cook`, `/instant-idea`) that interact with a test database (for inventory) and mocked external APIs (Spoonacular, Gemini).
+    *   Write a test for the `check_expiring_items()` PostgreSQL function to ensure it correctly identifies items and creates entries in the `notifications` table.
+*   **End-to-End (E2E) Tests (Playwright/Cypress):**
+    *   A full user flow: Log in, see a suggestion on the dashboard, click it, mark it as cooked, and verify the inventory is updated.
+    *   A full alert flow: Seed an item about to expire, manually trigger the alert mechanism, verify the in-app notification appears on the UI, click it, and ensure it leads to the correct page.
+    *   A full "Instant Idea" flow: Click the button, enter ingredients, and verify a recipe appears on the screen without affecting the main inventory display.

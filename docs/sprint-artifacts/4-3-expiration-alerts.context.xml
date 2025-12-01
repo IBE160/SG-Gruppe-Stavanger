@@ -1,184 +1,104 @@
-<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+<story-context id="docs/sprint-artifacts/4-3-expiration-alerts.context.xml" v="1.0">
   <metadata>
     <epicId>4</epicId>
     <storyId>3</storyId>
     <title>Expiration Alerts</title>
-    <status>drafted</status>
+    <status>ready-for-dev</status>
     <generatedAt>2025-12-01</generatedAt>
     <generator>BMAD Story Context Workflow</generator>
     <sourceStoryPath>docs/sprint-artifacts/4-3-expiration-alerts.md</sourceStoryPath>
   </metadata>
-
   <story>
-    <asA>As a user,</asA>
-    <iWant>I want to receive alerts for items nearing expiration,</iWant>
-    <soThat>so that I can use them before they go to waste.</soThat>
+    <asA>a user</asA>
+    <iWant>to receive alerts for items nearing expiration</iWant>
+    <soThat>I can use them before they go to waste.</soThat>
     <tasks>
-- [ ] Implement backend logic for expiration detection (AC: 1)
-  - [ ] Set up `PG Cron` job to periodically check for expiring items.
-  - [ ] Implement Supabase function to identify expiring items.
-  - [ ] Integrate with Supabase Realtime to push notifications to frontend.
-- [ ] Implement `GET /api/notifications` API endpoint (AC: 1)
-  - [ ] Define API route in `app/api/notifications/route.ts`.
-  - [ ] Fetch expiring items from Supabase.
-- [ ] Implement frontend notification display (AC: 1)
-  - [ ] Integrate with Supabase Realtime client on frontend.
-  - [ ] Display in-app notifications on the dashboard.
-  - [ ] Create `ActionableAlertCard` component per UX design.
-- [ ] Link notifications to relevant recipes (AC: 2)
-  - [ ] Modify notification payload to include recipe IDs or links.
-  - [ ] Implement navigation from `ActionableAlertCard` to recipe details.
-- [ ] Implement notification bundling logic (AC: 3)
-  - [ ] Group multiple expiring items into a single notification.
-  - [ ] Define bundling rules (e.g., daily digest).
-- [ ] Write unit and integration tests for expiration detection and notification API (AC: 1)
-- [ ] Write unit and integration tests for recipe linking in notifications (AC: 2)
-- [ ] Write unit and integration tests for notification bundling logic (AC: 3)
-- [ ] Write E2E tests for the complete notification flow, covering all acceptance criteria (AC: 1, 2, 3)</tasks>
+        - [ ] Implement backend logic for expiration detection (AC: 1)
+        - [ ] Set up `PG Cron` job to periodically check for expiring items.
+        - [ ] Implement Supabase function to identify expiring items.
+        - [ ] Integrate with Supabase Realtime to push notifications to frontend.
+        - [ ] Implement `GET /api/notifications` API endpoint (AC: 1)
+        - [ ] Define API route in `app/api/notifications/route.ts`.
+        - [ ] Fetch expiring items from Supabase.
+        - [ ] Implement frontend notification display (AC: 1)
+        - [ ] Integrate with Supabase Realtime client on frontend.
+        - [ ] Display in-app notifications on the dashboard.
+        - [ ] Create `ActionableAlertCard` component per UX design.
+        - [ ] Link notifications to relevant recipes (AC: 2)
+        - [ ] Modify notification payload to include recipe IDs or links.
+        - [ ] Implement navigation from `ActionableAlertCard` to recipe details.
+        - [ ] Implement notification bundling logic (AC: 3)
+        - [ ] Group multiple expiring items into a single notification.
+        - [ ] Define bundling rules (e.g., daily digest).
+        - [ ] Write unit and integration tests for expiration detection and notification API (AC: 1)
+        - [ ] Write unit and integration tests for recipe linking in notifications (AC: 2)
+        - [ ] Write unit and integration tests for notification bundling logic (AC: 3)
+        - [ ] Write E2E tests for the complete notification flow, covering all acceptance criteria (AC: 1, 2, 3)
+    </tasks>
   </story>
-
   <acceptanceCriteria>
-1. Given I have items in my inventory with expiration dates, when items are 2-3 days from expiring, then I receive an in-app notification. (FR4.1)
-2. The notification directly links to recipes using those expiring items (Expiration-to-Inspiration Loop, per UX). (FR4.1, UX)
-3. Notifications are bundled to avoid fatigue (per UX and PRD). (FR4.1, UX, PRD)</acceptanceCriteria>
-
+    1. Given I have items in my inventory with expiration dates, when items are 2-3 days from expiring, then I receive an in-app notification. (FR4.1)
+    2. The notification directly links to recipes using those expiring items (Expiration-to-Inspiration Loop, per UX). (FR4.1, UX)
+    3. Notifications are bundled to avoid fatigue (per UX and PRD). (FR4.1, UX, PRD)
+  </acceptanceCriteria>
   <artifacts>
     <docs>
-      <doc>
-        <path>docs/PRD.md</path>
-        <title>Product Requirements Document</title>
-        <section>MVP - Expiration Alerts &amp; Recommendations</section>
-        <snippet>In-app notifications for items nearing expiration (2-3 days prior), with direct recipe suggestions using those items.</snippet>
-      </doc>
-      <doc>
-        <path>docs/PRD.md</path>
-        <title>Product Requirements Document</title>
-        <section>Key Assumptions &amp; Risks - Assumption: Alerts about expiring food will motivate users to act.</section>
-        <snippet>Notifications must be actionable and inspirational, directly linking the expiring item to a simple, immediate solution (i.e., a list of recipes).</snippet>
-      </doc>
-      <doc>
-        <path>docs/PRD.md</path>
-        <title>Product Requirements Document</title>
-        <section>Functional Requirements - FR4.1 - Expiration Alerts</section>
-        <snippet>The system notifies the user about items nearing expiration. An in-app notification is generated for items expiring in the next 2-3 days. The notification is 'actionable', directly linking the user to a list of recipes that use the expiring item. The frequency and bundling of notifications are managed to avoid 'notification fatigue'.</snippet>
-      </doc>
-      <doc>
-        <path>docs/architecture.md</path>
-        <title>Architecture</title>
-        <section>Decision Summary - Real-time Features</section>
-        <snippet>Supabase Realtime integrates seamlessly with Supabase PostgreSQL and authentication. Simplifies building real-time features for expiration alerts and live inventory updates without managing complex WebSocket servers.</snippet>
-      </doc>
-      <doc>
-        <path>docs/architecture.md</path>
-        <title>Architecture</title>
-        <section>Decision Summary - Background Jobs</section>
-        <snippet>PG Cron in Supabase is simple, reliable, and cost-effective for handling database-related background tasks like checking expiration dates.</snippet>
-      </doc>
-      <doc>
-        <path>docs/architecture.md</path>
-        <title>Architecture</title>
-        <section>FR Category to Architecture Mapping - Notifications</section>
-        <snippet>Frontend components for in-app alerts, PG Cron for triggering alerts, Supabase Realtime for pushing alerts, Resend for email notifications, and Supabase's built-in email for authentication-related emails.</snippet>
-      </doc>
-      <doc>
-        <path>docs/ux-design-specification.md</path>
-        <title>UX Design Specification</title>
-        <section>Novel UX Patterns - Expiration-to-Inspiration Loop</section>
-        <snippet>Transforms the negative experience of seeing food expire into a positive, actionable task. A persistent, contextual alert (e.g., "3 items expiring soon") on the Dashboard directly links to an auto-generated list of "Waste-Saving Recipes" that exclusively use the expiring items.</snippet>
-      </doc>
-      <doc>
-        <path>docs/ux-design-specification.md</path>
-        <title>UX Design Specification</title>
-        <section>Component Library - Actionable Alert Card</section>
-        <snippet>A Dashboard card for alerts (e.g., Expiring Soon) with color-coding.</snippet>
-      </doc>
-      <doc>
-        <path>docs/ux-design-specification.md</path>
-        <title>UX Design Specification</title>
-        <section>UX Pattern Decisions - Expiration Color-Coded Border</section>
-        <snippet>A colored left border on an item indicates its expiration status (e.g., red for today, orange for soon). This provides a quick visual cue.</snippet>
-      </doc>
-      <doc>
-        <path>docs/epics.md</path>
-        <title>Epic Breakdown</title>
-        <section>Epic 4: Personalized Suggestions &amp; Alerts - Story 4.3: Expiration Alerts</section>
-        <snippet>As a user, I want to receive alerts for items nearing expiration, so that I can use them before they go to waste.</snippet>
-      </doc>
+        <doc>
+            <path>docs/sprint-artifacts/tech-spec-epic-4.md</path>
+            <title>Epic Technical Specification: Personalized Suggestions &amp; Alerts</title>
+            <section>Data Models and Contracts</section>
+            <snippet>This epic primarily relies on the existing `inventory_items` and `users` tables. It introduces a new `notifications` table.</snippet>
+        </doc>
+        <doc>
+            <path>docs/PRD.md</path>
+            <title>ibe160 - Product Requirements Document</title>
+            <section>FR4.1 - Expiration Alerts</section>
+            <snippet>The system notifies the user about items nearing expiration. An in-app notification is generated for items expiring in the next 2-3 days.</snippet>
+        </doc>
+        <doc>
+            <path>docs/architecture.md</path>
+            <title>Architecture</title>
+            <section>FR Category to Architecture Mapping</section>
+            <snippet>Notifications: Frontend components for in-app alerts, PG Cron for triggering alerts, Supabase Realtime for pushing alerts, Resend for email notifications...</snippet>
+        </doc>
     </docs>
     <code>
-      <artifact>
-        <path>app/(main)/dashboard/</path>
-        <kind>directory</kind>
-        <symbol>dashboard</symbol>
-        <lines></lines>
-        <reason>Frontend directory for displaying in-app alerts on the dashboard.</reason>
-      </artifact>
-      <artifact>
-        <path>components/specific/ActionableAlertCard.tsx</path>
-        <kind>component</kind>
-        <symbol>ActionableAlertCard</symbol>
-        <lines>new</lines>
-        <reason>Frontend component to be created for displaying individual actionable alert cards as per UX design.</reason>
-      </artifact>
-      <artifact>
-        <path>app/api/notifications/route.ts</path>
-        <kind>API route</kind>
-        <symbol>GET /api/notifications</symbol>
-        <lines>new</lines>
-        <reason>Backend Next.js API Route for handling notifications, specifically the GET endpoint to fetch all notifications for the authenticated user.</reason>
-      </artifact>
-      <artifact>
-        <path>lib/db.ts</path>
-        <kind>utility</kind>
-        <symbol>Supabase client interaction</symbol>
-        <lines>new</lines>
-        <reason>Module for Supabase client interaction, where PG Cron setup and Realtime subscriptions will be handled.</reason>
-      </artifact>
-      <artifact>
-        <path>lib/notifications.ts</path>
-        <kind>utility</kind>
-        <symbol>notifications logic</symbol>
-        <lines>new</lines>
-        <reason>Dedicated module for notifications logic, if separate from db.ts.</reason>
-      </artifact>
+        <artifact>
+            <path>app/api/notifications/route.ts</path>
+            <kind>api-route</kind>
+            <symbol>GET</symbol>
+            <lines>N/A (new file)</lines>
+            <reason>API endpoint to fetch notifications for the user.</reason>
+        </artifact>
+        <artifact>
+            <path>app/(main)/dashboard/page.tsx</path>
+            <kind>ui-page</kind>
+            <symbol>DashboardPage</symbol>
+            <lines>N/A</lines>
+            <reason>This page will display the in-app notifications.</reason>
+        </artifact>
+        <artifact>
+            <path>components/specific/ActionableAlertCard.tsx</path>
+            <kind>ui-component</kind>
+            <symbol>ActionableAlertCard</symbol>
+            <lines>N/A (new file)</lines>
+            <reason>Component to display a single notification alert.</reason>
+        </artifact>
     </code>
     <dependencies>
-      <npm>
-        <package name="@supabase/supabase-js" version="^2.0.0" />
-        <package name="next" version="^14.0.0" />
-        <package name="next-auth" version="4.24.13" />
-        <package name="react" version="^18.0.0" />
-        <package name="tailwindcss" version="^3.0.0" />
-      </npm>
+        <dependency>
+            <name>next</name>
+            <version>16+</version>
+        </dependency>
+        <dependency>
+            <name>@supabase/supabase-js</name>
+            <version>Latest Stable</version>
+        </dependency>
     </dependencies>
   </artifacts>
-
   <constraints>
-    <constraint>
-      <type>Architecture Pattern</type>
-      <description>Notifications: Frontend components for in-app alerts, PG Cron for triggering alerts, Supabase Realtime for pushing alerts, Resend for email notifications, and Supabase's built-in email for authentication-related emails.</description>
-      <source>docs/architecture.md#fr-category-to-architecture-mapping</source>
-    </constraint>
-    <constraint>
-      <type>Architecture Pattern</type>
-      <description>Background Jobs: PG Cron in Supabase for handling database-related background tasks like checking expiration dates.</description>
-      <source>docs/architecture.md#decision-summary</source>
-    </constraint>
-    <constraint>
-      <type>Architecture Pattern</type>
-      <description>Real-time Features: Supabase Realtime for real-time features for expiration alerts and live inventory updates.</description>
-      <source>docs/architecture.md#decision-summary</source>
-    </constraint>
-    <constraint>
-      <type>Database Schema</type>
-      <description>Modifications to existing inventory tables for expiration dates, or new tables for notification preferences/logs, will adhere to `snake_case` naming and RLS best practices.</description>
-      <source>docs/sprint-artifacts/4-3-expiration-alerts.md#dev-notes</source>
-    </constraint>
-    <constraint>
-      <type>UI/UX Pattern</type>
-      <description>Will follow "Expiration-to-Inspiration Loop" and "Actionable Alert Card" as described in `ux-design-specification.md`.</description>
-      <source>docs/sprint-artifacts/4-3-expiration-alerts.md#dev-notes</source>
-    </constraint>
+    - Background Jobs: PG Cron in Supabase for handling database-related background tasks.
+    - Real-time Features: Supabase Realtime for pushing alerts.
   </constraints>
   <interfaces>
     <interface>
@@ -189,56 +109,14 @@
     </interface>
   </interfaces>
   <tests>
-    <standards>
-      <standard>
-        <type>Unit Tests</type>
-        <description>For API routes (`app/api/notifications/route.ts`) and database functions/triggers related to notifications.</description>
-        <frameworks>Jest, React Testing Library</frameworks>
-      </standard>
-      <standard>
-        <type>Integration Tests</type>
-        <description>Verify interaction between API, database, and real-time features.</description>
-        <frameworks></frameworks>
-      </standard>
-      <standard>
-        <type>E2E Tests</type>
-        <description>Validate the user flow of receiving and interacting with expiration alerts in the UI.</description>
-        <frameworks>Playwright, Cypress</frameworks>
-      </standard>
-      <standard>
-        <type>Overall Testing Strategy</type>
-        <description>Multi-layered strategy including Unit Tests, Integration Tests, and End-to-End (E2E) Tests, focusing on user-centric scenarios.</description>
-        <source>docs/architecture.md</source>
-      </standard>
-    </standards>
+    <standards>Multi-layered strategy including Unit Tests (`Jest`, `React Testing Library`), Integration Tests (API routes, database interactions), and End-to-End (E2E) Tests (`Playwright`, `Cypress`), focusing on user-centric scenarios.</standards>
     <locations>
-      <location>tests/</location>
+      - `tests/`
     </locations>
     <ideas>
-      <idea>
-        <description>Unit tests for backend logic for expiration detection (AC: 1)</description>
-        <acceptance-criteria-id>1</acceptance-criteria-id>
-      </idea>
-      <idea>
-        <description>Unit tests for `GET /api/notifications` API endpoint (AC: 1)</description>
-        <acceptance-criteria-id>1</acceptance-criteria-id>
-      </idea>
-      <idea>
-        <description>Integration tests for expiration detection and notification API (AC: 1)</description>
-        <acceptance-criteria-id>1</acceptance-criteria-id>
-      </idea>
-      <idea>
-        <description>Unit and integration tests for recipe linking in notifications (AC: 2)</description>
-        <acceptance-criteria-id>2</acceptance-criteria-id>
-      </idea>
-      <idea>
-        <description>Unit and integration tests for notification bundling logic (AC: 3)</description>
-        <acceptance-criteria-id>3</acceptance-criteria-id>
-      </idea>
-      <idea>
-        <description>E2E tests for the complete notification flow, covering all acceptance criteria (AC: 1, 2, 3)</description>
-        <acceptance-criteria-id>1, 2, 3</acceptance-criteria-id>
-      </idea>
+        - (Integration) Test the `PG Cron` job to ensure it creates notifications correctly.
+        - (Integration) Test the Supabase Realtime integration to ensure the frontend receives notifications.
+        - (E2E) Simulate a user receiving an expiration alert and clicking on it to see recipe suggestions.
     </ideas>
   </tests>
 </story-context>

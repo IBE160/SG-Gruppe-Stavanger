@@ -1,4 +1,4 @@
-# generated: 2025-11-28
+# generated: 2025-12-01
 # project: ibe160
 # project_key: unknown
 # tracking_system: file-system
@@ -8,27 +8,28 @@
 # ==================
 # Epic Status:
 #   - backlog: Epic exists in epic file but not contexted
-#   - contexted: Next epic tech context created by *epic-tech-context (required)
+#   - contexted: Epic tech context created (required before drafting stories)
 #
 # Story Status:
 #   - backlog: Story only exists in epic file
-#   - drafted: Story file created in stories folder by *create-story
-#   - ready-for-dev: Draft approved and story context created by *story-ready
-#   - in-progress: Developer actively working on implementation by *dev-story
-#   - review: Implementation complete, ready for review by *code-review
-#   - done: Story completed by *story-done
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under SM review (via code-review workflow)
+#   - done: Story completed
 #
 # Retrospective Status:
 #   - optional: Can be completed but not required
-#   - completed: Retrospective has been done by *retrospective
+#   - completed: Retrospective has been done
 #
 # WORKFLOW NOTES:
 # ===============
 # - Epics should be 'contexted' before stories can be 'drafted'
-# - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
-# - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
 
-generated: 2025-11-29
+generated: 2025-12-01
 project: ibe160
 project_key: unknown
 tracking_system: file-system
@@ -42,17 +43,20 @@ development_status:
   1-4-user-login: ready-for-dev
   1-5-user-logout: ready-for-dev
   epic-1-retrospective: optional
+
   epic-2: ready-for-dev
   2-1-add-food-item: ready-for-dev
   2-2-view-inventory: ready-for-dev
   2-3-edit-food-item: ready-for-dev
   2-4-delete-food-item: ready-for-dev
   epic-2-retrospective: completed
+
   epic-3: ready-for-dev
   3-1-search-recipes: ready-for-dev
   3-2-view-recipe-details: ready-for-dev
   epic-3-retrospective: optional
-  epic-4: contexted
+
+  epic-4: ready-for-dev
   4-1-get-smart-recipe-suggestions: ready-for-dev
   4-2-mark-recipe-as-cooked-and-deduct-inventory: ready-for-dev
   4-3-expiration-alerts: ready-for-dev
