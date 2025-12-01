@@ -75,6 +75,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     env: {
       NODE_ENV: 'test', // Set NODE_ENV to test for higher rate limits
+      SPOONACULAR_API_KEY: 'df461e2c093f44c69cdebae469f8fc0a', // Spoonacular API key
     },
   },
 });
