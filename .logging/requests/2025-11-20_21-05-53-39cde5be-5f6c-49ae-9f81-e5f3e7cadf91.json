@@ -1,0 +1,221 @@
+[
+  {
+    "request": {
+      "session.id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_request",
+      "event.timestamp": "2025-11-20T21:06:12.131Z",
+      "model": "gemini-2.5-flash",
+      "prompt_id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91########0",
+      "request_text": [
+        {
+          "role": "user",
+          "parts": [
+            {
+              "text": "This is the Gemini CLI. We are setting up the context for our chat.\nToday's date is torsdag 20. november 2025 (formatted according to the user's locale).\nMy operating system is: win32\nThe project's temporary directory is: C:\\Users\\Administrator\\.gemini\\tmp\\106985dac53e1087dd07903cf8d34dd38f51d2cff2f3b5c1eefb179cc4d31f48\nI'm currently working in the directory: C:\\IBE160\\test\\SG-Gruppe-Stavanger\nHere is the folder structure of the current working directories:\n\nShowing up to 200 items (files + folders). Folders or files indicated with ... contain more items not shown, were ignored, or the display limit (200 items) was reached.\n\nC:\\IBE160\\test\\SG-Gruppe-Stavanger\\\n├───.gitignore\n├───README.md\n├───.claude\\\n│   └───commands\\\n│       └───bmad\\\n│           ├───bmm\\\n│           ├───cis\\\n│           └───core\\\n├───.gemini\\\n│   ├───settings.json\n│   └───commands\\\n│       ├───bmad-agent-bmm-analyst.toml\n│       ├───bmad-agent-bmm-architect.toml\n│       ├───bmad-agent-bmm-dev.toml\n│       ├───bmad-agent-bmm-game-architect.toml\n│       ├───bmad-agent-bmm-game-designer.toml\n│       ├───bmad-agent-bmm-game-dev.toml\n│       ├───bmad-agent-bmm-pm.toml\n│       ├───bmad-agent-bmm-sm.toml\n│       ├───bmad-agent-bmm-tea.toml\n│       ├───bmad-agent-bmm-tech-writer.toml\n│       ├───bmad-agent-bmm-ux-designer.toml\n│       ├───bmad-agent-cis-brainstorming-coach.toml\n│       ├───bmad-agent-cis-creative-problem-solver.toml\n│       ├───bmad-agent-cis-design-thinking-coach.toml\n│       ├───bmad-agent-cis-innovation-strategist.toml\n│       ├───bmad-agent-cis-README.toml\n│       ├───bmad-agent-cis-storyteller.toml\n│       ├───bmad-agent-core-bmad-master.toml\n│       ├───bmad-task-bmm-daily-standup.toml\n│       ├───bmad-task-core-adv-elicit.toml\n│       ├───bmad-task-core-index-docs.toml\n│       ├───bmad-task-core-validate-workflow.toml\n│       └───bmad-task-core-workflow.toml\n├───.git\\...\n├───.logging\\\n│   ├───.gitignore\n│   ├───api-viewer.html\n│   ├───api-viewer.html.bak\n│   ├───process-api-requests.py\n│   ├───README.md\n│   ├───requirements.txt\n│   ├───server.py\n│   ├───server.py.backup\n│   ├───telemetry.md\n│   ├───truncate.py\n│   ├───watcher.py\n│   └───requests\\\n│       ├───2025-11-03_18-19-00-2e943ecc-f9bb-481d-9610-d1ae1a3b1bed.json\n│       ├───2025-11-03_18-22-51-f3d8f739-bb0b-4b08-98b9-ce4ea63ad50f.json\n│       ├───2025-11-03_18-26-38-a334a7ea-0ca5-4a1b-874c-334314399dd1.json\n│       ├───2025-11-03_18-38-11-90353f13-1f6c-47b5-a7f2-e3f5ccd1f5b9.json\n│       ├───2025-11-03_19-38-41-dedeeca8-65dd-46df-a81c-cbf42f0c62db.json\n│       ├───2025-11-06_17-21-49-7b2ca049-1eba-4f38-93a1-2b3aa7ea3e1d.json\n│       ├───2025-11-06_17-26-01-98b3a19b-3808-4a4f-a0f0-62c2542cf1dc.json\n│       ├───2025-11-06_18-55-45-016c34ca-60d2-47a5-bfd9-e204d57d1a17.json\n│       └───2025-11-06_19-07-55-54b24d6b-e52d-4333-8a95-980c445ab915.json\n├───.vscode\\\n│   ├───launch.json\n│   ├───settings.json\n│   └───tasks.json\n├───bmad\\\n│   ├───_cfg\\\n│   │   ├───agent-manifest.csv\n│   │   ├───files-manifest.csv\n│   │   ├───manifest.yaml\n│   │   ├───task-manifest.csv\n│   │   ├───tool-manifest.csv\n│   │   ├───workflow-manifest.csv\n│   │   ├───agents\\\n│   │   │   ├───bmm-analyst.customize.yaml\n│   │   │   ├───bmm-architect.customize.yaml\n│   │   │   ├───bmm-dev.customize.yaml\n│   │   │   ├───bmm-game-architect.customize.yaml\n│   │   │   ├───bmm-game-designer.customize.yaml\n│   │   │   ├───bmm-game-dev.customize.yaml\n│   │   │   ├───bmm-pm.customize.yaml\n│   │   │   ├───bmm-sm.customize.yaml\n│   │   │   ├───bmm-tea.customize.yaml\n│   │   │   ├───bmm-tech-writer.customize.yaml\n│   │   │   ├───bmm-ux-designer.customize.yaml\n│   │   │   ├───cis-brainstorming-coach.customize.yaml\n│   │   │   ├───cis-creative-problem-solver.customize.yaml\n│   │   │   ├───cis-design-thinking-coach.customize.yaml\n│   │   │   ├───cis-innovation-strategist.customize.yaml\n│   │   │   ├───cis-storyteller.customize.yaml\n│   │   │   └───core-bmad-master.customize.yaml\n│   │   └───ides\\\n│   │       └───claude-code.yaml\n│   ├───bmm\\\n│   │   ├───config.yaml\n│   │   ├───README.md\n│   │   ├───agents\\\n│   │   │   ├───analyst.md\n│   │   │   ├───architect.md\n│   │   │   ├───dev.md\n│   │   │   ├───game-architect.md\n│   │   │   ├───game-designer.md\n│   │   │   ├───game-dev.md\n│   │   │   ├───pm.md\n│   │   │   ├───sm.md\n│   │   │   ├───tea.md\n│   │   │   ├───tech-writer.md\n│   │   │   └───ux-designer.md\n│   │   ├───docs\\\n│   │   ├───sub-modules\\\n│   │   ├───tasks\\\n│   │   ├───teams\\\n│   │   ├───testarch\\\n│   │   └───workflows\\\n│   ├───cis\\\n│   │   ├───config.yaml\n│   │   ├───readme.md\n│   │   ├───agents\\\n│   │   ├───teams\\\n│   │   └───workflows\\\n│   ├───core\\\n│   │   ├───config.yaml\n│   │   ├───agents\\\n│   │   ├───tasks\\\n│   │   ├───tools\\\n│   │   └───workflows\\\n│   └───docs\\\n│       ├───claude-code-instructions.md\n│       └───gemini-instructions.md\n├───docs\\\n│   ├───bmm-workflow-status.yaml\n│   ├───PRD.md\n│   └───proposal.md\n├───fase-0\\\n│   ├───brainstorming-session-results-2025-10-28.md\n│   ├───product-brief-ibe160-2025-11-03.md\n│   ├───README.md\n│   ├───research-findings.md\n│   └───research-technical-2025-10-28.md\n├───fase-1\\\n│   ├───add_item_dialog.html\n│   ├───ci-pipeline-config.yml\n│   ├───expiration_alerts_dashboard.html\n│   ├───landing_page.html\n│   ├───pantry_overview.html\n│   ├───README.md\n│   ├───recipe_browser.html\n│   ├───smart_grocery_list.html\n│   ├───user_profile.html\n│   ├───ux-color-themes.html\n│   ├───ux-design-specification.md\n│   └───ux-design.html\n├───fase-2\\\n│   ├───architecture.md\n│   ├───README.md\n│   └───solutioning-gate-check-report.md\n├───fase-3\\\n│   ├───bmm-epics.md\n│   ├───README.md\n│   └───sprint-status.yaml\n└───ibe160-app\\\n    ├───.gitignore\n    ├───500\n    ├───API-SETUP.md\n    ├───auth.ts\n    ├───cd\n    ├───cls\n    ├───components.json\n    ├───DEPLOYMENT-QUICK-START.md\n    ├───DEPLOYMENT.md\n    ├───eslint.config.mjs\n    ├───MIGRATION_REQUIRED.md\n    ├───next.config.ts\n    ├───node\n    ├───package-lock.json\n    ├───package.json\n    ├───PHASE2-3-FEATURES.md\n    ├───postcss.config.mjs\n    ├───PRODUCTION_READINESS.md\n    ├───README.md\n    ├───READY_FOR_STAKEHOLDERS.md\n    ├───setup-supabase.js\n    ├───tsconfig.json\n    ├───VERCEL_ENV_SETUP.txt\n    ├───vercel.json\n    ├───.next\\\n    │   └───dev\\...\n    ├───.vercel\\...\n    ├───node_modules\\...\n    ├───prisma\\\n    │   ├───schema.prisma\n    │   └───migrations\\\n    ├───public\\\n    │   ├───file.svg\n    │   ├───globe.svg\n    │   ├───next.svg\n    │   ├───vercel.svg\n    │   └───window.svg\n    └───src\\\n        ├───app\\\n        ├───components\\\n        ├───hooks\\\n        ├───lib\\\n        └───types\\\n\nReminder: Do not return an empty response when a tool call is required.\n\nMy setup is complete. I will provide my first command in the next turn."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "text": "uv run .logging/process-api-requests.py"
+            }
+          ]
+        },
+        {
+          "role": "model",
+          "parts": [
+            {
+              "thoughtSignature": "Ci8B4/H/XgI6MvV78wPBMEJdb3hzKElRoXz4PXvoRQ0fAl/FljSyhUEzQmBbQnWAWwppAePx/15nZb0vTjnLy1tb8h5wBQaKUiHojPdpFWXdw1AwS3Ynz4wcFUTu22hb6t7+UlTFDjXoelLBBs1KCaX83Vj59UAM48lowmyNaiCyS7UltiLPKxlq3LO2Pi1LcssD0TiNlxHwPtP2CmoB4/H/Xsyt0DTsWJ+8r50mAaOtVRQOZ+RttddJQIv444jQqTfGmoeMQx1qpR7Wcv+M/2C399EEmKPk2b2+cEJ+SQHggTmEDdzYl4wZlStJ18mRTEeALLgI+5hhiHQ1oAI4TYqI+wQJjSafCloB4/H/XucMRhCMKd9VxOYr9SmMVMKadlcK8qkm3fQfGCChr8gnsMOMkBpj/8EtR1z77bF8LSzjdg7GTO3chR3/Y/ECJ0ujHWSBOGjXnf2Xtc9Mcn3Z89wPArY=",
+              "functionCall": {
+                "name": "run_shell_command",
+                "args": {
+                  "description": "Running the python script to process API requests.",
+                  "command": "python .logging/process-api-requests.py"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "functionResponse": {
+                "id": "run_shell_command-1763672761787-22abdac6d2305",
+                "name": "run_shell_command",
+                "response": {
+                  "output": "Command: python .logging/process-api-requests.py\nDirectory: (root)\nOutput: [WARNING] A shebang 'uv' was found but could not be matched to an installed runtime, so it will be treated \nas an arbitrary command.                                                                                   \n[WARNING] To prevent execution of programs that are not Python runtimes, set 'shebang_can_run_anything' to \n'false' in your configuration file.                                                                        \nerror: unrecognized subcommand '.logging/process-api-requests.py'                                          \n                                                                                                           \nUsage: uv.EXE [OPTIONS] <COMMAND>                                                                          \n                                                                                                           \nFor more information, try '--help'.\nError: (none)\nExit Code: 1\nSignal: (none)\nBackground PIDs: (none)\nProcess Group PGID: 10512"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "model",
+          "parts": [
+            {
+              "thoughtSignature": "CjUB4/H/XiD59eNBK9+J+Tb0ognjZ4wKf1HBOwWEYgRGZggIiqQJoflijrf6yCMAKSvYIEfjLAp2AePx/17Yp41R2xpX30VqHYskIsrkP20fbXMRFH4JnnB+VppR2Alax+jUhJnwMGtkNxxd3IztnklJFFnIqrjoLdbAu6w31ILLqFMYhvfcv00wG7n4Pre3TxAuHmHA/hGZAWPensRZaqoUhg16y9gkDpYS+MOsCQptAePx/16MEW5kfuEWQLNwBqhqRfmJkouNE+mkoBHyIhOcC5+0HHpa8OQfzAfuWmSrHL8b3Zs9dWpiIbdYgPjeOddZDPXdnGufSn/u8vOFmyEeLimEQxP28FClTSzP0vcW4Sn3MofZzRcaPFThggqnAQHj8f9ewN6r4z9bEAckwQuMoER0YJAvXSA2Y9e6pglvgGlPz1dZvvxuVS4dgz39ZRTVq+nI4nuSVbxn5PzX71FOiI0Y5Ic5bHkElwcPpjzR9KsCo/kGOhTCPSOBe0j42kbhOJeDTvJgQH0A+HuIXUZqJZpM9CxTTONp68KQAFZVer+k1pt+xuZj9Oyfjt4I2mZGmpju9eCXtYbsDFjeYhzPK3KEXREtCqIBAePx/172PO/02ks+BRsz9fl2ZB0pj4Ap3X9xJYyYGYCgjM+x1nF5H3bKVqI11KHPdYpUjwFl+gWyMoqluxeCv6BuDR4rrbK5dH/VJHRvtgiCpSI7kfvynzr/DP0yWYN5z1hh126BDeQOD1k2bLDI0uMHNH8z5eWmLpCsL57i1KkenyNeDqnqOvbl9eo2o6xFD1zbSw1AX8hszOCIjGmL2MvdCp0BAePx/162E/KxFtbiq2cQITvwv+KrarRY/Qc+3sJG2737DCAQH9+XddGxGmNYopo4XcvGMWG9q6pp3sUrnE6DAT97Do6EES8ObyLIeGL+9p3k+/3le31MrBCeifG0GE2tb8QlDbnx+LAvs6lmfEEVWkvlBKLfOLc41oRWMApdN5qDdfW4rBFRL9tEEFKJpJvZQuQpcmqr/u9D2aWrgw==",
+              "functionCall": {
+                "name": "run_shell_command",
+                "args": {
+                  "description": "Running the python script to process API requests.",
+                  "command": "python .logging/process-api-requests.py"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "functionResponse": {
+                "id": "run_shell_command-1763672768894-d58c093769c54",
+                "name": "run_shell_command",
+                "response": {
+                  "output": "Command: python .logging/process-api-requests.py\nDirectory: (root)\nOutput: [WARNING] A shebang 'uv' was found but could not be matched to an installed runtime, so it will be treated \nas an arbitrary command.                                                                                   \n[WARNING] To prevent execution of programs that are not Python runtimes, set 'shebang_can_run_anything' to \n'false' in your configuration file.                                                                        \nerror: unrecognized subcommand '.logging/process-api-requests.py'                                          \n                                                                                                           \nUsage: uv.EXE [OPTIONS] <COMMAND>                                                                          \n                                                                                                           \nFor more information, try '--help'.\nError: (none)\nExit Code: 1\nSignal: (none)\nBackground PIDs: (none)\nProcess Group PGID: 16080"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "response": {
+      "session.id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_response",
+      "event.timestamp": "2025-11-20T21:06:15.165Z",
+      "model": "gemini-2.5-flash",
+      "duration_ms": 3034,
+      "input_token_count": 9435,
+      "output_token_count": 30,
+      "cached_content_token_count": 8809,
+      "thoughts_token_count": 219,
+      "tool_token_count": 0,
+      "total_token_count": 9684,
+      "prompt_id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91########0",
+      "auth_type": "oauth-personal",
+      "status_code": 200,
+      "response_text": [
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "thought": true,
+                    "text": "**Correcting an Assumption**\n\nI realize I jumped the gun a bit. I initially missed a crucial detail, namely that `uv` was part of the original command. The error message is now much clearer in its context, and my understanding of the execution flow has shifted.\n\n\n"
+                  }
+                ]
+              }
+            }
+          ],
+          "usageMetadata": {
+            "trafficType": "PROVISIONED_THROUGHPUT"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "f0c31af2009f9499"
+        },
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "thought": true,
+                    "text": "**Re-Evaluating the Approach**\n\nOkay, I'm adjusting my strategy again. After re-examining the command and error, I see that the user intends to utilize `uv` directly. My initial inclination to add `python` was misguided. The focus now is on confirming the capabilities of `uv` to execute this specific Python script as the user intends, without any modifications.\n\n\n"
+                  }
+                ]
+              }
+            }
+          ],
+          "usageMetadata": {
+            "trafficType": "PROVISIONED_THROUGHPUT"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "f0c31af2009f9499"
+        },
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "thoughtSignature": "CisB4/H/XqvfxudRpasGpRigpSnGnENdF1TrEQ9SZ/HNjDYLDudhpssWrzh/CnYB4/H/XotoSk55MTz2c/wO46KEn94OVcUBkpH8XK6v24PR03XPr3KCzVlIT91ZuMzyaOtFWlsSk1W9SDei8bz8hhTtOnQUGk7R6uqKvMM2JRsz05+N0u5/88avraDYAukhm9vkRZFbwhb3I7InAF5GO3A3YwwnCnAB4/H/XiwAM6I+zCV1kF57aG10psQto2rrc2H+H4PpJEriy2vIvA67NIBAmkMc8FxAj5QfG3XNu0jnzY3D8MqyjcCHA0UOr9Sw4UbLPhb0kcxJ1o7rsgXnhEloy0C4b2S14pQg4ZCCOKtujisbFr+bCrEBAePx/166E3dRvLmHREU6rryMz7fyv+odiQPpjYxC510up3ReMeDGHmbM05BUi5baXxO7oS6MtLj7qC+76IQBfTten4sy9R3KlkT1Lhb9sZ9Xuj4kN/yaypO8TymdysgPYta2VqojHWuY8wR6mWTKbXrfXZ629ry9QNCerfSuAlNnBrSoIaJv+aP8LyEdMgxR5M5+2AJf2exaxlqz1T5qI2tsmSp2D3YZkHVYRNziCp4uCtUBAePx/14G4j74Jk6bTXTYlkYK34+YKAdm7v6H5GlRKBntPE+lwUbhi5qB1nXoWHbncQxGfpSmYCuTHMOvq9PKURKgJ2f3pQhJWhFwuiNZoNneQQbpy83hkGqySPKVlPRfj77/49zcAG7CdxkhryId4umC5PHSeWkUlSOa4Q2iYVmSgCdWCz2G9dmFwCXaCE9C/RPn2xwqczJD3OVRgj2GVl7lqALfc55G1feE3+c9L3+j14a8u9US1Fpx7L9yjfXUcS+Qp2/lWtSZsWW1JK7Q2DCw81LaCuEBAePx/165xvq7CU7ouo7eRSIZJFnTlN6ezyWIM/CXfxGD5fJpzhUrhe2WJBH68d0OFimLKJVTflLtxqAvcbqSvypmS3uXrVS4qcu+ekFq/Q1eLA9vbyxP4CJHI9Y0j6mWD8s20rz5zjILVFB6yEU8gD1B6D5Fc+QoBFWbR62Zt1OQSQpN8Urc78sNMEkc0FN5p6XqpI3yScAoESzqhglL9oSnkvsY/W0lORHFKqDetFtRx05PfMGArJx7xcshK3O5a10Ych9wSViPRC5k0uVJSM+IfsANjPGhydHMn/QuEk8HCu0BAePx/158WO8C3gR7aP0Qrhut0OuGCdAbHljx6hkRoe6TBf2VrKtNcIkho4UhZG2u8j7OZuyuk3bsnwGYPHfrvTOvthYsgk0oBhjmc9TIh6Nom7i+a5P6rmc2Uxekmbflpyss84zZCYRKtU/wgT3TGkRlG45mWZSpMdTgqwylgQnInucjkSFgZSoqHg+bDAFZ0fZWVju+ibPZwtQq3n3KcZQqZA+SBCijAUrnWvKZcDG4tmkOa1Xo8+ihEq1CvFvaQS1v7zR2L/kTBgrNY8fdNudkAmRZrJMeT8jH0bV1ZNNlO84sO4qBRM4+IGUECjoB4/H/XnzLJhAlUpV2CogEfkBuFeXbMJqVD+wDerAEQ77LC6NCp3OfyRh0F4hndi6EyFZWw5OHXXlb",
+                    "functionCall": {
+                      "name": "run_shell_command",
+                      "args": {
+                        "description": "Running the user-provided command to process API requests.",
+                        "command": "uv run .logging/process-api-requests.py"
+                      }
+                    }
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 9435,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 9684,
+            "cachedContentTokenCount": 8809,
+            "trafficType": "PROVISIONED_THROUGHPUT",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 9435
+              }
+            ],
+            "cacheTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8809
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 30
+              }
+            ],
+            "thoughtsTokenCount": 219
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "f0c31af2009f9499"
+        }
+      ],
+      "http.status_code": 200
+    },
+    "error": {
+      "session.id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91",
+      "installation.id": "ff12dbc2-e7fa-42ed-953d-487093177fb7",
+      "interactive": true,
+      "user.email": "thomas.ekrem.jensen@gmail.com",
+      "event.name": "gemini_cli.api_error",
+      "event.timestamp": "2025-11-20T21:05:55.600Z",
+      "error.message": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 4s.\",\n    \"errors\": [\n      {\n        \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 4s.\",\n        \"domain\": \"global\",\n        \"reason\": \"rateLimitExceeded\"\n      }\n    ],\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"RATE_LIMIT_EXCEEDED\",\n        \"domain\": \"cloudcode-pa.googleapis.com\",\n        \"metadata\": {\n          \"uiMessage\": \"true\",\n          \"model\": \"gemini-2.5-flash\",\n          \"quotaResetDelay\": \"4.416022129s\",\n          \"quotaResetTimeStamp\": \"2025-11-20T21:06:00Z\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"4.416022129s\"\n      }\n    ]\n  }\n}\n]",
+      "model_name": "gemini-2.5-flash",
+      "duration": 501,
+      "model": "gemini-2.5-flash",
+      "error": "[{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 4s.\",\n    \"errors\": [\n      {\n        \"message\": \"You have exhausted your capacity on this model. Your quota will reset after 4s.\",\n        \"domain\": \"global\",\n        \"reason\": \"rateLimitExceeded\"\n      }\n    ],\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"RATE_LIMIT_EXCEEDED\",\n        \"domain\": \"cloudcode-pa.googleapis.com\",\n        \"metadata\": {\n          \"uiMessage\": \"true\",\n          \"model\": \"gemini-2.5-flash\",\n          \"quotaResetDelay\": \"4.416022129s\",\n          \"quotaResetTimeStamp\": \"2025-11-20T21:06:00Z\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"4.416022129s\"\n      }\n    ]\n  }\n}\n]",
+      "status_code": 429,
+      "duration_ms": 501,
+      "prompt_id": "39cde5be-5f6c-49ae-9f81-e5f3e7cadf91########0",
+      "auth_type": "oauth-personal",
+      "error.type": "Error",
+      "http.status_code": 429
+    }
+  }
+]

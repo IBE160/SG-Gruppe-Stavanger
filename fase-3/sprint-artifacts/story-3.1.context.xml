@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context>
+  <metadata>
+    <story-id>STORY-3.1</story-id>
+    <epic>3 - Food Inventory Management</epic>
+    <title>Create Pantry Item API</title>
+    <status>done</status>
+  </metadata>
+
+  <requirements>
+    <functional-requirement id="FR002">
+      Add food items with name, category, expiration date, quantity
+    </functional-requirement>
+    <functional-requirement id="FR003">
+      Categorize items (Dairy, Produce, Meat, etc.)
+    </functional-requirement>
+    <functional-requirement id="FR004">
+      Track expiration dates with visual indicators
+    </functional-requirement>
+  </requirements>
+
+  <architecture-context>
+    <database-model>
+      <![CDATA[
+      model FoodItem {
+        id             String    @id @default(cuid())
+        name           String
+        category       String
+        bestBeforeDate DateTime
+        quantity       Float
+        unit           String
+        barcode        String?
+        notes          String?
+        userId         String
+        createdAt      DateTime  @default(now())
+        updatedAt      DateTime  @updatedAt
+
+        user           User      @relation(...)
+
+        @@index([userId])
+        @@index([bestBeforeDate])
+      }
+      ]]>
+    </database-model>
+
+    <api-routes>
+      <route method="GET" path="/api/pantry" />
+      <route method="POST" path="/api/pantry" />
+      <route method="PATCH" path="/api/pantry/[id]" />
+      <route method="DELETE" path="/api/pantry/[id]" />
+    </api-routes>
+  </architecture-context>
+
+  <dependencies>
+    <package name="@prisma/client" version="^5.0.0" />
+    <package name="zod" version="^3.22.0" />
+  </dependencies>
+
+  <validation-schema>
+    <![CDATA[
+    const itemSchema = z.object({
+      name: z.string().min(1, "Name required"),
+      category: z.string(),
+      bestBeforeDate: z.string().datetime(),
+      quantity: z.number().positive(),
+      unit: z.string(),
+      barcode: z.string().optional(),
+      notes: z.string().optional()
+    })
+    ]]>
+  </validation-schema>
+
+  <categories>
+    <category id="dairy" name="Dairy" icon="🥛" />
+    <category id="meat" name="Meat &amp; Fish" icon="🥩" />
+    <category id="produce" name="Produce" icon="🥬" />
+    <category id="grains" name="Grains &amp; Bread" icon="🍞" />
+    <category id="frozen" name="Frozen" icon="🧊" />
+    <category id="canned" name="Canned Goods" icon="🥫" />
+    <category id="condiments" name="Condiments" icon="🫙" />
+    <category id="beverages" name="Beverages" icon="🥤" />
+    <category id="snacks" name="Snacks" icon="🍪" />
+    <category id="other" name="Other" icon="📦" />
+  </categories>
+
+  <api-specification>
+    <endpoint method="GET" path="/api/pantry">
+      <query-params>
+        <param name="category" type="string" required="false" />
+      </query-params>
+      <responses>
+        <response status="200">Array of FoodItem</response>
+        <response status="401">Unauthorized</response>
+      </responses>
+    </endpoint>
+
+    <endpoint method="POST" path="/api/pantry">
+      <request>
+        <field name="name" type="string" required="true" />
+        <field name="category" type="string" required="true" />
+        <field name="bestBeforeDate" type="datetime" required="true" />
+        <field name="quantity" type="number" required="true" />
+        <field name="unit" type="string" required="true" />
+        <field name="barcode" type="string" required="false" />
+        <field name="notes" type="string" required="false" />
+      </request>
+      <responses>
+        <response status="201">Created FoodItem</response>
+        <response status="400">Validation error</response>
+        <response status="401">Unauthorized</response>
+      </responses>
+    </endpoint>
+  </api-specification>
+
+  <acceptance-criteria>
+    <criterion id="1" status="pass">GET returns user's items</criterion>
+    <criterion id="2" status="pass">POST creates new item</criterion>
+    <criterion id="3" status="pass">PATCH updates item</criterion>
+    <criterion id="4" status="pass">DELETE removes item</criterion>
+    <criterion id="5" status="pass">Authentication enforced</criterion>
+    <criterion id="6" status="pass">Validation complete</criterion>
+  </acceptance-criteria>
+
+  <code-references>
+    <file path="ibe160-app/src/app/api/pantry/route.ts" />
+    <file path="ibe160-app/src/app/api/pantry/[id]/route.ts" />
+    <file path="ibe160-app/prisma/schema.prisma" />
+  </code-references>
+</story-context>

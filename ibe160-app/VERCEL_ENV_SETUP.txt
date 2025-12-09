@@ -1,0 +1,128 @@
+=======================================================
+  VERCEL ENVIRONMENT VARIABLES - KOPIER DISSE
+=======================================================
+
+STEG 1: Gå til Vercel Dashboard
+- Gå til: https://vercel.com
+- Logg inn
+- Velg prosjektet ditt
+- Klikk "Settings" → "Environment Variables"
+
+STEG 2: Legg til disse variablene (EN AV GANGEN)
+
+⚠️ VIKTIG: For hver variabel:
+1. Lim inn KEY i "Key" feltet
+2. Lim inn VALUE i "Value" feltet  
+3. Velg "Production", "Preview", og "Development" (alle tre)
+4. Klikk "Save"
+
+---
+
+DATABASE_URL
+postgresql://postgres.bucxoglospkxknbqynhq:ThomasHildeFrida1234!@aws-1-eu-west-1.pooler.supabase.com:5432/postgres
+
+---
+
+DIRECT_URL
+postgresql://postgres.bucxoglospkxknbqynhq:ThomasHildeFrida1234!@db.bucxoglospkxknbqynhq.supabase.co:5432/postgres
+
+---
+
+AUTH_SECRET
+NkwzuIdgvzt+MBxI4Vl6EKcWFv8uEmfzCpJVn97u7Jo=
+
+---
+
+AUTH_URL
+https://DITT-PROSJEKT.vercel.app
+
+⚠️ ENDRE "DITT-PROSJEKT" til ditt faktiske Vercel domene!
+Eksempel: https://ibe160-app.vercel.app
+
+---
+
+SPOONACULAR_API_KEY
+b0b7eb9913b94806966ecd2f1f63422f
+
+---
+
+NEXT_PUBLIC_SPOONACULAR_API_KEY
+b0b7eb9913b94806966ecd2f1f63422f
+
+---
+
+GOOGLE_AI_API_KEY
+AIzaSyBKBh1b5qA84v8R-c3t8J1nUBa4yYdKjl0
+
+---
+
+NEXT_PUBLIC_GOOGLE_AI_API_KEY
+AIzaSyBKBh1b5qA84v8R-c3t8J1nUBa4yYdKjl0
+
+---
+
+RESEND_API_KEY
+re_PwrH4kme_C6UPhGQbkRzRQEAxN8xVR52R
+
+---
+
+EMAIL_FROM
+onboarding@resend.dev
+
+---
+
+SUPPORT_EMAIL
+thomas.ekrem.jensen@gmail.com
+
+---
+
+CRON_SECRET
+ibe160-cron-secret-2024-production
+
+---
+
+NEXT_PUBLIC_VAPID_PUBLIC_KEY
+BJa7FOGcYFDVCPEodT8qsJHf9LSZXnwX1uvXrZvE-g0n8d1z9M7JgDZLHMLbnbsH6yLAP6UHTu5L0DfsblpZpnQ
+
+---
+
+VAPID_PRIVATE_KEY
+y9V8fy4ot7xXfIBJ6ZFQjHpabepml62Vrt33ROPHAgA
+
+---
+
+VAPID_SUBJECT
+mailto:thomas.ekrem.jensen@gmail.com
+
+=======================================================
+
+STEG 3: Etter alle variabler er lagt til
+
+1. Gå tilbake til "Deployments" tab
+2. Klikk på den nyeste deploymenten
+3. Klikk de tre prikkene (...) øverst til høyre
+4. Velg "Redeploy"
+5. Klikk "Redeploy" igjen for å bekrefte
+
+=======================================================
+
+TOTAL ANTALL VARIABLER: 15
+
+Sjekkliste:
+□ DATABASE_URL
+□ DIRECT_URL
+□ AUTH_SECRET
+□ AUTH_URL (HUSK Å ENDRE!)
+□ SPOONACULAR_API_KEY
+□ NEXT_PUBLIC_SPOONACULAR_API_KEY
+□ GOOGLE_AI_API_KEY
+□ NEXT_PUBLIC_GOOGLE_AI_API_KEY
+□ RESEND_API_KEY
+□ EMAIL_FROM
+□ SUPPORT_EMAIL
+□ CRON_SECRET
+□ NEXT_PUBLIC_VAPID_PUBLIC_KEY
+□ VAPID_PRIVATE_KEY
+□ VAPID_SUBJECT
+
+=======================================================

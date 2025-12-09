@@ -1,0 +1,195 @@
+// Prisma schema for ibe160 Smart Food & Recipe Platform
+// Based on architecture.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  passwordHash  String
+  name          String?
+  avatar        String?
+  points        Int             @default(0)  // Gamification
+  level         Int             @default(1)  // Gamification
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  foodItems        FoodItem[]
+  notifications    Notification[]
+  preferences      UserPreference?
+  recipes          RecipeReview[]
+  households       HouseholdMember[]
+  achievements     UserAchievement[]
+  emailAlerts      EmailAlert[]
+
+  @@map("users")
+}
+
+model FoodItem {
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  bestBeforeDate  DateTime
+  quantity        Float
+  unit            String
+  image           String?
+  userId          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([bestBeforeDate])
+  @@map("food_items")
+}
+
+model Recipe {
+  id             String   @id @default(cuid())
+  spoonacularId  Int?     @unique
+  title          String
+  image          String?
+  ingredients    String   // JSON string
+  instructions   String
+  cookingTime    Int
+  servings       Int
+  tags           String?  // JSON array: vegetarian, vegan, gluten-free, etc
+  nutrition      String?  // JSON: calories, protein, carbs, fat
+  sourceUrl      String?
+  createdAt      DateTime @default(now())
+
+  reviews        RecipeReview[]
+
+  @@index([spoonacularId])
+  @@map("recipes")
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  message    String
+  type       String   // 'expiration', 'recipe_suggestion'
+  isRead     Boolean  @default(false)
+  foodItemId String?
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}
+
+model UserPreference {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  dietaryRestrictions   String?  // JSON array: vegetarian, vegan, gluten-free, etc
+  allergies             String?  // JSON array: nuts, dairy, shellfish, etc
+  cuisinePreferences    String?  // JSON array: italian, asian, mexican, etc
+  dislikedIngredients   String?  // JSON array
+  emailNotifications    Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+// User-generated content: Recipe reviews and ratings
+model RecipeReview {
+  id         String   @id @default(cuid())
+  recipeId   String
+  userId     String
+  rating     Int      // 1-5 stars
+  review     String?
+  shared     Boolean  @default(false) // Shared with community
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([recipeId, userId])
+  @@index([recipeId])
+  @@index([userId])
+  @@map("recipe_reviews")
+}
+
+// Multi-user household accounts
+model Household {
+  id          String            @id @default(cuid())
+  name        String
+  inviteCode  String            @unique
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  members     HouseholdMember[]
+
+  @@map("households")
+}
+
+model HouseholdMember {
+  id           String    @id @default(cuid())
+  householdId  String
+  userId       String
+  role         String    // 'admin', 'member'
+  joinedAt     DateTime  @default(now())
+
+  household    Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([householdId, userId])
+  @@index([userId])
+  @@map("household_members")
+}
+
+// Gamification: Achievements and badges
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  icon        String
+  points      Int
+  createdAt   DateTime @default(now())
+
+  userAchievements UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id             String   @id @default(cuid())
+  userId         String
+  achievementId  String
+  unlockedAt     DateTime @default(now())
+
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement    Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@map("user_achievements")
+}
+
+// Email alerts for expiring items
+model EmailAlert {
+  id          String   @id @default(cuid())
+  userId      String
+  foodItemId  String
+  sentAt      DateTime @default(now())
+  emailType   String   // 'expiring_soon', 'expired'
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sentAt])
+  @@map("email_alerts")
+}
